@@ -6,6 +6,7 @@ InterfazPrincipal::InterfazPrincipal(QWidget *parent)
     , ui(new Ui::InterfazPrincipal)
 {
     ui->setupUi(this);
+    setWindowTitle("SimAerop");
 }
 
 InterfazPrincipal::~InterfazPrincipal()
