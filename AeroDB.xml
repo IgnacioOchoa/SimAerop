@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<data-set>
+	<record>
+		<acftID>B738</acftID>
+		<acftName>Boeing 737-800</acftName>
+		<wingspan>34.3</wingspan>
+		<appSpeed>250</appSpeed>
+		<LDA>1600</LDA>
+		<MTOW>70530</MTOW>
+	</record>
+		<acftID>A332</acftID>
+		<acftName>Airbus 330-200</acftName>
+		<wingspan>60.3</wingspan>
+		<appSpeed>230</appSpeed>
+		<LDA>1800</LDA>
+		<MTOW>230000</MTOW>
+	</record>
+</data-set>
+
