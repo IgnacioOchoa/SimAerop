@@ -1,3 +1,29 @@
+/*QWidget {
+    font: large;
+    margin: 10px;
+}*/
+
+QListWidget {
+    border-style: none;
+    show-decoration-selected: 1;
+    outline: none;
+}
+
+QListWidget::item {
+    color: black;
+    padding: 20px;
+    font: bold large;
+}
+
+QListWidget::item:selected {
+    background-color: rgb(218, 242, 247);
+    /* background-color: #DAF2F7; */
+}
+
+QListWidget::item:hover {
+    background-color: rgb(210, 188, 183);
+}
+
 QPushButton#BT_iniciarSimulacion {
     border-radius : 5px;
     background-color : #98FB98;

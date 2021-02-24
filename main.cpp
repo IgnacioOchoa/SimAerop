@@ -1,4 +1,5 @@
 #include "interfazprincipal.h"
+#include "interfazprincipalalternativa.h"
 
 #include <QFile>
 #include <QApplication>
@@ -17,7 +18,7 @@ int main(int argc, char *argv[])
            a.setStyleSheet(StyleSheet);
         }
 
-    InterfazPrincipal w;
+    InterfazPrincipalAlternativa w;
     w.show();
     return a.exec();
 }

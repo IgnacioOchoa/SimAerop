@@ -9,15 +9,18 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    interfazprincipalalternativa.cpp \
     kernel.cpp \
     main.cpp \
     interfazprincipal.cpp
 
 HEADERS += \
     interfazprincipal.h \
+    interfazprincipalalternativa.h \
     kernel.h
 
 FORMS += \
+    interfazPrincipalAlt.ui \
     interfazprincipal.ui
 
 # Default rules for deployment.
