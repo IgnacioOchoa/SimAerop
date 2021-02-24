@@ -17,5 +17,6 @@ public:
 
 private:
     Ui::InterfazPrincipal *ui;
+
 };
 #endif // INTERFAZPRINCIPAL_H

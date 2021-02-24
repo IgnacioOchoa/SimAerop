@@ -1,7 +1,8 @@
 #ifndef INTERFAZPRINCIPALALTERNATIVA_H
 #define INTERFAZPRINCIPALALTERNATIVA_H
-
 #include <QMainWindow>
+#include <QListWidgetItem>
+#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class InterfazPrincipalAlt; }
@@ -19,6 +20,12 @@ public:
 
 private:
     Ui::InterfazPrincipalAlt *ui;
+    QList<QColor> colores;
+
+private slots:
+    void listItemSelected(QListWidgetItem *current, QListWidgetItem *previous);
+    void listItemHovered(QListWidgetItem *itm);
+
 };
 
 #endif // INTERFAZPRINCIPALALTERNATIVA_H
