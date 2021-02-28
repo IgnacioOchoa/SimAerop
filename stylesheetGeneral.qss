@@ -3,9 +3,13 @@
     margin: 10px;
 }*/
 
-QListWidget {
+QListWidget, QPlainTextEdit{
     border-style: none;
     outline: none;
+}
+
+QPlainTextEdit {
+    background-color: #FFFAF0
 }
 
 QListWidget::item {

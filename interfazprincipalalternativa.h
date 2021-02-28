@@ -24,7 +24,6 @@ private:
 
 private slots:
     void listItemSelected(QListWidgetItem *current, QListWidgetItem *previous);
-    void listItemHovered(QListWidgetItem *itm);
 
 };
 

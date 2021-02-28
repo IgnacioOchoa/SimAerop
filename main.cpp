@@ -19,6 +19,7 @@ int main(int argc, char *argv[])
         }
 
     InterfazPrincipalAlternativa w;
+    w.setMinimumSize(1400,900);
     w.show();
     return a.exec();
 }
