@@ -3,13 +3,51 @@
     margin: 10px;
 }*/
 
-QListWidget, QPlainTextEdit{
-    border-style: none;
-    outline: none;
+QMenuBar {
+    border-style : solid 5px;
+    background-color : #dfe4ed
+}
+
+QMainWindow {
+    background-color : white
+}
+
+QPushButton#pbAeronaves,
+QPushButton#pbAeropuerto,
+QPushButton#pbOperaciones,
+QPushButton#pbSimulacion {
+background-color: white;
+border:none;
+}
+
+QPushButton#pbAeronaves:hover,
+QPushButton#pbAeropuerto:hover,
+QPushButton#pbOperaciones:hover,
+QPushButton#pbSimulacion:hover {
+background-color: #E9EFF0;;
+}
+
+QPushButton#pbAeronaves:checked {background-color : #f5fcfb}
+QPushButton#pbAeropuerto:checked {background-color : #fcfbf7}
+QPushButton#pbOperaciones:checked {background-color : #fbf7fc}
+QPushButton#pbSimulacion:checked {background-color : #fcf6f5}
+
+#paginaAeronaves {background-color : #f5fcfb}
+#paginaAeropuerto {background-color : #fcfbf7}
+#paginaOperaciones {background-color : #fbf7fc}
+#paginaSimulacion {background-color : #fcf6f5}
+
+
+QListWidget {
+    border-style: solid 3px black;
+    padding = 3px;
+    background-color: #9bbaa7;
 }
 
 QPlainTextEdit {
-    background-color: #FFFAF0
+    border-style: solid;
+    border-width: 1px;
+    background-color: white
 }
 
 QListWidget::item {

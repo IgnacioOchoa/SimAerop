@@ -1,8 +1,12 @@
 #ifndef INTERFAZPRINCIPALALTERNATIVA_H
 #define INTERFAZPRINCIPALALTERNATIVA_H
 #include <QMainWindow>
+#include <QButtonGroup>
 #include <QListWidgetItem>
 #include <QDebug>
+
+class QAction;
+class QPushButton;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class InterfazPrincipalAlt; }
@@ -19,11 +23,20 @@ public:
     ~InterfazPrincipalAlternativa();
 
 private:
+    void crearMenu();
     Ui::InterfazPrincipalAlt *ui;
     QList<QColor> colores;
+    QList<QPushButton*> listaBotones;
+    QButtonGroup* btnGroup;
+
+    QMenu* menuArchivo;
+    QMenu* menuEditar;
+    QMenu* menuAjustes;
+    QMenu* menuExportar;
+    QMenu* menuAyuda;
 
 private slots:
-    void listItemSelected(QListWidgetItem *current, QListWidgetItem *previous);
+    void botonPrincipalSeleccionado(bool checked);
 
 };
 

@@ -8,22 +8,29 @@ InterfazPrincipalAlternativa::InterfazPrincipalAlternativa(QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("SimAerop");
 
+    crearMenu();
+
     QList<QString> secciones = {"AERONAVES", "AEROPUERTO", "OPERACIONES", "SIMULACIÓN"};
-    colores = {"#daf2f7", "#ffffe6", "#f2e6ff", "#e6fff7"};
+    btnGroup = new QButtonGroup(this);
 
     QFont fnt;
     fnt.setPointSize(14);
-    for (int i = 0; i < secciones.size(); i++)
-    {
-        QListWidgetItem* itm = new QListWidgetItem(secciones[i]);
-        itm->setFont(fnt);
-        ui->listWidget->addItem(itm);
-        itm->setTextAlignment(Qt::AlignCenter);
-    }
 
-    ui->listWidget->setCurrentRow(0);
-    ui->stackedWidget->setCurrentIndex(0);
-    connect(ui->listWidget, &QListWidget::currentItemChanged, this, &InterfazPrincipalAlternativa::listItemSelected);
+
+    listaBotones = {ui->pbAeronaves, ui->pbAeropuerto, ui->pbOperaciones, ui->pbSimulacion};
+
+    int id=0;
+    foreach(QPushButton* btn, listaBotones)
+    {
+        btn->setFont(fnt);
+        btn->setCheckable(true);
+        btnGroup->addButton(btn,id);
+        connect(btn , &QAbstractButton::toggled, this, &InterfazPrincipalAlternativa::botonPrincipalSeleccionado);
+        id++;
+    }
+    btnGroup->setExclusive(true);
+    listaBotones[0]->setChecked(true);
+
 }
 
 InterfazPrincipalAlternativa::~InterfazPrincipalAlternativa()
@@ -31,7 +38,19 @@ InterfazPrincipalAlternativa::~InterfazPrincipalAlternativa()
     delete ui;
 }
 
-void InterfazPrincipalAlternativa::listItemSelected(QListWidgetItem *current, QListWidgetItem *previous)
+void InterfazPrincipalAlternativa::crearMenu()
 {
-    ui->stackedWidget->setCurrentIndex(ui->listWidget->currentRow());
+    menuArchivo = menuBar()->addMenu("Archivo");
+    menuEditar = menuBar()->addMenu("Editar");
+    menuAjustes = menuBar()->addMenu("Ajustes");
+    menuExportar = menuBar()->addMenu("Exportar");
+    menuExportar = menuBar()->addMenu("Ayuda");
+}
+
+void InterfazPrincipalAlternativa::botonPrincipalSeleccionado(bool checked)
+{
+    if(checked)
+    {
+        ui->stackedWidget->setCurrentIndex(btnGroup->checkedId());
+    }
 }
