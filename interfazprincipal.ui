@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>InterfazPrincipalAlt</class>
- <widget class="QMainWindow" name="InterfazPrincipalAlt">
+ <class>interfazPrincipal</class>
+ <widget class="QMainWindow" name="interfazPrincipal">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -197,7 +197,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="paginaAeronaves">
        <property name="sizePolicy">
@@ -355,12 +355,63 @@
          </disabled>
         </palette>
        </property>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>AEROPUERTOS</string>
+         <widget class="QGraphicsView" name="graficoPista"/>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="groupBox_3">
+          <property name="title">
+           <string>Configuración de pista</string>
           </property>
+          <layout class="QVBoxLayout" name="verticalLayout_5">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_6">
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_3">
+               <item>
+                <widget class="QLabel" name="label">
+                 <property name="text">
+                  <string>Longitud</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit"/>
+               </item>
+              </layout>
+             </item>
+             <item>
+              <layout class="QHBoxLayout" name="horizontalLayout_2">
+               <item>
+                <widget class="QLabel" name="label_2">
+                 <property name="text">
+                  <string>Ancho</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLineEdit" name="lineEdit_2"/>
+               </item>
+              </layout>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_4">
+             <item>
+              <widget class="QLabel" name="label_5">
+               <property name="text">
+                <string>Calles de rodaje</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTableWidget" name="tableWidget"/>
+             </item>
+            </layout>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
