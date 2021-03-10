@@ -1,8 +1,9 @@
 #include "interfazprincipal.h"
-#include "interfazprincipalalternativa.h"
+#include "kernel.h"
 
 #include <QFile>
 #include <QApplication>
+
 
 int main(int argc, char *argv[])
 {
@@ -18,7 +19,8 @@ int main(int argc, char *argv[])
            a.setStyleSheet(StyleSheet);
         }
 
-    InterfazPrincipalAlternativa w;
+    Kernel* k = new Kernel();
+    InterfazPrincipal w(k);
     w.setMinimumSize(1400,900);
     w.show();
     return a.exec();
