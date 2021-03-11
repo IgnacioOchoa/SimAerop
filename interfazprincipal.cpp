@@ -8,8 +8,13 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     ui->setupUi(this);
     setWindowTitle("SimAerop");
 
+    QGraphicsScene* escenaPista = new QGraphicsScene(this);
+    ui->graficoPista->setScene(escenaPista);
+
     crearMenu();
-    k->inicializar(this);
+    k->inicializar(this, escenaPista);
+
+    qInfo() << "Graphics view scene rect: " << ui->graficoPista->sceneRect();
 
     QList<QString> secciones = {"AERONAVES", "AEROPUERTO", "OPERACIONES", "SIMULACIÓN"};
     btnGroup = new QButtonGroup(this);
@@ -31,6 +36,8 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     }
     btnGroup->setExclusive(true);
     listaBotones[0]->setChecked(true);
+
+    //connect(ui->botonGraficarPista, &QAbstractButton::pressed, k, &Kernel::botonGraficarPistaApretado);
 
 }
 

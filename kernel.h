@@ -6,12 +6,17 @@
 
 class InterfazPrincipal;
 
-class Kernel
+class Kernel : public QObject
 {
+    Q_OBJECT
+
 public:
     Kernel();
-    ~Kernel();
-    bool inicializar(InterfazPrincipal* ip);
+    virtual ~Kernel();
+    bool inicializar(InterfazPrincipal* ip, QGraphicsScene* gs);
+
+public slots:
+    void botonGraficarPistaApretado();
 
 private:
     InterfazPrincipal* interfazPpal;
