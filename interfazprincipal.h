@@ -32,11 +32,16 @@ private:
     QList<QPushButton*> listaBotones;
     QButtonGroup* btnGroup;
 
+    QGraphicsScene* escenaPista;
+
     QMenu* menuArchivo;
     QMenu* menuEditar;
     QMenu* menuAjustes;
     QMenu* menuExportar;
     QMenu* menuAyuda;
+
+    void reportarDatosEscena();
+
 
 private slots:
     void botonPrincipalSeleccionado(bool checked);

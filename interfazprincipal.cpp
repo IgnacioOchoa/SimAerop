@@ -4,24 +4,24 @@
 InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::interfazPrincipal)
+    , escenaPista(new QGraphicsScene(this))
 {
     ui->setupUi(this);
     setWindowTitle("SimAerop");
 
-    QGraphicsScene* escenaPista = new QGraphicsScene(this);
     ui->graficoPista->setScene(escenaPista);
 
     crearMenu();
     k->inicializar(this, escenaPista);
 
-    qInfo() << "Graphics view scene rect: " << ui->graficoPista->sceneRect();
+    ui->graficoPista->fitInView(-500,-25,1000,50,Qt::KeepAspectRatioByExpanding);
+    reportarDatosEscena();
 
     QList<QString> secciones = {"AERONAVES", "AEROPUERTO", "OPERACIONES", "SIMULACIÓN"};
     btnGroup = new QButtonGroup(this);
 
     QFont fnt;
     fnt.setPointSize(14);
-
 
     listaBotones = {ui->pbAeronaves, ui->pbAeropuerto, ui->pbOperaciones, ui->pbSimulacion};
 
@@ -53,6 +53,20 @@ void InterfazPrincipal::crearMenu()
     menuAjustes = menuBar()->addMenu("Ajustes");
     menuExportar = menuBar()->addMenu("Exportar");
     menuExportar = menuBar()->addMenu("Ayuda");
+}
+
+void InterfazPrincipal::reportarDatosEscena()
+{
+    qInfo() << "escenaPista->sceneRect() = " << escenaPista->sceneRect();
+    qInfo() << "ui->graficoPista->sceneRect() = " << ui->graficoPista->sceneRect();
+    qInfo() << "Item at (0,0): " << ui->graficoPista->itemAt(ui->graficoPista->mapFromScene(0,0));
+    qInfo() << "ui->graficoPista->transform() = " << ui->graficoPista->transform();
+    qInfo() << "ui->graficoPista->rect() (from QWidget) = " << ui->graficoPista->rect();
+    qInfo() << "ui->graficoPista->contentsRect() (from QWidget) = " << ui->graficoPista->contentsRect();
+    qInfo() << "ui->graficoPista->mapToScene(ui->graficoPista->viewport()->geometry()).boundingRect() "
+               "(from QAbstractScrollArea) = "
+            << ui->graficoPista->mapToScene(ui->graficoPista->viewport()->geometry()).boundingRect();
+
 }
 
 void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)

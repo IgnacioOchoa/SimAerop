@@ -9,12 +9,12 @@ EditorPista::EditorPista(QGraphicsScene* gs) :
     QBrush br(linearGrad);
     escena->setBackgroundBrush(br);
     //escena->addEllipse(QRectF(0,0,50,50));
-    escena->addLine(QLineF(-1000,50,1000,50));
-    escena->addLine(QLineF(-1000,-50,1000,-50));
-    escena->addLine(QLineF(-1000,50,-1000,-50));
-    escena->addLine(QLineF(1000,50,1000,-50));
+    escena->addRect(-1000,-50,2000,100);
+    //escena->addLine(QLineF(-1000,50,1000,50));
+    //escena->addLine(QLineF(-1000,-50,1000,-50));
+    //escena->addLine(QLineF(-1000,50,-1000,-50));
+    //escena->addLine(QLineF(1000,50,1000,-50));
     escena->addLine(QLineF(-5,-5,5,5));
     escena->addLine(QLineF(-5,5,5,-5));
-    escena->setSceneRect(escena->itemsBoundingRect());
-    qInfo() << "Scene rect: " << escena->sceneRect();
+
 }
