@@ -4,28 +4,55 @@ EditorPista::EditorPista(QGraphicsView *gv) :
     vistaPista(gv)
 {
     escenaPista = gv->scene();
-    QLinearGradient linearGrad(QPointF(-1000, -1000), QPointF(1000, 1000));
-        linearGrad.setColorAt(0, "#faf0e3");
-        linearGrad.setColorAt(1, "#e0d1bc");
-    QBrush br(linearGrad);
-    escenaPista->setBackgroundBrush(br);
-    //escena->addEllipse(QRectF(0,0,50,50));
-    escenaPista->addRect(-1000,-50,2000,100);
-    //escena->addLine(QLineF(-1000,50,1000,50));
-    //escena->addLine(QLineF(-1000,-50,1000,-50));
-    //escena->addLine(QLineF(-1000,50,-1000,-50));
-    //escena->addLine(QLineF(1000,50,1000,-50));
-    escenaPista->addLine(QLineF(-5,-5,5,5));
-    escenaPista->addLine(QLineF(-5,5,5,-5));
-
-    vistaPista->fitInView(-500,-25,1000,50,Qt::KeepAspectRatioByExpanding);
-
+    gradienteFondoPista = new QLinearGradient(QPointF(-1000, -1000), QPointF(1000, 1000));
+    gradienteFondoPista->setColorAt(0, "#faf0e3");
+    gradienteFondoPista->setColorAt(1, "#e0d1bc");
+    fondoPista = new QBrush(*gradienteFondoPista);
+    colorPista = new QBrush("#A4B3B6");
+    escenaPista->setBackgroundBrush(*fondoPista);
+    bordePista = new QPen;
+    bordePista->setWidth(2);
 }
 
 void EditorPista::actualizarPista(const Pista& p)
 {
-    qInfo() << "Se recibe una senial desde Interfaz ppal!";
-    qInfo() << "p.ancho = " << p.ancho;
+    escenaPista->clear();
+    escenaPista->setBackgroundBrush(*fondoPista);
+    QGraphicsRectItem* rectItm = new QGraphicsRectItem;
+    rectItm = escenaPista->addRect(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho, *bordePista, *colorPista);
+
+    for (int i=0; i<5; i++)
+    {
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
+        barraBlanca->moveBy(-p.largo/2.0 + 60,-p.ancho/2.0 + (1 + i)*(p.ancho/2)/6.0);
+    }
+
+    for (int i=0; i<5; i++)
+    {
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
+        barraBlanca->moveBy(-p.largo/2.0 + 60, p.ancho/2.0 - (1 + i)*(p.ancho/2)/6.0);
+    }
+
+    for (int i=0; i<5; i++)
+    {
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
+        barraBlanca->moveBy(p.largo/2.0 - 60,-p.ancho/2.0 + (1 + i)*(p.ancho/2)/6.0);
+    }
+
+    for (int i=0; i<5; i++)
+    {
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
+        barraBlanca->moveBy(p.largo/2.0 - 60, p.ancho/2.0 - (1 + i)*(p.ancho/2)/6.0);
+    }
+
+
+
+
+    escenaPista->addLine(QLineF(-5,-5,5,5));
+    escenaPista->addLine(QLineF(-5,5,5,-5));
+
+    vistaPista->fitInView(rectItm,Qt::KeepAspectRatio);
+    vistaPista->scale(0.98, 0.98);
 }
 
 void EditorPista::reportarDatosEscena()

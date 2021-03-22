@@ -35,6 +35,9 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     btnGroup->setExclusive(true);
     listaBotones[0]->setChecked(true);
 
+    ui->lineEditLongitudPista->setText("2000");
+    ui->lineEditAnchoPista->setText("100");
+
     connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::validarDatosPista);
     connect(this, SIGNAL(pistaCambiada()), k, SLOT(graficarPista()));
 

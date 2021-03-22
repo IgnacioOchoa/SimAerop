@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QGraphicsScene>
 #include <QGraphicsView>
+#include <QGraphicsItem>
 #include <QDebug>
 
 #include "elementosaerop.h"
@@ -25,6 +26,11 @@ private:
 
     QGraphicsView* vistaPista;
     QGraphicsScene* escenaPista;
+
+    QLinearGradient* gradienteFondoPista;
+    QBrush* fondoPista;
+    QBrush* colorPista;
+    QPen* bordePista;
 };
 
 #endif // EDITORPISTA_H
