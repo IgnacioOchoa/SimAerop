@@ -24,6 +24,7 @@ class InterfazPrincipal : public QMainWindow
 public:
     InterfazPrincipal(Kernel *k, QWidget* parent = nullptr);
     ~InterfazPrincipal();
+    QGraphicsView *getVistaPista();
 
 private:
     void crearMenu();
@@ -32,6 +33,7 @@ private:
     QList<QPushButton*> listaBotones;
     QButtonGroup* btnGroup;
 
+    QGraphicsView* vistaPista;
     QGraphicsScene* escenaPista;
 
     QMenu* menuArchivo;
@@ -39,9 +41,6 @@ private:
     QMenu* menuAjustes;
     QMenu* menuExportar;
     QMenu* menuAyuda;
-
-    void reportarDatosEscena();
-
 
 private slots:
     void botonPrincipalSeleccionado(bool checked);

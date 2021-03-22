@@ -3,15 +3,19 @@
 
 #include <QObject>
 #include <QGraphicsScene>
+#include <QGraphicsView>
 #include <QDebug>
 
 class EditorPista
 {
 public:
-    EditorPista(QGraphicsScene* gs);
+    EditorPista(QGraphicsView* gv);
 
 private:
-    QGraphicsScene* escena;
+    void reportarDatosEscena();
+
+    QGraphicsView* vistaPista;
+    QGraphicsScene* escenaPista;
 };
 
 #endif // EDITORPISTA_H

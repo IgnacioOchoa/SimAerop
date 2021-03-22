@@ -12,13 +12,15 @@ class Kernel : public QObject
 
 public:
     Kernel();
+    Kernel(InterfazPrincipal* ip);
     virtual ~Kernel();
-    bool inicializar(InterfazPrincipal* ip, QGraphicsScene* gs);
+    void inicializar(InterfazPrincipal *ip);
 
 public slots:
     void botonGraficarPistaApretado();
 
 private:
+    bool inicializarEditorPista(InterfazPrincipal* ip);
     InterfazPrincipal* interfazPpal;
     EditorPista* editorPista;
 };

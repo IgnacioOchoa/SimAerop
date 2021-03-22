@@ -5,15 +5,25 @@ Kernel::Kernel()
 
 }
 
+Kernel::Kernel(InterfazPrincipal* ip)
+{
+    inicializarEditorPista(ip);
+}
+
 Kernel::~Kernel()
 {
 
 }
 
-bool Kernel::inicializar(InterfazPrincipal* ip, QGraphicsScene* gs)
+void Kernel::inicializar(InterfazPrincipal *ip)
+{
+    inicializarEditorPista(ip);
+}
+
+bool Kernel::inicializarEditorPista(InterfazPrincipal* ip)
 {
     interfazPpal = ip;
-    editorPista = new EditorPista(gs);
+    editorPista = new EditorPista(ip->getVistaPista());
     return true;
 }
 
