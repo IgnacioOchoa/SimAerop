@@ -6,10 +6,19 @@
 #include <QGraphicsView>
 #include <QDebug>
 
-class EditorPista
+#include "elementosaerop.h"
+
+//Q_DECLARE_METATYPE(Pista)
+
+class EditorPista : public QObject
 {
+    Q_OBJECT
+
 public:
     EditorPista(QGraphicsView* gv);
+
+public slots:
+    void actualizarPista(const Pista& p);
 
 private:
     void reportarDatosEscena();

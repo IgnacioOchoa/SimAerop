@@ -35,7 +35,8 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     btnGroup->setExclusive(true);
     listaBotones[0]->setChecked(true);
 
-    //connect(ui->botonGraficarPista, &QAbstractButton::pressed, k, &Kernel::botonGraficarPistaApretado);
+    connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::validarDatosPista);
+    connect(this, SIGNAL(pistaCambiada()), k, SLOT(graficarPista()));
 
 }
 
@@ -64,4 +65,14 @@ void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
     {
         ui->stackedWidget->setCurrentIndex(btnGroup->checkedId());
     }
+}
+
+void InterfazPrincipal::validarDatosPista()
+{
+    int largo = ui->lineEditLongitudPista->text().toInt();
+    int ancho = ui->lineEditAnchoPista->text().toInt();
+
+    pista = Pista{largo,ancho,0,0};
+
+    emit pistaCambiada();
 }

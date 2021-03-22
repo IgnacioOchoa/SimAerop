@@ -22,6 +22,12 @@ EditorPista::EditorPista(QGraphicsView *gv) :
 
 }
 
+void EditorPista::actualizarPista(const Pista& p)
+{
+    qInfo() << "Se recibe una senial desde Interfaz ppal!";
+    qInfo() << "p.ancho = " << p.ancho;
+}
+
 void EditorPista::reportarDatosEscena()
 {
     qInfo() << "escenaPista->sceneRect() = " << escenaPista->sceneRect();

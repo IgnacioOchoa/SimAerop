@@ -1,12 +1,14 @@
 #ifndef KERNEL_H
 #define KERNEL_H
 
+#include <QtCore>
+
 #include "editorpista.h"
 #include "interfazprincipal.h"
 #include "elementosaerop.h"
 
 class InterfazPrincipal;
-Q_DECLARE_METATYPE(Pista)
+//Q_DECLARE_METATYPE(Pista)
 
 class Kernel : public QObject
 {
@@ -20,16 +22,15 @@ public:
     void inicializar(InterfazPrincipal *ip);
 
 public slots:
-    void botonGraficarPistaApretado();
+    void graficarPista();
 
 private:
     bool inicializarEditorPista(InterfazPrincipal* ip);
     InterfazPrincipal* interfazPpal;
     EditorPista* editorPista;
-    struct Pista;
 
 signals:
-    void pistaActualizada(Pista* p);
+    void pistaActualizada(const Pista& p);
 
 };
 

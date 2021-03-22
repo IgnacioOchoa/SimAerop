@@ -2,10 +2,12 @@
 #define INTERFAZPRINCIPAL_H
 
 #include "kernel.h"
+#include "elementosaerop.h"
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>
 #include <QDebug>
+#include <QString>
 
 class QAction;
 class QPushButton;
@@ -25,9 +27,14 @@ public:
     InterfazPrincipal(Kernel *k, QWidget* parent = nullptr);
     ~InterfazPrincipal();
     QGraphicsView *getVistaPista();
+    const Pista& getPista() const {return pista;}
+
+signals:
+    void pistaCambiada();
 
 private:
     void crearMenu();
+
     Ui::interfazPrincipal *ui;
     QList<QColor> colores;
     QList<QPushButton*> listaBotones;
@@ -42,8 +49,11 @@ private:
     QMenu* menuExportar;
     QMenu* menuAyuda;
 
+    Pista pista;
+
 private slots:
     void botonPrincipalSeleccionado(bool checked);
+    void validarDatosPista();
 
 };
 
