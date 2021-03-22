@@ -16,6 +16,7 @@ SOURCES += \
 
 HEADERS += \
     editorpista.h \
+    elementosaerop.h \
     interfazprincipal.h \
     kernel.h
 
