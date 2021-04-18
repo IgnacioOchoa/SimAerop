@@ -9,12 +9,16 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    customgraphicsscene.cpp \
+    customgraphicsview.cpp \
     editorpista.cpp \
     interfazprincipal.cpp \
     kernel.cpp \
     main.cpp
 
 HEADERS += \
+    customgraphicsscene.h \
+    customgraphicsview.h \
     editorpista.h \
     elementosaerop.h \
     interfazprincipal.h \

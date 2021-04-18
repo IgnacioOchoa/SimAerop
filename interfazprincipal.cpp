@@ -4,7 +4,7 @@
 InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::interfazPrincipal)
-    , escenaPista(new QGraphicsScene(this))
+    , escenaPista(new customGraphicsScene(this))
 {
     ui->setupUi(this);
     setWindowTitle("SimAerop");

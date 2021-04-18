@@ -3,6 +3,8 @@
 
 #include "kernel.h"
 #include "elementosaerop.h"
+#include "customgraphicsview.h"
+#include "customgraphicsscene.h"
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>
@@ -40,8 +42,8 @@ private:
     QList<QPushButton*> listaBotones;
     QButtonGroup* btnGroup;
 
-    QGraphicsView* vistaPista;
-    QGraphicsScene* escenaPista;
+    customGraphicsView* vistaPista;
+    customGraphicsScene* escenaPista;
 
     QMenu* menuArchivo;
     QMenu* menuEditar;
