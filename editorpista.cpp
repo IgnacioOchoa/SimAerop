@@ -21,6 +21,9 @@ void EditorPista::actualizarPista(const Pista& p)
     QGraphicsRectItem* rectItm = new QGraphicsRectItem;
     rectItm = escenaPista->addRect(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho, *bordePista, *colorPista);
 
+    QPen penArea(Qt::NoPen);
+    escenaPista->addRect(-p.largo/2.0 - 200, -p.ancho/2.0, p.largo + 400, p.ancho, penArea);
+
     for (int i=0; i<5; i++)
     {
         QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
@@ -45,14 +48,11 @@ void EditorPista::actualizarPista(const Pista& p)
         barraBlanca->moveBy(p.largo/2.0 - 60, p.ancho/2.0 - (1 + i)*(p.ancho/2)/6.0);
     }
 
-
-
-
     escenaPista->addLine(QLineF(-5,-5,5,5));
     escenaPista->addLine(QLineF(-5,5,5,-5));
 
     vistaPista->fitInView(rectItm,Qt::KeepAspectRatio);
-    vistaPista->scale(0.98, 0.98);
+    //vistaPista->scale(0.98, 0.98);
 }
 
 void EditorPista::reportarDatosEscena()
