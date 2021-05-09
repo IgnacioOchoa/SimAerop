@@ -5,6 +5,7 @@
 #include "elementosaerop.h"
 #include "customgraphicsview.h"
 #include "customgraphicsscene.h"
+#include "dialogconfpista.h"
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>

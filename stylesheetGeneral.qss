@@ -78,3 +78,9 @@ QPushButton#BT_iniciarSimulacion:pressed {
     background-color: #98AA98
 
 }
+
+QLabel#tituloConfPista
+{
+    border : 1px solid #919ba8;
+    background : #d7dbe0
+}

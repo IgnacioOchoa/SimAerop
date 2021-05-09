@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     customgraphicsscene.cpp \
     customgraphicsview.cpp \
+    dialogconfpista.cpp \
     editorpista.cpp \
     interfazprincipal.cpp \
     kernel.cpp \
@@ -19,12 +20,14 @@ SOURCES += \
 HEADERS += \
     customgraphicsscene.h \
     customgraphicsview.h \
+    dialogconfpista.h \
     editorpista.h \
     elementosaerop.h \
     interfazprincipal.h \
     kernel.h
 
 FORMS += \
+    dialogconfpista.ui \
     interfazprincipal.ui
 
 # Default rules for deployment.

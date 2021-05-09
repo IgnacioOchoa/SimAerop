@@ -23,10 +23,10 @@ void customGraphicsView::wheelEvent(QWheelEvent *event)
     QPointF puntoDelta = puntoMouseEnScene2-puntoMouseEnScene1;
     centroAnterior+=puntoDelta;
 
-    qInfo() << "puntoMouseEnView1 : " << puntoMouseEnView1;
-    qInfo() << "puntoMouseEnScene1 : " << puntoMouseEnScene1;
-    qInfo() << "puntoMouseEnScene2 : " << puntoMouseEnScene2;
-    qInfo() << "puntoDelta : " << puntoDelta;
+    //qInfo() << "puntoMouseEnView1 : " << puntoMouseEnView1;
+    //qInfo() << "puntoMouseEnScene1 : " << puntoMouseEnScene1;
+    //qInfo() << "puntoMouseEnScene2 : " << puntoMouseEnScene2;
+    //qInfo() << "puntoDelta : " << puntoDelta;
 
     this->centerOn(-centroAnterior);
 
@@ -49,6 +49,7 @@ void customGraphicsView::mousePressEvent(QMouseEvent *event)
     {
         ruedaApretada = true;
         puntoInicioRueda = event->pos();
+        qInfo() << "Rueda apretada";
     }
 }
 

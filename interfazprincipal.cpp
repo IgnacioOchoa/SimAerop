@@ -38,8 +38,12 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     ui->lineEditLongitudPista->setText("2000");
     ui->lineEditAnchoPista->setText("100");
 
+    DialogConfPista* dialogConfPista = new DialogConfPista;
+
     connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::validarDatosPista);
     connect(this, SIGNAL(pistaCambiada()), k, SLOT(graficarPista()));
+
+    connect(ui->pbConfigurarPista, &QAbstractButton::pressed, [dialogConfPista](){dialogConfPista->show();});
 
 }
 
