@@ -6,6 +6,8 @@
 #include "customgraphicsview.h"
 #include "customgraphicsscene.h"
 #include "dialogconfpista.h"
+#include "dialogconfrodaje.h"
+#include "dialogconfplataformas.h"
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>

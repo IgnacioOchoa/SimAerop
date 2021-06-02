@@ -36,11 +36,15 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     listaBotones[0]->setChecked(true);
 
     DialogConfPista* dialogConfPista = new DialogConfPista;
+    DialogConfRodaje* dialogConfRodaje = new DialogConfRodaje;
+    DialogConfPlataformas* dialogConfPlataformas = new DialogConfPlataformas;
 
     connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::crearPista);
     connect(this, SIGNAL(pistaCambiada()), k, SLOT(graficarPista()));
 
     connect(ui->pbConfigurarPista, &QAbstractButton::pressed, [dialogConfPista](){dialogConfPista->show();});
+    connect(ui->pbConfigurarCallesRodaje, &QAbstractButton::pressed, [dialogConfRodaje](){dialogConfRodaje->show();});
+    connect(ui->pbConfigurarPlataformas, &QAbstractButton::pressed, [dialogConfPlataformas](){dialogConfPlataformas->show();});
 
 }
 

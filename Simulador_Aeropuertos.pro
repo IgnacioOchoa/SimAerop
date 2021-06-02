@@ -12,6 +12,8 @@ SOURCES += \
     customgraphicsscene.cpp \
     customgraphicsview.cpp \
     dialogconfpista.cpp \
+    dialogconfplataformas.cpp \
+    dialogconfrodaje.cpp \
     editorpista.cpp \
     interfazprincipal.cpp \
     kernel.cpp \
@@ -21,6 +23,8 @@ HEADERS += \
     customgraphicsscene.h \
     customgraphicsview.h \
     dialogconfpista.h \
+    dialogconfplataformas.h \
+    dialogconfrodaje.h \
     editorpista.h \
     elementosaerop.h \
     interfazprincipal.h \
@@ -28,6 +32,8 @@ HEADERS += \
 
 FORMS += \
     dialogconfpista.ui \
+    dialogconfplataformas.ui \
+    dialogconfrodaje.ui \
     interfazprincipal.ui
 
 # Default rules for deployment.
