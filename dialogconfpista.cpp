@@ -33,7 +33,6 @@ void DialogConfPista::configurarWidgets()
     leDireccionArchivo = ui->leDireccionArchivo;
     cbCabecera1 = ui->cbCab1;
     cbCabecera2 = ui->cbCab2;
-    tablaCallesRodaje = ui->tvCallesRodaje;
     vistaPreliminar = ui->gvPreVisualizacion;
 }
 

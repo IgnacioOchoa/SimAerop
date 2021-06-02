@@ -56,7 +56,7 @@ private:
 
 private slots:
     void botonPrincipalSeleccionado(bool checked);
-    void validarDatosPista();
+    void crearPista();
 
 };
 

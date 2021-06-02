@@ -34,7 +34,6 @@ private:
     QLineEdit* leDireccionArchivo;
     QComboBox* cbCabecera1;
     QComboBox* cbCabecera2;
-    QTableView* tablaCallesRodaje;
     QGraphicsView* vistaPreliminar;
 
 private slots:

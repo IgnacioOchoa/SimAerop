@@ -2,4 +2,7 @@
     <qresource prefix="/stylesheets">
         <file>stylesheetGeneral.qss</file>
     </qresource>
+    <qresource prefix="/imagenes">
+        <file>imagenes/Check_mark.png</file>
+    </qresource>
 </RCC>

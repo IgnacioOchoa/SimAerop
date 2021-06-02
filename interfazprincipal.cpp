@@ -35,12 +35,9 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     btnGroup->setExclusive(true);
     listaBotones[0]->setChecked(true);
 
-    ui->lineEditLongitudPista->setText("2000");
-    ui->lineEditAnchoPista->setText("100");
-
     DialogConfPista* dialogConfPista = new DialogConfPista;
 
-    connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::validarDatosPista);
+    connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::crearPista);
     connect(this, SIGNAL(pistaCambiada()), k, SLOT(graficarPista()));
 
     connect(ui->pbConfigurarPista, &QAbstractButton::pressed, [dialogConfPista](){dialogConfPista->show();});
@@ -74,12 +71,11 @@ void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
     }
 }
 
-void InterfazPrincipal::validarDatosPista()
+void InterfazPrincipal::crearPista()
 {
-    int largo = ui->lineEditLongitudPista->text().toInt();
-    int ancho = ui->lineEditAnchoPista->text().toInt();
-
-    pista = Pista{largo,ancho,0,0};
+    pista = Pista{2000,100,0,0};
+    ui->lbValorAncho->setText(QString::number(pista.ancho) + " m");
+    ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");
 
     emit pistaCambiada();
 }

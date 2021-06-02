@@ -84,3 +84,18 @@ QLabel#tituloConfPista
     border : 1px solid #919ba8;
     background : #d7dbe0
 }
+
+QCheckBox#confPistaChk::indicator,
+QCheckBox#confCalleRodChk::indicator,
+QCheckBox#confPlatChk::indicator
+{
+    width: 37px;
+    height: 37px;
+}
+
+QCheckBox#confPistaChk::indicator:checked,
+QCheckBox#confCalleRodChk::indicator:checked,
+QCheckBox#confPlatChk::indicator:checked
+{
+    image: url(:/imagenes/imagenes/Check_mark.png)
+}
