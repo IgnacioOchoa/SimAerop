@@ -5,7 +5,9 @@
 #include <QTableView>
 #include <QGraphicsView>
 #include <QComboBox>
+#include <QVBoxLayout>
 #include <QDialog>
+#include <QDebug>
 
 namespace Ui {
 class DialogConfPista;
@@ -31,15 +33,18 @@ private:
     QLineEdit* leLargoPista;
     QLineEdit* leAnchoPista;
     QLineEdit* leNombreArchivo;
-    QLineEdit* leDireccionArchivo;
+    QLineEdit* leRutaArchivo;
     QComboBox* cbCabecera1;
     QComboBox* cbCabecera2;
     QGraphicsView* vistaPreliminar;
+    QVBoxLayout* layoutDial;
+    QLineEdit* leOrientacion;
 
 private slots:
     void dialogoAceptado();
     void dialogoCancelado();
     void poblarCabeceras();
+    void seleccionarAbrirArchivo();
 
 };
 

@@ -1,17 +1,19 @@
 #include "dialogconfpista.h"
 #include "ui_dialogconfpista.h"
 
+#include <QFileDialog>
+
 DialogConfPista::DialogConfPista(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogConfPista)
 {
     ui->setupUi(this);
     configurarWidgets();
-    poblarCabeceras();
+    //poblarCabeceras();
 
     connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
-
+    connect(botonCargar, &QPushButton::pressed, this, &DialogConfPista::seleccionarAbrirArchivo);
 
 }
 
@@ -30,10 +32,11 @@ void DialogConfPista::configurarWidgets()
     leLargoPista = ui->leLargo;
     leAnchoPista = ui->leAncho;
     leNombreArchivo = ui->leNombreArchivo;
-    leDireccionArchivo = ui->leDireccionArchivo;
-    cbCabecera1 = ui->cbCab1;
-    cbCabecera2 = ui->cbCab2;
+    leRutaArchivo = ui->leRutaArchivo;
     vistaPreliminar = ui->gvPreVisualizacion;
+    layoutDial = ui->vlDial;
+    leOrientacion = ui->leOrientacion;
+    layoutDial->setAlignment(leOrientacion,Qt::AlignCenter);
 }
 
 void DialogConfPista::dialogoAceptado()
@@ -48,7 +51,7 @@ void DialogConfPista::dialogoCancelado()
 
 void DialogConfPista::poblarCabeceras()
 {
-    for (int i=0; i<18; i++)
+    /*for (int i=0; i<18; i++)
     {
         cbCabecera1->addItem(QString::number(i).rightJustified(2,'0'));
         cbCabecera2->addItem(QString::number(i+18).rightJustified(2,'0'));
@@ -56,4 +59,14 @@ void DialogConfPista::poblarCabeceras()
 
     connect(cbCabecera1, QOverload<int>::of(&QComboBox::currentIndexChanged), cbCabecera2, &QComboBox::setCurrentIndex);
     connect(cbCabecera2, QOverload<int>::of(&QComboBox::currentIndexChanged), cbCabecera1, &QComboBox::setCurrentIndex);
+    */
+}
+
+void DialogConfPista::seleccionarAbrirArchivo()
+{
+    QString file_name = QFileDialog::getOpenFileName(this,"Seleccionar archivo");
+    QUrl direccion(file_name);
+    leNombreArchivo->setText(direccion.fileName());
+    leRutaArchivo->setText(direccion.adjusted(QUrl::RemoveFilename).url());
+    leRutaArchivo->setCursorPosition(0);
 }
