@@ -17,6 +17,14 @@ public:
 
 private:
     Ui::DialogConfPlataformas *ui;
+    void configurarWidgets();
+
+    QPushButton* botonAceptar;
+    QPushButton* botonCancelar;
+
+private slots:
+    void dialogoAceptado();
+    void dialogoCancelado();
 };
 
 #endif // DIALOGCONFPLATAFORMAS_H
