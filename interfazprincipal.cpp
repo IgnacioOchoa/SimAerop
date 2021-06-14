@@ -82,11 +82,9 @@ void InterfazPrincipal::crearPista()
     QList<Rodaje> rod = pistaParser.cargarRodaje("miPistaNueva.txt");
     QList<Plataforma> plat = pistaParser.cargarPlataforma("miPistaNueva.txt");
 
-    qInfo() << "Las cosas que se cargaron\nPista: " << "  largo = " << pis.largo << "   ancho = " << pis.ancho;
-    qInfo() << "Rodaje: " << "cabecera = " << rod[0].cabecera << "  posicion = " << rod[0].posicion
-            << "   angulo: " << rod[0].angulo;
-    qInfo() << "Plataforma: " << " coordPerimetro = " << plat[0].coordPerimetro << "\ncoordParking = "
-            << plat[0].coordParking;
+    qInfo() << pis;
+    qInfo() << rod[0];
+    qInfo() << plat[0];
 
     //qInfo() << "Current path: " << QDir::currentPath();
 
