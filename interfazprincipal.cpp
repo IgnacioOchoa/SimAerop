@@ -5,6 +5,7 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::interfazPrincipal)
     , escenaPista(new customGraphicsScene(this))
+    , pistaParser()
 {
     ui->setupUi(this);
     setWindowTitle("SimAerop");
@@ -77,9 +78,22 @@ void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
 
 void InterfazPrincipal::crearPista()
 {
-    pista = Pista{2000,100,0,0};
-    ui->lbValorAncho->setText(QString::number(pista.ancho) + " m");
-    ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");
+    Pista pis = pistaParser.cargarPista("miPistaNueva.txt");
+    QList<Rodaje> rod = pistaParser.cargarRodaje("miPistaNueva.txt");
+    QList<Plataforma> plat = pistaParser.cargarPlataforma("miPistaNueva.txt");
+
+    qInfo() << "Las cosas que se cargaron\nPista: " << "  largo = " << pis.largo << "   ancho = " << pis.ancho;
+    qInfo() << "Rodaje: " << "cabecera = " << rod[0].cabecera << "  posicion = " << rod[0].posicion
+            << "   angulo: " << rod[0].angulo;
+    qInfo() << "Plataforma: " << " coordPerimetro = " << plat[0].coordPerimetro << "\ncoordParking = "
+            << plat[0].coordParking;
+
+    //qInfo() << "Current path: " << QDir::currentPath();
+
+    ui->lbValorAncho->setText(QString::number(pis.ancho) + " m");
+    ui->lbValorLongitud->setText(QString::number(pis.largo) + " m");
+
+    pista = pis;
 
     emit pistaCambiada();
 }

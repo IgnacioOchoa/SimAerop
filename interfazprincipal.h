@@ -8,11 +8,13 @@
 #include "dialogconfpista.h"
 #include "dialogconfrodaje.h"
 #include "dialogconfplataformas.h"
+#include "pistaparser.h"
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>
 #include <QDebug>
 #include <QString>
+#include <QDir>
 
 class QAction;
 class QPushButton;
@@ -53,6 +55,8 @@ private:
     QMenu* menuAjustes;
     QMenu* menuExportar;
     QMenu* menuAyuda;
+
+    PistaParser pistaParser;
 
     Pista pista;
 

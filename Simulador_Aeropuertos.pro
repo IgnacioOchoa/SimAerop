@@ -17,7 +17,8 @@ SOURCES += \
     editorpista.cpp \
     interfazprincipal.cpp \
     kernel.cpp \
-    main.cpp
+    main.cpp \
+    pistaparser.cpp
 
 HEADERS += \
     customgraphicsscene.h \
@@ -28,7 +29,8 @@ HEADERS += \
     editorpista.h \
     elementosaerop.h \
     interfazprincipal.h \
-    kernel.h
+    kernel.h \
+    pistaparser.h
 
 FORMS += \
     dialogconfpista.ui \
