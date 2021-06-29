@@ -78,20 +78,21 @@ void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
 
 void InterfazPrincipal::crearPista()
 {
-    Pista pis = pistaParser.cargarPista("miPistaNueva.txt");
-    QList<Rodaje> rod = pistaParser.cargarRodaje("miPistaNueva.txt");
-    QList<Plataforma> plat = pistaParser.cargarPlataforma("miPistaNueva.txt");
+    //Pista pis = pistaParser.cargarPista("miPistaNueva.json");
+    //QList<Rodaje> rod = pistaParser.cargarRodaje("miPistaNueva.json");
+    //QList<Plataforma> plat = pistaParser.cargarPlataforma("miPistaNueva.json");
 
-    qInfo() << pis;
-    qInfo() << rod[0];
-    qInfo() << plat[0];
+    //qInfo() << pis;
+    //qInfo() << rod[0];
+    //qInfo() << plat[0];
 
     //qInfo() << "Current path: " << QDir::currentPath();
 
-    ui->lbValorAncho->setText(QString::number(pis.ancho) + " m");
-    ui->lbValorLongitud->setText(QString::number(pis.largo) + " m");
+    //ui->lbValorAncho->setText(QString::number(pis.ancho) + " m");
+    //ui->lbValorLongitud->setText(QString::number(pis.largo) + " m");
 
-    pista = pis;
+    //pista = pis;
+    pista = {2000,100,0,"",""};
 
     emit pistaCambiada();
 }

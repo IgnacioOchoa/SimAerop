@@ -5,7 +5,8 @@
 
 DialogConfPista::DialogConfPista(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DialogConfPista)
+    ui(new Ui::DialogConfPista),
+    escenaPreliminar(new QGraphicsScene)
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -14,6 +15,17 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
     connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
     connect(botonCargar, &QPushButton::pressed, this, &DialogConfPista::seleccionarAbrirArchivo);
+
+    connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+        leUmbral1->setEnabled(state);
+        lbUmbral1->setEnabled(state);
+    });
+    connect(cbUmbral2, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+        leUmbral2->setEnabled(state);
+        lbUmbral2->setEnabled(state);
+    });
 
 }
 
@@ -37,6 +49,24 @@ void DialogConfPista::configurarWidgets()
     layoutDial = ui->vlDial;
     leOrientacion = ui->leOrientacion;
     layoutDial->setAlignment(leOrientacion,Qt::AlignCenter);
+    cbUmbral1 = ui->chkUmbral1;
+    cbUmbral2 = ui->chkUmbral2;
+    leUmbral1 = ui->leUmbral1;
+    leUmbral2 = ui->leUmbral2;
+    lbUmbral1 = ui->lbUmbral1;
+    lbUmbral2 = ui->lbUmbral2;
+
+    leUmbral1->setEnabled(false);
+    leUmbral2->setEnabled(false);
+    lbUmbral1->setEnabled(false);
+    lbUmbral2->setEnabled(false);
+}
+
+void DialogConfPista::poblarDatos()
+{
+    leLargoPista->setText(QString::number(pista.largo));
+    leAnchoPista->setText(QString::number(pista.ancho));
+    leOrientacion->setText(QString::number(pista.orientacion));
 }
 
 void DialogConfPista::dialogoAceptado()
@@ -64,9 +94,17 @@ void DialogConfPista::poblarCabeceras()
 
 void DialogConfPista::seleccionarAbrirArchivo()
 {
-    QString file_name = QFileDialog::getOpenFileName(this,"Seleccionar archivo");
+    QString file_name = QFileDialog::getOpenFileName(this,"Seleccionar archivo",QDir::currentPath(),"(*.json)");
     QUrl direccion(file_name);
-    leNombreArchivo->setText(direccion.fileName());
+    QString nombreArchivo = direccion.fileName();
+    int lastPoint = nombreArchivo.lastIndexOf(".");
+    QString fileNameNoExt = nombreArchivo.left(lastPoint);
+    leNombreArchivo->setText(fileNameNoExt);
     leRutaArchivo->setText(direccion.adjusted(QUrl::RemoveFilename).url());
     leRutaArchivo->setCursorPosition(0);
+
+    PistaParser pistaParser;
+    pista = pistaParser.cargarPista(file_name);
+
+    poblarDatos();
 }

@@ -4,10 +4,16 @@
 #include <QLineEdit>
 #include <QTableView>
 #include <QGraphicsView>
+#include <QGraphicsScene>
 #include <QComboBox>
 #include <QVBoxLayout>
+#include <QCheckBox>
 #include <QDialog>
 #include <QDebug>
+#include <QDir>
+#include <QLabel>
+#include "pistaparser.h"
+#include "elementosaerop.h"
 
 namespace Ui {
 class DialogConfPista;
@@ -24,6 +30,7 @@ public:
 private:
     Ui::DialogConfPista *ui;
     void configurarWidgets();
+    void poblarDatos();
 
     QPushButton* botonAceptar;
     QPushButton* botonCancelar;
@@ -39,6 +46,16 @@ private:
     QGraphicsView* vistaPreliminar;
     QVBoxLayout* layoutDial;
     QLineEdit* leOrientacion;
+    QLineEdit* leUmbral1;
+    QLineEdit* leUmbral2;
+    QLabel* lbUmbral1;
+    QLabel* lbUmbral2;
+    QGraphicsScene* escenaPreliminar;
+
+    QCheckBox* cbUmbral1;
+    QCheckBox* cbUmbral2;
+
+    Pista pista;
 
 private slots:
     void dialogoAceptado();
