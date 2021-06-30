@@ -5,6 +5,7 @@
 #include <QTableView>
 #include <QGraphicsView>
 #include <QGraphicsScene>
+#include <QGraphicsRectItem>
 #include <QComboBox>
 #include <QVBoxLayout>
 #include <QCheckBox>
@@ -22,6 +23,7 @@ class DialogConfPista;
 class DialogConfPista : public QDialog
 {
     Q_OBJECT
+    enum Orientacion {HOR, VER};
 
 public:
     explicit DialogConfPista(QWidget *parent = nullptr);
@@ -31,6 +33,9 @@ private:
     Ui::DialogConfPista *ui;
     void configurarWidgets();
     void poblarDatos();
+    void dibujarPista();
+    void ajustarContenido();
+    void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
 
     QPushButton* botonAceptar;
     QPushButton* botonCancelar;

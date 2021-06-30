@@ -12,6 +12,9 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
     configurarWidgets();
     //poblarCabeceras();
 
+    vistaPreliminar->setScene(escenaPreliminar);
+    escenaPreliminar->setBackgroundBrush(QBrush("#f5f0f3"));
+
     connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
     connect(botonCargar, &QPushButton::pressed, this, &DialogConfPista::seleccionarAbrirArchivo);
@@ -69,6 +72,58 @@ void DialogConfPista::poblarDatos()
     leOrientacion->setText(QString::number(pista.orientacion));
 }
 
+void DialogConfPista::dibujarPista()
+{
+    escenaPreliminar->clear();
+    QPen borde;
+    borde.setWidth(2);
+    borde.setCosmetic(true);
+    QGraphicsRectItem* rectItm = escenaPreliminar->addRect(QRect(-pista.largo/2,-pista.ancho/2,
+                                    pista.largo,pista.ancho),borde);
+    ajustarContenido();
+
+    QPointF p1 = {rectItm->rect().x(),rectItm->rect().y()+rectItm->rect().height()};
+    QPointF p2 = {rectItm->rect().x()+rectItm->rect().width(),
+                  rectItm->rect().y()+rectItm->rect().height()};
+    graficarCota(p1,p2,pista.ancho,HOR);
+}
+
+void DialogConfPista::ajustarContenido()
+{
+    QRectF r1 = escenaPreliminar->itemsBoundingRect();
+    QRectF r2 = vistaPreliminar->mapToScene(vistaPreliminar->viewport()->rect()).boundingRect();
+
+    float cociente1 = r2.x()/r1.x();
+    float cociente2 = r2.y()/r1.y();
+    float escala = qMin(cociente1,cociente2)*0.9;
+
+    vistaPreliminar->scale(escala,escala);
+}
+
+void DialogConfPista::graficarCota(QPointF p1, QPointF p2, float distancia, DialogConfPista::Orientacion)
+{
+    QPen penCota;
+    QBrush brushFlecha("black");
+    float posicionInterseccion = 0.8;
+    penCota.setWidth(1);
+    penCota.setCosmetic(true);
+    QPointF pInter1 = p1+QPointF(0,distancia*posicionInterseccion);
+    QPointF pInter2 = p2+QPointF(0,distancia*posicionInterseccion);
+    escenaPreliminar->addLine(QLineF(p1,p1+QPointF(0,distancia)),penCota);
+    escenaPreliminar->addLine(QLineF(p2,p2+QPointF(0,distancia)),penCota);
+    escenaPreliminar->addLine(QLineF(pInter1,pInter2),penCota);
+
+    QVector<QPointF> v1 = {pInter1, pInter1+QPointF(20,-10), pInter1+QPointF(20,10)};
+    QVector<QPointF> v2 = {pInter2, pInter2+QPointF(-20,-10), pInter2+QPointF(-20,10)};
+
+    escenaPreliminar->addPolygon(QPolygonF(v1),penCota, brushFlecha);
+    escenaPreliminar->addPolygon(QPolygonF(v2),penCota, brushFlecha);
+
+    QGraphicsTextItem* txt1 = escenaPreliminar->addText(QString::number(pista.largo), QFont("Arial",30));
+    txt1->setPos((pInter1+pInter2)/2 + QPointF(txt1->textWidth()*5,20));
+
+}
+
 void DialogConfPista::dialogoAceptado()
 {
     this->close();
@@ -107,4 +162,5 @@ void DialogConfPista::seleccionarAbrirArchivo()
     pista = pistaParser.cargarPista(file_name);
 
     poblarDatos();
+    dibujarPista();
 }
