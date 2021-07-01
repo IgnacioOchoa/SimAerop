@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
 
     Kernel* k = new Kernel();
     InterfazPrincipal w(k);
-    w.setMinimumSize(1400,900);
+    w.setMinimumSize(1280,720);
     w.show();
     return a.exec();
 }

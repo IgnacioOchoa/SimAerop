@@ -6,6 +6,8 @@
 #include "customgraphicsview.h"
 #include "customgraphicsscene.h"
 #include "dialogconfpista.h"
+#include "aeronave.h"
+#include <QXmlStreamReader>
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>
@@ -58,6 +60,27 @@ private slots:
     void botonPrincipalSeleccionado(bool checked);
     void validarDatosPista();
 
+    void on_botonCargarFlota_clicked();
+
+    void on_botonGuardarFlota_clicked();
+
+    void on_pushButton_4_clicked();
+
+    void on_botonCargarAcft_triggered(QAction *arg1);
+
+    void on_comboBoxAcft_activated(const QString &arg1);
+
+private:
+    enum{
+        ID,
+        NOMBRE,
+        ENVERGADURA,
+        APPSPD,
+        LDA,
+        MTOW,
+        PORCENTAJE,
+    };
+    void agregaAeronave(const Aeronave &aeronave);
 };
 
 #endif // INTERFAZPRINCIPAL_H
