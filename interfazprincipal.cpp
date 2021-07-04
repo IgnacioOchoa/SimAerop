@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QDomDocument>
 #include <QDomElement>
+#include <QDebug>
 
 InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     : QMainWindow(parent)
@@ -95,6 +96,8 @@ void InterfazPrincipal::validarDatosPista()
 
 void InterfazPrincipal::on_botonCargarFlota_clicked()
 {
+    ui->tablaFlota->clearContents();
+    ui->tablaFlota->setRowCount(0);
     auto filename = QFileDialog::getOpenFileName(this, "Abrir datos", QDir::rootPath(), "XML file (*.xml)");
     if (filename.isEmpty()){
         return;
@@ -201,5 +204,8 @@ void InterfazPrincipal::agregaAeronave(const Aeronave &aeronave)
     ui->tablaFlota->setItem(row, LDA, new QTableWidgetItem(aeronave.getLda()));
     ui->tablaFlota->setItem(row, MTOW, new QTableWidgetItem(aeronave.getMtow()));
     ui->tablaFlota->setItem(row, PORCENTAJE, new QTableWidgetItem(aeronave.getPerc()));
-
+    for (int i = 0; i < ui->tablaFlota->columnCount() - 1; i++) {
+        QTableWidgetItem* pItem = ui->tablaFlota->item(row, i);
+        pItem->setFlags(pItem->flags() & (~Qt::ItemIsEditable));
+    }
 }
