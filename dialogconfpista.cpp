@@ -1,17 +1,34 @@
 #include "dialogconfpista.h"
 #include "ui_dialogconfpista.h"
 
+#include <QFileDialog>
+
 DialogConfPista::DialogConfPista(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DialogConfPista)
+    ui(new Ui::DialogConfPista),
+    escenaPreliminar(new QGraphicsScene)
 {
     ui->setupUi(this);
     configurarWidgets();
-    poblarCabeceras();
+    //poblarCabeceras();
+
+    vistaPreliminar->setScene(escenaPreliminar);
+    escenaPreliminar->setBackgroundBrush(QBrush("#f5f0f3"));
 
     connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
+    connect(botonCargar, &QPushButton::pressed, this, &DialogConfPista::seleccionarAbrirArchivo);
 
+    connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+        leUmbral1->setEnabled(state);
+        lbUmbral1->setEnabled(state);
+    });
+    connect(cbUmbral2, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+        leUmbral2->setEnabled(state);
+        lbUmbral2->setEnabled(state);
+    });
 
 }
 
@@ -30,11 +47,81 @@ void DialogConfPista::configurarWidgets()
     leLargoPista = ui->leLargo;
     leAnchoPista = ui->leAncho;
     leNombreArchivo = ui->leNombreArchivo;
-    leDireccionArchivo = ui->leDireccionArchivo;
-    cbCabecera1 = ui->cbCab1;
-    cbCabecera2 = ui->cbCab2;
-    tablaCallesRodaje = ui->tvCallesRodaje;
+    leRutaArchivo = ui->leRutaArchivo;
     vistaPreliminar = ui->gvPreVisualizacion;
+    layoutDial = ui->vlDial;
+    leOrientacion = ui->leOrientacion;
+    layoutDial->setAlignment(leOrientacion,Qt::AlignCenter);
+    cbUmbral1 = ui->chkUmbral1;
+    cbUmbral2 = ui->chkUmbral2;
+    leUmbral1 = ui->leUmbral1;
+    leUmbral2 = ui->leUmbral2;
+    lbUmbral1 = ui->lbUmbral1;
+    lbUmbral2 = ui->lbUmbral2;
+
+    leUmbral1->setEnabled(false);
+    leUmbral2->setEnabled(false);
+    lbUmbral1->setEnabled(false);
+    lbUmbral2->setEnabled(false);
+}
+
+void DialogConfPista::poblarDatos()
+{
+    leLargoPista->setText(QString::number(pista.largo));
+    leAnchoPista->setText(QString::number(pista.ancho));
+    leOrientacion->setText(QString::number(pista.orientacion));
+}
+
+void DialogConfPista::dibujarPista()
+{
+    escenaPreliminar->clear();
+    QPen borde;
+    borde.setWidth(2);
+    borde.setCosmetic(true);
+    QGraphicsRectItem* rectItm = escenaPreliminar->addRect(QRect(-pista.largo/2,-pista.ancho/2,
+                                    pista.largo,pista.ancho),borde);
+    ajustarContenido();
+
+    QPointF p1 = {rectItm->rect().x(),rectItm->rect().y()+rectItm->rect().height()};
+    QPointF p2 = {rectItm->rect().x()+rectItm->rect().width(),
+                  rectItm->rect().y()+rectItm->rect().height()};
+    graficarCota(p1,p2,pista.ancho,HOR);
+}
+
+void DialogConfPista::ajustarContenido()
+{
+    QRectF r1 = escenaPreliminar->itemsBoundingRect();
+    QRectF r2 = vistaPreliminar->mapToScene(vistaPreliminar->viewport()->rect()).boundingRect();
+
+    float cociente1 = r2.x()/r1.x();
+    float cociente2 = r2.y()/r1.y();
+    float escala = qMin(cociente1,cociente2)*0.9;
+
+    vistaPreliminar->scale(escala,escala);
+}
+
+void DialogConfPista::graficarCota(QPointF p1, QPointF p2, float distancia, DialogConfPista::Orientacion)
+{
+    QPen penCota;
+    QBrush brushFlecha("black");
+    float posicionInterseccion = 0.8;
+    penCota.setWidth(1);
+    penCota.setCosmetic(true);
+    QPointF pInter1 = p1+QPointF(0,distancia*posicionInterseccion);
+    QPointF pInter2 = p2+QPointF(0,distancia*posicionInterseccion);
+    escenaPreliminar->addLine(QLineF(p1,p1+QPointF(0,distancia)),penCota);
+    escenaPreliminar->addLine(QLineF(p2,p2+QPointF(0,distancia)),penCota);
+    escenaPreliminar->addLine(QLineF(pInter1,pInter2),penCota);
+
+    QVector<QPointF> v1 = {pInter1, pInter1+QPointF(20,-10), pInter1+QPointF(20,10)};
+    QVector<QPointF> v2 = {pInter2, pInter2+QPointF(-20,-10), pInter2+QPointF(-20,10)};
+
+    escenaPreliminar->addPolygon(QPolygonF(v1),penCota, brushFlecha);
+    escenaPreliminar->addPolygon(QPolygonF(v2),penCota, brushFlecha);
+
+    QGraphicsTextItem* txt1 = escenaPreliminar->addText(QString::number(pista.largo), QFont("Arial",30));
+    txt1->setPos((pInter1+pInter2)/2 + QPointF(txt1->textWidth()*5,20));
+
 }
 
 void DialogConfPista::dialogoAceptado()
@@ -49,7 +136,7 @@ void DialogConfPista::dialogoCancelado()
 
 void DialogConfPista::poblarCabeceras()
 {
-    for (int i=0; i<18; i++)
+    /*for (int i=0; i<18; i++)
     {
         cbCabecera1->addItem(QString::number(i).rightJustified(2,'0'));
         cbCabecera2->addItem(QString::number(i+18).rightJustified(2,'0'));
@@ -57,4 +144,23 @@ void DialogConfPista::poblarCabeceras()
 
     connect(cbCabecera1, QOverload<int>::of(&QComboBox::currentIndexChanged), cbCabecera2, &QComboBox::setCurrentIndex);
     connect(cbCabecera2, QOverload<int>::of(&QComboBox::currentIndexChanged), cbCabecera1, &QComboBox::setCurrentIndex);
+    */
+}
+
+void DialogConfPista::seleccionarAbrirArchivo()
+{
+    QString file_name = QFileDialog::getOpenFileName(this,"Seleccionar archivo",QDir::currentPath(),"(*.json)");
+    QUrl direccion(file_name);
+    QString nombreArchivo = direccion.fileName();
+    int lastPoint = nombreArchivo.lastIndexOf(".");
+    QString fileNameNoExt = nombreArchivo.left(lastPoint);
+    leNombreArchivo->setText(fileNameNoExt);
+    leRutaArchivo->setText(direccion.adjusted(QUrl::RemoveFilename).url());
+    leRutaArchivo->setCursorPosition(0);
+
+    PistaParser pistaParser;
+    pista = pistaParser.cargarPista(file_name);
+
+    poblarDatos();
+    dibujarPista();
 }

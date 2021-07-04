@@ -10,6 +10,7 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::interfazPrincipal)
     , escenaPista(new customGraphicsScene(this))
+    , pistaParser()
 {
     ui->setupUi(this);
     setWindowTitle("SimAerop");
@@ -45,15 +46,16 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     btnGroup->setExclusive(true);
     listaBotones[0]->setChecked(true);
 
-    ui->lineEditLongitudPista->setText("2000");
-    ui->lineEditAnchoPista->setText("100");
-
     DialogConfPista* dialogConfPista = new DialogConfPista;
+    DialogConfRodaje* dialogConfRodaje = new DialogConfRodaje;
+    DialogConfPlataformas* dialogConfPlataformas = new DialogConfPlataformas;
 
-    connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::validarDatosPista);
+    connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::crearPista);
     connect(this, SIGNAL(pistaCambiada()), k, SLOT(graficarPista()));
 
     connect(ui->pbConfigurarPista, &QAbstractButton::pressed, [dialogConfPista](){dialogConfPista->show();});
+    connect(ui->pbConfigurarCallesRodaje, &QAbstractButton::pressed, [dialogConfRodaje](){dialogConfRodaje->show();});
+    connect(ui->pbConfigurarPlataformas, &QAbstractButton::pressed, [dialogConfPlataformas](){dialogConfPlataformas->show();});
 
 }
 
@@ -84,12 +86,23 @@ void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
     }
 }
 
-void InterfazPrincipal::validarDatosPista()
+void InterfazPrincipal::crearPista()
 {
-    int largo = ui->lineEditLongitudPista->text().toInt();
-    int ancho = ui->lineEditAnchoPista->text().toInt();
+    //Pista pis = pistaParser.cargarPista("miPistaNueva.json");
+    //QList<Rodaje> rod = pistaParser.cargarRodaje("miPistaNueva.json");
+    //QList<Plataforma> plat = pistaParser.cargarPlataforma("miPistaNueva.json");
 
-    pista = Pista{largo,ancho,0,0};
+    //qInfo() << pis;
+    //qInfo() << rod[0];
+    //qInfo() << plat[0];
+
+    //qInfo() << "Current path: " << QDir::currentPath();
+
+    //ui->lbValorAncho->setText(QString::number(pis.ancho) + " m");
+    //ui->lbValorLongitud->setText(QString::number(pis.largo) + " m");
+
+    //pista = pis;
+    pista = {2000,100,0,"",""};
 
     emit pistaCambiada();
 }

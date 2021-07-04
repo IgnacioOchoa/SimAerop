@@ -8,11 +8,15 @@
 #include "dialogconfpista.h"
 #include "aeronave.h"
 #include <QXmlStreamReader>
+#include "dialogconfrodaje.h"
+#include "dialogconfplataformas.h"
+#include "pistaparser.h"
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>
 #include <QDebug>
 #include <QString>
+#include <QDir>
 
 class QAction;
 class QPushButton;
@@ -54,11 +58,13 @@ private:
     QMenu* menuExportar;
     QMenu* menuAyuda;
 
+    PistaParser pistaParser;
+
     Pista pista;
 
 private slots:
     void botonPrincipalSeleccionado(bool checked);
-    void validarDatosPista();
+    void crearPista();
 
     void on_botonCargarFlota_clicked();
 

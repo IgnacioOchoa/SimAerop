@@ -13,23 +13,31 @@ SOURCES += \
     customgraphicsscene.cpp \
     customgraphicsview.cpp \
     dialogconfpista.cpp \
+    dialogconfplataformas.cpp \
+    dialogconfrodaje.cpp \
     editorpista.cpp \
     interfazprincipal.cpp \
     kernel.cpp \
-    main.cpp
+    main.cpp \
+    pistaparser.cpp
 
 HEADERS += \
     aeronave.h \
     customgraphicsscene.h \
     customgraphicsview.h \
     dialogconfpista.h \
+    dialogconfplataformas.h \
+    dialogconfrodaje.h \
     editorpista.h \
     elementosaerop.h \
     interfazprincipal.h \
-    kernel.h
+    kernel.h \
+    pistaparser.h
 
 FORMS += \
     dialogconfpista.ui \
+    dialogconfplataformas.ui \
+    dialogconfrodaje.ui \
     interfazprincipal.ui
 
 # Default rules for deployment.

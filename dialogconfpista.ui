@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
     <widget class="QLabel" name="tituloConfPista">
      <property name="text">
@@ -36,17 +36,20 @@
         </widget>
        </item>
        <item row="0" column="1">
-        <widget class="QLineEdit" name="leLargo"/>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="lbCab1">
-         <property name="text">
-          <string>Cabecera 1</string>
+        <widget class="QLineEdit" name="leLargo">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
-       </item>
-       <item row="0" column="3">
-        <widget class="QComboBox" name="cbCab1"/>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="lbAncho">
@@ -56,17 +59,66 @@
         </widget>
        </item>
        <item row="1" column="1">
-        <widget class="QLineEdit" name="leAncho"/>
-       </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="lbCab2">
-         <property name="text">
-          <string>Cabecera 2</string>
+        <widget class="QLineEdit" name="leAncho">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>100</width>
+           <height>16777215</height>
+          </size>
          </property>
         </widget>
        </item>
-       <item row="1" column="3">
-        <widget class="QComboBox" name="cbCab2"/>
+       <item row="2" column="0" colspan="2">
+        <widget class="QLabel" name="label_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Orientación</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="vlDial">
+       <item>
+        <widget class="QDial" name="dial">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="leOrientacion">
+         <property name="maximumSize">
+          <size>
+           <width>60</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </item>
@@ -96,12 +148,12 @@
         <item row="1" column="0">
          <widget class="QLabel" name="lbDireccion">
           <property name="text">
-           <string>Dirección</string>
+           <string>Ruta</string>
           </property>
          </widget>
         </item>
         <item row="1" column="1">
-         <widget class="QLineEdit" name="leDireccionArchivo"/>
+         <widget class="QLineEdit" name="leRutaArchivo"/>
         </item>
         <item row="1" column="2">
          <widget class="QPushButton" name="pbGuardar">
@@ -116,14 +168,87 @@
     </layout>
    </item>
    <item>
-    <widget class="QLabel" name="lbCallesRodaje">
-     <property name="text">
-      <string>Calles de rodaje</string>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>Detalles de pista</string>
      </property>
+     <layout class="QFormLayout" name="formLayout">
+      <item row="0" column="0">
+       <widget class="QCheckBox" name="chkUmbral1">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Umbral 1 desplazado</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_4">
+        <item>
+         <widget class="QLabel" name="lbUmbral1">
+          <property name="text">
+           <string>Desplazamiento</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="buddy">
+           <cstring>leUmbral1</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="leUmbral1">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item row="1" column="0">
+       <widget class="QCheckBox" name="chkUmbral2">
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="text">
+         <string>Umbral 2 desplazado</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="lbUmbral2">
+          <property name="text">
+           <string>Desplazamiento</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+          </property>
+          <property name="buddy">
+           <cstring>leUmbral2</cstring>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="leUmbral2">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
     </widget>
-   </item>
-   <item>
-    <widget class="QTableView" name="tvCallesRodaje"/>
    </item>
    <item>
     <widget class="QLabel" name="lbPreVisualizacion">
