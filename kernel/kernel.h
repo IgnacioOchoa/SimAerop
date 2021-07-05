@@ -3,9 +3,9 @@
 
 #include <QtCore>
 
-#include "editorpista.h"
-#include "interfazprincipal.h"
-#include "elementosaerop.h"
+#include "../interfaz/aeropuerto/editorpista.h"
+#include "interfaz/interfazprincipal.h"
+#include "../estructuras-datos/elementosaerop.h"
 
 class InterfazPrincipal;
 //Q_DECLARE_METATYPE(Pista)

@@ -7,7 +7,7 @@
 #include <QGraphicsItem>
 #include <QDebug>
 
-#include "elementosaerop.h"
+#include "../../estructuras-datos/elementosaerop.h"
 
 //Q_DECLARE_METATYPE(Pista)
 

@@ -1,16 +1,16 @@
 #ifndef INTERFAZPRINCIPAL_H
 #define INTERFAZPRINCIPAL_H
 
-#include "kernel.h"
-#include "elementosaerop.h"
-#include "customgraphicsview.h"
-#include "customgraphicsscene.h"
-#include "dialogconfpista.h"
-#include "aeronave.h"
+#include "kernel/kernel.h"
+#include "../estructuras-datos/elementosaerop.h"
+#include "aeropuerto/customgraphicsview.h"
+#include "aeropuerto/customgraphicsscene.h"
+#include "interfaz/aeropuerto/dialogconfpista.h"
+#include "aeronaves/aeronave.h"
 #include <QXmlStreamReader>
-#include "dialogconfrodaje.h"
-#include "dialogconfplataformas.h"
-#include "pistaparser.h"
+#include "interfaz/aeropuerto/dialogconfrodaje.h"
+#include "interfaz/aeropuerto/dialogconfplataformas.h"
+#include "input-output/pistaparser.h"
 #include <QMainWindow>
 #include <QButtonGroup>
 #include <QListWidgetItem>

@@ -13,8 +13,8 @@
 #include <QDebug>
 #include <QDir>
 #include <QLabel>
-#include "pistaparser.h"
-#include "elementosaerop.h"
+#include "../../input-output/pistaparser.h"
+#include "../../estructuras-datos/elementosaerop.h"
 
 namespace Ui {
 class DialogConfPista;

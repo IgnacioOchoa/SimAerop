@@ -1,7 +1,7 @@
 #ifndef PISTAPARSER_H
 #define PISTAPARSER_H
 
-#include "elementosaerop.h"
+#include "../estructuras-datos/elementosaerop.h"
 #include <QVariant>
 #include <QVariantMap>
 #include <QVariantList>
