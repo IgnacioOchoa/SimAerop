@@ -1,5 +1,5 @@
-#include "interfazprincipal.h"
-#include "kernel.h"
+#include "interfaz/interfazprincipal.h"
+#include "kernel/kernel.h"
 
 #include <QFile>
 #include <QApplication>
