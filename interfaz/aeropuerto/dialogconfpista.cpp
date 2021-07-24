@@ -18,6 +18,8 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
     connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
     connect(botonCargar, &QPushButton::pressed, this, &DialogConfPista::seleccionarAbrirArchivo);
+    connect(botonGuardar, &QPushButton::pressed, this, &DialogConfPista::selccionarGuardarArchivo);
+    connect(botonReset, &QPushButton::pressed, this, &DialogConfPista::resetDialogoPista);
 
     connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
             [this](int state){
@@ -43,11 +45,11 @@ void DialogConfPista::configurarWidgets()
     botonCancelar = ui->pbCancelar;
     botonCargar = ui->pbCargar;
     botonGuardar = ui->pbGuardar;
+    botonReset = ui->pbReset;
     botonOpAvanzadas = ui->pbOpcionesAvanzadas;
     leLargoPista = ui->leLargo;
     leAnchoPista = ui->leAncho;
     leNombreArchivo = ui->leNombreArchivo;
-    leRutaArchivo = ui->leRutaArchivo;
     vistaPreliminar = ui->gvPreVisualizacion;
     layoutDial = ui->vlDial;
     leOrientacion = ui->leOrientacion;
@@ -150,17 +152,43 @@ void DialogConfPista::poblarCabeceras()
 void DialogConfPista::seleccionarAbrirArchivo()
 {
     QString file_name = QFileDialog::getOpenFileName(this,"Seleccionar archivo",QDir::currentPath(),"(*.json)");
+
+    if(file_name.isEmpty()) return;
+
     QUrl direccion(file_name);
     QString nombreArchivo = direccion.fileName();
     int lastPoint = nombreArchivo.lastIndexOf(".");
     QString fileNameNoExt = nombreArchivo.left(lastPoint);
     leNombreArchivo->setText(fileNameNoExt);
-    leRutaArchivo->setText(direccion.adjusted(QUrl::RemoveFilename).url());
-    leRutaArchivo->setCursorPosition(0);
 
     PistaParser pistaParser;
     pista = pistaParser.cargarPista(file_name);
 
     poblarDatos();
     dibujarPista();
+}
+
+void DialogConfPista::selccionarGuardarArchivo()
+{
+    QString nombrePista;
+    if (leNombreArchivo->text().isEmpty())
+        nombrePista = "miNuevaPista";
+    else
+        nombrePista = leNombreArchivo->text();
+
+    QString file_name = QDir::currentPath() + "/" + nombrePista + ".json";
+    file_name = QFileDialog::getSaveFileName(this,"Guardar archivo", file_name,"(*.json)");
+    if(file_name.isEmpty()) return;
+
+
+    PistaParser pistaParser;
+    pistaParser.guardarPista(file_name,pista);
+}
+
+void DialogConfPista::resetDialogoPista()
+{
+    escenaPreliminar->clear();
+    leNombreArchivo->clear();
+    leLargoPista->clear();
+    leAnchoPista->clear();
 }

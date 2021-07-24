@@ -41,6 +41,7 @@ private:
     QPushButton* botonCancelar;
     QPushButton* botonCargar;
     QPushButton* botonGuardar;
+    QPushButton* botonReset;
     QPushButton* botonOpAvanzadas;
     QLineEdit* leLargoPista;
     QLineEdit* leAnchoPista;
@@ -67,6 +68,9 @@ private slots:
     void dialogoCancelado();
     void poblarCabeceras();
     void seleccionarAbrirArchivo();
+    void selccionarGuardarArchivo();
+    void resetDialogoPista();
+
 };
 
 #endif // DIALOGCONFPISTA_H
