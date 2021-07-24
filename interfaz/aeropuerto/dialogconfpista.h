@@ -38,6 +38,7 @@ private:
     void dibujarPista();
     void ajustarContenido();
     void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
+    void datosModificados();
     bool datosCompletos();
 
     QPushButton* botonAceptar;

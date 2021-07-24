@@ -322,6 +322,24 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>leLargo</tabstop>
+  <tabstop>leAncho</tabstop>
+  <tabstop>leOrientacion</tabstop>
+  <tabstop>chkUmbral1</tabstop>
+  <tabstop>chkUmbral2</tabstop>
+  <tabstop>gvPreVisualizacion</tabstop>
+  <tabstop>pbOpcionesAvanzadas</tabstop>
+  <tabstop>pbAceptar</tabstop>
+  <tabstop>pbCancelar</tabstop>
+  <tabstop>leNombreArchivo</tabstop>
+  <tabstop>pbCargar</tabstop>
+  <tabstop>pbGuardar</tabstop>
+  <tabstop>pbReset</tabstop>
+  <tabstop>leUmbral1</tabstop>
+  <tabstop>leUmbral2</tabstop>
+  <tabstop>dial</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

@@ -21,6 +21,10 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
     connect(botonGuardar, &QPushButton::pressed, this, &DialogConfPista::seleccionarGuardarArchivo);
     connect(botonReset, &QPushButton::pressed, this, &DialogConfPista::resetDialogoPista);
 
+    connect(leLargoPista, &QLineEdit::editingFinished, this, &DialogConfPista::datosModificados);
+    connect(leAnchoPista, &QLineEdit::editingFinished, this, &DialogConfPista::datosModificados);
+    connect(leOrientacion, &QLineEdit::editingFinished, this, &DialogConfPista::datosModificados);
+
     connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
             [this](int state){
         leUmbral1->setEnabled(state);
@@ -139,6 +143,16 @@ void DialogConfPista::graficarCota(QPointF p1, QPointF p2, float distancia, Dial
     QGraphicsTextItem* txt1 = escenaPreliminar->addText(QString::number(pista.largo), QFont("Arial",30));
     txt1->setPos((pInter1+pInter2)/2 + QPointF(txt1->textWidth()*5,20));
 
+}
+
+void DialogConfPista::datosModificados()
+{
+    qInfo() << "Se llama a datosModificados";
+    if(datosCompletos())
+    {
+        poblarPista();
+        dibujarPista();
+    }
 }
 
 bool DialogConfPista::datosCompletos()
