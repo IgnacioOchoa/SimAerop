@@ -33,7 +33,8 @@ private:
     QBrush* colorPista;
     QPen* bordePista;
     qint8 fajas;
-    double anchoFajas;
+    double anchoFajasUm;
+    double anchoFajasLa;
 };
 
 #endif // EDITORPISTA_H
