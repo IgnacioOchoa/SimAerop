@@ -13,6 +13,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QLabel>
+#include <QMessageBox>
 #include "../../input-output/pistaparser.h"
 #include "../../estructuras-datos/elementosaerop.h"
 
@@ -33,9 +34,11 @@ private:
     Ui::DialogConfPista *ui;
     void configurarWidgets();
     void poblarDatos();
+    void poblarPista();
     void dibujarPista();
     void ajustarContenido();
     void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
+    bool datosCompletos();
 
     QPushButton* botonAceptar;
     QPushButton* botonCancelar;
@@ -68,7 +71,7 @@ private slots:
     void dialogoCancelado();
     void poblarCabeceras();
     void seleccionarAbrirArchivo();
-    void selccionarGuardarArchivo();
+    void seleccionarGuardarArchivo();
     void resetDialogoPista();
 
 };

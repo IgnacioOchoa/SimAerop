@@ -18,7 +18,7 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
     connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
     connect(botonCargar, &QPushButton::pressed, this, &DialogConfPista::seleccionarAbrirArchivo);
-    connect(botonGuardar, &QPushButton::pressed, this, &DialogConfPista::selccionarGuardarArchivo);
+    connect(botonGuardar, &QPushButton::pressed, this, &DialogConfPista::seleccionarGuardarArchivo);
     connect(botonReset, &QPushButton::pressed, this, &DialogConfPista::resetDialogoPista);
 
     connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
@@ -47,12 +47,20 @@ void DialogConfPista::configurarWidgets()
     botonGuardar = ui->pbGuardar;
     botonReset = ui->pbReset;
     botonOpAvanzadas = ui->pbOpcionesAvanzadas;
+
     leLargoPista = ui->leLargo;
+    leLargoPista->setValidator(new QIntValidator(0,7000));
+
     leAnchoPista = ui->leAncho;
+    leAnchoPista->setValidator(new QIntValidator(0,1000));
+
     leNombreArchivo = ui->leNombreArchivo;
     vistaPreliminar = ui->gvPreVisualizacion;
     layoutDial = ui->vlDial;
+
     leOrientacion = ui->leOrientacion;
+    leOrientacion->setValidator(new QIntValidator(0,360));
+
     layoutDial->setAlignment(leOrientacion,Qt::AlignCenter);
     cbUmbral1 = ui->chkUmbral1;
     cbUmbral2 = ui->chkUmbral2;
@@ -72,6 +80,13 @@ void DialogConfPista::poblarDatos()
     leLargoPista->setText(QString::number(pista.largo));
     leAnchoPista->setText(QString::number(pista.ancho));
     leOrientacion->setText(QString::number(pista.orientacion));
+}
+
+void DialogConfPista::poblarPista()
+{
+    pista.largo = leLargoPista->text().toInt();
+    pista.ancho = leAnchoPista->text().toInt();
+    pista.orientacion = leOrientacion->text().toInt();
 }
 
 void DialogConfPista::dibujarPista()
@@ -126,6 +141,21 @@ void DialogConfPista::graficarCota(QPointF p1, QPointF p2, float distancia, Dial
 
 }
 
+bool DialogConfPista::datosCompletos()
+{
+    if(leLargoPista->text().isEmpty() ||
+       leAnchoPista->text().isEmpty() ||
+       leOrientacion->text().isEmpty()) return false;
+
+    int largo = leLargoPista->text().toInt();
+    if (largo < 100 || largo > 10000) return false;
+
+    int ancho = leAnchoPista->text().toInt();
+    if (ancho < 10 || ancho>500) return false;
+
+    return true;
+}
+
 void DialogConfPista::dialogoAceptado()
 {
     this->close();
@@ -168,8 +198,15 @@ void DialogConfPista::seleccionarAbrirArchivo()
     dibujarPista();
 }
 
-void DialogConfPista::selccionarGuardarArchivo()
+void DialogConfPista::seleccionarGuardarArchivo()
 {
+    if (!datosCompletos())
+    {
+        QMessageBox::warning(this,"Datos incompletos", "Los datos de pista no están completos");
+        return;
+    }
+
+    poblarPista();
     QString nombrePista;
     if (leNombreArchivo->text().isEmpty())
         nombrePista = "miNuevaPista";
