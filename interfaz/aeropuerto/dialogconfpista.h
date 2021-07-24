@@ -67,7 +67,6 @@ private slots:
     void dialogoCancelado();
     void poblarCabeceras();
     void seleccionarAbrirArchivo();
-
 };
 
 #endif // DIALOGCONFPISTA_H

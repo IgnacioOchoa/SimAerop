@@ -6,6 +6,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QDebug>
+#include <QFloat16>
 
 #include "../../estructuras-datos/elementosaerop.h"
 
@@ -31,6 +32,8 @@ private:
     QBrush* fondoPista;
     QBrush* colorPista;
     QPen* bordePista;
+    qint8 fajas;
+    double anchoFajas;
 };
 
 #endif // EDITORPISTA_H

@@ -11,7 +11,7 @@ EditorPista::EditorPista(QGraphicsView *gv) :
     colorPista = new QBrush("#A4B3B6");
     escenaPista->setBackgroundBrush(*fondoPista);
     bordePista = new QPen;
-    bordePista->setWidth(2);
+    bordePista->setWidth(0);
 }
 
 void EditorPista::actualizarPista(const Pista& p)
@@ -24,28 +24,47 @@ void EditorPista::actualizarPista(const Pista& p)
     QPen penArea(Qt::NoPen);
     escenaPista->addRect(-p.largo/2.0 - 200, -p.ancho/2.0, p.largo + 400, p.ancho, penArea);
 
-    for (int i=0; i<5; i++)
+    if (p.ancho<23){
+        fajas = 2;
+    }
+    else if(p.ancho<30){
+        fajas = 3;
+    }
+    else if(p.ancho<45){
+        fajas = 4;
+    }
+    else if(p.ancho<60){
+        fajas = 6;
+    }
+    else {
+        fajas = 8;
+    }
+   anchoFajas = (p.ancho-6.0)/(fajas*4);
+
+    QPen pen(Qt::white, 0);
+
+    for (int i=0; i<fajas; i++)
     {
-        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
-        barraBlanca->moveBy(-p.largo/2.0 + 60,-p.ancho/2.0 + (1 + i)*(p.ancho/2)/6.0);
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-15,-anchoFajas/2,30,anchoFajas, pen, QBrush("white"));
+        barraBlanca->moveBy(-(p.largo/2.0 - 21),-(p.ancho/2.0 - 3  -anchoFajas/2) + i*anchoFajas*2);
     }
 
-    for (int i=0; i<5; i++)
+    for (int i=0; i<fajas; i++)
     {
-        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
-        barraBlanca->moveBy(-p.largo/2.0 + 60, p.ancho/2.0 - (1 + i)*(p.ancho/2)/6.0);
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-15,-anchoFajas/2,30,anchoFajas, pen, QBrush("white"));
+        barraBlanca->moveBy(-(p.largo/2.0 - 21),(p.ancho/2.0 - 3  -anchoFajas/2) - i*anchoFajas*2);
     }
 
-    for (int i=0; i<5; i++)
+    for (int i=0; i<fajas; i++)
     {
-        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
-        barraBlanca->moveBy(p.largo/2.0 - 60,-p.ancho/2.0 + (1 + i)*(p.ancho/2)/6.0);
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-15,-anchoFajas/2,30,anchoFajas, pen, QBrush("white"));
+        barraBlanca->moveBy((p.largo/2.0 - 21),-(p.ancho/2.0 - 3 - anchoFajas/2) + i*anchoFajas*2);
     }
 
-    for (int i=0; i<5; i++)
+    for (int i=0; i<fajas; i++)
     {
-        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-20,-1.5,40,3, QPen("white"), QBrush("white"));
-        barraBlanca->moveBy(p.largo/2.0 - 60, p.ancho/2.0 - (1 + i)*(p.ancho/2)/6.0);
+        QGraphicsRectItem* barraBlanca = escenaPista->addRect(-15,-anchoFajas/2,30,anchoFajas, pen, QBrush("white"));
+        barraBlanca->moveBy((p.largo/2.0 - 21),(p.ancho/2.0 - 3 - anchoFajas/2) - i*anchoFajas*2);
     }
 
     escenaPista->addLine(QLineF(-5,-5,5,5));
