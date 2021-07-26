@@ -27,6 +27,9 @@ void EditorPista::actualizarPista(const Pista& p)
 
     //GRAFICADOR DE PINTURA DE PISTA
 
+    QPen penw(Qt::white, 0);
+    QPen penb(Qt::black, 0);
+
     //Determinación de Parámetros según ancho de pista
     if (p.ancho<23){
         fajas = 2;
@@ -49,9 +52,7 @@ void EditorPista::actualizarPista(const Pista& p)
         anchoFajasLa = 0.9;
     }
 
-    QPen pen(Qt::white, 0);
-
-   //Determinación de ancho de fajas según ancho de pista
+    //Determinación de ancho de fajas según ancho de pista
    if (p.ancho>=60){
        anchoFajasUm = (54.0)/(fajas*4);
    }
@@ -62,35 +63,47 @@ void EditorPista::actualizarPista(const Pista& p)
     //Graficación de barras de umbral
     for (int i=0; i<fajas; i++)
     {
-        QGraphicsRectItem* barraUm1 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, pen, QBrush("white"));
+        QGraphicsRectItem* barraUm1 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, penw, QBrush("white"));
         barraUm1->moveBy(-(p.largo/2.0 - 21),-(p.ancho/2.0 - 3  -anchoFajasUm/2) + i*anchoFajasUm*2);
 
-        QGraphicsRectItem* barraUm2 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, pen, QBrush("white"));
+        QGraphicsRectItem* barraUm2 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, penw, QBrush("white"));
         barraUm2->moveBy(-(p.largo/2.0 - 21),(p.ancho/2.0 - 3  -anchoFajasUm/2) - i*anchoFajasUm*2);
 
-        QGraphicsRectItem* barraUm3 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, pen, QBrush("white"));
+        QGraphicsRectItem* barraUm3 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, penw, QBrush("white"));
         barraUm3->moveBy((p.largo/2.0 - 21),-(p.ancho/2.0 - 3 - anchoFajasUm/2) + i*anchoFajasUm*2);
 
-        QGraphicsRectItem* barraUm4 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, pen, QBrush("white"));
+        QGraphicsRectItem* barraUm4 = escenaPista->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, penw, QBrush("white"));
         barraUm4->moveBy((p.largo/2.0 - 21),(p.ancho/2.0 - 3 - anchoFajasUm/2) - i*anchoFajasUm*2);
     }
 
-    //Graficación de fajas transversales de umbral
-    QGraphicsRectItem* barraTr1 = escenaPista->addRect(-0.9,-p.ancho/2,1.8,p.ancho, pen, QBrush("white"));
-    barraTr1->moveBy((p.largo/2.0 - 0.9),0);
+    //Graficación de fajas transversales de umbral y fajas laterales de pista
+    QPainterPath outer;
+    //add outer points
+    outer.addRect(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho);
+    QPainterPath inner;
+    //add inner points
+    inner.addRect(-p.largo/2.0+1.8,-p.ancho/2.0+anchoFajasLa,p.largo-3.6,p.ancho-anchoFajasLa*2);
+    outer = outer.subtracted(inner);
 
-    QGraphicsRectItem* barraTr2 = escenaPista->addRect(-0.9,-p.ancho/2,1.8,p.ancho, pen, QBrush("white"));
-    barraTr2->moveBy(-(p.largo/2.0 - 0.9),0);
+    QGraphicsPathItem* fajasTransyLat = escenaPista->addPath(outer, penw,  QBrush("white"));
 
-    //Graficación de fajas laterales de pista
-    QGraphicsRectItem* barraLa1 = escenaPista->addRect(-p.largo/2,-anchoFajasLa/2,p.largo,anchoFajasLa, pen, QBrush("white"));
-    barraLa1->moveBy(0,p.ancho/2-anchoFajasLa/2);
+    //Graficación de fajas transversales de umbral y fajas laterales de pista
+    //36 (umbrales) + 12+9+12 m = 67 -> x2 = p.largo - 134
+    //Una señal de eje de pista consistirá en una línea de trazos uniformemente espaciados. La longitud de
+    //un trazo más la del intervalo no será menor de 50 m ni mayor de 75 m. La longitud de cada trazo será por lo
+    //menos igual a la longitud del intervalo, o de 30 m, tomándose la que sea mayor.
+    qDebug() << (p.largo-134);
+    for (int i=0; i<(p.largo-134)/50; i++)
+    {
+        QGraphicsRectItem* ejePista = escenaPista->addRect(-12.5,-0.45,25,0.9, penw, QBrush("white"));
+        ejePista->moveBy(-(p.largo/2.0 - 67-12.5)+50*i,0);
+    }
 
-    QGraphicsRectItem* barraLa2 = escenaPista->addRect(-p.largo/2,-anchoFajasLa/2,p.largo,anchoFajasLa, pen, QBrush("white"));
-    barraLa2->moveBy(0,-p.ancho/2+anchoFajasLa/2);
+    //Grafica centro de la pista
+    escenaPista->addLine(QLineF(-5,-5,5,5),penb);
+    escenaPista->addLine(QLineF(-5,5,5,-5),penb);
 
-    escenaPista->addLine(QLineF(-5,-5,5,5));
-    escenaPista->addLine(QLineF(-5,5,5,-5));
+    rectItm->setPen(penb);
 
     vistaPista->fitInView(rectItm,Qt::KeepAspectRatio);
     //vistaPista->scale(0.98, 0.98);
