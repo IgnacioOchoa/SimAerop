@@ -102,7 +102,7 @@ void InterfazPrincipal::crearPista()
     //ui->lbValorLongitud->setText(QString::number(pis.largo) + " m");
 
     //pista = pis;
-    pista = {500,45,0,"",""};
+    pista = {1250,45,0,"",""};
 
     emit pistaCambiada();
 }

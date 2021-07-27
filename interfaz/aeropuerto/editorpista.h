@@ -31,10 +31,15 @@ private:
     QLinearGradient* gradienteFondoPista;
     QBrush* fondoPista;
     QBrush* colorPista;
+    QBrush* colorMargen;
     QPen* bordePista;
     qint8 fajas;
     double anchoFajasUm;
     double anchoFajasLa;
+    double largoEjes;
+    double distanciaUmVi;
+    double anchoFajasVi;
+    double espaciadoFajasVi;
 };
 
 #endif // EDITORPISTA_H
