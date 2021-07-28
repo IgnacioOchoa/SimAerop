@@ -107,18 +107,35 @@ void InterfazPrincipal::crearPista()
     emit pistaCambiada();
 }
 
-void InterfazPrincipal::on_botonCargarFlota_clicked()
+//MÓDULO AERONAVES
+
+void InterfazPrincipal::on_pbCargarAcft_triggered(QAction *arg1)
 {
+
+}
+
+void InterfazPrincipal::on_pbCargarFlota_clicked()
+{
+    if (ui->tablaFlota->rowCount() != 0){
+        QMessageBox::StandardButton reply;
+          reply = QMessageBox::warning(this, "Advertencia", "Se han encontrado datos en el espacio de trabajo."
+                                                " Si carga una nueva flota los datos se sobreescribirán."
+                                                "¿Desea continuar?",
+                                        QMessageBox::Yes|QMessageBox::No);
+          if (reply == QMessageBox::No) {
+            return;
+          }
+    }
     ui->tablaFlota->clearContents();
     ui->tablaFlota->setRowCount(0);
     auto filename = QFileDialog::getOpenFileName(this, "Abrir datos", QDir::rootPath(), "XML file (*.xml)");
     if (filename.isEmpty()){
-        return;
+      return;
     }
     QFile file(filename);
     if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
-        QMessageBox::critical(this, "Error", file.errorString());
-        return;
+      QMessageBox::critical(this, "Error", file.errorString());
+      return;
     }
     QDomDocument doc;
     doc.setContent(&file);
@@ -126,19 +143,37 @@ void InterfazPrincipal::on_botonCargarFlota_clicked()
     auto root = doc.firstChild().toElement();
     auto ix = root.firstChild().toElement();
     while (!ix.isNull()){
-        auto id = ix.attribute("id");
-        auto nombre = ix.firstChild().toElement().text();
-        auto envergadura = ix.firstChild().nextSibling().toElement().text();
-        auto appspd = ix.firstChild().nextSibling().nextSibling().toElement().text();
-        auto lda = ix.firstChild().nextSibling().nextSibling().nextSibling().toElement().text();
-        auto mtow = ix.firstChild().nextSibling().nextSibling().nextSibling().nextSibling().toElement().text();
-        auto perc = ix.firstChild().nextSibling().nextSibling().nextSibling().nextSibling().nextSibling().toElement().text();
-        agregaAeronave(Aeronave(id, nombre, envergadura, appspd, lda, mtow, perc));
-        ix = ix.nextSibling().toElement();
+      auto id = ix.attribute("id");
+      auto nombre = ix.firstChild().toElement().text();
+      auto envergadura = ix.firstChild().nextSibling().toElement().text();
+      auto appspd = ix.firstChild().nextSibling().nextSibling().toElement().text();
+      auto lda = ix.firstChild().nextSibling().nextSibling().nextSibling().toElement().text();
+      auto mtow = ix.firstChild().nextSibling().nextSibling().nextSibling().nextSibling().toElement().text();
+      auto perc = ix.firstChild().nextSibling().nextSibling().nextSibling().nextSibling().nextSibling().toElement().text();
+      agregaAeronave(Aeronave(id, nombre, envergadura, appspd, lda, mtow, perc));
+      ix = ix.nextSibling().toElement();
+
     }
 }
 
-void InterfazPrincipal::on_botonGuardarFlota_clicked()
+void InterfazPrincipal::agregaAeronave(const Aeronave &aeronave)
+{
+    const int row = ui->tablaFlota->rowCount();
+    ui->tablaFlota->insertRow(row);
+    ui->tablaFlota->setItem(row, ID, new QTableWidgetItem(aeronave.getId()));
+    ui->tablaFlota->setItem(row, NOMBRE, new QTableWidgetItem(aeronave.getNombre()));
+    ui->tablaFlota->setItem(row, ENVERGADURA, new QTableWidgetItem(aeronave.getEnvergadura()));
+    ui->tablaFlota->setItem(row, APPSPD, new QTableWidgetItem(aeronave.getVel_app()));
+    ui->tablaFlota->setItem(row, LDA, new QTableWidgetItem(aeronave.getLda()));
+    ui->tablaFlota->setItem(row, MTOW, new QTableWidgetItem(aeronave.getMtow()));
+    ui->tablaFlota->setItem(row, PORCENTAJE, new QTableWidgetItem(aeronave.getPerc()));
+    for (int i = 0; i < ui->tablaFlota->columnCount() - 1; i++) {
+        QTableWidgetItem* pItem = ui->tablaFlota->item(row, i);
+        pItem->setFlags(pItem->flags() & (~Qt::ItemIsEditable));
+    }
+}
+
+void InterfazPrincipal::on_pbGuardarFlota_clicked()
 {
     auto filename = QFileDialog::getSaveFileName(this, "Guardar",
                                                  QDir::rootPath(),
@@ -191,34 +226,7 @@ void InterfazPrincipal::on_botonGuardarFlota_clicked()
     file.close();
 }
 
-void InterfazPrincipal::on_pushButton_4_clicked()
+void InterfazPrincipal::on_pbAeroDBConfig_clicked()
 {
 
-}
-
-void InterfazPrincipal::on_botonCargarAcft_triggered(QAction *arg1)
-{
-
-}
-
-void InterfazPrincipal::on_comboBoxAcft_activated(const QString &arg1)
-{
-
-}
-
-void InterfazPrincipal::agregaAeronave(const Aeronave &aeronave)
-{
-    const int row = ui->tablaFlota->rowCount();
-    ui->tablaFlota->insertRow(row);
-    ui->tablaFlota->setItem(row, ID, new QTableWidgetItem(aeronave.getId()));
-    ui->tablaFlota->setItem(row, NOMBRE, new QTableWidgetItem(aeronave.getNombre()));
-    ui->tablaFlota->setItem(row, ENVERGADURA, new QTableWidgetItem(aeronave.getEnvergadura()));
-    ui->tablaFlota->setItem(row, APPSPD, new QTableWidgetItem(aeronave.getVel_app()));
-    ui->tablaFlota->setItem(row, LDA, new QTableWidgetItem(aeronave.getLda()));
-    ui->tablaFlota->setItem(row, MTOW, new QTableWidgetItem(aeronave.getMtow()));
-    ui->tablaFlota->setItem(row, PORCENTAJE, new QTableWidgetItem(aeronave.getPerc()));
-    for (int i = 0; i < ui->tablaFlota->columnCount() - 1; i++) {
-        QTableWidgetItem* pItem = ui->tablaFlota->item(row, i);
-        pItem->setFlags(pItem->flags() & (~Qt::ItemIsEditable));
-    }
 }

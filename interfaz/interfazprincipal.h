@@ -66,15 +66,14 @@ private slots:
     void botonPrincipalSeleccionado(bool checked);
     void crearPista();
 
-    void on_botonCargarFlota_clicked();
 
-    void on_botonGuardarFlota_clicked();
+    void on_pbCargarAcft_triggered(QAction *arg1);
 
-    void on_pushButton_4_clicked();
+    void on_pbCargarFlota_clicked();
 
-    void on_botonCargarAcft_triggered(QAction *arg1);
+    void on_pbGuardarFlota_clicked();
 
-    void on_comboBoxAcft_activated(const QString &arg1);
+    void on_pbAeroDBConfig_clicked();
 
 private:
     enum{
