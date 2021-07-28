@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     input-output/pistaparser.cpp \
     interfaz/aeronaves/aeronave.cpp \
+    interfaz/aeronaves/flota.cpp \
     interfaz/aeropuerto/customgraphicsscene.cpp \
     interfaz/aeropuerto/customgraphicsview.cpp \
     interfaz/aeropuerto/dialogconfpista.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     estructuras-datos/elementosaerop.h \
     input-output/pistaparser.h \
     interfaz/aeronaves/aeronave.h \
+    interfaz/aeronaves/flota.h \
     interfaz/aeropuerto/customgraphicsscene.h \
     interfaz/aeropuerto/customgraphicsview.h \
     interfaz/aeropuerto/dialogconfpista.h \
