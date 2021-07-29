@@ -38,7 +38,6 @@ private:
     void poblarPista();
     void ajustarContenido();
     void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
-    void datosModificados();
     bool datosCompletos();
 
     QPushButton* botonAceptar;
@@ -76,6 +75,10 @@ private slots:
     void seleccionarGuardarArchivo();
     void resetDialogoPista();
     void dibujarPista();
+    void botonGraficarApretado();
+
+signals:
+    void pistaActualizada(const Pista&);
 
 };
 

@@ -64,6 +64,13 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
 
     connect(ui->pbGuardarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::slotCargarFlota);
     connect(this, SIGNAL(signalGuardarFlota()), k, SLOT(slotGuardarFlota()));
+
+    connect(dialogConfPista, SIGNAL(pistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
+
+    // Valores por default
+    pista = {1250,45,0,"",""};
+    actualizarDatosPista(pista);
+
 }
 
 InterfazPrincipal::~InterfazPrincipal()
@@ -99,22 +106,55 @@ void InterfazPrincipal::crearPista()
     //QList<Rodaje> rod = pistaParser.cargarRodaje("miPistaNueva.json");
     //QList<Plataforma> plat = pistaParser.cargarPlataforma("miPistaNueva.json");
 
-    //qInfo() << pis;
-    //qInfo() << rod[0];
-    //qInfo() << plat[0];
-
-    //qInfo() << "Current path: " << QDir::currentPath();
-
-    //ui->lbValorAncho->setText(QString::number(pis.ancho) + " m");
-    //ui->lbValorLongitud->setText(QString::number(pis.largo) + " m");
-
     //pista = pis;
-    pista = {1250,45,0,"",""};
-
+    //pista = {1250,45,0,"",""};
     emit pistaCambiada();
 }
 
+<<<<<<< HEAD
 void InterfazPrincipal::slotCargarFlota()
+=======
+void InterfazPrincipal::actualizarDatosPista(const Pista& p)
+{
+    escenaPista->clear();
+    pista = p;
+    ui->lbValorAncho->setText(QString::number(pista.ancho) + " m");
+    ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");
+}
+
+void InterfazPrincipal::on_botonCargarFlota_clicked()
+{
+    ui->tablaFlota->clearContents();
+    ui->tablaFlota->setRowCount(0);
+    auto filename = QFileDialog::getOpenFileName(this, "Abrir datos", QDir::rootPath(), "XML file (*.xml)");
+    if (filename.isEmpty()){
+        return;
+    }
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QMessageBox::critical(this, "Error", file.errorString());
+        return;
+    }
+    QDomDocument doc;
+    doc.setContent(&file);
+    file.close();
+    auto root = doc.firstChild().toElement();
+    auto ix = root.firstChild().toElement();
+    while (!ix.isNull()){
+        auto id = ix.attribute("id");
+        auto nombre = ix.firstChild().toElement().text();
+        auto envergadura = ix.firstChild().nextSibling().toElement().text();
+        auto appspd = ix.firstChild().nextSibling().nextSibling().toElement().text();
+        auto lda = ix.firstChild().nextSibling().nextSibling().nextSibling().toElement().text();
+        auto mtow = ix.firstChild().nextSibling().nextSibling().nextSibling().nextSibling().toElement().text();
+        auto perc = ix.firstChild().nextSibling().nextSibling().nextSibling().nextSibling().nextSibling().toElement().text();
+        agregaAeronave(Aeronave(id, nombre, envergadura, appspd, lda, mtow, perc));
+        ix = ix.nextSibling().toElement();
+    }
+}
+
+void InterfazPrincipal::on_botonGuardarFlota_clicked()
+>>>>>>> cfb5d4d (Se conectó DialogConfPista con InterfazPpal)
 {
     emit signalCargarFlota();
 }

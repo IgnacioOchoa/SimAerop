@@ -15,7 +15,6 @@ class Kernel : public QObject
 {
     Q_OBJECT
 
-
 public:
     Kernel();
     Kernel(InterfazPrincipal* ip);

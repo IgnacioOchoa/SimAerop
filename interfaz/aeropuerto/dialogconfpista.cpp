@@ -21,7 +21,7 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
     connect(botonGuardar, &QPushButton::pressed, this, &DialogConfPista::seleccionarGuardarArchivo);
     connect(botonReset, &QPushButton::pressed, this, &DialogConfPista::resetDialogoPista);
 
-    connect(botonGraficar, &QAbstractButton::pressed, this, &DialogConfPista::dibujarPista);
+    connect(botonGraficar, &QAbstractButton::pressed, this, &DialogConfPista::botonGraficarApretado);
 
     connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
             [this](int state){
@@ -116,6 +116,20 @@ void DialogConfPista::dibujarPista()
     escenaPreliminar->addItem(cota2);
 }
 
+void DialogConfPista::botonGraficarApretado()
+{
+    if(datosCompletos())
+    {
+        poblarPista();
+        dibujarPista();
+    }
+    else
+    {
+        QMessageBox::warning(this,"Datos incompletos", "Los datos de pista no están completos");
+        return;
+    }
+}
+
 void DialogConfPista::ajustarContenido()
 {
     QRectF r1 = escenaPreliminar->itemsBoundingRect();
@@ -126,16 +140,6 @@ void DialogConfPista::ajustarContenido()
     float escala = qMin(cociente1,cociente2)*0.9;
 
     vistaPreliminar->scale(escala,escala);
-}
-
-void DialogConfPista::datosModificados()
-{
-    qInfo() << "Se llama a datosModificados";
-    if(datosCompletos())
-    {
-        poblarPista();
-        dibujarPista();
-    }
 }
 
 bool DialogConfPista::datosCompletos()
@@ -155,6 +159,13 @@ bool DialogConfPista::datosCompletos()
 
 void DialogConfPista::dialogoAceptado()
 {
+    if (!datosCompletos())
+    {
+        QMessageBox::warning(this,"Datos incompletos", "Los datos de pista no están completos");
+        return;
+    }
+    poblarPista();
+    emit pistaActualizada(pista);
     this->close();
 }
 
@@ -212,7 +223,6 @@ void DialogConfPista::seleccionarGuardarArchivo()
     QString file_name = QDir::currentPath() + "/" + nombrePista + ".json";
     file_name = QFileDialog::getSaveFileName(this,"Guardar archivo", file_name,"(*.json)");
     if(file_name.isEmpty()) return;
-
 
     PistaParser pistaParser;
     pistaParser.guardarPista(file_name,pista);
