@@ -6,6 +6,7 @@
 #include "../interfaz/aeropuerto/editorpista.h"
 #include "interfaz/interfazprincipal.h"
 #include "../estructuras-datos/elementosaerop.h"
+#include "interfaz/aeronaves/flota.h"
 
 class InterfazPrincipal;
 //Q_DECLARE_METATYPE(Pista)
@@ -23,15 +24,20 @@ public:
 
 public slots:
     void graficarPista();
+    void slotCargarFlota();
+    void slotGuardarFlota();
 
 private:
     bool inicializarEditorPista(InterfazPrincipal* ip);
+    bool inicializarFlota(InterfazPrincipal* ip);
     InterfazPrincipal* interfazPpal;
     EditorPista* editorPista;
+    Flota* flota;
 
 signals:
     void pistaActualizada(const Pista& p);
-
+    void signalCargarFlota();
+    void signalGuardarFlota();
 };
 
 #endif // KERNEL_H

@@ -40,6 +40,8 @@ public:
 
 signals:
     void pistaCambiada();
+    void signalCargarFlota();
+    void signalGuardarFlota();
 
 private:
     void crearMenu();
@@ -65,27 +67,8 @@ private:
 private slots:
     void botonPrincipalSeleccionado(bool checked);
     void crearPista();
-
-
-    void on_pbCargarAcft_triggered(QAction *arg1);
-
-    void on_pbCargarFlota_clicked();
-
-    void on_pbGuardarFlota_clicked();
-
-    void on_pbAeroDBConfig_clicked();
-
-private:
-    enum{
-        ID,
-        NOMBRE,
-        ENVERGADURA,
-        APPSPD,
-        LDA,
-        MTOW,
-        PORCENTAJE,
-    };
-    void agregaAeronave(const Aeronave &aeronave);
+    void slotCargarFlota();
+    void slotGuardarFlota();
 };
 
 #endif // INTERFAZPRINCIPAL_H

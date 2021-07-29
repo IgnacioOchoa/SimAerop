@@ -8,6 +8,7 @@ Kernel::Kernel()
 Kernel::Kernel(InterfazPrincipal* ip)
 {
     inicializarEditorPista(ip);
+    inicializarFlota(ip);
 }
 
 Kernel::~Kernel()
@@ -18,6 +19,7 @@ Kernel::~Kernel()
 void Kernel::inicializar(InterfazPrincipal *ip)
 {
     inicializarEditorPista(ip);
+    inicializarFlota(ip);
 }
 
 bool Kernel::inicializarEditorPista(InterfazPrincipal* ip)
@@ -29,9 +31,27 @@ bool Kernel::inicializarEditorPista(InterfazPrincipal* ip)
     return true;
 }
 
+bool Kernel::inicializarFlota(InterfazPrincipal *ip)
+{
+    interfazPpal = ip;
+    flota = new Flota;
+    connect(this, SIGNAL(signalCargarFlota()), flota, SLOT(slotCargarFlota()));
+    connect(this, SIGNAL(signalGuardarFlota()), flota, SLOT(slotGuardarFlota()));
+    return true;
+}
+
 void Kernel::graficarPista()
 {
     emit pistaActualizada(interfazPpal->getPista());
 }
 
+void Kernel::slotCargarFlota()
+{
+    emit signalCargarFlota();
+}
+
+void Kernel::slotGuardarFlota()
+{
+    emit signalGuardarFlota();
+}
 
