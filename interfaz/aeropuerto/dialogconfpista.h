@@ -16,6 +16,7 @@
 #include <QMessageBox>
 #include "../../input-output/pistaparser.h"
 #include "../../estructuras-datos/elementosaerop.h"
+#include "dibujo/cotagrafica.h"
 
 namespace Ui {
 class DialogConfPista;
@@ -35,7 +36,6 @@ private:
     void configurarWidgets();
     void poblarDatos();
     void poblarPista();
-    void dibujarPista();
     void ajustarContenido();
     void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
     void datosModificados();
@@ -47,6 +47,7 @@ private:
     QPushButton* botonGuardar;
     QPushButton* botonReset;
     QPushButton* botonOpAvanzadas;
+    QPushButton* botonGraficar;
     QLineEdit* leLargoPista;
     QLineEdit* leAnchoPista;
     QLineEdit* leNombreArchivo;
@@ -74,6 +75,7 @@ private slots:
     void seleccionarAbrirArchivo();
     void seleccionarGuardarArchivo();
     void resetDialogoPista();
+    void dibujarPista();
 
 };
 
