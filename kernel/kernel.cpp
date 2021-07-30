@@ -35,8 +35,8 @@ bool Kernel::inicializarFlota(InterfazPrincipal *ip)
 {
     interfazPpal = ip;
     flota = new Flota;
-    connect(this, SIGNAL(signalCargarFlota()), flota, SLOT(slotCargarFlota()));
-    connect(this, SIGNAL(signalGuardarFlota()), flota, SLOT(slotGuardarFlota()));
+    connect(this, SIGNAL(sigCargarFlota()), flota, SLOT(sloCargadorFlota()));
+    connect(this, SIGNAL(sigGuardarFlota()), flota, SLOT(sloGuardadorFlota()));
     return true;
 }
 
@@ -45,13 +45,13 @@ void Kernel::graficarPista()
     emit pistaActualizada(interfazPpal->getPista());
 }
 
-void Kernel::slotCargarFlota()
+void Kernel::sloCargarFlota()
 {
-    emit signalCargarFlota();
+    emit sigCargarFlota();
 }
 
-void Kernel::slotGuardarFlota()
+void Kernel::sloGuardarFlota()
 {
-    emit signalGuardarFlota();
+    emit sigGuardarFlota();
 }
 

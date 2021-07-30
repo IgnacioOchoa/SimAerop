@@ -13,8 +13,8 @@ public:
     Flota();
 
 public slots:
-    void slotCargarFlota();
-    void slotGuardarFlota();
+    void sloCargadorFlota();
+    void sloGuardadorFlota();
 
 private:
     void agregaAeronave(const Aeronave &aeronave);

@@ -59,12 +59,13 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     connect(ui->pbConfigurarPlataformas, &QAbstractButton::pressed, [dialogConfPlataformas](){dialogConfPlataformas->show();});
 
     //Conexiones Página Aeronaves
-    connect(ui->pbCargarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::slotCargarFlota);
-    connect(this, SIGNAL(signalCargarFlota()), k, SLOT(slotGuardarFlota()));
+    connect(ui->pbCargarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::sloCargarFlota);
+    connect(this, SIGNAL(sigCargarFlota()), k, SLOT(sloCargarFlota()));
 
-    connect(ui->pbGuardarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::slotCargarFlota);
-    connect(this, SIGNAL(signalGuardarFlota()), k, SLOT(slotGuardarFlota()));
+    connect(ui->pbGuardarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::sloGuardarFlota);
+    connect(this, SIGNAL(sigGuardarFlota()), k, SLOT(sloGuardarFlota()));
 
+    //Conexiones Diálogo Configuración de Pista
     connect(dialogConfPista, SIGNAL(pistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
 
     // Valores por default
@@ -120,13 +121,13 @@ void InterfazPrincipal::actualizarDatosPista(const Pista& p)
     ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");
 }
 
-void InterfazPrincipal::slotCargarFlota()
+void InterfazPrincipal::sloCargarFlota()
 {
-    emit signalCargarFlota();
+    emit sigCargarFlota();
 }
 
 
-void InterfazPrincipal::slotGuardarFlota()
+void InterfazPrincipal::sloGuardarFlota()
 {
-    emit signalGuardarFlota();
+    emit sigGuardarFlota();
 }

@@ -5,7 +5,7 @@ Flota::Flota()
 
 }
 
-void Flota::slotCargarFlota()
+void Flota::sloCargadorFlota()
 {
     qDebug() << "Cargar flota en flota.cpp";
 
@@ -49,7 +49,7 @@ void Flota::slotCargarFlota()
 //    }
 }
 
-void Flota::slotGuardarFlota()
+void Flota::sloGuardadorFlota()
 {
     qDebug() << "Guardar flota en flota.cpp";
 

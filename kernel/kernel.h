@@ -23,8 +23,8 @@ public:
 
 public slots:
     void graficarPista();
-    void slotCargarFlota();
-    void slotGuardarFlota();
+    void sloCargarFlota();
+    void sloGuardarFlota();
 
 private:
     bool inicializarEditorPista(InterfazPrincipal* ip);
@@ -35,8 +35,8 @@ private:
 
 signals:
     void pistaActualizada(const Pista& p);
-    void signalCargarFlota();
-    void signalGuardarFlota();
+    void sigCargarFlota();
+    void sigGuardarFlota();
 };
 
 #endif // KERNEL_H

@@ -40,8 +40,8 @@ public:
 
 signals:
     void pistaCambiada();
-    void signalCargarFlota();
-    void signalGuardarFlota();
+    void sigCargarFlota();
+    void sigGuardarFlota();
 
 private:
     void crearMenu();
@@ -67,8 +67,8 @@ private:
 private slots:
     void botonPrincipalSeleccionado(bool checked);
     void crearPista();
-    void slotCargarFlota();
-    void slotGuardarFlota();
+    void sloCargarFlota();
+    void sloGuardarFlota();
 
     void actualizarDatosPista(const Pista&);
 
