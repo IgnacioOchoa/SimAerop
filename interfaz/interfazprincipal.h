@@ -67,21 +67,10 @@ private:
 private slots:
     void botonPrincipalSeleccionado(bool checked);
     void crearPista();
-<<<<<<< HEAD
     void slotCargarFlota();
     void slotGuardarFlota();
-=======
+
     void actualizarDatosPista(const Pista&);
-
-    void on_botonCargarFlota_clicked();
-
-    void on_botonGuardarFlota_clicked();
-
-    void on_pushButton_4_clicked();
-
-    void on_botonCargarAcft_triggered(QAction *arg1);
-
-    void on_comboBoxAcft_activated(const QString &arg1);
 
 private:
     enum{
@@ -94,7 +83,7 @@ private:
         PORCENTAJE,
     };
     void agregaAeronave(const Aeronave &aeronave);
->>>>>>> cfb5d4d (Se conectó DialogConfPista con InterfazPpal)
+
 };
 
 #endif // INTERFAZPRINCIPAL_H
