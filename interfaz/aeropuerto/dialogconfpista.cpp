@@ -6,7 +6,7 @@
 DialogConfPista::DialogConfPista(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::DialogConfPista),
-    escenaPreliminar(new QGraphicsScene)
+    escenaPreliminar(new EscenaConfPista)
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -22,6 +22,7 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
     connect(botonReset, &QPushButton::pressed, this, &DialogConfPista::resetDialogoPista);
 
     connect(botonGraficar, &QAbstractButton::pressed, this, &DialogConfPista::botonGraficarApretado);
+    connect(botonCentrarVista, &QAbstractButton::pressed, this, [this](){vistaPreliminar->centrarVista();});
 
     connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
             [this](int state){
@@ -50,6 +51,7 @@ void DialogConfPista::configurarWidgets()
     botonReset = ui->pbReset;
     botonOpAvanzadas = ui->pbOpcionesAvanzadas;
     botonGraficar = ui->pbGraficar;
+    botonCentrarVista = ui->pbCentrarVista;
 
     leLargoPista = ui->leLargo;
     leLargoPista->setValidator(new QIntValidator(0,7000));
@@ -122,6 +124,7 @@ void DialogConfPista::botonGraficarApretado()
     {
         poblarPista();
         dibujarPista();
+        vistaPreliminar->centerOn(QPointF(0,0));
     }
     else
     {

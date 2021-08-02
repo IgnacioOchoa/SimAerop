@@ -17,6 +17,8 @@
 #include "../../input-output/pistaparser.h"
 #include "../../estructuras-datos/elementosaerop.h"
 #include "dibujo/cotagrafica.h"
+#include "escenaconfpista.h"
+#include "vistaconfpista.h"
 
 namespace Ui {
 class DialogConfPista;
@@ -47,13 +49,14 @@ private:
     QPushButton* botonReset;
     QPushButton* botonOpAvanzadas;
     QPushButton* botonGraficar;
+    QPushButton* botonCentrarVista;
     QLineEdit* leLargoPista;
     QLineEdit* leAnchoPista;
     QLineEdit* leNombreArchivo;
     QLineEdit* leRutaArchivo;
     QComboBox* cbCabecera1;
     QComboBox* cbCabecera2;
-    QGraphicsView* vistaPreliminar;
+    VistaConfPista* vistaPreliminar;
     QVBoxLayout* layoutDial;
     QLineEdit* leOrientacion;
     QLineEdit* leUmbral1;
