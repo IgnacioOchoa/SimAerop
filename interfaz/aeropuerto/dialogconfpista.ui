@@ -287,7 +287,7 @@
     </layout>
    </item>
    <item>
-    <widget class="QGraphicsView" name="gvPreVisualizacion"/>
+    <widget class="VistaConfPista" name="gvPreVisualizacion"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -346,6 +346,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>VistaConfPista</class>
+   <extends>QGraphicsView</extends>
+   <header>interfaz/aeropuerto/vistaconfpista.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>leLargo</tabstop>
   <tabstop>leAncho</tabstop>

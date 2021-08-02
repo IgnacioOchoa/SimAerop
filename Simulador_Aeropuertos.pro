@@ -19,6 +19,8 @@ SOURCES += \
     interfaz/aeropuerto/dialogconfrodaje.cpp \
     interfaz/aeropuerto/dibujo/cotagrafica.cpp \
     interfaz/aeropuerto/editorpista.cpp \
+    interfaz/aeropuerto/escenaconfpista.cpp \
+    interfaz/aeropuerto/vistaconfpista.cpp \
     interfaz/interfazprincipal.cpp \
     kernel/kernel.cpp \
     main.cpp
@@ -35,6 +37,8 @@ HEADERS += \
     interfaz/aeropuerto/dialogconfrodaje.h \
     interfaz/aeropuerto/dibujo/cotagrafica.h \
     interfaz/aeropuerto/editorpista.h \
+    interfaz/aeropuerto/escenaconfpista.h \
+    interfaz/aeropuerto/vistaconfpista.h \
     interfaz/interfazprincipal.h \
     kernel/kernel.h
 
