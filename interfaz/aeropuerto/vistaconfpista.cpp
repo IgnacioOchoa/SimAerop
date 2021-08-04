@@ -20,6 +20,8 @@ VistaConfPista::VistaConfPista(QWidget* w) :
 
     escena = new EscenaConfPista;
     setScene(escena);
+
+    connect(cbActivarCotas, &QCheckBox::stateChanged, this, &VistaConfPista::chBoxCotasAccionada);
 }
 
 void VistaConfPista::mouseMoveEvent(QMouseEvent *event)
@@ -70,16 +72,17 @@ void VistaConfPista::ajustarContenidos()
 void VistaConfPista::graficarPista(QRectF rectPista)
 {
     escena->graficarPista(rectPista);
+    escena->mostrarCotas(cbActivarCotas->isChecked());
     ajustarContenidos();
 }
 
 void VistaConfPista::vaciarContenido()
 {
-    escena->clear();
+    escena->limpiar();
 }
 
-void VistaConfPista::contenidoCambiado()
+void VistaConfPista::chBoxCotasAccionada(int state)
 {
-
+    escena->mostrarCotas(state == 0 ? false : true);
 }
 

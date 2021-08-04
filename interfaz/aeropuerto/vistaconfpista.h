@@ -25,7 +25,7 @@ public:
     void vaciarContenido();
 
 public slots:
-    void contenidoCambiado();
+    void chBoxCotasAccionada(int state);
 
 private:
     QPointF inicioRueda;
