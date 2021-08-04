@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QCheckBox>
 #include <QBoxLayout>
+#include "escenaconfpista.h"
 
 class VistaConfPista : public QGraphicsView
 {
@@ -18,11 +19,19 @@ public:
     void wheelEvent(QWheelEvent *event) override;
 
     void centrarVista(QPointF p = QPointF());
+    void ajustarContenidos();
+
+    void graficarPista(QRectF rectPista);
+    void vaciarContenido();
+
+public slots:
+    void contenidoCambiado();
 
 private:
     QPointF inicioRueda;
     QPointF centroVista;
     QCheckBox* cbActivarCotas;
+    EscenaConfPista* escena;
 };
 
 #endif // VISTACONFPISTA_H

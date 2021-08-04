@@ -16,7 +16,6 @@
 #include <QMessageBox>
 #include "../../input-output/pistaparser.h"
 #include "../../estructuras-datos/elementosaerop.h"
-#include "dibujo/cotagrafica.h"
 #include "escenaconfpista.h"
 #include "vistaconfpista.h"
 
@@ -38,7 +37,6 @@ private:
     void configurarWidgets();
     void poblarDatos();
     void poblarPista();
-    void ajustarContenido();
     void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
     bool datosCompletos();
 
@@ -56,14 +54,13 @@ private:
     QLineEdit* leRutaArchivo;
     QComboBox* cbCabecera1;
     QComboBox* cbCabecera2;
-    VistaConfPista* vistaPreliminar;
     QVBoxLayout* layoutDial;
     QLineEdit* leOrientacion;
     QLineEdit* leUmbral1;
     QLineEdit* leUmbral2;
     QLabel* lbUmbral1;
     QLabel* lbUmbral2;
-    QGraphicsScene* escenaPreliminar;
+    VistaConfPista* vistaPreliminar;
 
     QCheckBox* cbUmbral1;
     QCheckBox* cbUmbral2;

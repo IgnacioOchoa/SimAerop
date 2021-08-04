@@ -17,6 +17,9 @@ VistaConfPista::VistaConfPista(QWidget* w) :
     hLay->addWidget(cbActivarCotas);
     vLay->addItem(hLay);
     setLayout(vLay);
+
+    escena = new EscenaConfPista;
+    setScene(escena);
 }
 
 void VistaConfPista::mouseMoveEvent(QMouseEvent *event)
@@ -50,5 +53,33 @@ void VistaConfPista::centrarVista(QPointF p)
 {
     centerOn(p);
     centroVista = QPointF();
+}
+
+void VistaConfPista::ajustarContenidos()
+{
+    QRectF r1 = scene()->itemsBoundingRect();
+    QRectF r2 = mapToScene(viewport()->rect()).boundingRect();
+
+    float cociente1 = r2.x()/r1.x();
+    float cociente2 = r2.y()/r1.y();
+    float escala = qMin(cociente1,cociente2)*0.9;
+
+    scale(escala,escala);
+}
+
+void VistaConfPista::graficarPista(QRectF rectPista)
+{
+    escena->graficarPista(rectPista);
+    ajustarContenidos();
+}
+
+void VistaConfPista::vaciarContenido()
+{
+    escena->clear();
+}
+
+void VistaConfPista::contenidoCambiado()
+{
+
 }
 

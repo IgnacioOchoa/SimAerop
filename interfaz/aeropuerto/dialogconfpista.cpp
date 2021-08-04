@@ -5,14 +5,10 @@
 
 DialogConfPista::DialogConfPista(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DialogConfPista),
-    escenaPreliminar(new EscenaConfPista)
+    ui(new Ui::DialogConfPista)
 {
     ui->setupUi(this);
     configurarWidgets();
-
-    vistaPreliminar->setScene(escenaPreliminar);
-    escenaPreliminar->setBackgroundBrush(QBrush("#f5f0f3"));
 
     connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
@@ -94,26 +90,8 @@ void DialogConfPista::poblarPista()
 
 void DialogConfPista::dibujarPista()
 {
-    escenaPreliminar->clear();
-    QPen borde;
-    borde.setWidth(2);
-    borde.setCosmetic(true);
-    QGraphicsRectItem* rectItm = escenaPreliminar->addRect(QRect(-pista.largo/2,-pista.ancho/2,
-                                    pista.largo,pista.ancho),borde);
-    ajustarContenido();
-
-    QPointF p1 = {rectItm->rect().x(),rectItm->rect().y()+rectItm->rect().height()};
-    QPointF p2 = {rectItm->rect().x()+rectItm->rect().width(),
-                  rectItm->rect().y()+rectItm->rect().height()};
-
-    QPointF p3 = {rectItm->rect().x(), rectItm->rect().y()};
-    QPointF p4 = {rectItm->rect().x() + rectItm->rect().width(),rectItm->rect().y()};
-
-    CotaGrafica* cota1 = new CotaGrafica(p3,p4,"HOR",-100);
-    escenaPreliminar->addItem(cota1);
-
-    CotaGrafica* cota2 = new CotaGrafica(p1,p3,"VER",-100);
-    escenaPreliminar->addItem(cota2);
+    vistaPreliminar->graficarPista(QRect(-pista.largo/2,-pista.ancho/2,
+                                        pista.largo,pista.ancho));
 }
 
 void DialogConfPista::botonGraficarApretado()
@@ -129,18 +107,6 @@ void DialogConfPista::botonGraficarApretado()
         QMessageBox::warning(this,"Datos incompletos", "Los datos de pista no están completos");
         return;
     }
-}
-
-void DialogConfPista::ajustarContenido()
-{
-    QRectF r1 = escenaPreliminar->itemsBoundingRect();
-    QRectF r2 = vistaPreliminar->mapToScene(vistaPreliminar->viewport()->rect()).boundingRect();
-
-    float cociente1 = r2.x()/r1.x();
-    float cociente2 = r2.y()/r1.y();
-    float escala = qMin(cociente1,cociente2)*0.9;
-
-    vistaPreliminar->scale(escala,escala);
 }
 
 bool DialogConfPista::datosCompletos()
@@ -231,7 +197,7 @@ void DialogConfPista::seleccionarGuardarArchivo()
 
 void DialogConfPista::resetDialogoPista()
 {
-    escenaPreliminar->clear();
+    vistaPreliminar->vaciarContenido();
     leNombreArchivo->clear();
     leLargoPista->clear();
     leAnchoPista->clear();
