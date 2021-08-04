@@ -6,6 +6,17 @@ VistaConfPista::VistaConfPista(QWidget* w) :
     this->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     centroVista = QPointF();
+
+    cbActivarCotas = new QCheckBox(this);
+    cbActivarCotas->setText("Mostrar cotas");
+
+    QVBoxLayout* vLay = new QVBoxLayout();
+    QHBoxLayout* hLay = new QHBoxLayout();
+    vLay->addStretch(1);
+    hLay->addStretch(1);
+    hLay->addWidget(cbActivarCotas);
+    vLay->addItem(hLay);
+    setLayout(vLay);
 }
 
 void VistaConfPista::mouseMoveEvent(QMouseEvent *event)
@@ -40,3 +51,4 @@ void VistaConfPista::centrarVista(QPointF p)
     centerOn(p);
     centroVista = QPointF();
 }
+

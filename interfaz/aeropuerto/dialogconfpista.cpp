@@ -10,7 +10,6 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
 {
     ui->setupUi(this);
     configurarWidgets();
-    //poblarCabeceras();
 
     vistaPreliminar->setScene(escenaPreliminar);
     escenaPreliminar->setBackgroundBrush(QBrush("#f5f0f3"));
@@ -34,7 +33,6 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
         leUmbral2->setEnabled(state);
         lbUmbral2->setEnabled(state);
     });
-
 }
 
 DialogConfPista::~DialogConfPista()

@@ -68,6 +68,8 @@ private:
     QCheckBox* cbUmbral1;
     QCheckBox* cbUmbral2;
 
+    QCheckBox* cbActivarCotas;
+
     Pista pista;
 
 private slots:
