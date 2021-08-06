@@ -2,11 +2,15 @@
 #define KERNEL_H
 
 #include <QtCore>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QDir>
 
 #include "../interfaz/aeropuerto/editorpista.h"
 #include "interfaz/interfazprincipal.h"
 #include "../estructuras-datos/elementosaerop.h"
 #include "interfaz/aeronaves/flota.h"
+
 
 class InterfazPrincipal;
 //Q_DECLARE_METATYPE(Pista)
@@ -23,20 +27,17 @@ public:
 
 public slots:
     void graficarPista();
-    void sloCargarFlota();
-    void sloGuardarFlota();
+    void sloCargarFlota(QString);
+    void sloGuardarFlota(QString, QList<Aeronave>);
 
 private:
     bool inicializarEditorPista(InterfazPrincipal* ip);
-    bool inicializarFlota(InterfazPrincipal* ip);
+    QList<Flota*> listaFlotas;
     InterfazPrincipal* interfazPpal;
-    EditorPista* editorPista;
-    Flota* flota;
+    EditorPista* editorPista;  
 
 signals:
     void pistaActualizada(const Pista& p);
-    void sigCargarFlota();
-    void sigGuardarFlota();
 };
 
 #endif // KERNEL_H

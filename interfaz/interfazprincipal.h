@@ -1,22 +1,26 @@
 #ifndef INTERFAZPRINCIPAL_H
 #define INTERFAZPRINCIPAL_H
 
+#include <QMainWindow>
+#include <QButtonGroup>
+#include <QListWidgetItem>
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QDir>
+#include <QDebug>
+#include <QString>
+
 #include "kernel/kernel.h"
 #include "../estructuras-datos/elementosaerop.h"
 #include "aeropuerto/customgraphicsview.h"
 #include "aeropuerto/customgraphicsscene.h"
 #include "interfaz/aeropuerto/dialogconfpista.h"
 #include "aeronaves/aeronave.h"
-#include <QXmlStreamReader>
+#include "aeronaves/flota.h"
 #include "interfaz/aeropuerto/dialogconfrodaje.h"
 #include "interfaz/aeropuerto/dialogconfplataformas.h"
 #include "input-output/pistaparser.h"
-#include <QMainWindow>
-#include <QButtonGroup>
-#include <QListWidgetItem>
-#include <QDebug>
-#include <QString>
-#include <QDir>
+
 
 class QAction;
 class QPushButton;
@@ -37,11 +41,12 @@ public:
     ~InterfazPrincipal();
     QGraphicsView *getVistaPista();
     const Pista& getPista() const {return pista;}
+    void mostradorFlota(const QList<Aeronave>&);
 
 signals:
     void pistaCambiada();
-    void sigCargarFlota();
-    void sigGuardarFlota();
+    void sigCargarFlota(QString);
+    void sigGuardarFlota(QString, QList<Aeronave>);
 
 private:
     void crearMenu();
@@ -69,7 +74,6 @@ private slots:
     void crearPista();
     void sloCargarFlota();
     void sloGuardarFlota();
-
     void actualizarDatosPista(const Pista&);
 
 private:
@@ -82,8 +86,6 @@ private:
         MTOW,
         PORCENTAJE,
     };
-    void agregaAeronave(const Aeronave &aeronave);
-
 };
 
 #endif // INTERFAZPRINCIPAL_H

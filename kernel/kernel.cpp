@@ -8,7 +8,6 @@ Kernel::Kernel()
 Kernel::Kernel(InterfazPrincipal* ip)
 {
     inicializarEditorPista(ip);
-    inicializarFlota(ip);
 }
 
 Kernel::~Kernel()
@@ -18,25 +17,15 @@ Kernel::~Kernel()
 
 void Kernel::inicializar(InterfazPrincipal *ip)
 {
+    interfazPpal = ip;
     inicializarEditorPista(ip);
-    inicializarFlota(ip);
 }
 
 bool Kernel::inicializarEditorPista(InterfazPrincipal* ip)
 {
-    interfazPpal = ip;
     editorPista = new EditorPista(ip->getVistaPista());
     connect(this, SIGNAL(pistaActualizada(const Pista&)), editorPista, SLOT(actualizarPista(const Pista&)));
     //connect(ip->ui->botonGraficarPista, SIGNAL(clicked()), editor)
-    return true;
-}
-
-bool Kernel::inicializarFlota(InterfazPrincipal *ip)
-{
-    interfazPpal = ip;
-    flota = new Flota;
-    connect(this, SIGNAL(sigCargarFlota()), flota, SLOT(sloCargadorFlota()));
-    connect(this, SIGNAL(sigGuardarFlota()), flota, SLOT(sloGuardadorFlota()));
     return true;
 }
 
@@ -45,13 +34,32 @@ void Kernel::graficarPista()
     emit pistaActualizada(interfazPpal->getPista());
 }
 
-void Kernel::sloCargarFlota()
+void Kernel::sloCargarFlota(QString filename)
 {
-    emit sigCargarFlota();
+    QFile file(filename);
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        qDebug() << "Acá debería correr código para devolver Interfaz el error";
+        //QMessageBox::critical(this, "Error", file.errorString());
+        return;
+    }
+    Flota* miFlota = new Flota();
+    listaFlotas.append(miFlota);
+    miFlota->cargadorFlota(file);
+    file.close();
+    interfazPpal->mostradorFlota(miFlota->getListaFlota());
 }
 
-void Kernel::sloGuardarFlota()
+void Kernel::sloGuardarFlota(QString filename, QList<Aeronave> flota)
 {
-    emit sigGuardarFlota();
+    QString name = QFileInfo(filename).fileName();
+    int pos = name.lastIndexOf(QChar('.'));
+    Flota* miFlota = new Flota(name.left(pos), flota);
+    //Chequea si miFlota está en listaFlota
+    if (!listaFlotas.contains(miFlota)){
+        listaFlotas.append(miFlota);
+    }
+    else {
+        qDebug() << "Debería emitir error por nombre de flota repetido";
+    }
+    miFlota->guardadorFlota(filename);
 }
-

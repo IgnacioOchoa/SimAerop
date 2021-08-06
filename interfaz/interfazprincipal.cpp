@@ -1,10 +1,5 @@
 #include "interfazprincipal.h"
 #include "ui_interfazprincipal.h"
-#include <QMessageBox>
-#include <QFileDialog>
-#include <QDomDocument>
-#include <QDomElement>
-#include <QDebug>
 
 InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     : QMainWindow(parent)
@@ -60,10 +55,10 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
 
     //Conexiones Página Aeronaves
     connect(ui->pbCargarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::sloCargarFlota);
-    connect(this, SIGNAL(sigCargarFlota()), k, SLOT(sloCargarFlota()));
+    connect(this, SIGNAL(sigCargarFlota(QString)), k, SLOT(sloCargarFlota(QString)));
 
     connect(ui->pbGuardarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::sloGuardarFlota);
-    connect(this, SIGNAL(sigGuardarFlota()), k, SLOT(sloGuardarFlota()));
+    connect(this, SIGNAL(sigGuardarFlota(QString, QList<Aeronave>)), k, SLOT(sloGuardarFlota(QString, QList<Aeronave>)));
 
     //Conexiones Diálogo Configuración de Pista
     connect(dialogConfPista, SIGNAL(pistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
@@ -121,13 +116,65 @@ void InterfazPrincipal::actualizarDatosPista(const Pista& p)
     ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");
 }
 
-void InterfazPrincipal::sloCargarFlota()
+void InterfazPrincipal::mostradorFlota(const QList<Aeronave>& f)
 {
-    emit sigCargarFlota();
+    const int row = ui->tablaFlota->rowCount();
+    for (int i = 0;i<f.count();++i){
+        Aeronave aeronave = f[i];
+        ui->tablaFlota->insertRow(row+i);
+        ui->tablaFlota->setItem(row+i, ID, new QTableWidgetItem(aeronave.getId()));
+        ui->tablaFlota->setItem(row+i, NOMBRE, new QTableWidgetItem(aeronave.getNombre()));
+        ui->tablaFlota->setItem(row+i, ENVERGADURA, new QTableWidgetItem(aeronave.getEnvergadura()));
+        ui->tablaFlota->setItem(row+i, APPSPD, new QTableWidgetItem(aeronave.getVel_app()));
+        ui->tablaFlota->setItem(row+i, LDA, new QTableWidgetItem(aeronave.getLda()));
+        ui->tablaFlota->setItem(row+i, MTOW, new QTableWidgetItem(aeronave.getMtow()));
+        ui->tablaFlota->setItem(row+i, PORCENTAJE, new QTableWidgetItem(aeronave.getPerc()));
+        for (int i = 0; i < ui->tablaFlota->columnCount() - 1; i++) {
+            QTableWidgetItem* pItem = ui->tablaFlota->item(row, i);
+            pItem->setFlags(pItem->flags() & (~Qt::ItemIsEditable));
+        }
+    }
 }
 
+void InterfazPrincipal::sloCargarFlota()
+{
+    if (ui->tablaFlota->rowCount() != 0){
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::warning(this, "Advertencia", "Se han encontrado datos en el espacio de trabajo."
+                                                    " Si carga una nueva flota los datos se sobreescribirán."
+                                                    "¿Desea continuar?",
+                                     QMessageBox::Yes|QMessageBox::No);
+        if (reply == QMessageBox::No) {
+            return;
+        }
+    }
+    ui->tablaFlota->clearContents();
+    ui->tablaFlota->setRowCount(0);
+    auto filename = QFileDialog::getOpenFileName(this, "Abrir datos", QDir::rootPath(), "XML file (*.xml)");
+    if (filename.isEmpty()){
+        return;
+    }
+    emit sigCargarFlota(filename);
+}
 
 void InterfazPrincipal::sloGuardarFlota()
 {
-    emit sigGuardarFlota();
+    QList<Aeronave> flota;
+    for (int i = 0; i < ui->tablaFlota->rowCount(); i++) {
+        Aeronave aeronave(ui->tablaFlota->item(i, ID)->text(),
+                          ui->tablaFlota->item(i, NOMBRE)->text(),
+                          ui->tablaFlota->item(i, ENVERGADURA)->text(),
+                          ui->tablaFlota->item(i, APPSPD)->text(),
+                          ui->tablaFlota->item(i, LDA)->text(),
+                          ui->tablaFlota->item(i, MTOW)->text(),
+                          ui->tablaFlota->item(i, PORCENTAJE)->text());
+        flota.append(aeronave);
+    }
+    auto filename = QFileDialog::getSaveFileName(this, "Guardar",
+                                                 QDir::rootPath(),
+                                                 "XML file (*.xml)");
+    if (filename.isEmpty()){
+        return;
+    }
+    emit sigGuardarFlota(filename, flota);
 }
