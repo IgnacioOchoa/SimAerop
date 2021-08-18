@@ -1,13 +1,14 @@
 #include "cotagrafica.h"
 
-CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, QString orient, float dist, QFont font)
+CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist, QFont font)
 {
     // Para entender que es cada variable, ver el archivo referenciaCotas.png, en la misma carpeta
     // que este codigo fuente
-    penCota = QPen(QBrush("blue"),2);
+    penCota = QPen(QColor("blue"),2);
+    brushCota = QBrush("blue");
 
-    ori = orient;
-    if (ori == "HOR")
+    sentido = sen;
+    if (sentido == Sentido::HOR)
     {
         if (p1.x() < p2.x())   //Esto garantiza que P1 esta siempre a la izquierda de p2
         {
@@ -31,7 +32,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, QString orient, float dist, QFo
     }
 
     //Distancia entre los dos puntos, depende de si la orientacion es horizontal o vertical
-    longitud = ori == "HOR" ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
+    longitud = sentido == Sentido::HOR ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
 
     //Si no se ingresa un valor para dist se lo calcula como 1/4 de la distancia
     //entre puntos, y la posicion de la cota es por debajo de los puntos (caso HOR) o a la
@@ -48,7 +49,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, QString orient, float dist, QFo
 
     float xMin,xMax,yMin,yMax;
 
-    if(ori == "HOR")
+    if(sentido == Sentido::HOR)
     {
         if(distanciaPerp > 0) //La linea de cota está por debajo de los puntos
         {
@@ -90,7 +91,8 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, QString orient, float dist, QFo
 void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
     painter->setPen(penCota);
-    if(ori == "HOR")
+    painter->setBrush(brushCota);
+    if(sentido == Sentido::HOR)
     {
         if (distanciaPerp > 0) // cota por debajo de los puntos
         {
@@ -128,6 +130,17 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
                               coordLim + distanciaPerp, punto2.y());
         }
     }
+    if (sentido == Sentido::HOR)
+    {
+         graficarFlecha(punto1 + QPointF(0,distanciaPerp),Direccion::IZQUIERDA, painter);
+         graficarFlecha(punto2 + QPointF(0,distanciaPerp),Direccion::DERECHA, painter);
+    }
+    else if (sentido == Sentido::VER)
+    {
+        graficarFlecha(punto1 + QPointF(distanciaPerp,0), Direccion::ARRIBA, painter);
+        graficarFlecha(punto2 + QPointF(distanciaPerp,0), Direccion::ABAJO, painter);
+    }
+
 }
 
 QRectF CotaGrafica::boundingRect() const
@@ -135,8 +148,34 @@ QRectF CotaGrafica::boundingRect() const
     return bRect;
 }
 
-void CotaGrafica::graficarFlecha(QPointF posVertice, float size, QString direccion)
+void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter)
 {
+    float largo = sizeFlechaRef;
+    QVector<QPointF> tri;
+    if (ori == Direccion::ARRIBA)
+    {
+
+         tri = {posVertice, posVertice+QPointF(-largo/2, largo),
+                             posVertice+QPointF(largo/2,largo)};
+    }
+    else if (ori == Direccion::ABAJO)
+    {
+        tri = {posVertice, posVertice+QPointF(-largo/2, -largo),
+                            posVertice+QPointF(largo/2,-largo)};
+    }
+    else if (ori == Direccion::DERECHA)
+    {
+        tri = {posVertice, posVertice+QPointF(-largo, -largo/2),
+                            posVertice+QPointF(-largo,largo/2)};
+    }
+    else if (ori == Direccion::IZQUIERDA)
+    {
+        tri = {posVertice, posVertice+QPointF(largo, -largo/2),
+                            posVertice+QPointF(largo,largo/2)};
+    }
+
+    painter->drawConvexPolygon(QPolygonF(tri));
+
     /*QVector<QPointF> v1 = {pInter1, pInter1+QPointF(20,-10), pInter1+QPointF(20,10)};
     QVector<QPointF> v2 = {pInter2, pInter2+QPointF(-20,-10), pInter2+QPointF(-20,10)};
 
