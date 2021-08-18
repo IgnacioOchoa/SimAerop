@@ -1,12 +1,13 @@
 #include "cotagrafica.h"
 
-CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist, QFont font)
+CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist, QFont font)
+
 {
     // Para entender que es cada variable, ver el archivo referenciaCotas.png, en la misma carpeta
     // que este codigo fuente
     penCota = QPen(QColor("blue"),2);
     brushCota = QBrush("blue");
-
+    texto = valor;
     sentido = sen;
     if (sentido == Sentido::HOR)
     {
@@ -40,10 +41,12 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist, QFont 
     distanciaPerp = dist == 0 ? longitud*0.25 : dist;
 
     //Si no se ingresa una fuente (o sea que font es un QFont vacio) pongo una por default.
-    fuente = font == QFont() ? QFont("Arial",12) : font;
+    fuente = font == QFont() ? QFont("Arial",30) : font;
 
-    qreal alturaFont = fuente.pointSizeF();
-    margin = alturaFont/2;
+    anchoTexto = QFontMetrics(fuente).boundingRect(texto).width();
+    altoTexto = QFontMetrics(fuente).ascent();
+
+    margin = altoTexto/2;
 
     //Calculo de bounding Rect
 
@@ -60,7 +63,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist, QFont 
         }
         else //La linea de cota está por arriba de los puntos
         {
-            yMin = qMin(punto1.y(),punto2.y()) + distanciaPerp - margin - alturaFont; //aca distanciaPerp es negativo
+            yMin = qMin(punto1.y(),punto2.y()) + distanciaPerp - margin - altoTexto; //aca distanciaPerp es negativo
             xMin = qMin(punto1.x(),punto2.x());
             yMax = qMax(punto1.y(), punto2.y());
             xMax = xMin + longitud;
@@ -78,7 +81,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist, QFont 
         else // La linea de cota está a la izquierda de los puntos
         {
             yMin = qMin(punto1.y(), punto2.y());
-            xMin = qMin(punto1.x(), punto2.x()) + distanciaPerp - margin - alturaFont; //aca distanciaPerp es negativo
+            xMin = qMin(punto1.x(), punto2.x()) + distanciaPerp - margin - anchoTexto; //aca distanciaPerp es negativo
             yMax = yMin + longitud;
             xMax = qMax(punto1.x(), punto2.x());
         }
@@ -140,7 +143,20 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         graficarFlecha(punto1 + QPointF(distanciaPerp,0), Direccion::ARRIBA, painter);
         graficarFlecha(punto2 + QPointF(distanciaPerp,0), Direccion::ABAJO, painter);
     }
-
+    painter->setFont(fuente);
+    if (sentido == Sentido::HOR)
+    {
+        float offset = anchoTexto/2;
+        QPointF posCentro = punto1/2 + punto2/2 + QPointF(-offset,distanciaPerp-margin);
+        graficarTexto(posCentro, texto, painter);
+    }
+    else if (sentido == Sentido::VER)
+    {
+        float hOffset = anchoTexto;
+        float vOffset = altoTexto/2.0;
+        QPointF posCentro = punto1/2 + punto2/2 + QPointF(distanciaPerp-margin-hOffset,vOffset);
+        graficarTexto(posCentro, texto, painter);
+    }
 }
 
 QRectF CotaGrafica::boundingRect() const
@@ -175,17 +191,10 @@ void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *pa
     }
 
     painter->drawConvexPolygon(QPolygonF(tri));
-
-    /*QVector<QPointF> v1 = {pInter1, pInter1+QPointF(20,-10), pInter1+QPointF(20,10)};
-    QVector<QPointF> v2 = {pInter2, pInter2+QPointF(-20,-10), pInter2+QPointF(-20,10)};
-
-    escenaPreliminar->addPolygon(QPolygonF(v1),penCota, brushFlecha);
-    escenaPreliminar->addPolygon(QPolygonF(v2),penCota, brushFlecha);*/
 }
 
-void CotaGrafica::graficarTexto(QPointF posCentro, QString texto)
+void CotaGrafica::graficarTexto(QPointF posCentro, QString texto, QPainter *painter)
 {
-    /*QGraphicsTextItem* txt1 = escenaPreliminar->addText(QString::number(pista.largo), QFont("Arial",30));
-    txt1->setPos((pInter1+pInter2)/2 + QPointF(txt1->textWidth()*5,20));*/
+    painter->drawText(posCentro,texto);
 }
 

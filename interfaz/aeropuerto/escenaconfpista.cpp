@@ -23,13 +23,13 @@ void EscenaConfPista::graficarPista(QRectF rectPista)
     QPointF p3 = {grRectItm->rect().x(), grRectItm->rect().y()};
     QPointF p4 = {grRectItm->rect().x() + grRectItm->rect().width(),grRectItm->rect().y()};
 
-    CotaGrafica* cota1 = new CotaGrafica(p3,p4,CotaGrafica::Sentido::HOR,-100);
+    CotaGrafica* cota1 = new CotaGrafica(p3,p4,CotaGrafica::Sentido::HOR,"2000", -100);
     addItem(cota1);
     cota1->hide();
 
     listaCotas.append(cota1);
 
-    CotaGrafica* cota2 = new CotaGrafica(p1,p3,CotaGrafica::Sentido::VER,-100);
+    CotaGrafica* cota2 = new CotaGrafica(p1,p3,CotaGrafica::Sentido::VER,"50", -100);
     addItem(cota2);
     cota2->hide();
 

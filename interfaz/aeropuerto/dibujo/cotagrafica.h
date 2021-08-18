@@ -13,11 +13,11 @@ public:
     enum class Direccion {ARRIBA,ABAJO,DERECHA,IZQUIERDA};
     enum class Sentido {HOR,VER};
 
-    CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist = 0, QFont font = QFont());
+    CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist = 0, QFont font = QFont());
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     virtual QRectF boundingRect() const override;
     void graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter);
-    void graficarTexto(QPointF posCentro, QString texto);
+    void graficarTexto(QPointF posCentro, QString texto, QPainter *painter);
 
 private:
     QPointF punto1;
@@ -28,6 +28,9 @@ private:
     QFont fuente;
     qreal margin;
     QRectF bRect;
+    QString texto;
+    qreal anchoTexto;
+    qreal altoTexto;
 
     const int sizeFlechaRef = 30;
 
