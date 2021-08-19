@@ -90,8 +90,7 @@ void DialogConfPista::poblarPista()
 
 void DialogConfPista::dibujarPista()
 {
-    vistaPreliminar->graficarPista(QRect(-pista.largo/2,-pista.ancho/2,
-                                        pista.largo,pista.ancho));
+    vistaPreliminar->graficarPista(pista);
 }
 
 void DialogConfPista::botonGraficarApretado()

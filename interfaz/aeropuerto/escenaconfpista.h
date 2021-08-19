@@ -5,12 +5,13 @@
 #include <QObject>
 #include <QGraphicsRectItem>
 #include "dibujo/cotagrafica.h"
+#include "../../estructuras-datos/elementosaerop.h"
 
 class EscenaConfPista : public QGraphicsScene
 {
 public:
     EscenaConfPista(QObject* ob = nullptr);
-    void graficarPista(QRectF rectPista);
+    void graficarPista(Pista p);
     void mostrarCotas(bool);
     void limpiar();
 

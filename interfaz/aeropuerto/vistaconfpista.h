@@ -8,6 +8,7 @@
 #include <QCheckBox>
 #include <QBoxLayout>
 #include "escenaconfpista.h"
+#include "../../estructuras-datos/elementosaerop.h"
 
 class VistaConfPista : public QGraphicsView
 {
@@ -21,7 +22,7 @@ public:
     void centrarVista(QPointF p = QPointF());
     void ajustarContenidos();
 
-    void graficarPista(QRectF rectPista);
+    void graficarPista(Pista p);
     void vaciarContenido();
 
 public slots:

@@ -3,12 +3,21 @@
 CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist, QFont font)
 
 {
+    setAcceptHoverEvents(true);
+
     // Para entender que es cada variable, ver el archivo referenciaCotas.png, en la misma carpeta
     // que este codigo fuente
     penCota = QPen(QColor("blue"),2);
     brushCota = QBrush("blue");
+
+    penCotaHover = QPen(QColor("#9f63bf"),6);
+    brushCotaHover = QBrush("#9f63bf");
+
     texto = valor;
     sentido = sen;
+
+    hover = false;
+
     if (sentido == Sentido::HOR)
     {
         if (p1.x() < p2.x())   //Esto garantiza que P1 esta siempre a la izquierda de p2
@@ -93,8 +102,19 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
 
 void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setPen(penCota);
-    painter->setBrush(brushCota);
+    if(!hover)
+    {
+        painter->setPen(penCota);
+        painter->setBrush(brushCota);
+        fuente.setBold(false);
+    }
+    else
+    {
+        painter->setPen(penCotaHover);
+        painter->setBrush(brushCotaHover);
+        fuente.setBold(true);
+    }
+
     if(sentido == Sentido::HOR)
     {
         if (distanciaPerp > 0) // cota por debajo de los puntos
@@ -196,5 +216,23 @@ void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *pa
 void CotaGrafica::graficarTexto(QPointF posCentro, QString texto, QPainter *painter)
 {
     painter->drawText(posCentro,texto);
+}
+
+void CotaGrafica::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
+{
+    if (event->type() == QEvent::GraphicsSceneHoverEnter)
+        {
+            hover = true;
+        }
+    QGraphicsItem::hoverEnterEvent(event);
+}
+
+void CotaGrafica::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
+{
+    if (event->type() == QEvent::GraphicsSceneHoverLeave)
+        {
+            hover = false;
+        }
+        QGraphicsItem::hoverLeaveEvent(event);
 }
 

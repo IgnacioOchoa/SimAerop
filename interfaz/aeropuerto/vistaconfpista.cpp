@@ -69,9 +69,9 @@ void VistaConfPista::ajustarContenidos()
     scale(escala,escala);
 }
 
-void VistaConfPista::graficarPista(QRectF rectPista)
+void VistaConfPista::graficarPista(Pista p)
 {
-    escena->graficarPista(rectPista);
+    escena->graficarPista(p);
     escena->mostrarCotas(cbActivarCotas->isChecked());
     ajustarContenidos();
 }

@@ -5,6 +5,7 @@
 #include <QFont>
 #include <QPainter>
 #include <QDebug>
+#include <QGraphicsSceneEvent>
 
 class CotaGrafica : public QGraphicsItem
 {
@@ -18,6 +19,12 @@ public:
     virtual QRectF boundingRect() const override;
     void graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter);
     void graficarTexto(QPointF posCentro, QString texto, QPainter *painter);
+
+    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+
+    //Hay que reimplementar [virtual] QPainterPath QGraphicsItem::shape() const
+    //para ser mas precisos con el hover
 
 private:
     QPointF punto1;
@@ -36,6 +43,10 @@ private:
 
     QPen penCota;
     QBrush brushCota;
+    QPen penCotaHover;
+    QBrush brushCotaHover;
+
+    bool hover;
 };
 
 #endif // COTAGRAFICA_H
