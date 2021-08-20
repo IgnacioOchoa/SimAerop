@@ -1,4 +1,4 @@
-QT       += core gui
+QT       += core gui xml
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -9,16 +9,49 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    main.cpp \
-    interfazprincipal.cpp
+    input-output/pistaparser.cpp \
+    interfaz/aeronaves/aeronave.cpp \
+    interfaz/aeronaves/flota.cpp \
+    interfaz/aeropuerto/customgraphicsscene.cpp \
+    interfaz/aeropuerto/customgraphicsview.cpp \
+    interfaz/aeropuerto/dialogconfpista.cpp \
+    interfaz/aeropuerto/dialogconfplataformas.cpp \
+    interfaz/aeropuerto/dialogconfrodaje.cpp \
+    interfaz/aeropuerto/dibujo/cotagrafica.cpp \
+    interfaz/aeropuerto/editorpista.cpp \
+    interfaz/aeropuerto/escenaconfpista.cpp \
+    interfaz/aeropuerto/vistaconfpista.cpp \
+    interfaz/interfazprincipal.cpp \
+    kernel/kernel.cpp \
+    main.cpp
 
 HEADERS += \
-    interfazprincipal.h
+    estructuras-datos/elementosaerop.h \
+    input-output/pistaparser.h \
+    interfaz/aeronaves/aeronave.h \
+    interfaz/aeronaves/flota.h \
+    interfaz/aeropuerto/customgraphicsscene.h \
+    interfaz/aeropuerto/customgraphicsview.h \
+    interfaz/aeropuerto/dialogconfpista.h \
+    interfaz/aeropuerto/dialogconfplataformas.h \
+    interfaz/aeropuerto/dialogconfrodaje.h \
+    interfaz/aeropuerto/dibujo/cotagrafica.h \
+    interfaz/aeropuerto/editorpista.h \
+    interfaz/aeropuerto/escenaconfpista.h \
+    interfaz/aeropuerto/vistaconfpista.h \
+    interfaz/interfazprincipal.h \
+    kernel/kernel.h
 
 FORMS += \
-    interfazprincipal.ui
+    interfaz/aeropuerto/dialogconfpista.ui \
+    interfaz/aeropuerto/dialogconfplataformas.ui \
+    interfaz/aeropuerto/dialogconfrodaje.ui \
+    interfaz/interfazprincipal.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    Recursos.qrc

@@ -1,0 +1,101 @@
+/*QWidget {
+    font: large;
+    margin: 10px;
+}*/
+
+QMenuBar {
+    border-style : solid 5px;
+    background-color : #dfe4ed
+}
+
+QMainWindow {
+    background-color : white
+}
+
+QPushButton#pbAeronaves,
+QPushButton#pbAeropuerto,
+QPushButton#pbOperaciones,
+QPushButton#pbSimulacion {
+background-color: white;
+border:none;
+}
+
+QPushButton#pbAeronaves:hover,
+QPushButton#pbAeropuerto:hover,
+QPushButton#pbOperaciones:hover,
+QPushButton#pbSimulacion:hover {
+background-color: #E9EFF0;;
+}
+
+QPushButton#pbAeronaves:checked {background-color : #f5fcfb}
+QPushButton#pbAeropuerto:checked {background-color : #fcfbf7}
+QPushButton#pbOperaciones:checked {background-color : #fbf7fc}
+QPushButton#pbSimulacion:checked {background-color : #fcf6f5}
+
+#paginaAeronaves {background-color : #f5fcfb}
+#paginaAeropuerto {background-color : #fcfbf7}
+#paginaOperaciones {background-color : #fbf7fc}
+#paginaSimulacion {background-color : #fcf6f5}
+
+
+QListWidget {
+    border-style: solid 3px black;
+    padding = 3px;
+    background-color: #9bbaa7;
+}
+
+QPlainTextEdit {
+    border-style: solid;
+    border-width: 1px;
+    background-color: white
+}
+
+QListWidget::item {
+    color: black;
+    padding: 20px;
+    font: bold large;
+    background-color: #D5DADB;
+}
+
+QListWidget::item:hover {
+    background-color: #E9EFF0;
+}
+
+QListWidget::item:selected {
+    background-color: transparent;
+}
+
+QPushButton#BT_iniciarSimulacion {
+    border-radius : 5px;
+    background-color : #98FB98;
+    border-style: solid;
+    border-width : 2px;
+    border-color: black
+}
+
+QPushButton#BT_iniciarSimulacion:pressed {
+
+    background-color: #98AA98
+
+}
+
+QLabel#tituloConfPista
+{
+    border : 1px solid #919ba8;
+    background : #d7dbe0
+}
+
+QCheckBox#confPistaChk::indicator,
+QCheckBox#confCalleRodChk::indicator,
+QCheckBox#confPlatChk::indicator
+{
+    width: 37px;
+    height: 37px;
+}
+
+QCheckBox#confPistaChk::indicator:checked,
+QCheckBox#confCalleRodChk::indicator:checked,
+QCheckBox#confPlatChk::indicator:checked
+{
+    image: url(:/imagenes/imagenes/Check_mark.png)
+}
