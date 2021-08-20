@@ -1,0 +1,993 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   sodipodi:docname="Cotas.svg"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   id="svg8"
+   version="1.1"
+   viewBox="0 0 210 297"
+   height="297mm"
+   width="210mm">
+  <defs
+     id="defs2">
+    <rect
+       id="rect2814"
+       height="111.18412"
+       width="235.19718"
+       y="-429.7694"
+       x="-132.56569" />
+    <rect
+       id="rect2268"
+       height="126.85021"
+       width="344.90328"
+       y="-367.39286"
+       x="-127.75595" />
+    <rect
+       id="rect2093"
+       height="43.297663"
+       width="67.351921"
+       y="-260.32052"
+       x="136.842" />
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker1479"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path1477"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) rotate(180) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker1469"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1467"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) translate(1,0)" />
+    </marker>
+    <rect
+       id="rect1415"
+       height="35.012308"
+       width="93.544335"
+       y="-68.955538"
+       x="46.237628" />
+    <marker
+       inkscape:stockid="Arrow2Lend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker1303"
+       style="overflow:visible;"
+       inkscape:isstock="true">
+      <path
+         id="path1301"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) rotate(180) translate(1,0)" />
+    </marker>
+    <marker
+       inkscape:stockid="Arrow2Lstart"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="marker1293"
+       style="overflow:visible"
+       inkscape:isstock="true">
+      <path
+         id="path1291"
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         transform="scale(1.1) translate(1,0)" />
+    </marker>
+    <rect
+       id="rect1205"
+       height="63.122024"
+       width="153.08036"
+       y="90.33631"
+       x="63.5" />
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible;"
+       id="Arrow2Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         id="path908" />
+    </marker>
+    <marker
+       inkscape:collect="always"
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="Arrow2Lstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lstart">
+      <path
+         transform="scale(1.1) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="fill-rule:evenodd;stroke-width:0.625;stroke-linejoin:round;stroke:#000000;stroke-opacity:1;fill:#000000;fill-opacity:1"
+         id="path905" />
+    </marker>
+    <rect
+       x="63.5"
+       y="90.336311"
+       width="153.08035"
+       height="63.122025"
+       id="rect1205-6" />
+    <rect
+       x="63.5"
+       y="90.336311"
+       width="153.08035"
+       height="63.122025"
+       id="rect1231" />
+    <rect
+       x="63.5"
+       y="90.33631"
+       width="153.08036"
+       height="63.122024"
+       id="rect1287" />
+    <rect
+       id="rect1289"
+       height="63.122025"
+       width="153.08035"
+       y="90.336311"
+       x="63.5" />
+    <rect
+       x="46.237628"
+       y="-68.955538"
+       width="93.544335"
+       height="35.012308"
+       id="rect1421" />
+    <rect
+       x="63.5"
+       y="90.33631"
+       width="153.08036"
+       height="63.122024"
+       id="rect1461" />
+    <rect
+       id="rect1463"
+       height="63.122025"
+       width="153.08035"
+       y="90.336311"
+       x="63.5" />
+    <rect
+       x="46.237628"
+       y="-68.955538"
+       width="93.544335"
+       height="35.012308"
+       id="rect1465" />
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1469-2"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lstart">
+      <path
+         transform="matrix(1.1,0,0,1.1,1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1467-8" />
+    </marker>
+    <marker
+       inkscape:isstock="true"
+       style="overflow:visible"
+       id="marker1479-1"
+       refX="0"
+       refY="0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend">
+      <path
+         transform="matrix(-1.1,0,0,-1.1,-1.1,0)"
+         d="M 8.7185878,4.0337352 -2.2072895,0.01601326 8.7185884,-4.0017078 c -1.7454984,2.3720609 -1.7354408,5.6174519 -6e-7,8.035443 z"
+         style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.625;stroke-linejoin:round;stroke-opacity:1"
+         id="path1477-2" />
+    </marker>
+    <rect
+       id="rect1461-0"
+       height="63.122025"
+       width="153.08035"
+       y="90.336311"
+       x="63.5" />
+    <rect
+       id="rect1720"
+       height="63.122025"
+       width="153.08035"
+       y="90.336311"
+       x="63.5" />
+    <rect
+       x="63.5"
+       y="90.336311"
+       width="153.08035"
+       height="63.122025"
+       id="rect1463-3" />
+    <rect
+       x="63.5"
+       y="90.336311"
+       width="153.08035"
+       height="63.122025"
+       id="rect1723" />
+    <rect
+       id="rect1465-1"
+       height="35.012306"
+       width="93.544334"
+       y="-68.955536"
+       x="46.237629" />
+    <rect
+       id="rect1726"
+       height="35.012306"
+       width="93.544334"
+       y="-68.955536"
+       x="46.237629" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2093-6" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2106" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2093-0" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2106-0" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2093-8" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2106-2" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2093-9" />
+    <rect
+       x="136.842"
+       y="-260.32053"
+       width="67.351921"
+       height="43.297665"
+       id="rect2174" />
+    <rect
+       id="rect2093-9-8"
+       height="43.297665"
+       width="67.351921"
+       y="-260.32053"
+       x="136.842" />
+    <rect
+       id="rect2206"
+       height="43.297665"
+       width="67.351921"
+       y="-260.32053"
+       x="136.842" />
+    <rect
+       id="rect2093-9-3"
+       height="43.297665"
+       width="67.351921"
+       y="-260.32053"
+       x="136.842" />
+    <rect
+       id="rect2206-8"
+       height="43.297665"
+       width="67.351921"
+       y="-260.32053"
+       x="136.842" />
+    <rect
+       id="rect2093-9-0"
+       height="43.297665"
+       width="67.351921"
+       y="-260.32053"
+       x="136.842" />
+    <rect
+       id="rect2206-0"
+       height="43.297665"
+       width="67.351921"
+       y="-260.32053"
+       x="136.842" />
+    <rect
+       x="-127.75595"
+       y="-367.39285"
+       width="344.90329"
+       height="126.85021"
+       id="rect2268-7" />
+    <rect
+       x="-127.75595"
+       y="-367.39285"
+       width="344.90329"
+       height="126.85021"
+       id="rect2296" />
+    <rect
+       x="-127.75595"
+       y="-367.39285"
+       width="344.90329"
+       height="126.85021"
+       id="rect2268-76" />
+    <rect
+       x="-127.75595"
+       y="-367.39285"
+       width="344.90329"
+       height="126.85021"
+       id="rect2296-2" />
+    <rect
+       id="rect2268-76-4"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       id="rect2346"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       x="-127.75595"
+       y="-367.39285"
+       width="344.90329"
+       height="126.85021"
+       id="rect2268-2" />
+    <rect
+       x="-127.75595"
+       y="-367.39285"
+       width="344.90329"
+       height="126.85021"
+       id="rect2379" />
+    <rect
+       id="rect2268-2-9"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       id="rect2411"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       id="rect2268-2-1"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       id="rect2411-7"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       id="rect2268-2-4"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       id="rect2411-0"
+       height="126.85021"
+       width="344.90329"
+       y="-367.39285"
+       x="-127.75595" />
+    <rect
+       x="-132.56569"
+       y="-429.76941"
+       width="235.19717"
+       height="111.18412"
+       id="rect2814-0" />
+    <rect
+       x="-132.56569"
+       y="-429.76941"
+       width="235.19717"
+       height="111.18412"
+       id="rect2839" />
+    <rect
+       x="-132.56569"
+       y="-429.76941"
+       width="235.19717"
+       height="111.18412"
+       id="rect2814-5" />
+    <rect
+       x="-132.56569"
+       y="-429.76941"
+       width="235.19717"
+       height="111.18412"
+       id="rect2904" />
+    <rect
+       id="rect2814-5-5"
+       height="111.18412"
+       width="235.19717"
+       y="-429.76941"
+       x="-132.56569" />
+    <rect
+       id="rect2945"
+       height="111.18412"
+       width="235.19717"
+       y="-429.76941"
+       x="-132.56569" />
+  </defs>
+  <sodipodi:namedview
+     inkscape:window-maximized="1"
+     inkscape:window-y="-9"
+     inkscape:window-x="-9"
+     inkscape:window-height="1051"
+     inkscape:window-width="1920"
+     inkscape:snap-midpoints="true"
+     inkscape:snap-smooth-nodes="true"
+     showborder="false"
+     showgrid="false"
+     inkscape:document-rotation="0"
+     inkscape:current-layer="layer1"
+     inkscape:document-units="mm"
+     inkscape:cy="-184.48523"
+     inkscape:cx="1477.7743"
+     inkscape:zoom="0.24748737"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     borderopacity="1.0"
+     bordercolor="#666666"
+     pagecolor="#ffffff"
+     id="base" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     id="layer1"
+     inkscape:groupmode="layer"
+     inkscape:label="Layer 1">
+    <g
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       transform="translate(10.690781,-22.45064)"
+       id="g2683">
+      <circle
+         r="5.8586297"
+         cy="-199.81573"
+         cx="-64.444939"
+         id="circle1263"
+         style="opacity:1;fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063" />
+      <path
+         sodipodi:nodetypes="cc"
+         id="path1265"
+         d="M 217.14733,-102.35916 V -234.68403"
+         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <circle
+         style="opacity:1;fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063"
+         id="circle1267"
+         cx="217.14732"
+         cy="-234.68402"
+         r="5.8586297" />
+      <path
+         sodipodi:nodetypes="cc"
+         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m -64.444937,-102.35916 v -97.45657"
+         id="path1269" />
+      <path
+         id="path1271"
+         d="M -64.444937,-118.20607 H 217.14733"
+         style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1293);marker-end:url(#marker1303)" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+         d="M -64.444937,-199.81573 H 217.14733"
+         id="path1273" />
+      <path
+         sodipodi:nodetypes="cc"
+         id="path1275"
+         d="m -0.62242792,-200.19372 v 82.30433"
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         transform="translate(-88.446428,-305.83804)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1287);fill:#000000;fill-opacity:1;stroke:none;"
+         id="text1279"
+         xml:space="preserve"><tspan
+           x="63.5"
+           y="99.991403"><tspan>longitud</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         id="text1285"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1289);fill:#000000;fill-opacity:1;stroke:none;"
+         transform="rotate(-90,-84.409907,22.501863)"><tspan
+           x="63.5"
+           y="99.991403"><tspan>distanciaPerp</tspan></tspan></text>
+      <text
+         transform="translate(14.432554,-71.093694)"
+         style="font-style:normal;font-weight:normal;font-size:12.7px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1421);fill:#000000;fill-opacity:1;stroke:none;"
+         id="text1419"
+         xml:space="preserve"><tspan
+           x="46.238281"
+           y="-57.368483"><tspan
+             style="shape-inside:url(#rect1421)">2000</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#11c300;stroke-width:0.565;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 217.14733,-234.68403 H 139.85119"
+         id="path2089" />
+      <text
+         xml:space="preserve"
+         id="text2091"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         transform="translate(3.2072343,10.156242)"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymin</tspan></tspan></text>
+      <path
+         id="path2089-21"
+         d="M -64.444937,-102.35916 H -141.74108"
+         style="fill:none;stroke:#11c300;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         transform="translate(-278.38504,142.48112)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093-9);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         id="text2091-0"
+         xml:space="preserve"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymax</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         id="text2266"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268);fill:#c300af;fill-opacity:1;stroke:none;"
+         transform="translate(30.616071,120.95238)"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmin</tspan></tspan></text>
+      <path
+         id="path2089-24"
+         d="m -64.444937,-277.11187 v 77.29614"
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         transform="translate(308.46656,86.084085)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268-2);fill:#c300af;fill-opacity:1;stroke:none;"
+         id="text2266-3"
+         xml:space="preserve"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmax</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 217.14733,-311.98017 v 77.29614"
+         id="path2089-24-9" />
+    </g>
+    <g
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       transform="translate(10.896459,50.85067)"
+       id="g2750">
+      <circle
+         style="opacity:1;fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063"
+         id="path845"
+         cx="-64.444939"
+         cy="75.406242"
+         r="5.8586297" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M -64.444937,75.406241 V -56.918632"
+         id="path849"
+         sodipodi:nodetypes="cc" />
+      <circle
+         r="5.8586297"
+         cy="40.537941"
+         cx="217.14732"
+         id="circle869"
+         style="opacity:1;fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063" />
+      <path
+         id="path873"
+         d="M 217.14733,40.537937 V -56.918632"
+         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Arrow2Lstart);marker-end:url(#Arrow2Lend)"
+         d="M -64.444937,-41.799583 H 217.14733"
+         id="path875" />
+      <path
+         id="path877"
+         d="M -64.444937,40.537937 H 217.14733"
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 76.351196,-41.766386 V 40.537937"
+         id="path1201"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         id="text1203"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1205);fill:#000000;fill-opacity:1;stroke:none;"
+         transform="translate(-75.973214,-44.979166)"><tspan
+           x="63.5"
+           y="99.991403"><tspan>longitud</tspan></tspan></text>
+      <text
+         transform="rotate(-90,34.613486,64.173656)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1205-6);fill:#000000;fill-opacity:1;stroke:none;"
+         id="text1203-4"
+         xml:space="preserve"><tspan
+           x="63.5"
+           y="99.991403"><tspan>distanciaPerp</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         id="text1413"
+         style="font-style:normal;font-weight:normal;font-size:12.7px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1415);fill:#000000;fill-opacity:1;stroke:none;"
+         transform="translate(14.432554,7.4835468)"><tspan
+           x="46.238281"
+           y="-57.368483"><tspan
+             style="shape-inside:url(#rect1415)">2000</tspan></tspan></text>
+      <path
+         id="path2089-5"
+         d="m 62.702326,-59.104125 h -77.29614"
+         style="fill:none;stroke:#11c300;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         transform="translate(-151.23777,185.73614)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093-6);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         id="text2091-6"
+         xml:space="preserve"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymin</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#11c300;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M -64.444937,75.406241 H -141.74108"
+         id="path2089-21-9" />
+      <text
+         xml:space="preserve"
+         id="text2091-0-4"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093-9-8);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         transform="translate(-278.38503,320.24653)"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymax</tspan></tspan></text>
+      <text
+         transform="translate(30.616068,399.95412)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268-7);fill:#c300af;fill-opacity:1;stroke:none;"
+         id="text2266-8"
+         xml:space="preserve"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmin</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M -64.444937,1.889866 V 79.186008"
+         id="path2089-24-2" />
+      <text
+         xml:space="preserve"
+         id="text2266-3-0"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268-2-9);fill:#c300af;fill-opacity:1;stroke:none;"
+         transform="translate(308.46656,438.60218)"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmax</tspan></tspan></text>
+      <path
+         id="path2089-24-9-0"
+         d="M 217.14733,40.537937 V 117.83408"
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       transform="translate(-11.759859,47.039437)"
+       id="g2512">
+      <circle
+         r="5.8586297"
+         cy="-398.92831"
+         cx="-236.72685"
+         id="circle1435"
+         style="fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063"
+         transform="rotate(90)" />
+      <path
+         sodipodi:nodetypes="cc"
+         id="path1437"
+         d="M 398.9283,-236.72685 H 531.25317"
+         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <circle
+         style="fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063"
+         id="circle1439"
+         cx="44.865398"
+         cy="-433.7966"
+         r="5.8586297"
+         transform="rotate(90)" />
+      <path
+         sodipodi:nodetypes="cc"
+         style="fill:none;stroke:#000000;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 433.7966,44.865419 h 97.45657"
+         id="path1441" />
+      <path
+         id="path1443"
+         d="M 516.13412,-236.72685 V 44.865419"
+         style="fill:none;stroke:#000000;stroke-width:0.6;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1469);marker-end:url(#marker1479)" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+         d="M 433.7966,-236.72685 V 44.865419"
+         id="path1445" />
+      <path
+         sodipodi:nodetypes="cc"
+         id="path1447"
+         d="M 516.10092,-198.29495 H 433.7966"
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1" />
+      <text
+         transform="rotate(90,383.78442,135.52928)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1461);fill:#000000;fill-opacity:1;stroke:none;"
+         id="text1451"
+         xml:space="preserve"><tspan
+           x="63.5"
+           y="99.991403"><tspan>longitud</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         id="text1457"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1463);fill:#000000;fill-opacity:1;stroke:none;"
+         transform="translate(375.5474,-304.20631)"><tspan
+           x="63.5"
+           y="99.991403"><tspan>distanciaPerp</tspan></tspan></text>
+      <text
+         transform="rotate(-90,268.68154,-296.21481)"
+         style="font-style:normal;font-weight:normal;font-size:12.7px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1465);fill:#000000;fill-opacity:1;stroke:none;"
+         id="text1459"
+         xml:space="preserve"><tspan
+           x="46.238281"
+           y="-57.368483"><tspan
+             style="shape-inside:url(#rect1465)">2000</tspan></tspan></text>
+      <path
+         id="path2089-2"
+         d="M 398.9283,-236.72685 H 321.63216"
+         style="fill:none;stroke:#11c300;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         transform="translate(184.9882,8.113422)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093-0);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         id="text2091-9"
+         xml:space="preserve"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymin</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#11c300;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 433.7966,44.865419 H 356.50046"
+         id="path2089-21-92" />
+      <text
+         xml:space="preserve"
+         id="text2091-0-1"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093-9-3);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         transform="translate(219.85651,289.70571)"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymax</tspan></tspan></text>
+      <text
+         transform="translate(493.9893,84.04126)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268-76);fill:#c300af;fill-opacity:1;stroke:none;"
+         id="text2266-1"
+         xml:space="preserve"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmin</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 398.9283,-314.02299 v 77.29614"
+         id="path2089-24-6" />
+      <text
+         xml:space="preserve"
+         id="text2266-3-5"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268-2-1);fill:#c300af;fill-opacity:1;stroke:none;"
+         transform="translate(622.57241,442.92967)"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmax</tspan></tspan></text>
+      <path
+         id="path2089-24-9-5"
+         d="M 531.25317,44.865419 V 122.16156"
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <g
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       transform="translate(-10.690781,40.624968)"
+       id="g2606">
+      <circle
+         transform="matrix(0,1,1,0,0,0)"
+         style="fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063"
+         id="circle1435-8"
+         cx="-231.66777"
+         cy="782.30646"
+         r="5.8586297" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 782.30642,-231.66776 H 649.98154"
+         id="path1437-1"
+         sodipodi:nodetypes="cc" />
+      <circle
+         transform="matrix(0,1,1,0,0,0)"
+         r="5.8586297"
+         cy="747.43817"
+         cx="49.924496"
+         id="circle1439-6"
+         style="fill:#000000;fill-opacity:0.488189;stroke:#3f3f3f;stroke-width:1.665;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:0.996063" />
+      <path
+         id="path1441-5"
+         d="M 747.43812,49.924517 H 649.98154"
+         style="fill:none;stroke:#000000;stroke-width:0.499999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         sodipodi:nodetypes="cc" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.600001;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#marker1469-2);marker-end:url(#marker1479-1)"
+         d="M 665.10059,-231.66776 V 49.924517"
+         id="path1443-5" />
+      <path
+         id="path1445-6"
+         d="M 747.43812,-231.66776 V 49.924517"
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1" />
+      <path
+         style="fill:none;stroke:#000000;stroke-width:0.4;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:3.2, 1.6;stroke-dashoffset:0;stroke-opacity:1"
+         d="m 665.13379,-193.23586 h 82.30433"
+         id="path1447-0"
+         sodipodi:nodetypes="cc" />
+      <text
+         xml:space="preserve"
+         id="text1451-9"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1461-0);fill:#000000;fill-opacity:1;stroke:none;"
+         transform="rotate(90,557.75206,297.16912)"><tspan
+           x="63.5"
+           y="99.991403"><tspan>longitud</tspan></tspan></text>
+      <text
+         transform="translate(607.58939,-300.65912)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1463-3);fill:#000000;fill-opacity:1;stroke:none;"
+         id="text1457-2"
+         xml:space="preserve"><tspan
+           x="63.5"
+           y="99.991403"><tspan>distanciaPerp</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         id="text1459-4"
+         style="font-style:normal;font-weight:normal;font-size:12.7px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect1465-1);fill:#000000;fill-opacity:1;stroke:none;"
+         transform="rotate(-90,343.76482,-370.77473)"><tspan
+           x="46.238281"
+           y="-57.368483"><tspan
+             style="shape-inside:url(#rect1465-1)">2000</tspan></tspan></text>
+      <path
+         id="path2089-3"
+         d="M 786.08619,-231.66776 H 708.79005"
+         style="fill:none;stroke:#11c300;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         transform="translate(572.14609,13.172508)"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093-8);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         id="text2091-7"
+         xml:space="preserve"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymin</tspan></tspan></text>
+      <path
+         style="fill:none;stroke:#11c300;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="M 665.10059,49.924517 H 587.80444"
+         id="path2089-21-94" />
+      <text
+         xml:space="preserve"
+         id="text2091-0-41"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2093-9-0);fill:#12c300;fill-opacity:0.568627;stroke:none;"
+         transform="translate(451.16049,294.7648)"><tspan
+           x="136.8418"
+           y="-250.66485"><tspan
+             style="fill:#12c300;fill-opacity:0.568627">Ymax</tspan></tspan></text>
+      <text
+         xml:space="preserve"
+         id="text2266-1-9"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268-76-4);fill:#c300af;fill-opacity:1;stroke:none;"
+         transform="translate(743.06767,218.80904)"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmin</tspan></tspan></text>
+      <path
+         id="path2089-24-6-4"
+         d="m 648.00667,-179.25522 v 77.29614"
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+      <text
+         xml:space="preserve"
+         id="text2266-3-6"
+         style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2268-2-4);fill:#c300af;fill-opacity:1;stroke:none;"
+         transform="translate(873.62565,89.10035)"><tspan
+           x="-127.75586"
+           y="-357.73711"><tspan
+             style="fill:#c300af;fill-opacity:1">Xmax</tspan></tspan></text>
+      <path
+         id="path2089-24-9-1"
+         d="m 782.30642,-308.9639 v 77.29614"
+         style="fill:none;stroke:#c300af;stroke-width:0.564999;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+    </g>
+    <text
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       transform="translate(78.042702,97.820647)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2814);fill:#000000;fill-opacity:1;stroke:none;"
+       id="text2812"
+       xml:space="preserve"><tspan
+         x="-132.56641"
+         y="-420.11407"><tspan>Cota horizontal: distanciaPerp &gt; 0</tspan></tspan></text>
+    <text
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       xml:space="preserve"
+       id="text2812-1"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2814-0);fill:#000000;fill-opacity:1;stroke:none;"
+       transform="translate(78.029626,378.05009)"><tspan
+         x="-132.56641"
+         y="-420.11407"><tspan>Cota horizontal: distanciaPerp &lt; 0</tspan></tspan></text>
+    <text
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       xml:space="preserve"
+       id="text2812-8"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2814-5);fill:#000000;fill-opacity:1;stroke:none;"
+       transform="translate(493.89529,128.44721)"><tspan
+         x="-132.56641"
+         y="-420.11407"><tspan>Cota vertical: distanciaPerp &gt; 0</tspan></tspan></text>
+    <text
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       transform="translate(755.31739,128.00439)"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;white-space:pre;shape-inside:url(#rect2814-5-5);fill:#000000;fill-opacity:1;stroke:none;"
+       id="text2812-8-3"
+       xml:space="preserve"><tspan
+         x="-132.56641"
+         y="-420.11407"><tspan>Cota vertical: distanciaPerp &lt; 0</tspan></tspan></text>
+    <rect
+       inkscape:export-ydpi="84.899498"
+       inkscape:export-xdpi="84.899498"
+       inkscape:export-filename="C:\Users\Ignacio\Proyectos\SimAerop\interfaz\aeropuerto\dibujo\referenciaCotas.png"
+       y="-370.97009"
+       x="-157.15446"
+       height="562.33502"
+       width="1006.0024"
+       id="rect3014"
+       style="fill:none;fill-rule:evenodd;stroke-width:0.765;fill-opacity:1;opacity:1;stroke:#000000;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none" />
+  </g>
+</svg>
