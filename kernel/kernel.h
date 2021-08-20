@@ -21,7 +21,6 @@ class Kernel : public QObject
 
 public:
     Kernel();
-    Kernel(InterfazPrincipal* ip);
     virtual ~Kernel();
     void inicializar(InterfazPrincipal *ip);
 

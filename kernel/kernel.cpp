@@ -5,11 +5,6 @@ Kernel::Kernel()
 
 }
 
-Kernel::Kernel(InterfazPrincipal* ip)
-{
-    inicializarEditorPista(ip);
-}
-
 Kernel::~Kernel()
 {
 
