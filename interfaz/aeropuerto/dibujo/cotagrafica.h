@@ -24,6 +24,7 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
     void ordenarPuntos(QPointF p1, QPointF p2);
+    void procesarTexto();
     void calcularBoundingRect();
     void calcularShape();
 
@@ -39,10 +40,15 @@ private:
     float longitud;      //Longitud entre los puntos
     QFont fuente;
     qreal margin;
+    qreal tramoAdicional;
+
     QRectF bRect;
+    QPainterPath pPath;
+
     QString texto;
     qreal anchoTexto;
     qreal altoTexto;
+    QPointF posInfIzqTexto;
 
     const int sizeFlechaRef = 30;
 

@@ -30,7 +30,9 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
     anchoTexto = QFontMetrics(fuente).boundingRect(texto).width();
     altoTexto = QFontMetrics(fuente).ascent();
     margin = altoTexto/2;
+    tramoAdicional = altoTexto;
 
+    procesarTexto();
     calcularBoundingRect();
     calcularShape();
 }
@@ -55,16 +57,16 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         if (distanciaPerp > 0) // cota por debajo de los puntos
         {
             float coordLim = qMax(punto1.y(), punto2.y());
-            painter->drawLine(punto1.x(),punto1.y(),punto1.x(), coordLim + distanciaPerp + margin);
-            painter->drawLine(punto2.x(),punto2.y(),punto2.x(), coordLim + distanciaPerp + margin);
+            painter->drawLine(punto1.x(),punto1.y(),punto1.x(), coordLim + distanciaPerp + tramoAdicional);
+            painter->drawLine(punto2.x(),punto2.y(),punto2.x(), coordLim + distanciaPerp + tramoAdicional);
             painter->drawLine(punto1.x(),coordLim + distanciaPerp,
                               punto2.x(),coordLim + distanciaPerp);
         }
         else    // cota por encima de los puntos
         {
             float coordLim = qMin(punto1.y(), punto2.y());
-            painter->drawLine(punto1.x(),punto1.y(),punto1.x(), coordLim + distanciaPerp - margin);
-            painter->drawLine(punto2.x(),punto2.y(),punto2.x(), coordLim + distanciaPerp - margin);
+            painter->drawLine(punto1.x(),punto1.y(),punto1.x(), coordLim + distanciaPerp - tramoAdicional);
+            painter->drawLine(punto2.x(),punto2.y(),punto2.x(), coordLim + distanciaPerp - tramoAdicional);
             painter->drawLine(punto1.x(),coordLim + distanciaPerp,
                               punto2.x(),coordLim + distanciaPerp);
         }
@@ -74,20 +76,23 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         if (distanciaPerp > 0) // cota a la derecha de los puntos
         {
             float coordLim = qMax(punto1.x(), punto2.x());
-            painter->drawLine(punto1.x(),punto1.y(),coordLim + distanciaPerp + margin , punto1.y());
-            painter->drawLine(punto2.x(),punto2.y(),coordLim + distanciaPerp + margin, punto2.y());
+            painter->drawLine(punto1.x(),punto1.y(),coordLim + distanciaPerp + tramoAdicional , punto1.y());
+            painter->drawLine(punto2.x(),punto2.y(),coordLim + distanciaPerp + tramoAdicional, punto2.y());
             painter->drawLine(coordLim + distanciaPerp, punto1.y(),
                               coordLim + distanciaPerp, punto2.y());
         }
         else // cota a la izquierda de los puntos
         {
             float coordLim = qMin(punto1.x(), punto2.x());
-            painter->drawLine(punto1.x(),punto1.y(),coordLim + distanciaPerp - margin , punto1.y());
-            painter->drawLine(punto2.x(),punto2.y(),coordLim + distanciaPerp - margin, punto2.y());
+            painter->drawLine(punto1.x(),punto1.y(),coordLim + distanciaPerp - tramoAdicional , punto1.y());
+            painter->drawLine(punto2.x(),punto2.y(),coordLim + distanciaPerp - tramoAdicional, punto2.y());
             painter->drawLine(coordLim + distanciaPerp, punto1.y(),
                               coordLim + distanciaPerp, punto2.y());
         }
     }
+    //painter->setBrush(Qt::NoBrush);
+    //painter->setPen(QColor("green"));
+    //painter->drawPath(pPath);
     if (sentido == Sentido::HOR)
     {
          graficarFlecha(punto1 + QPointF(0,distanciaPerp),Direccion::IZQUIERDA, painter);
@@ -98,20 +103,9 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         graficarFlecha(punto1 + QPointF(distanciaPerp,0), Direccion::ARRIBA, painter);
         graficarFlecha(punto2 + QPointF(distanciaPerp,0), Direccion::ABAJO, painter);
     }
-    painter->setFont(fuente);
-    if (sentido == Sentido::HOR)
-    {
-        float offset = anchoTexto/2;
-        QPointF posCentro = punto1/2 + punto2/2 + QPointF(-offset,distanciaPerp-margin);
-        graficarTexto(posCentro, texto, painter);
-    }
-    else if (sentido == Sentido::VER)
-    {
-        float hOffset = anchoTexto;
-        float vOffset = altoTexto/2.0;
-        QPointF posCentro = punto1/2 + punto2/2 + QPointF(distanciaPerp-margin-hOffset,vOffset);
-        graficarTexto(posCentro, texto, painter);
-    }
+
+    painter->setFont(fuente);     
+    graficarTexto(posInfIzqTexto, texto, painter);
 }
 
 QRectF CotaGrafica::boundingRect() const
@@ -197,6 +191,21 @@ void CotaGrafica::ordenarPuntos(QPointF p1, QPointF p2)
     }
 }
 
+void CotaGrafica::procesarTexto()
+{
+    if (sentido == Sentido::HOR)
+    {
+        float offset = anchoTexto/2;
+        posInfIzqTexto = punto1/2 + punto2/2 + QPointF(-offset,distanciaPerp-margin);
+    }
+    else if (sentido == Sentido::VER)
+    {
+        float hOffset = anchoTexto;
+        float vOffset = altoTexto/2.0;
+        posInfIzqTexto = punto1/2 + punto2/2 + QPointF(distanciaPerp-margin-hOffset,vOffset);
+    }
+}
+
 void CotaGrafica::calcularBoundingRect()
 {
     //Calculo de bounding Rect
@@ -209,7 +218,7 @@ void CotaGrafica::calcularBoundingRect()
         {
             yMin = qMin(punto1.y(), punto2.y());
             xMin = qMin(punto1.x(), punto2.x());
-            yMax = qMax(punto1.y(), punto2.y()) + distanciaPerp + margin;
+            yMax = qMax(punto1.y(), punto2.y()) + distanciaPerp + tramoAdicional;
             xMax = xMin + longitud;
         }
         else //La linea de cota está por arriba de los puntos
@@ -227,7 +236,7 @@ void CotaGrafica::calcularBoundingRect()
             yMin = qMin(punto1.y(), punto2.y());
             xMin = qMin(punto1.x(), punto2.x());
             yMax = yMin + longitud;
-            xMax = qMax(punto1.x(), punto2.x()) + distanciaPerp + margin;
+            xMax = qMax(punto1.x(), punto2.x()) + distanciaPerp + tramoAdicional;
         }
         else // La linea de cota está a la izquierda de los puntos
         {
@@ -245,33 +254,69 @@ void CotaGrafica::calcularBoundingRect()
 void CotaGrafica::calcularShape()
 {
     QPainterPath painterPath;
-
+    float anchoRect = margin+6;
+    QRectF r1, r2, r3;
     if(sentido == Sentido::HOR)
     {
         if(distanciaPerp > 0) // La línea de cota está por debajo de los puntos
         {
-
+            float yInferior = qMax(punto1.y(),punto2.y());
+            r1 = QRectF(punto1 + QPointF(-anchoRect/2,0),
+                        QPointF(punto1.x() + anchoRect/2,yInferior+distanciaPerp+tramoAdicional));
+            r2 = QRectF(punto2 + QPointF(-anchoRect/2,0),
+                        QPointF(punto2.x() + anchoRect/2,yInferior+distanciaPerp+tramoAdicional));
+            r3 = QRectF(QPointF(punto1.x(),yInferior+distanciaPerp-anchoRect/2),
+                        QPointF(punto2.x(),yInferior+distanciaPerp+anchoRect/2));
         }
         else if(distanciaPerp < 0) // La línea de cota está por encima de los puntos
         {
-
+            float ySuperior = qMin(punto1.y(),punto2.y());
+            r1 = QRectF(QPointF(punto1.x() - anchoRect/2,ySuperior+distanciaPerp-tramoAdicional),
+                        punto1 + QPointF(anchoRect/2,0));
+            r2 = QRectF(QPointF(punto2.x() - anchoRect/2,ySuperior+distanciaPerp-tramoAdicional),
+                        punto2 + QPointF(anchoRect/2,0));
+            r3 = QRectF(QPointF(punto1.x(),ySuperior+distanciaPerp-anchoRect/2),
+                        QPointF(punto2.x(),ySuperior+distanciaPerp+anchoRect/2));
         }
     }
     else if (sentido == Sentido::VER)
     {
         if(distanciaPerp > 0) // La línea de cota está a la derecha de los puntos
         {
-
+            float xDerecho = qMax(punto1.x(),punto2.x());
+            r1 = QRectF(punto1 + QPointF(0,-anchoRect/2),
+                        QPointF(xDerecho+distanciaPerp+tramoAdicional,punto1.y()+anchoRect/2));
+            r2 = QRectF(punto2 + QPointF(0,-anchoRect/2),
+                        QPointF(xDerecho+distanciaPerp+tramoAdicional,punto2.y()+anchoRect/2));
+            r3 = QRectF(QPointF(xDerecho+distanciaPerp-anchoRect/2,punto1.y()),
+                        QPointF(xDerecho+distanciaPerp+anchoRect/2,punto2.y()));
         }
         else if(distanciaPerp < 0) // La línea de cota está a la izquierda de los puntos
         {
-
+            float xIzquierdo = qMin(punto1.x(),punto2.x());
+            r1 = QRectF(QPointF(xIzquierdo+distanciaPerp-tramoAdicional,punto1.y()-anchoRect/2),
+                        punto1 + QPointF(0,anchoRect/2));
+            r2 = QRectF(QPointF(xIzquierdo+distanciaPerp-tramoAdicional,punto2.y()-anchoRect/2),
+                        punto2 + QPointF(0,anchoRect/2));
+            r3 = QRectF(QPointF(xIzquierdo+distanciaPerp-anchoRect/2, punto1.y()),
+                        QPointF(xIzquierdo+distanciaPerp+anchoRect/2, punto2.y()));
         }
     }
+
+    QRectF r4 = QRectF(posInfIzqTexto + QPointF(0,-altoTexto),
+                      posInfIzqTexto + QPointF(anchoTexto,0));
+
+    painterPath.addRect(r1);
+    painterPath.addRect(r2);
+    painterPath.addRect(r3);
+    painterPath.addRect(r4);
+    pPath = painterPath;
+    pPath.setFillRule(Qt::WindingFill);
 }
 
 QPainterPath CotaGrafica::shape() const
 {
-    return QGraphicsItem::shape();
+    return pPath;
+    //return QGraphicsItem::shape();
 }
 
