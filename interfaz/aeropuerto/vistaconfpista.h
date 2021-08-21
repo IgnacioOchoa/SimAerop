@@ -33,6 +33,8 @@ private:
     QPointF centroVista;
     QCheckBox* cbActivarCotas;
     EscenaConfPista* escena;
+    QPointF centroAnterior;
+    qreal escala;
 };
 
 #endif // VISTACONFPISTA_H

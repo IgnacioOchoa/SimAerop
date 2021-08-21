@@ -21,6 +21,8 @@ VistaConfPista::VistaConfPista(QWidget* w) :
     escena = new EscenaConfPista;
     setScene(escena);
 
+    escala = 1;
+
     connect(cbActivarCotas, &QCheckBox::stateChanged, this, &VistaConfPista::chBoxCotasAccionada);
 }
 
@@ -48,6 +50,24 @@ void VistaConfPista::mousePressEvent(QMouseEvent *event)
 
 void VistaConfPista::wheelEvent(QWheelEvent *event)
 {
+    QPoint puntoMouseEnView1 = event->pos();
+    QPointF puntoMouseEnScene1 = this->mapToScene(puntoMouseEnView1);
+    qreal sc = 1+event->angleDelta().y()/1000.0;
+
+    escala *= sc;
+    if (escala < 0.3)
+    {
+        sc = 1;
+        escala = 0.3;
+    }
+
+    this->scale(sc,sc);
+
+    QPointF puntoMouseEnScene2 = this->mapToScene(puntoMouseEnView1);
+
+    QPointF desplazamiento = puntoMouseEnScene1 - puntoMouseEnScene2;
+    centroVista += desplazamiento;
+    centerOn(centroVista);
 
 }
 

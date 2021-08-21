@@ -90,9 +90,9 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
                               coordLim + distanciaPerp, punto2.y());
         }
     }
-    //painter->setBrush(Qt::NoBrush);
-    //painter->setPen(QColor("green"));
-    //painter->drawPath(pPath);
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(QColor("green"));
+    painter->drawPath(pPath);
     if (sentido == Sentido::HOR)
     {
          graficarFlecha(punto1 + QPointF(0,distanciaPerp),Direccion::IZQUIERDA, painter);
@@ -310,7 +310,7 @@ void CotaGrafica::calcularShape()
     painterPath.addRect(r2);
     painterPath.addRect(r3);
     painterPath.addRect(r4);
-    pPath = painterPath;
+    pPath = painterPath.simplified();
     pPath.setFillRule(Qt::WindingFill);
 }
 
