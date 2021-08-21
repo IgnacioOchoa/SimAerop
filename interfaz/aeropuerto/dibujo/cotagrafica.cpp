@@ -1,45 +1,20 @@
 #include "cotagrafica.h"
 
-CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist, QFont font)
-
+CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist, QFont font) :
+    sentido(sen),
+    texto(valor),
+    hover(false)
 {
-    setAcceptHoverEvents(true);
-
     // Para entender que es cada variable, ver el archivo referenciaCotas.png, en la misma carpeta
     // que este codigo fuente
+    setAcceptHoverEvents(true);
+
     penCota = QPen(QColor("blue"),2);
     brushCota = QBrush("blue");
-
     penCotaHover = QPen(QColor("#9f63bf"),6);
     brushCotaHover = QBrush("#9f63bf");
 
-    texto = valor;
-    sentido = sen;
-
-    hover = false;
-
-    if (sentido == Sentido::HOR)
-    {
-        if (p1.x() < p2.x())   //Esto garantiza que P1 esta siempre a la izquierda de p2
-        {
-            punto1 = p1; punto2 = p2;
-        }
-        else
-        {
-            punto1 = p2; punto2 = p1;
-        }
-    }
-    else //ori == "VER"
-    {
-        if (p1.y() < p2.y())
-        {
-            punto1 = p1; punto2 = p2;  //Esto garantiza que P1 esta siempre arriba de p2
-        }
-        else
-        {
-            punto1 = p2; punto2 = p1;
-        }
-    }
+    ordenarPuntos(p1, p2);
 
     //Distancia entre los dos puntos, depende de si la orientacion es horizontal o vertical
     longitud = sentido == Sentido::HOR ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
@@ -54,50 +29,10 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
 
     anchoTexto = QFontMetrics(fuente).boundingRect(texto).width();
     altoTexto = QFontMetrics(fuente).ascent();
-
     margin = altoTexto/2;
 
-    //Calculo de bounding Rect
-
-    float xMin,xMax,yMin,yMax;
-
-    if(sentido == Sentido::HOR)
-    {
-        if(distanciaPerp > 0) //La linea de cota está por debajo de los puntos
-        {
-            yMin = qMin(punto1.y(), punto2.y());
-            xMin = qMin(punto1.x(), punto2.x());
-            yMax = qMax(punto1.y(), punto2.y()) + distanciaPerp + margin;
-            xMax = xMin + longitud;
-        }
-        else //La linea de cota está por arriba de los puntos
-        {
-            yMin = qMin(punto1.y(),punto2.y()) + distanciaPerp - margin - altoTexto; //aca distanciaPerp es negativo
-            xMin = qMin(punto1.x(),punto2.x());
-            yMax = qMax(punto1.y(), punto2.y());
-            xMax = xMin + longitud;
-        }
-    }
-    else
-    {
-        if(distanciaPerp > 0) // La linea de cota está a la derecha de los puntos
-        {
-            yMin = qMin(punto1.y(), punto2.y());
-            xMin = qMin(punto1.x(), punto2.x());
-            yMax = yMin + longitud;
-            xMax = qMax(punto1.x(), punto2.x()) + distanciaPerp + margin;
-        }
-        else // La linea de cota está a la izquierda de los puntos
-        {
-            yMin = qMin(punto1.y(), punto2.y());
-            xMin = qMin(punto1.x(), punto2.x()) + distanciaPerp - margin - anchoTexto; //aca distanciaPerp es negativo
-            yMax = yMin + longitud;
-            xMax = qMax(punto1.x(), punto2.x());
-        }
-    }
-    QPointF topLeft(xMin,yMin);
-    QPointF botRight(xMax,yMax);
-    bRect = QRectF(topLeft,botRight);
+    calcularBoundingRect();
+    calcularShape();
 }
 
 void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -233,6 +168,110 @@ void CotaGrafica::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
         {
             hover = false;
         }
-        QGraphicsItem::hoverLeaveEvent(event);
+    QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void CotaGrafica::ordenarPuntos(QPointF p1, QPointF p2)
+{
+    if (sentido == Sentido::HOR)
+    {
+        if (p1.x() < p2.x())   //Esto garantiza que P1 esta siempre a la izquierda de p2
+        {
+            punto1 = p1; punto2 = p2;
+        }
+        else
+        {
+            punto1 = p2; punto2 = p1;
+        }
+    }
+    else //ori == "VER"
+    {
+        if (p1.y() < p2.y())
+        {
+            punto1 = p1; punto2 = p2;  //Esto garantiza que P1 esta siempre arriba de p2
+        }
+        else
+        {
+            punto1 = p2; punto2 = p1;
+        }
+    }
+}
+
+void CotaGrafica::calcularBoundingRect()
+{
+    //Calculo de bounding Rect
+
+    float xMin,xMax,yMin,yMax;
+
+    if(sentido == Sentido::HOR)
+    {
+        if(distanciaPerp > 0) //La linea de cota está por debajo de los puntos
+        {
+            yMin = qMin(punto1.y(), punto2.y());
+            xMin = qMin(punto1.x(), punto2.x());
+            yMax = qMax(punto1.y(), punto2.y()) + distanciaPerp + margin;
+            xMax = xMin + longitud;
+        }
+        else //La linea de cota está por arriba de los puntos
+        {
+            yMin = qMin(punto1.y(),punto2.y()) + distanciaPerp - margin - altoTexto; //aca distanciaPerp es negativo
+            xMin = qMin(punto1.x(),punto2.x());
+            yMax = qMax(punto1.y(), punto2.y());
+            xMax = xMin + longitud;
+        }
+    }
+    else
+    {
+        if(distanciaPerp > 0) // La linea de cota está a la derecha de los puntos
+        {
+            yMin = qMin(punto1.y(), punto2.y());
+            xMin = qMin(punto1.x(), punto2.x());
+            yMax = yMin + longitud;
+            xMax = qMax(punto1.x(), punto2.x()) + distanciaPerp + margin;
+        }
+        else // La linea de cota está a la izquierda de los puntos
+        {
+            yMin = qMin(punto1.y(), punto2.y());
+            xMin = qMin(punto1.x(), punto2.x()) + distanciaPerp - margin - anchoTexto; //aca distanciaPerp es negativo
+            yMax = yMin + longitud;
+            xMax = qMax(punto1.x(), punto2.x());
+        }
+    }
+    QPointF topLeft(xMin,yMin);
+    QPointF botRight(xMax,yMax);
+    bRect = QRectF(topLeft,botRight);
+}
+
+void CotaGrafica::calcularShape()
+{
+    QPainterPath painterPath;
+
+    if(sentido == Sentido::HOR)
+    {
+        if(distanciaPerp > 0) // La línea de cota está por debajo de los puntos
+        {
+
+        }
+        else if(distanciaPerp < 0) // La línea de cota está por encima de los puntos
+        {
+
+        }
+    }
+    else if (sentido == Sentido::VER)
+    {
+        if(distanciaPerp > 0) // La línea de cota está a la derecha de los puntos
+        {
+
+        }
+        else if(distanciaPerp < 0) // La línea de cota está a la izquierda de los puntos
+        {
+
+        }
+    }
+}
+
+QPainterPath CotaGrafica::shape() const
+{
+    return QGraphicsItem::shape();
 }
 

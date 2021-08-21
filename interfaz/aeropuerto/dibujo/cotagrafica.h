@@ -16,15 +16,20 @@ public:
 
     CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist = 0, QFont font = QFont());
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    virtual QRectF boundingRect() const override;
+
     void graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter);
     void graficarTexto(QPointF posCentro, QString texto, QPainter *painter);
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
-    //Hay que reimplementar [virtual] QPainterPath QGraphicsItem::shape() const
-    //para ser mas precisos con el hover
+    void ordenarPuntos(QPointF p1, QPointF p2);
+    void calcularBoundingRect();
+    void calcularShape();
+
+    virtual QPainterPath shape() const override;
+    virtual QRectF boundingRect() const override;
+
 
 private:
     QPointF punto1;
