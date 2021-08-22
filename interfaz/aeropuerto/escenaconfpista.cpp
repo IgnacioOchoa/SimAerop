@@ -36,6 +36,9 @@ void EscenaConfPista::graficarPista(Pista pista)
     cota2->hide();
 
     listaCotas.append(cota2);
+
+    //addPath(cota1->shape(),QPen("green"));
+    //addPath(cota2->shape(),QPen("green"));
 }
 
 void EscenaConfPista::mostrarCotas(bool mostrar)

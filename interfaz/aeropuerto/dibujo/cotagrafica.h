@@ -44,6 +44,7 @@ private:
 
     QRectF bRect;
     QPainterPath pPath;
+    float anchoRect;
 
     QString texto;
     qreal anchoTexto;

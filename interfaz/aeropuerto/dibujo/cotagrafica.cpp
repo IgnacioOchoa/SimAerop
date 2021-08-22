@@ -31,10 +31,11 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
     altoTexto = QFontMetrics(fuente).ascent();
     margin = altoTexto/2;
     tramoAdicional = altoTexto;
-
+    anchoRect = margin; //Ancho del rectangulo alrededor de las lineas creado para la shape
     procesarTexto();
     calcularBoundingRect();
     calcularShape();
+
 }
 
 void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -90,9 +91,6 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
                               coordLim + distanciaPerp, punto2.y());
         }
     }
-    painter->setBrush(Qt::NoBrush);
-    painter->setPen(QColor("green"));
-    painter->drawPath(pPath);
     if (sentido == Sentido::HOR)
     {
          graficarFlecha(punto1 + QPointF(0,distanciaPerp),Direccion::IZQUIERDA, painter);
@@ -110,7 +108,7 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
 QRectF CotaGrafica::boundingRect() const
 {
-    return bRect;
+    return bRect.adjusted(-anchoRect/2,-anchoRect/2,anchoRect/2,anchoRect/2);
 }
 
 void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter)
@@ -254,7 +252,6 @@ void CotaGrafica::calcularBoundingRect()
 void CotaGrafica::calcularShape()
 {
     QPainterPath painterPath;
-    float anchoRect = margin+6;
     QRectF r1, r2, r3;
     if(sentido == Sentido::HOR)
     {
@@ -306,17 +303,17 @@ void CotaGrafica::calcularShape()
     QRectF r4 = QRectF(posInfIzqTexto + QPointF(0,-altoTexto),
                       posInfIzqTexto + QPointF(anchoTexto,0));
 
+    painterPath.setFillRule(Qt::WindingFill);
     painterPath.addRect(r1);
     painterPath.addRect(r2);
     painterPath.addRect(r3);
     painterPath.addRect(r4);
     pPath = painterPath.simplified();
-    pPath.setFillRule(Qt::WindingFill);
+
 }
 
 QPainterPath CotaGrafica::shape() const
 {
     return pPath;
-    //return QGraphicsItem::shape();
 }
 
