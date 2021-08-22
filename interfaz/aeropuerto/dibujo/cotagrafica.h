@@ -22,11 +22,14 @@ public:
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
     void ordenarPuntos(QPointF p1, QPointF p2);
     void procesarTexto();
     void calcularBoundingRect();
     void calcularShape();
+    void actualizarPosicion(float delta);
 
     virtual QPainterPath shape() const override;
     virtual QRectF boundingRect() const override;

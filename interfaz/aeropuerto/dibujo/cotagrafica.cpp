@@ -40,6 +40,8 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
 
 void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
     if(!hover)
     {
         painter->setPen(penCota);
@@ -104,11 +106,19 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
     painter->setFont(fuente);     
     graficarTexto(posInfIzqTexto, texto, painter);
+
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(QColor("green"));
+    painter->drawPath(pPath);
+
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(QColor("red"));
+    painter->drawRect(bRect);
 }
 
 QRectF CotaGrafica::boundingRect() const
 {
-    return bRect.adjusted(-anchoRect/2,-anchoRect/2,anchoRect/2,anchoRect/2);
+    return bRect;
 }
 
 void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter)
@@ -161,6 +171,30 @@ void CotaGrafica::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
             hover = false;
         }
     QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void CotaGrafica::mousePressEvent(QGraphicsSceneMouseEvent *event)
+{
+    Q_UNUSED(event);
+}
+
+void CotaGrafica::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    float delta = 0.0;
+    if (event->buttons() == Qt::LeftButton)
+    {
+        QPointF puntoActual = event->scenePos();
+        QPointF puntoAnterior = event->lastScenePos();
+        if(sentido == Sentido::HOR)
+        {
+            delta = (puntoActual-puntoAnterior).y();
+        }
+        if(sentido == Sentido::VER)
+        {
+            delta = (puntoActual-puntoAnterior).x();
+        }
+    }
+    actualizarPosicion(delta);
 }
 
 void CotaGrafica::ordenarPuntos(QPointF p1, QPointF p2)
@@ -247,6 +281,8 @@ void CotaGrafica::calcularBoundingRect()
     QPointF topLeft(xMin,yMin);
     QPointF botRight(xMax,yMax);
     bRect = QRectF(topLeft,botRight);
+    bRect = bRect.normalized();
+    bRect.adjust(-anchoRect/2,-anchoRect/2,anchoRect/2,anchoRect/2);
 }
 
 void CotaGrafica::calcularShape()
@@ -310,6 +346,14 @@ void CotaGrafica::calcularShape()
     painterPath.addRect(r4);
     pPath = painterPath.simplified();
 
+}
+
+void CotaGrafica::actualizarPosicion(float delta)
+{
+    distanciaPerp += delta;
+    procesarTexto();
+    calcularShape();
+    calcularBoundingRect();
 }
 
 QPainterPath CotaGrafica::shape() const
