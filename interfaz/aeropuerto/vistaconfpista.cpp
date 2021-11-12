@@ -96,6 +96,11 @@ void VistaConfPista::graficarPista(Pista p)
     ajustarContenidos();
 }
 
+void VistaConfPista::dibujarUmbral(float pos)
+{
+    escena->graficarUmbral(pos);
+}
+
 void VistaConfPista::vaciarContenido()
 {
     escena->limpiar();

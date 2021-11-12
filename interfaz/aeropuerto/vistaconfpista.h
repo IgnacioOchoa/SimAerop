@@ -6,6 +6,7 @@
 #include <QMouseEvent>
 #include <QDebug>
 #include <QCheckBox>
+#include <QPushButton>
 #include <QBoxLayout>
 #include "escenaconfpista.h"
 #include "../../estructuras-datos/elementosaerop.h"
@@ -23,6 +24,7 @@ public:
     void ajustarContenidos();
 
     void graficarPista(Pista p);
+    void dibujarUmbral(float pos);
     void vaciarContenido();
 
 public slots:

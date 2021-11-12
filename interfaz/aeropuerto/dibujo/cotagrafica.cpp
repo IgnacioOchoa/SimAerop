@@ -8,6 +8,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
     // Para entender que es cada variable, ver el archivo referenciaCotas.png, en la misma carpeta
     // que este codigo fuente
     setAcceptHoverEvents(true);
+    setZValue(1);
 
     penCota = QPen(QColor("blue"),2);
     brushCota = QBrush("blue");
@@ -35,7 +36,6 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
     procesarTexto();
     calcularBoundingRect();
     calcularShape();
-
 }
 
 void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -119,6 +119,7 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 QRectF CotaGrafica::boundingRect() const
 {
     return bRect;
+    //return QRectF(-2000,-400,4000,800);
 }
 
 void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter)
@@ -127,7 +128,6 @@ void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *pa
     QVector<QPointF> tri;
     if (ori == Direccion::ARRIBA)
     {
-
          tri = {posVertice, posVertice+QPointF(-largo/2, largo),
                              posVertice+QPointF(largo/2,largo)};
     }
@@ -176,6 +176,7 @@ void CotaGrafica::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void CotaGrafica::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
+    qInfo() << "Se hizo click en cota";
 }
 
 void CotaGrafica::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -201,25 +202,15 @@ void CotaGrafica::ordenarPuntos(QPointF p1, QPointF p2)
 {
     if (sentido == Sentido::HOR)
     {
-        if (p1.x() < p2.x())   //Esto garantiza que P1 esta siempre a la izquierda de p2
-        {
-            punto1 = p1; punto2 = p2;
-        }
-        else
-        {
-            punto1 = p2; punto2 = p1;
-        }
+        //Esto garantiza que P1 esta siempre a la izquierda de p2
+        if (p1.x() < p2.x()) {punto1 = p1; punto2 = p2;}
+        else {punto1 = p2; punto2 = p1;}
     }
     else //ori == "VER"
     {
-        if (p1.y() < p2.y())
-        {
-            punto1 = p1; punto2 = p2;  //Esto garantiza que P1 esta siempre arriba de p2
-        }
-        else
-        {
-            punto1 = p2; punto2 = p1;
-        }
+        //Esto garantiza que P1 esta siempre arriba de p2
+        if (p1.y() < p2.y()) {punto1 = p1; punto2 = p2;}
+        else {punto1 = p2; punto2 = p1;}
     }
 }
 
@@ -240,8 +231,6 @@ void CotaGrafica::procesarTexto()
 
 void CotaGrafica::calcularBoundingRect()
 {
-    //Calculo de bounding Rect
-
     float xMin,xMax,yMin,yMax;
 
     if(sentido == Sentido::HOR)
@@ -281,13 +270,13 @@ void CotaGrafica::calcularBoundingRect()
     QPointF topLeft(xMin,yMin);
     QPointF botRight(xMax,yMax);
     bRect = QRectF(topLeft,botRight);
-    bRect = bRect.normalized();
-    bRect.adjust(-anchoRect/2,-anchoRect/2,anchoRect/2,anchoRect/2);
+    //bRect = bRect.normalized();
+    bRect.adjust(-anchoRect/2*7,-anchoRect/2*7,anchoRect/2*7,anchoRect/2*7);
 }
 
 void CotaGrafica::calcularShape()
 {
-    QPainterPath painterPath;
+    pPath.clear();
     QRectF r1, r2, r3;
     if(sentido == Sentido::HOR)
     {
@@ -339,13 +328,34 @@ void CotaGrafica::calcularShape()
     QRectF r4 = QRectF(posInfIzqTexto + QPointF(0,-altoTexto),
                       posInfIzqTexto + QPointF(anchoTexto,0));
 
-    painterPath.setFillRule(Qt::WindingFill);
-    painterPath.addRect(r1);
-    painterPath.addRect(r2);
-    painterPath.addRect(r3);
-    painterPath.addRect(r4);
-    pPath = painterPath.simplified();
+    pPath.setFillRule(Qt::WindingFill);
+    pPath.addRect(r1.normalized());
+    pPath.addRect(r2.normalized());
+    pPath.addRect(r3.normalized());
+    pPath.addRect(r4.normalized());
 
+    /*QPainterPath p1 = QPainterPath();
+    p1.addRect(r1);
+    pPath = pPath.united(QPainterPath().addRect(r1));
+
+    p1 = QPainterPath();
+    p1.addRect(r2);
+    pPath = pPath.united(p1);
+
+    p1 = QPainterPath();
+    p1.addRect(r2);
+    pPath = pPath.united(p1);
+
+    p1 = QPainterPath();
+    p1.addRect(r3);
+    pPath = pPath.united(p1);
+
+    p1 = QPainterPath();
+    p1.addRect(r4);
+    pPath = pPath.united(p1);*/
+
+    pPath = pPath.simplified();
+    //qInfo() << "Painter path: " << pPath;
 }
 
 void CotaGrafica::actualizarPosicion(float delta)
@@ -354,6 +364,8 @@ void CotaGrafica::actualizarPosicion(float delta)
     procesarTexto();
     calcularShape();
     calcularBoundingRect();
+    //qInfo() << "ditanciaPerp = " << distanciaPerp;
+    //qInfo() << "Bounding rect = " << boundingRect();
 }
 
 QPainterPath CotaGrafica::shape() const

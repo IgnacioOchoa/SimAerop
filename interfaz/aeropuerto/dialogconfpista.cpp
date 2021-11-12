@@ -91,6 +91,16 @@ void DialogConfPista::poblarPista()
 void DialogConfPista::dibujarPista()
 {
     vistaPreliminar->graficarPista(pista);
+    QString um1 = ui->leUmbral1->text();
+    if(um1 != "")
+    {
+        bool ok;
+        float um = um1.toFloat(&ok);
+        if (ok)
+        {
+            vistaPreliminar->dibujarUmbral(um);
+        }
+    }
 }
 
 void DialogConfPista::botonGraficarApretado()

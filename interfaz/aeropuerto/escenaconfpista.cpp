@@ -11,12 +11,13 @@ EscenaConfPista::EscenaConfPista(QObject* ob) :
 void EscenaConfPista::graficarPista(Pista pista)
 {
 
-    QRect rectPista = QRect(-pista.largo/2,-pista.ancho/2,pista.largo,pista.ancho);
+    rectPista = QRect(-pista.largo/2,-pista.ancho/2,pista.largo,pista.ancho);
     limpiar();
     QPen borde;
     borde.setWidth(2);
     borde.setCosmetic(true);
     grRectItm = addRect(rectPista,borde);
+    grRectItm->setZValue(0);
 
     QPointF p1 = {grRectItm->rect().x(),grRectItm->rect().y()+grRectItm->rect().height()};
     QPointF p2 = {grRectItm->rect().x()+grRectItm->rect().width(),
@@ -25,17 +26,20 @@ void EscenaConfPista::graficarPista(Pista pista)
     QPointF p3 = {grRectItm->rect().x(), grRectItm->rect().y()};
     QPointF p4 = {grRectItm->rect().x() + grRectItm->rect().width(),grRectItm->rect().y()};
 
-    CotaGrafica* cota1 = new CotaGrafica(p3,p4,CotaGrafica::Sentido::HOR,QString::number(pista.largo), -100);
+    cota1 = new CotaGrafica(p3,p4,CotaGrafica::Sentido::HOR,QString::number(pista.largo), -100);
     addItem(cota1);
     cota1->hide();
 
     listaCotas.append(cota1);
 
-    CotaGrafica* cota2 = new CotaGrafica(p1,p3,CotaGrafica::Sentido::VER,QString::number(pista.ancho), -100);
+    cota2 = new CotaGrafica(p1,p3,CotaGrafica::Sentido::VER,QString::number(pista.ancho), -100);
     addItem(cota2);
     cota2->hide();
 
     listaCotas.append(cota2);
+
+    addLine(0,0,500,0);
+    addLine(0,0,0,300);
 }
 
 void EscenaConfPista::mostrarCotas(bool mostrar)
@@ -60,4 +64,24 @@ void EscenaConfPista::limpiar()
 {
     clear();
     listaCotas.clear();
+}
+
+void EscenaConfPista::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+{
+    QGraphicsItem* itmClick = itemAt(mouseEvent->scenePos(), QTransform());
+    if(itmClick)
+    {
+        qInfo() << "Click en escena sobre el item " << itmClick->type();
+    }
+    QGraphicsScene::mousePressEvent(mouseEvent);
+}
+
+void EscenaConfPista::graficarUmbral(float despl)
+{
+    QPointF p1(rectPista.x() + despl, rectPista.y() + rectPista.height());
+    QPointF p2 = p1 + QPointF(-40,80);
+    QPointF p3 = p1 + QPointF(40,80);
+    QPolygonF pol;
+    pol.append(p1); pol.append(p2); pol.append(p3);
+    addPolygon(pol,QPen(),QBrush(Qt::black));
 }
