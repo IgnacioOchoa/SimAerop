@@ -119,7 +119,6 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 QRectF CotaGrafica::boundingRect() const
 {
     return bRect;
-    //return QRectF(-2000,-400,4000,800);
 }
 
 void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter)
@@ -176,7 +175,7 @@ void CotaGrafica::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 void CotaGrafica::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    qInfo() << "Se hizo click en cota";
+    //QGraphicsItem::mousePressEvent(event); -> no hay que llamarlo porque si no el arrastrar no funciona
 }
 
 void CotaGrafica::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
@@ -270,8 +269,7 @@ void CotaGrafica::calcularBoundingRect()
     QPointF topLeft(xMin,yMin);
     QPointF botRight(xMax,yMax);
     bRect = QRectF(topLeft,botRight);
-    //bRect = bRect.normalized();
-    bRect.adjust(-anchoRect/2*7,-anchoRect/2*7,anchoRect/2*7,anchoRect/2*7);
+    bRect.adjust(-anchoRect/2,-anchoRect/2,anchoRect/2,anchoRect/2);
 }
 
 void CotaGrafica::calcularShape()
@@ -334,38 +332,17 @@ void CotaGrafica::calcularShape()
     pPath.addRect(r3.normalized());
     pPath.addRect(r4.normalized());
 
-    /*QPainterPath p1 = QPainterPath();
-    p1.addRect(r1);
-    pPath = pPath.united(QPainterPath().addRect(r1));
-
-    p1 = QPainterPath();
-    p1.addRect(r2);
-    pPath = pPath.united(p1);
-
-    p1 = QPainterPath();
-    p1.addRect(r2);
-    pPath = pPath.united(p1);
-
-    p1 = QPainterPath();
-    p1.addRect(r3);
-    pPath = pPath.united(p1);
-
-    p1 = QPainterPath();
-    p1.addRect(r4);
-    pPath = pPath.united(p1);*/
-
     pPath = pPath.simplified();
-    //qInfo() << "Painter path: " << pPath;
+
 }
 
 void CotaGrafica::actualizarPosicion(float delta)
 {
     distanciaPerp += delta;
+    prepareGeometryChange();
     procesarTexto();
     calcularShape();
     calcularBoundingRect();
-    //qInfo() << "ditanciaPerp = " << distanciaPerp;
-    //qInfo() << "Bounding rect = " << boundingRect();
 }
 
 QPainterPath CotaGrafica::shape() const

@@ -37,9 +37,6 @@ void EscenaConfPista::graficarPista(Pista pista)
     cota2->hide();
 
     listaCotas.append(cota2);
-
-    addLine(0,0,500,0);
-    addLine(0,0,0,300);
 }
 
 void EscenaConfPista::mostrarCotas(bool mostrar)
@@ -68,11 +65,6 @@ void EscenaConfPista::limpiar()
 
 void EscenaConfPista::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    QGraphicsItem* itmClick = itemAt(mouseEvent->scenePos(), QTransform());
-    if(itmClick)
-    {
-        qInfo() << "Click en escena sobre el item " << itmClick->type();
-    }
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
