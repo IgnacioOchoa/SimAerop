@@ -29,6 +29,7 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
         leUmbral2->setEnabled(state);
         lbUmbral2->setEnabled(state);
     });
+    connect(dialPista, &QDial::sliderMoved, this, &DialogConfPista::actualizarLEOrientacion);
 }
 
 DialogConfPista::~DialogConfPista()
@@ -53,12 +54,14 @@ void DialogConfPista::configurarWidgets()
     leAnchoPista = ui->leAncho;
     leAnchoPista->setValidator(new QIntValidator(0,1000));
 
+    dialPista = ui->dialPista;
+
     leNombreArchivo = ui->leNombreArchivo;
     vistaPreliminar = ui->gvPreVisualizacion;
     layoutDial = ui->vlDial;
 
     leOrientacion = ui->leOrientacion;
-    leOrientacion->setValidator(new QIntValidator(0,360));
+    leOrientacion->setReadOnly(true);
 
     layoutDial->setAlignment(leOrientacion,Qt::AlignCenter);
     cbUmbral1 = ui->chkUmbral1;
@@ -116,6 +119,21 @@ void DialogConfPista::botonGraficarApretado()
         QMessageBox::warning(this,"Datos incompletos", "Los datos de pista no están completos");
         return;
     }
+}
+
+void DialogConfPista::actualizarCBUmbrales(const QString& s1, const QString& s2)
+{
+    cbUmbral1->setText("Umbral Cabecera " + s1);
+    cbUmbral2->setText("Umbral Cabecera " + s2);
+}
+
+void DialogConfPista::actualizarLEOrientacion(int value)
+{
+    QString s1 = QString::number(value%18).rightJustified(2,'0');
+    QString s2 = QString::number(value%18+18).rightJustified(2,'0');
+    QString s = s1 + " - " + s2;
+    leOrientacion->setText(s);
+    actualizarCBUmbrales(s1,s2);
 }
 
 bool DialogConfPista::datosCompletos()

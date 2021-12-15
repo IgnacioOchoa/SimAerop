@@ -28,13 +28,6 @@
     <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QLabel" name="lbLargo">
-         <property name="text">
-          <string>Largo</string>
-         </property>
-        </widget>
-       </item>
        <item row="0" column="1">
         <widget class="QLineEdit" name="leLargo">
          <property name="sizePolicy">
@@ -48,6 +41,16 @@
            <width>100</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="lbLargo">
+         <property name="text">
+          <string>Largo</string>
          </property>
         </widget>
        </item>
@@ -72,9 +75,12 @@
            <height>16777215</height>
           </size>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
-       <item row="2" column="0" colspan="2">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_3">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -90,25 +96,11 @@
          </property>
         </widget>
        </item>
-      </layout>
-     </item>
-     <item>
-      <layout class="QVBoxLayout" name="vlDial">
-       <item>
-        <widget class="QDial" name="dial">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-        </widget>
-       </item>
-       <item>
+       <item row="2" column="1">
         <widget class="QLineEdit" name="leOrientacion">
          <property name="maximumSize">
           <size>
-           <width>60</width>
+           <width>100</width>
            <height>16777215</height>
           </size>
          </property>
@@ -117,6 +109,23 @@
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="vlDial">
+       <item>
+        <widget class="DialPista" name="dialPista">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="notchesVisible">
+          <bool>false</bool>
          </property>
         </widget>
        </item>
@@ -175,7 +184,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Detalles de pista</string>
+      <string>Desplazamiento de umbrales</string>
      </property>
      <layout class="QFormLayout" name="formLayout">
       <item row="0" column="0">
@@ -184,7 +193,7 @@
          <enum>Qt::LeftToRight</enum>
         </property>
         <property name="text">
-         <string>Umbral 1 desplazado</string>
+         <string>Umbral 1</string>
         </property>
        </widget>
       </item>
@@ -193,7 +202,7 @@
         <item>
          <widget class="QLabel" name="lbUmbral1">
           <property name="text">
-           <string>Desplazamiento</string>
+           <string>Desplazamiento [m]</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -221,7 +230,7 @@
          <enum>Qt::LeftToRight</enum>
         </property>
         <property name="text">
-         <string>Umbral 2 desplazado</string>
+         <string>Umbral 2</string>
         </property>
        </widget>
       </item>
@@ -230,7 +239,7 @@
         <item>
          <widget class="QLabel" name="lbUmbral2">
           <property name="text">
-           <string>Desplazamiento</string>
+           <string>Desplazamiento [m]</string>
           </property>
           <property name="alignment">
            <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
@@ -359,11 +368,15 @@
    <extends>QGraphicsView</extends>
    <header>interfaz/aeropuerto/vistaconfpista.h</header>
   </customwidget>
+  <customwidget>
+   <class>DialPista</class>
+   <extends>QDial</extends>
+   <header>interfaz/aeropuerto/dialpista.h</header>
+  </customwidget>
  </customwidgets>
  <tabstops>
   <tabstop>leLargo</tabstop>
   <tabstop>leAncho</tabstop>
-  <tabstop>leOrientacion</tabstop>
   <tabstop>chkUmbral1</tabstop>
   <tabstop>chkUmbral2</tabstop>
   <tabstop>gvPreVisualizacion</tabstop>
@@ -376,7 +389,6 @@
   <tabstop>pbReset</tabstop>
   <tabstop>leUmbral1</tabstop>
   <tabstop>leUmbral2</tabstop>
-  <tabstop>dial</tabstop>
  </tabstops>
  <resources/>
  <connections/>

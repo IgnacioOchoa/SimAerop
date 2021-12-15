@@ -18,6 +18,7 @@
 #include "../../estructuras-datos/elementosaerop.h"
 #include "escenaconfpista.h"
 #include "vistaconfpista.h"
+#include "dialpista.h"
 
 namespace Ui {
 class DialogConfPista;
@@ -50,6 +51,7 @@ private:
     QPushButton* botonCentrarVista;
     QLineEdit* leLargoPista;
     QLineEdit* leAnchoPista;
+    DialPista* dialPista;
     QLineEdit* leNombreArchivo;
     QLineEdit* leRutaArchivo;
     QComboBox* cbCabecera1;
@@ -78,6 +80,8 @@ private slots:
     void resetDialogoPista();
     void dibujarPista();
     void botonGraficarApretado();
+    void actualizarCBUmbrales(const QString& s1, const QString& s2);
+    void actualizarLEOrientacion(int value);
 
 signals:
     void pistaActualizada(const Pista&);

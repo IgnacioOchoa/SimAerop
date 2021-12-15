@@ -17,6 +17,7 @@ SOURCES += \
     interfaz/aeropuerto/dialogconfpista.cpp \
     interfaz/aeropuerto/dialogconfplataformas.cpp \
     interfaz/aeropuerto/dialogconfrodaje.cpp \
+    interfaz/aeropuerto/dialpista.cpp \
     interfaz/aeropuerto/dibujo/cotagrafica.cpp \
     interfaz/aeropuerto/editorpista.cpp \
     interfaz/aeropuerto/escenaconfpista.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     interfaz/aeropuerto/dialogconfpista.h \
     interfaz/aeropuerto/dialogconfplataformas.h \
     interfaz/aeropuerto/dialogconfrodaje.h \
+    interfaz/aeropuerto/dialpista.h \
     interfaz/aeropuerto/dibujo/cotagrafica.h \
     interfaz/aeropuerto/editorpista.h \
     interfaz/aeropuerto/escenaconfpista.h \
