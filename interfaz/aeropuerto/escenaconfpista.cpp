@@ -68,9 +68,17 @@ void EscenaConfPista::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
-void EscenaConfPista::graficarUmbral(float despl)
+void EscenaConfPista::graficarUmbral(float despl, Lado lado)
 {
-    QPointF p1(rectPista.x() + despl, rectPista.y() + rectPista.height());
+    QPointF p1;
+    if (lado == Lado::IZQ)
+    {
+        p1 = QPointF(rectPista.x() + despl, rectPista.y() + rectPista.height());
+    }
+    else if (lado == Lado::DER)
+    {
+        p1 = QPointF(rectPista.x()+rectPista.width() - despl, rectPista.y() + rectPista.height());
+    }
     QPointF p2 = p1 + QPointF(-40,80);
     QPointF p3 = p1 + QPointF(40,80);
     QPolygonF pol;

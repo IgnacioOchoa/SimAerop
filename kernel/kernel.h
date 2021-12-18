@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QDir>
 
-#include "../interfaz/aeropuerto/editorpista.h"
+#include "../interfaz/aeropuerto/graficadoraeropuerto.h"
 #include "interfaz/interfazprincipal.h"
 #include "../estructuras-datos/elementosaerop.h"
 #include "interfaz/aeronaves/flota.h"
@@ -30,10 +30,10 @@ public slots:
     void sloGuardarFlota(QString, QList<Aeronave>);
 
 private:
-    bool inicializarEditorPista(InterfazPrincipal* ip);
+    bool inicializarGraficadorAeropuerto(InterfazPrincipal* ip);
     QList<Flota*> listaFlotas;
     InterfazPrincipal* interfazPpal;
-    EditorPista* editorPista;  
+    GraficadorAeropuerto* graficadorAeropuerto;
 
 signals:
     void pistaActualizada(const Pista& p);

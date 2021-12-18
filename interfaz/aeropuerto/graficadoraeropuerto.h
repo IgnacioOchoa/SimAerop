@@ -12,12 +12,12 @@
 
 //Q_DECLARE_METATYPE(Pista)
 
-class EditorPista : public QObject
+class GraficadorAeropuerto : public QObject
 {
     Q_OBJECT
 
 public:
-    EditorPista(QGraphicsView* gv);
+    GraficadorAeropuerto(QGraphicsView* gv);
 
 public slots:
     void actualizarPista(const Pista& p);

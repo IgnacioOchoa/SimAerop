@@ -9,14 +9,15 @@
 
 class EscenaConfPista : public QGraphicsScene
 {
+
 public:
     EscenaConfPista(QObject* ob = nullptr);
+    enum class Lado {IZQ, DER};
     void graficarPista(Pista p);
     void mostrarCotas(bool);
     void limpiar();
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
-    void graficarUmbral(float);
-
+    void graficarUmbral(float, Lado);
 signals:
     void contenidoCambiado();
 

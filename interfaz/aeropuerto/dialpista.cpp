@@ -6,8 +6,7 @@
 DialPista::DialPista(QWidget* parent) :
 QDial(parent)
 {
-    setValue(0);
-    setRange(0,NroPtos-1);
+    setRange(1,NroPtos);
 }
 
 void DialPista::paintEvent(QPaintEvent *pe)

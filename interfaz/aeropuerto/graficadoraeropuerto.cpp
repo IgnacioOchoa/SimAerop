@@ -1,6 +1,6 @@
-#include "editorpista.h"
+#include "graficadoraeropuerto.h"
 
-EditorPista::EditorPista(QGraphicsView *gv) :
+GraficadorAeropuerto::GraficadorAeropuerto(QGraphicsView *gv) :
     vistaPista(gv)
 {
     escenaPista = gv->scene();
@@ -15,7 +15,7 @@ EditorPista::EditorPista(QGraphicsView *gv) :
     bordePista->setWidth(0);
 }
 
-void EditorPista::actualizarPista(const Pista& p)
+void GraficadorAeropuerto::actualizarPista(const Pista& p)
 {
     escenaPista->clear();
     escenaPista->setBackgroundBrush(*fondoPista);
@@ -157,7 +157,7 @@ void EditorPista::actualizarPista(const Pista& p)
     //vistaPista->scale(0.98, 0.98);
 }
 
-void EditorPista::reportarDatosEscena()
+void GraficadorAeropuerto::reportarDatosEscena()
 {
     qInfo() << "escenaPista->sceneRect() = " << escenaPista->sceneRect();
     qInfo() << "ui->graficoPista->sceneRect() = " << vistaPista->sceneRect();

@@ -107,13 +107,13 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     painter->setFont(fuente);     
     graficarTexto(posInfIzqTexto, texto, painter);
 
-    painter->setBrush(Qt::NoBrush);
-    painter->setPen(QColor("green"));
-    painter->drawPath(pPath);
+//    painter->setBrush(Qt::NoBrush);
+//    painter->setPen(QColor("green"));
+//    painter->drawPath(pPath);
 
-    painter->setBrush(Qt::NoBrush);
-    painter->setPen(QColor("red"));
-    painter->drawRect(bRect);
+//    painter->setBrush(Qt::NoBrush);
+//    painter->setPen(QColor("red"));
+//    painter->drawRect(bRect);
 }
 
 QRectF CotaGrafica::boundingRect() const

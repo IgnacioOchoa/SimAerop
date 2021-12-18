@@ -13,13 +13,13 @@ Kernel::~Kernel()
 void Kernel::inicializar(InterfazPrincipal *ip)
 {
     interfazPpal = ip;
-    inicializarEditorPista(ip);
+    inicializarGraficadorAeropuerto(ip);
 }
 
-bool Kernel::inicializarEditorPista(InterfazPrincipal* ip)
+bool Kernel::inicializarGraficadorAeropuerto(InterfazPrincipal* ip)
 {
-    editorPista = new EditorPista(ip->getVistaPista());
-    connect(this, SIGNAL(pistaActualizada(const Pista&)), editorPista, SLOT(actualizarPista(const Pista&)));
+    graficadorAeropuerto = new GraficadorAeropuerto(ip->getVistaPista());
+    connect(this, SIGNAL(pistaActualizada(const Pista&)), graficadorAeropuerto, SLOT(actualizarPista(const Pista&)));
     //connect(ip->ui->botonGraficarPista, SIGNAL(clicked()), editor)
     return true;
 }

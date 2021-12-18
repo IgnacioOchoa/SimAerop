@@ -101,7 +101,17 @@ void DialogConfPista::dibujarPista()
         float um = um1.toFloat(&ok);
         if (ok)
         {
-            vistaPreliminar->dibujarUmbral(um);
+            vistaPreliminar->dibujarUmbral(um, EscenaConfPista::Lado::IZQ);
+        }
+    }
+    QString um2 = ui->leUmbral2->text();
+    if(um2 != "")
+    {
+        bool ok;
+        float um = um2.toFloat(&ok);
+        if (ok)
+        {
+            vistaPreliminar->dibujarUmbral(um, EscenaConfPista::Lado::DER);
         }
     }
 }
@@ -131,8 +141,12 @@ void DialogConfPista::actualizarLEOrientacion(int value)
 {
     QString s1 = QString::number(value%18).rightJustified(2,'0');
     QString s2 = QString::number(value%18+18).rightJustified(2,'0');
-    QString s = s1 + " - " + s2;
-    leOrientacion->setText(s);
+    if (s1=="00")
+    {
+        s1 = s2;
+        s2 = "36";
+    }
+    leOrientacion->setText(s1 + " - " + s2);
     actualizarCBUmbrales(s1,s2);
 }
 
