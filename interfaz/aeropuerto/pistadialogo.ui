@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>DialogConfPista</class>
- <widget class="QDialog" name="DialogConfPista">
+ <class>PistaDialogo</class>
+ <widget class="QDialog" name="PistaDialogo">
   <property name="geometry">
    <rect>
     <x>0</x>

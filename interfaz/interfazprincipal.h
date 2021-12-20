@@ -12,13 +12,13 @@
 
 #include "kernel/kernel.h"
 #include "../estructuras-datos/elementosaerop.h"
-#include "aeropuerto/customgraphicsview.h"
-#include "aeropuerto/customgraphicsscene.h"
-#include "interfaz/aeropuerto/dialogconfpista.h"
+#include "aeropuerto/aeropuertovista.h"
+#include "aeropuerto/aeropuertoescena.h"
+#include "interfaz/aeropuerto/pistadialogo.h"
 #include "aeronaves/aeronave.h"
 #include "aeronaves/flota.h"
-#include "interfaz/aeropuerto/dialogconfrodaje.h"
-#include "interfaz/aeropuerto/dialogconfplataformas.h"
+#include "interfaz/aeropuerto/rodajedialogo.h"
+#include "interfaz/aeropuerto/plataformadialogo.h"
 #include "input-output/pistaparser.h"
 
 
@@ -39,12 +39,12 @@ class InterfazPrincipal : public QMainWindow
 public:
     InterfazPrincipal(Kernel *k, QWidget* parent = nullptr);
     ~InterfazPrincipal();
-    QGraphicsView *getVistaPista();
+    AeropuertoVista *getVistaAeropuerto();
     const Pista& getPista() const {return pista;}
     void mostradorFlota(const QList<Aeronave>&);
 
 signals:
-    void pistaCambiada();
+    void sigPistaCambiada();
     void sigCargarFlota(QString);
     void sigGuardarFlota(QString, QList<Aeronave>);
 
@@ -56,8 +56,8 @@ private:
     QList<QPushButton*> listaBotones;
     QButtonGroup* btnGroup;
 
-    customGraphicsView* vistaPista;
-    customGraphicsScene* escenaPista;
+    AeropuertoVista* vistaAeropuerto;
+    AeropuertoEscena* escenaAeropuerto;
 
     QMenu* menuArchivo;
     QMenu* menuEditar;

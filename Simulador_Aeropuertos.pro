@@ -12,16 +12,16 @@ SOURCES += \
     input-output/pistaparser.cpp \
     interfaz/aeronaves/aeronave.cpp \
     interfaz/aeronaves/flota.cpp \
-    interfaz/aeropuerto/customgraphicsscene.cpp \
-    interfaz/aeropuerto/customgraphicsview.cpp \
-    interfaz/aeropuerto/dialogconfpista.cpp \
-    interfaz/aeropuerto/dialogconfplataformas.cpp \
-    interfaz/aeropuerto/dialogconfrodaje.cpp \
-    interfaz/aeropuerto/dialpista.cpp \
+    interfaz/aeropuerto/aeropuertoescena.cpp \
+    interfaz/aeropuerto/aeropuertovista.cpp \
     interfaz/aeropuerto/dibujo/cotagrafica.cpp \
-    interfaz/aeropuerto/escenaconfpista.cpp \
     interfaz/aeropuerto/graficadoraeropuerto.cpp \
-    interfaz/aeropuerto/vistaconfpista.cpp \
+    interfaz/aeropuerto/pistadial.cpp \
+    interfaz/aeropuerto/pistadialogo.cpp \
+    interfaz/aeropuerto/pistaescena.cpp \
+    interfaz/aeropuerto/pistavista.cpp \
+    interfaz/aeropuerto/plataformadialogo.cpp \
+    interfaz/aeropuerto/rodajedialogo.cpp \
     interfaz/interfazprincipal.cpp \
     kernel/kernel.cpp \
     main.cpp
@@ -31,23 +31,23 @@ HEADERS += \
     input-output/pistaparser.h \
     interfaz/aeronaves/aeronave.h \
     interfaz/aeronaves/flota.h \
-    interfaz/aeropuerto/customgraphicsscene.h \
-    interfaz/aeropuerto/customgraphicsview.h \
-    interfaz/aeropuerto/dialogconfpista.h \
-    interfaz/aeropuerto/dialogconfplataformas.h \
-    interfaz/aeropuerto/dialogconfrodaje.h \
-    interfaz/aeropuerto/dialpista.h \
+    interfaz/aeropuerto/aeropuertoescena.h \
+    interfaz/aeropuerto/aeropuertovista.h \
     interfaz/aeropuerto/dibujo/cotagrafica.h \
-    interfaz/aeropuerto/escenaconfpista.h \
     interfaz/aeropuerto/graficadoraeropuerto.h \
-    interfaz/aeropuerto/vistaconfpista.h \
+    interfaz/aeropuerto/pistadial.h \
+    interfaz/aeropuerto/pistadialogo.h \
+    interfaz/aeropuerto/pistaescena.h \
+    interfaz/aeropuerto/pistavista.h \
+    interfaz/aeropuerto/plataformadialogo.h \
+    interfaz/aeropuerto/rodajedialogo.h \
     interfaz/interfazprincipal.h \
     kernel/kernel.h
 
 FORMS += \
-    interfaz/aeropuerto/dialogconfpista.ui \
-    interfaz/aeropuerto/dialogconfplataformas.ui \
-    interfaz/aeropuerto/dialogconfrodaje.ui \
+    interfaz/aeropuerto/pistadialogo.ui \
+    interfaz/aeropuerto/plataformadialogo.ui \
+    interfaz/aeropuerto/rodajedialogo.ui \
     interfaz/interfazprincipal.ui
 
 # Default rules for deployment.

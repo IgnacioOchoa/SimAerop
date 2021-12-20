@@ -4,7 +4,7 @@
 InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::interfazPrincipal)
-    , escenaPista(new customGraphicsScene(this))
+    , escenaAeropuerto(new AeropuertoEscena(this))
     , pistaParser()
 {
     ui->setupUi(this);
@@ -15,8 +15,8 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     ui->tablaFlota->setHorizontalHeaderLabels(titles);
     ui->tablaFlota->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
-    vistaPista = ui->graficoPista;
-    ui->graficoPista->setScene(escenaPista);
+    vistaAeropuerto = ui->vistaAeropuerto;
+    ui->vistaAeropuerto->setScene(escenaAeropuerto);
 
     crearMenu();
     k->inicializar(this);
@@ -42,12 +42,12 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     listaBotones[0]->setChecked(true);
 
     //Conexiones Página Aeropuertos
-    DialogConfPista* dialogConfPista = new DialogConfPista;
-    DialogConfRodaje* dialogConfRodaje = new DialogConfRodaje;
-    DialogConfPlataformas* dialogConfPlataformas = new DialogConfPlataformas;
+    PistaDialogo* dialogConfPista = new PistaDialogo;
+    RodajeDialogo* dialogConfRodaje = new RodajeDialogo;
+    PlataformaDialogo* dialogConfPlataformas = new PlataformaDialogo;
 
     connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::crearPista);
-    connect(this, SIGNAL(pistaCambiada()), k, SLOT(graficarPista()));
+    connect(this, SIGNAL(sigPistaCambiada()), k, SLOT(graficarPista()));
 
     connect(ui->pbConfigurarPista, &QAbstractButton::pressed, [dialogConfPista](){dialogConfPista->show();});
     connect(ui->pbConfigurarCallesRodaje, &QAbstractButton::pressed, [dialogConfRodaje](){dialogConfRodaje->show();});
@@ -74,9 +74,9 @@ InterfazPrincipal::~InterfazPrincipal()
     delete ui;
 }
 
-QGraphicsView *InterfazPrincipal::getVistaPista()
+ AeropuertoVista *InterfazPrincipal::getVistaAeropuerto()
 {
-    return vistaPista;
+    return vistaAeropuerto;
 }
 
 void InterfazPrincipal::crearMenu()
@@ -104,13 +104,13 @@ void InterfazPrincipal::crearPista()
 
     //pista = pis;
     //pista = {1250,45,0,"",""};
-    emit pistaCambiada();
+    emit sigPistaCambiada();
 }
 
 
 void InterfazPrincipal::actualizarDatosPista(const Pista& p)
 {
-    escenaPista->clear();
+    escenaAeropuerto->clear();
     pista = p;
     ui->lbValorAncho->setText(QString::number(pista.ancho) + " m");
     ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");

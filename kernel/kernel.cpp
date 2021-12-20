@@ -18,8 +18,8 @@ void Kernel::inicializar(InterfazPrincipal *ip)
 
 bool Kernel::inicializarGraficadorAeropuerto(InterfazPrincipal* ip)
 {
-    graficadorAeropuerto = new GraficadorAeropuerto(ip->getVistaPista());
-    connect(this, SIGNAL(pistaActualizada(const Pista&)), graficadorAeropuerto, SLOT(actualizarPista(const Pista&)));
+    graficadorAeropuerto = new GraficadorAeropuerto(ip->getVistaAeropuerto());
+    connect(this, SIGNAL(pistaActualizada(const Pista&)), graficadorAeropuerto, SLOT(actualizarAeropuerto(const Pista&)));
     //connect(ip->ui->botonGraficarPista, SIGNAL(clicked()), editor)
     return true;
 }

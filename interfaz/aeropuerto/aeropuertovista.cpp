@@ -1,6 +1,6 @@
-#include "customgraphicsview.h"
+#include "aeropuertovista.h"
 
-customGraphicsView::customGraphicsView(QWidget* w) :
+AeropuertoVista::AeropuertoVista(QWidget* w) :
     QGraphicsView(w)
 {
     this->setHorizontalScrollBarPolicy ( Qt::ScrollBarAlwaysOff );
@@ -9,7 +9,7 @@ customGraphicsView::customGraphicsView(QWidget* w) :
     centroAnterior = QPointF(0,0);
 }
 
-void customGraphicsView::wheelEvent(QWheelEvent *event)
+void AeropuertoVista::wheelEvent(QWheelEvent *event)
 {
     QPoint puntoMouseEnView1 = event->pos();
     QPointF puntoMouseEnScene1 = this->mapToScene(puntoMouseEnView1);
@@ -43,7 +43,7 @@ void customGraphicsView::wheelEvent(QWheelEvent *event)
     //qInfo() << "Matrix = " << this->matrix();
 }
 
-void customGraphicsView::mousePressEvent(QMouseEvent *event)
+void AeropuertoVista::mousePressEvent(QMouseEvent *event)
 {
     if(event->button()==Qt::MiddleButton)
     {
@@ -53,7 +53,7 @@ void customGraphicsView::mousePressEvent(QMouseEvent *event)
     }
 }
 
-void customGraphicsView::mouseReleaseEvent(QMouseEvent *event)
+void AeropuertoVista::mouseReleaseEvent(QMouseEvent *event)
 {
     if(event->button()==Qt::MiddleButton)
     {
@@ -62,7 +62,7 @@ void customGraphicsView::mouseReleaseEvent(QMouseEvent *event)
 }
 
 
-void customGraphicsView::mouseMoveEvent(QMouseEvent *event)
+void AeropuertoVista::mouseMoveEvent(QMouseEvent *event)
 {
     if(ruedaApretada)
     {

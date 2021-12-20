@@ -1,6 +1,6 @@
-#include "escenaconfpista.h"
+#include "pistaescena.h"
 
-EscenaConfPista::EscenaConfPista(QObject* ob) :
+PistaEscena::PistaEscena(QObject* ob) :
     QGraphicsScene(ob)
 {
     setSceneRect(QRect(-10000,-3000,20000,6000));
@@ -8,7 +8,7 @@ EscenaConfPista::EscenaConfPista(QObject* ob) :
     listaCotas = QList<CotaGrafica*>();
 }
 
-void EscenaConfPista::graficarPista(Pista pista)
+void PistaEscena::graficarPista(Pista pista)
 {
 
     rectPista = QRect(-pista.largo/2,-pista.ancho/2,pista.largo,pista.ancho);
@@ -39,7 +39,7 @@ void EscenaConfPista::graficarPista(Pista pista)
     listaCotas.append(cota2);
 }
 
-void EscenaConfPista::mostrarCotas(bool mostrar)
+void PistaEscena::mostrarCotas(bool mostrar)
 {
     if(mostrar)
     {
@@ -57,18 +57,18 @@ void EscenaConfPista::mostrarCotas(bool mostrar)
     }
 }
 
-void EscenaConfPista::limpiar()
+void PistaEscena::limpiar()
 {
     clear();
     listaCotas.clear();
 }
 
-void EscenaConfPista::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
+void PistaEscena::mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
-void EscenaConfPista::graficarUmbral(float despl, Lado lado)
+void PistaEscena::graficarUmbral(float despl, Lado lado)
 {
     QPointF p1;
     if (lado == Lado::IZQ)

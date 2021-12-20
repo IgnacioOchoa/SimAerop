@@ -1,5 +1,5 @@
-#ifndef ESCENACONFPISTA_H
-#define ESCENACONFPISTA_H
+#ifndef PISTAESCENA_H
+#define PISTAESCENA_H
 
 #include <QGraphicsScene>
 #include <QObject>
@@ -7,11 +7,11 @@
 #include "dibujo/cotagrafica.h"
 #include "../../estructuras-datos/elementosaerop.h"
 
-class EscenaConfPista : public QGraphicsScene
+class PistaEscena : public QGraphicsScene
 {
 
 public:
-    EscenaConfPista(QObject* ob = nullptr);
+    PistaEscena(QObject* ob = nullptr);
     enum class Lado {IZQ, DER};
     void graficarPista(Pista p);
     void mostrarCotas(bool);
@@ -29,4 +29,4 @@ private:
     QRect rectPista;
 };
 
-#endif // ESCENACONFPISTA_H
+#endif // PISTAESCENA_H

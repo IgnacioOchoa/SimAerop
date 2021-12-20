@@ -1,15 +1,15 @@
-#include "dialpista.h"
+#include "pistadial.h"
 #include "cmath"
 #define PI 3.141592
 #define NroPtos 36
 
-DialPista::DialPista(QWidget* parent) :
+PistaDial::PistaDial(QWidget* parent) :
 QDial(parent)
 {
     setRange(1,NroPtos);
 }
 
-void DialPista::paintEvent(QPaintEvent *pe)
+void PistaDial::paintEvent(QPaintEvent *pe)
 {
     Q_UNUSED(pe);
     qreal angulo = 3*PI/2.0 - (2*PI)/NroPtos * value();

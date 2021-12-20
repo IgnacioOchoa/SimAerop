@@ -1,22 +1,22 @@
-#include "dialogconfpista.h"
-#include "ui_dialogconfpista.h"
+#include "pistadialogo.h"
+#include "ui_pistadialogo.h"
 
 #include <QFileDialog>
 
-DialogConfPista::DialogConfPista(QWidget *parent) :
+PistaDialogo::PistaDialogo(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::DialogConfPista)
+    ui(new Ui::PistaDialogo)
 {
     ui->setupUi(this);
     configurarWidgets();
 
-    connect(botonAceptar, &QPushButton::pressed, this, &DialogConfPista::dialogoAceptado);
-    connect(botonCancelar, &QPushButton::pressed, this, &DialogConfPista::dialogoCancelado);
-    connect(botonCargar, &QPushButton::pressed, this, &DialogConfPista::seleccionarAbrirArchivo);
-    connect(botonGuardar, &QPushButton::pressed, this, &DialogConfPista::seleccionarGuardarArchivo);
-    connect(botonReset, &QPushButton::pressed, this, &DialogConfPista::resetDialogoPista);
+    connect(botonAceptar, &QPushButton::pressed, this, &PistaDialogo::dialogoAceptado);
+    connect(botonCancelar, &QPushButton::pressed, this, &PistaDialogo::dialogoCancelado);
+    connect(botonCargar, &QPushButton::pressed, this, &PistaDialogo::seleccionarAbrirArchivo);
+    connect(botonGuardar, &QPushButton::pressed, this, &PistaDialogo::seleccionarGuardarArchivo);
+    connect(botonReset, &QPushButton::pressed, this, &PistaDialogo::resetDialogoPista);
 
-    connect(botonGraficar, &QAbstractButton::pressed, this, &DialogConfPista::botonGraficarApretado);
+    connect(botonGraficar, &QAbstractButton::pressed, this, &PistaDialogo::botonGraficarApretado);
     connect(botonCentrarVista, &QAbstractButton::pressed, this, [this](){vistaPreliminar->centrarVista();});
 
     connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
@@ -29,15 +29,15 @@ DialogConfPista::DialogConfPista(QWidget *parent) :
         leUmbral2->setEnabled(state);
         lbUmbral2->setEnabled(state);
     });
-    connect(dialPista, &QDial::sliderMoved, this, &DialogConfPista::actualizarLEOrientacion);
+    connect(dialPista, &QDial::sliderMoved, this, &PistaDialogo::actualizarLEOrientacion);
 }
 
-DialogConfPista::~DialogConfPista()
+PistaDialogo::~PistaDialogo()
 {
     delete ui;
 }
 
-void DialogConfPista::configurarWidgets()
+void PistaDialogo::configurarWidgets()
 {
     botonAceptar = ui->pbAceptar;
     botonCancelar = ui->pbCancelar;
@@ -77,21 +77,21 @@ void DialogConfPista::configurarWidgets()
     lbUmbral2->setEnabled(false);
 }
 
-void DialogConfPista::poblarDatos()
+void PistaDialogo::poblarDatos()
 {
     leLargoPista->setText(QString::number(pista.largo));
     leAnchoPista->setText(QString::number(pista.ancho));
     leOrientacion->setText(QString::number(pista.orientacion));
 }
 
-void DialogConfPista::poblarPista()
+void PistaDialogo::poblarPista()
 {
     pista.largo = leLargoPista->text().toInt();
     pista.ancho = leAnchoPista->text().toInt();
     pista.orientacion = leOrientacion->text().toInt();
 }
 
-void DialogConfPista::dibujarPista()
+void PistaDialogo::dibujarPista()
 {
     vistaPreliminar->graficarPista(pista);
     QString um1 = ui->leUmbral1->text();
@@ -101,7 +101,7 @@ void DialogConfPista::dibujarPista()
         float um = um1.toFloat(&ok);
         if (ok)
         {
-            vistaPreliminar->dibujarUmbral(um, EscenaConfPista::Lado::IZQ);
+            vistaPreliminar->dibujarUmbral(um, PistaEscena::Lado::IZQ);
         }
     }
     QString um2 = ui->leUmbral2->text();
@@ -111,12 +111,12 @@ void DialogConfPista::dibujarPista()
         float um = um2.toFloat(&ok);
         if (ok)
         {
-            vistaPreliminar->dibujarUmbral(um, EscenaConfPista::Lado::DER);
+            vistaPreliminar->dibujarUmbral(um, PistaEscena::Lado::DER);
         }
     }
 }
 
-void DialogConfPista::botonGraficarApretado()
+void PistaDialogo::botonGraficarApretado()
 {
     if(datosCompletos())
     {
@@ -131,13 +131,13 @@ void DialogConfPista::botonGraficarApretado()
     }
 }
 
-void DialogConfPista::actualizarCBUmbrales(const QString& s1, const QString& s2)
+void PistaDialogo::actualizarCBUmbrales(const QString& s1, const QString& s2)
 {
     cbUmbral1->setText("Umbral Cabecera " + s1);
     cbUmbral2->setText("Umbral Cabecera " + s2);
 }
 
-void DialogConfPista::actualizarLEOrientacion(int value)
+void PistaDialogo::actualizarLEOrientacion(int value)
 {
     QString s1 = QString::number(value%18).rightJustified(2,'0');
     QString s2 = QString::number(value%18+18).rightJustified(2,'0');
@@ -150,7 +150,7 @@ void DialogConfPista::actualizarLEOrientacion(int value)
     actualizarCBUmbrales(s1,s2);
 }
 
-bool DialogConfPista::datosCompletos()
+bool PistaDialogo::datosCompletos()
 {
     if(leLargoPista->text().isEmpty() ||
        leAnchoPista->text().isEmpty() ||
@@ -165,7 +165,7 @@ bool DialogConfPista::datosCompletos()
     return true;
 }
 
-void DialogConfPista::dialogoAceptado()
+void PistaDialogo::dialogoAceptado()
 {
     if (!datosCompletos())
     {
@@ -177,12 +177,12 @@ void DialogConfPista::dialogoAceptado()
     this->close();
 }
 
-void DialogConfPista::dialogoCancelado()
+void PistaDialogo::dialogoCancelado()
 {
     this->close();
 }
 
-void DialogConfPista::poblarCabeceras()
+void PistaDialogo::poblarCabeceras()
 {
     /*for (int i=0; i<18; i++)
     {
@@ -195,7 +195,7 @@ void DialogConfPista::poblarCabeceras()
     */
 }
 
-void DialogConfPista::seleccionarAbrirArchivo()
+void PistaDialogo::seleccionarAbrirArchivo()
 {
     QString file_name = QFileDialog::getOpenFileName(this,"Seleccionar archivo",QDir::currentPath(),"(*.json)");
 
@@ -213,7 +213,7 @@ void DialogConfPista::seleccionarAbrirArchivo()
     poblarDatos();
 }
 
-void DialogConfPista::seleccionarGuardarArchivo()
+void PistaDialogo::seleccionarGuardarArchivo()
 {
     if (!datosCompletos())
     {
@@ -236,7 +236,7 @@ void DialogConfPista::seleccionarGuardarArchivo()
     pistaParser.guardarPista(file_name,pista);
 }
 
-void DialogConfPista::resetDialogoPista()
+void PistaDialogo::resetDialogoPista()
 {
     vistaPreliminar->vaciarContenido();
     leNombreArchivo->clear();

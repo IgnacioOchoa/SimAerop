@@ -1,16 +1,16 @@
-#ifndef CUSTOMGRAPHICSVIEW_H
-#define CUSTOMGRAPHICSVIEW_H
+#ifndef AEROPUERTOVISTA_H
+#define AEROPUERTOVISTA_H
 
 #include <QObject>
 #include <QGraphicsView>
 #include <QDebug>
 #include <QWheelEvent>
 
-class customGraphicsView : public QGraphicsView
+class AeropuertoVista : public QGraphicsView
 {
     Q_OBJECT
 public:
-    customGraphicsView(QWidget* w = nullptr);
+    AeropuertoVista(QWidget* w = nullptr);
 
     virtual void wheelEvent(QWheelEvent *event) override;
     virtual void mouseMoveEvent(QMouseEvent *event) override;
@@ -25,4 +25,4 @@ private:
 
 };
 
-#endif // CUSTOMGRAPHICSVIEW_H
+#endif // AEROPUERTOVISTA_H

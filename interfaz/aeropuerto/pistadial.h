@@ -1,5 +1,5 @@
-#ifndef DIALPISTA_H
-#define DIALPISTA_H
+#ifndef PISTADIAL_H
+#define PISTADIAL_H
 
 #include <QDial>
 #include <QPainter>
@@ -7,11 +7,11 @@
 
 class QPainter;
 
-class DialPista : public QDial
+class PistaDial : public QDial
 {
     Q_OBJECT
 public:
-    DialPista(QWidget* parent = nullptr);
+    PistaDial(QWidget* parent = nullptr);
     virtual void paintEvent(QPaintEvent *pe) override;
 
 private:
@@ -22,4 +22,4 @@ private:
 
 };
 
-#endif // DIALPISTA_H
+#endif // PISTADIAL_H

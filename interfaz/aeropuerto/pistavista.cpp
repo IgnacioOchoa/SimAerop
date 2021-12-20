@@ -1,6 +1,6 @@
-#include "vistaconfpista.h"
+#include "pistavista.h"
 
-VistaConfPista::VistaConfPista(QWidget* w) :
+PistaVista::PistaVista(QWidget* w) :
     QGraphicsView(w)
 {
     this->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -18,15 +18,15 @@ VistaConfPista::VistaConfPista(QWidget* w) :
     vLay->addItem(hLay);
     setLayout(vLay);
 
-    escena = new EscenaConfPista;
+    escena = new PistaEscena;
     setScene(escena);
 
     escala = 1;
 
-    connect(cbActivarCotas, &QCheckBox::stateChanged, this, &VistaConfPista::chBoxCotasAccionada);
+    connect(cbActivarCotas, &QCheckBox::stateChanged, this, &PistaVista::chBoxCotasAccionada);
 }
 
-void VistaConfPista::mouseMoveEvent(QMouseEvent *event)
+void PistaVista::mouseMoveEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::MidButton)
        {
@@ -39,7 +39,7 @@ void VistaConfPista::mouseMoveEvent(QMouseEvent *event)
        viewport()->update(); //Esto es clave para que no sucedan cosas raras en el fondo al mover los items
 }
 
-void VistaConfPista::mousePressEvent(QMouseEvent *event)
+void PistaVista::mousePressEvent(QMouseEvent *event)
 {
     if (event->buttons() == Qt::MidButton)
     {
@@ -48,7 +48,7 @@ void VistaConfPista::mousePressEvent(QMouseEvent *event)
     QGraphicsView::mousePressEvent(event);
 }
 
-void VistaConfPista::wheelEvent(QWheelEvent *event)
+void PistaVista::wheelEvent(QWheelEvent *event)
 {
     QPoint puntoMouseEnView1 = event->pos();
     QPointF puntoMouseEnScene1 = this->mapToScene(puntoMouseEnView1);
@@ -71,13 +71,13 @@ void VistaConfPista::wheelEvent(QWheelEvent *event)
 
 }
 
-void VistaConfPista::centrarVista(QPointF p)
+void PistaVista::centrarVista(QPointF p)
 {
     centerOn(p);
     centroVista = QPointF();
 }
 
-void VistaConfPista::ajustarContenidos()
+void PistaVista::ajustarContenidos()
 {
     QRectF r1 = scene()->itemsBoundingRect();
     QRectF r2 = mapToScene(viewport()->rect()).boundingRect();
@@ -89,24 +89,24 @@ void VistaConfPista::ajustarContenidos()
     scale(escala,escala);
 }
 
-void VistaConfPista::graficarPista(Pista p)
+void PistaVista::graficarPista(Pista p)
 {
     escena->graficarPista(p);
     escena->mostrarCotas(cbActivarCotas->isChecked());
     ajustarContenidos();
 }
 
-void VistaConfPista::dibujarUmbral(float pos, EscenaConfPista::Lado lado)
+void PistaVista::dibujarUmbral(float pos, PistaEscena::Lado lado)
 {
     escena->graficarUmbral(pos, lado);
 }
 
-void VistaConfPista::vaciarContenido()
+void PistaVista::vaciarContenido()
 {
     escena->limpiar();
 }
 
-void VistaConfPista::chBoxCotasAccionada(int state)
+void PistaVista::chBoxCotasAccionada(int state)
 {
     escena->mostrarCotas(state == 0 ? false : true);
 }

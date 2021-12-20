@@ -1,5 +1,5 @@
-#ifndef VISTACONFPISTA_H
-#define VISTACONFPISTA_H
+#ifndef PISTAVISTA_H
+#define PISTAVISTA_H
 
 #include <QGraphicsView>
 #include <QObject>
@@ -8,13 +8,13 @@
 #include <QCheckBox>
 #include <QPushButton>
 #include <QBoxLayout>
-#include "escenaconfpista.h"
+#include "pistaescena.h"
 #include "../../estructuras-datos/elementosaerop.h"
 
-class VistaConfPista : public QGraphicsView
+class PistaVista : public QGraphicsView
 {
 public:
-    VistaConfPista(QWidget* = nullptr);
+    PistaVista(QWidget* = nullptr);
 
     void mouseMoveEvent(QMouseEvent* event) override;
     void mousePressEvent(QMouseEvent* event) override;
@@ -24,7 +24,7 @@ public:
     void ajustarContenidos();
 
     void graficarPista(Pista p);
-    void dibujarUmbral(float pos, EscenaConfPista::Lado);
+    void dibujarUmbral(float pos, PistaEscena::Lado);
     void vaciarContenido();
 
 public slots:
@@ -34,9 +34,9 @@ private:
     QPointF inicioRueda;
     QPointF centroVista;
     QCheckBox* cbActivarCotas;
-    EscenaConfPista* escena;
+    PistaEscena* escena;
     QPointF centroAnterior;
     qreal escala;
 };
 
-#endif // VISTACONFPISTA_H
+#endif // PISTAVISTA_H

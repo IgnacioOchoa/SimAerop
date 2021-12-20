@@ -7,6 +7,8 @@
 #include <QGraphicsItem>
 #include <QDebug>
 #include <QFloat16>
+#include "aeropuertoescena.h"
+#include "aeropuertovista.h"
 
 #include "../../estructuras-datos/elementosaerop.h"
 
@@ -17,16 +19,16 @@ class GraficadorAeropuerto : public QObject
     Q_OBJECT
 
 public:
-    GraficadorAeropuerto(QGraphicsView* gv);
+    GraficadorAeropuerto(AeropuertoVista* gv);
 
 public slots:
-    void actualizarPista(const Pista& p);
+    void actualizarAeropuerto(const Pista& p);
 
 private:
     void reportarDatosEscena();
 
-    QGraphicsView* vistaPista;
-    QGraphicsScene* escenaPista;
+    AeropuertoVista* vistaAeropuerto;
+    AeropuertoEscena* escenaAeropuerto;
 
     QLinearGradient* gradienteFondoPista;
     QBrush* fondoPista;

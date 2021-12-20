@@ -1,5 +1,5 @@
-#ifndef DIALOGCONFPISTA_H
-#define DIALOGCONFPISTA_H
+#ifndef PISTADIALOGO_H
+#define PISTADIALOGO_H
 
 #include <QLineEdit>
 #include <QTableView>
@@ -16,25 +16,25 @@
 #include <QMessageBox>
 #include "../../input-output/pistaparser.h"
 #include "../../estructuras-datos/elementosaerop.h"
-#include "escenaconfpista.h"
-#include "vistaconfpista.h"
-#include "dialpista.h"
+#include "pistaescena.h"
+#include "pistavista.h"
+#include "pistadial.h"
 
 namespace Ui {
-class DialogConfPista;
+class PistaDialogo;
 }
 
-class DialogConfPista : public QDialog
+class PistaDialogo : public QDialog
 {
     Q_OBJECT
     enum Orientacion {HOR, VER};
 
 public:
-    explicit DialogConfPista(QWidget *parent = nullptr);
-    ~DialogConfPista();
+    explicit PistaDialogo(QWidget *parent = nullptr);
+    ~PistaDialogo();
 
 private:
-    Ui::DialogConfPista *ui;
+    Ui::PistaDialogo *ui;
     void configurarWidgets();
     void poblarDatos();
     void poblarPista();
@@ -51,7 +51,7 @@ private:
     QPushButton* botonCentrarVista;
     QLineEdit* leLargoPista;
     QLineEdit* leAnchoPista;
-    DialPista* dialPista;
+    PistaDial* dialPista;
     QLineEdit* leNombreArchivo;
     QLineEdit* leRutaArchivo;
     QComboBox* cbCabecera1;
@@ -62,7 +62,7 @@ private:
     QLineEdit* leUmbral2;
     QLabel* lbUmbral1;
     QLabel* lbUmbral2;
-    VistaConfPista* vistaPreliminar;
+    PistaVista* vistaPreliminar;
 
     QCheckBox* cbUmbral1;
     QCheckBox* cbUmbral2;
@@ -88,4 +88,4 @@ signals:
 
 };
 
-#endif // DIALOGCONFPISTA_H
+#endif // PISTADIALOGO_H

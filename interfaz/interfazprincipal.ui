@@ -203,7 +203,7 @@
        <number>0</number>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="paginaAeronaves">
        <property name="palette">
@@ -701,7 +701,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
-         <widget class="customGraphicsView" name="graficoPista">
+         <widget class="AeropuertoVista" name="vistaAeropuerto">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
             <horstretch>0</horstretch>
@@ -1078,7 +1078,7 @@
      <x>0</x>
      <y>0</y>
      <width>1103</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>
@@ -1086,9 +1086,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>customGraphicsView</class>
+   <class>AeropuertoVista</class>
    <extends>QGraphicsView</extends>
-   <header>interfaz/aeropuerto/customgraphicsview.h</header>
+   <header>interfaz/aeropuerto/aeropuertovista.h</header>
   </customwidget>
  </customwidgets>
  <resources/>
