@@ -107,13 +107,13 @@ void CotaGrafica::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     painter->setFont(fuente);     
     graficarTexto(posInfIzqTexto, texto, painter);
 
-//    painter->setBrush(Qt::NoBrush);
-//    painter->setPen(QColor("green"));
-//    painter->drawPath(pPath);
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(QColor("green"));
+    painter->drawPath(pPath);
 
-//    painter->setBrush(Qt::NoBrush);
-//    painter->setPen(QColor("red"));
-//    painter->drawRect(bRect);
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(QColor("red"));
+    painter->drawRect(bRect);
 }
 
 QRectF CotaGrafica::boundingRect() const
@@ -125,6 +125,17 @@ void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *pa
 {
     float largo = sizeFlechaRef;
     QVector<QPointF> tri;
+    // Si la longitud de la cota es muy pequeña, pongo las flechas del lado de afuera
+    if (longitud < sizeFlechaRef*3)
+    {
+        switch(ori)
+        {
+        case Direccion::ARRIBA: ori = Direccion::ABAJO; break;
+        case Direccion::ABAJO:  ori = Direccion::ARRIBA; break;
+        case Direccion::DERECHA: ori = Direccion::IZQUIERDA; break;
+        case Direccion::IZQUIERDA: ori = Direccion::DERECHA; break;
+        }
+    }
     if (ori == Direccion::ARRIBA)
     {
          tri = {posVertice, posVertice+QPointF(-largo/2, largo),
@@ -230,13 +241,14 @@ void CotaGrafica::procesarTexto()
 
 void CotaGrafica::calcularBoundingRect()
 {
-    float xMin,xMax,yMin,yMax;
+    qreal xMin,xMax,yMin,yMax;
 
     if(sentido == Sentido::HOR)
     {
         if(distanciaPerp > 0) //La linea de cota está por debajo de los puntos
         {
             yMin = qMin(punto1.y(), punto2.y());
+            yMin = qMin(yMin, yMin + distanciaPerp-margin-altoTexto); // caso borde, ver grafico
             xMin = qMin(punto1.x(), punto2.x());
             yMax = qMax(punto1.y(), punto2.y()) + distanciaPerp + tramoAdicional;
             xMax = xMin + longitud;
@@ -249,12 +261,13 @@ void CotaGrafica::calcularBoundingRect()
             xMax = xMin + longitud;
         }
     }
-    else
+    else // sentido == Sentido::VER
     {
         if(distanciaPerp > 0) // La linea de cota está a la derecha de los puntos
         {
             yMin = qMin(punto1.y(), punto2.y());
             xMin = qMin(punto1.x(), punto2.x());
+            xMin = qMin(xMin, xMin + distanciaPerp-margin-anchoTexto); // caso borde, ver grafico
             yMax = yMin + longitud;
             xMax = qMax(punto1.x(), punto2.x()) + distanciaPerp + tramoAdicional;
         }

@@ -39,15 +39,15 @@ private:
     QPointF punto1;
     QPointF punto2;
     Sentido sentido;
-    float distanciaPerp; //Distancia perpendicular al eje entre los dos puntos en que se encuentra la linea de cota
-    float longitud;      //Longitud entre los puntos
+    qreal distanciaPerp; //Distancia perpendicular al eje entre los dos puntos en que se encuentra la linea de cota
+    qreal longitud;      //Longitud entre los puntos
     QFont fuente;
     qreal margin;
     qreal tramoAdicional;
 
     QRectF bRect;
     QPainterPath pPath;
-    float anchoRect;
+    qreal anchoRect;
 
     QString texto;
     qreal anchoTexto;
