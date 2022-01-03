@@ -62,6 +62,7 @@ private:
     QBrush brushCotaHover;
 
     bool hover;
+    bool longitudCorta;
 };
 
 #endif // COTAGRAFICA_H

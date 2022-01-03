@@ -19,6 +19,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
 
     //Distancia entre los dos puntos, depende de si la orientacion es horizontal o vertical
     longitud = sentido == Sentido::HOR ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
+    longitudCorta = longitud < sizeFlechaRef*3;
 
     //Si no se ingresa un valor para dist se lo calcula como 1/4 de la distancia
     //entre puntos, y la posicion de la cota es por debajo de los puntos (caso HOR) o a la
@@ -126,7 +127,7 @@ void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *pa
     float largo = sizeFlechaRef;
     QVector<QPointF> tri;
     // Si la longitud de la cota es muy pequeña, pongo las flechas del lado de afuera
-    if (longitud < sizeFlechaRef*3)
+    if (longitudCorta)
     {
         switch(ori)
         {
@@ -279,6 +280,15 @@ void CotaGrafica::calcularBoundingRect()
             xMax = qMax(punto1.x(), punto2.x());
         }
     }
+
+    if(longitudCorta)
+    {
+        switch(sentido) {
+        case Sentido::HOR: xMin-=sizeFlechaRef; xMax+=sizeFlechaRef; break;
+        case Sentido::VER: yMin-=sizeFlechaRef; yMax+=sizeFlechaRef; break;
+        }
+    }
+
     QPointF topLeft(xMin,yMin);
     QPointF botRight(xMax,yMax);
     bRect = QRectF(topLeft,botRight);
@@ -288,7 +298,7 @@ void CotaGrafica::calcularBoundingRect()
 void CotaGrafica::calcularShape()
 {
     pPath.clear();
-    QRectF r1, r2, r3;
+    QRectF r1, r2, r3, r4, r5, r6;
     if(sentido == Sentido::HOR)
     {
         if(distanciaPerp > 0) // La línea de cota está por debajo de los puntos
@@ -336,14 +346,39 @@ void CotaGrafica::calcularShape()
         }
     }
 
-    QRectF r4 = QRectF(posInfIzqTexto + QPointF(0,-altoTexto),
+    //Rectangulo de texto
+    r4 = QRectF(posInfIzqTexto + QPointF(0,-altoTexto),
                       posInfIzqTexto + QPointF(anchoTexto,0));
+
+    //Rectangulos de flechas
+    if (sentido==Sentido::HOR && longitudCorta == false)
+    {
+        r5 = QRect(punto1.x(), punto1.y()-sizeFlechaRef/2+distanciaPerp, sizeFlechaRef, sizeFlechaRef);
+        r6 = QRect(punto2.x()-sizeFlechaRef, punto2.y()-sizeFlechaRef/2+distanciaPerp, sizeFlechaRef, sizeFlechaRef);
+    }
+    else if (sentido==Sentido::HOR && longitudCorta == true)
+    {
+        r5 = QRect(punto1.x()-sizeFlechaRef, punto2.y()-sizeFlechaRef/2+distanciaPerp, sizeFlechaRef,sizeFlechaRef);
+        r6 = QRect(punto2.x(), punto2.y()-sizeFlechaRef/2+distanciaPerp, sizeFlechaRef, sizeFlechaRef);
+    }
+    else if (sentido ==Sentido::VER && longitudCorta == false)
+    {
+        r5 = QRect(punto1.x()-sizeFlechaRef/2+distanciaPerp, punto1.y(),sizeFlechaRef,sizeFlechaRef);
+        r6 = QRect(punto2.x()-sizeFlechaRef/2+distanciaPerp, punto2.y()-sizeFlechaRef, sizeFlechaRef,sizeFlechaRef);
+    }
+    else if (sentido == Sentido::VER && longitudCorta == true)
+    {
+        r5 = QRect(punto1.x()-sizeFlechaRef/2+distanciaPerp, punto1.y()-sizeFlechaRef, sizeFlechaRef,sizeFlechaRef);
+        r6 = QRect(punto2.x()-sizeFlechaRef/2+distanciaPerp, punto2.y(), sizeFlechaRef,sizeFlechaRef);
+    }
 
     pPath.setFillRule(Qt::WindingFill);
     pPath.addRect(r1.normalized());
     pPath.addRect(r2.normalized());
     pPath.addRect(r3.normalized());
     pPath.addRect(r4.normalized());
+    pPath.addRect(r5.normalized().adjusted(-4,-4,4,4));
+    pPath.addRect(r6.normalized().adjusted(-4,-4,4,4));
 
     pPath = pPath.simplified();
 
