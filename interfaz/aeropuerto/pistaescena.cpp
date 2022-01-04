@@ -37,6 +37,8 @@ void PistaEscena::graficarPista(Pista pista)
     cota2->hide();
 
     listaCotas.append(cota2);
+
+    addItem(new LineaUmbral(200,pista.ancho,pista.largo));
 }
 
 void PistaEscena::mostrarCotas(bool mostrar)

@@ -15,6 +15,7 @@ SOURCES += \
     interfaz/aeropuerto/aeropuertoescena.cpp \
     interfaz/aeropuerto/aeropuertovista.cpp \
     interfaz/aeropuerto/dibujo/cotagrafica.cpp \
+    interfaz/aeropuerto/dibujo/lineaumbral.cpp \
     interfaz/aeropuerto/graficadoraeropuerto.cpp \
     interfaz/aeropuerto/pistadial.cpp \
     interfaz/aeropuerto/pistadialogo.cpp \
@@ -34,6 +35,7 @@ HEADERS += \
     interfaz/aeropuerto/aeropuertoescena.h \
     interfaz/aeropuerto/aeropuertovista.h \
     interfaz/aeropuerto/dibujo/cotagrafica.h \
+    interfaz/aeropuerto/dibujo/lineaumbral.h \
     interfaz/aeropuerto/graficadoraeropuerto.h \
     interfaz/aeropuerto/pistadial.h \
     interfaz/aeropuerto/pistadialogo.h \

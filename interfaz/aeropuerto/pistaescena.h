@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QGraphicsRectItem>
 #include "dibujo/cotagrafica.h"
+#include "dibujo/lineaumbral.h"
 #include "../../estructuras-datos/elementosaerop.h"
 
 class PistaEscena : public QGraphicsScene
