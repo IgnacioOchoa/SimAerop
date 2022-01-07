@@ -41,6 +41,8 @@ public:
     ~InterfazPrincipal();
     AeropuertoVista *getVistaAeropuerto();
     const Pista& getPista() const {return pista;}
+    const Rodaje& getRodaje() const {return rodaje;}
+    const Plataforma& getPlataforma() const {return plataforma;}
     void mostradorFlota(const QList<Aeronave>&);
 
 signals:
@@ -68,6 +70,8 @@ private:
     PistaParser pistaParser;
 
     Pista pista;
+    Rodaje rodaje;
+    Plataforma plataforma;
 
 private slots:
     void botonPrincipalSeleccionado(bool checked);

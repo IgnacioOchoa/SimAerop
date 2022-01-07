@@ -36,7 +36,7 @@ private:
     GraficadorAeropuerto* graficadorAeropuerto;
 
 signals:
-    void pistaActualizada(const Pista& p);
+    void aeropuertoActualizado(const Pista&, const Rodaje&, const Plataforma&);
 };
 
 #endif // KERNEL_H

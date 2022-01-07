@@ -8,17 +8,29 @@ GraficadorAeropuerto::GraficadorAeropuerto(AeropuertoVista *gv) :
     gradienteFondoPista->setColorAt(0, "#faf0e3");
     gradienteFondoPista->setColorAt(1, "#e0d1bc");
     fondoPista = new QBrush(*gradienteFondoPista);
-    colorPista = new QBrush("#A4B3B6");
+    colorPavimento = new QBrush("#A4B3B6");
     colorMargen = new QBrush("#828282");
     escenaAeropuerto->setBackgroundBrush(*fondoPista);
-    bordePista = new QPen;
-    bordePista->setWidth(0);
+    bordePavimento = new QPen;
+    bordePavimento->setWidth(0);
 }
 
-void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p)
+void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p, const Rodaje& r, const Plataforma& a)
 {
     escenaAeropuerto->clear();
     escenaAeropuerto->setBackgroundBrush(*fondoPista);
+
+    //GRAFICADOR DE RODAJES
+    QGraphicsRectItem* pavRodaje = new QGraphicsRectItem;
+    pavRodaje = escenaAeropuerto->addRect(r.posicion,-r.ancho/2.0,r.largo,r.ancho, *bordePavimento, *colorPavimento);
+    pavRodaje->setTransformOriginPoint(QPoint(r.posicion,0));
+    pavRodaje->setRotation(-r.angulo);
+
+    //GRAFICADOR DE PLATAFORMAS
+    QGraphicsRectItem* pavPlataforma = new QGraphicsRectItem;
+    pavPlataforma = escenaAeropuerto->addRect(-150,-300,300,100, *bordePavimento, *colorPavimento);
+
+    //GRAFICADOR DE PISTA
 
     QPen penArea(Qt::NoPen);
 
@@ -31,11 +43,10 @@ void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p)
         pavFlexible = escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, penArea, *colorMargen);
     }
 
-    QGraphicsRectItem* rectItm = new QGraphicsRectItem;
-    rectItm = escenaAeropuerto->addRect(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho, *bordePista, *colorPista);
+    QGraphicsRectItem* pavPista = new QGraphicsRectItem;
+    pavPista = escenaAeropuerto->addRect(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho, *bordePavimento, *colorPavimento);
 
     escenaAeropuerto->addRect(-p.largo/2.0 - 200, -p.ancho/2.0, p.largo + 400, p.ancho, penArea);
-
 
     //GRAFICADOR DE PINTURA DE PISTA
 
@@ -132,7 +143,6 @@ void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p)
     }
 
     //Graficación de puntos de visada
-
     //Nota: En esta versión se simplifica la graficación. Algunos de los parámetros deberían poder variar en rangos determinados.
 
     QGraphicsRectItem* barraVi1 = escenaAeropuerto->addRect(-22.5,-anchoFajasVi/2.0,45,anchoFajasVi, penw, QBrush("white"));
@@ -151,10 +161,11 @@ void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p)
     escenaAeropuerto->addLine(QLineF(-5,-5,5,5),penb);
     escenaAeropuerto->addLine(QLineF(-5,5,5,-5),penb);
 
-    rectItm->setPen(penb);
+    pavPista->setPen(penb);
 
     vistaAeropuerto->fitInView(pavFlexible,Qt::KeepAspectRatio);
     //vistaPista->scale(0.98, 0.98);
+
 }
 
 void GraficadorAeropuerto::reportarDatosEscena()

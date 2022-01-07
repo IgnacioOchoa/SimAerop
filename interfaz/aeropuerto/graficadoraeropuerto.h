@@ -22,7 +22,7 @@ public:
     GraficadorAeropuerto(AeropuertoVista* gv);
 
 public slots:
-    void actualizarAeropuerto(const Pista& p);
+    void actualizarAeropuerto(const Pista&, const Rodaje&, const Plataforma&);
 
 private:
     void reportarDatosEscena();
@@ -32,9 +32,9 @@ private:
 
     QLinearGradient* gradienteFondoPista;
     QBrush* fondoPista;
-    QBrush* colorPista;
+    QBrush* colorPavimento;
     QBrush* colorMargen;
-    QPen* bordePista;
+    QPen* bordePavimento;
     qint8 fajas;
     double anchoFajasUm;
     double anchoFajasLa;
