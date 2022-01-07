@@ -3,39 +3,61 @@
 LineaUmbral::LineaUmbral(int posX, int anchoPista, int longitudPista) :
     ancho(anchoPista),
     radio(8),
+    posicion(posX),
     hover(false)
 {
+
+    setFlag(QGraphicsItem::ItemIsMovable);
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges);
+
     setAcceptHoverEvents(true);
+    setPos(posX,0);
     radioAumentado = radio+3;
-    pincel1.setCosmetic(true);
-    pincel2.setCosmetic(true);
-    punto1 = QPoint(-longitudPista/2+posX, anchoPista/2);
-    punto2 = QPoint(-longitudPista/2+posX, -anchoPista/2);
+
+    circ1 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
+    circ2 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
+    circ1->setPos(0,-ancho/2);
+    circ2->setPos(0,ancho/2);
+    circ1->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    circ2->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+
     calcularBoundingRect();
     calcularShape();
+
 }
 
 void LineaUmbral::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+    pincel1.setCosmetic(true);
+    pincel2.setCosmetic(true);
     if(hover)
     {
         painter->setPen(pincel2);
         painter->setBrush(brush2);
+        circ1->setColor(cRojo);
+        circ2->setColor(cRojo);
     }
     else
     {
         painter->setPen(pincel1);
         painter->setBrush(brush1);
+        circ1->setColor(cNaranja);
+        circ2->setColor(cNaranja);
     }
-    painter->drawLine(QLine(punto1,punto2));
-    painter->drawEllipse(punto1.x()-radio, punto1.y()-radio,2*radio,2*radio);
-    painter->drawEllipse(punto2.x()-radio, punto2.y()-radio,2*radio,2*radio);
+    painter->drawLine(0,-ancho/2,0, ancho/2);
+    //painter->drawEllipse(-radio, -ancho/2-radio, 2*radio,2*radio);
+    //painter->drawEllipse(-radio, ancho/2-radio,2*radio,2*radio);
 
 //    painter->setBrush(Qt::NoBrush);
 //    painter->setPen(QPen("red"));
 //    painter->drawPath(shape());
 //    painter->setPen(QPen("green"));
 //    painter->drawRect(boundingRect());
+
+    calcularBoundingRect();
+    calcularShape();
 }
 
 void LineaUmbral::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -50,46 +72,36 @@ void LineaUmbral::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
     QGraphicsItem::hoverLeaveEvent(event);
 }
 
-void LineaUmbral::mousePressEvent(QGraphicsSceneMouseEvent *event)
+QVariant LineaUmbral::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)
 {
-
-}
-
-void LineaUmbral::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    qreal delta = 0.0;
-    if (event->buttons() == Qt::LeftButton)
-    {
-        QPointF puntoActual = event->scenePos();
-        QPointF puntoAnterior = event->lastScenePos();
-        delta = (puntoActual-puntoAnterior).x();
-    }
-    actualizarPosicion(delta);
+        if (change == ItemPositionChange && scene()) {
+            QPointF nuevaPos = value.toPointF();
+            nuevaPos.setY(0);
+            return nuevaPos;
+        }
+        return QGraphicsItem::itemChange(change, value);
 }
 
 void LineaUmbral::calcularBoundingRect()
 {
-    bRect = QRectF(punto2.x()-radioAumentado, punto2.y()-radioAumentado, 2*radioAumentado, ancho + 2*radioAumentado);
+    bRect = QRectF(-radioAumentado, -ancho/2-radioAumentado, 2*radioAumentado, ancho + 2*radioAumentado);
 }
 
 void LineaUmbral::calcularShape()
 {
     pPath.clear();
-    pPath.addRect(QRect(punto2.x()-5, punto2.y()-5, 10, ancho + 10));
-    pPath.addEllipse(punto2.x()-radioAumentado,punto2.y()-radioAumentado,2*radioAumentado,2*radioAumentado);
-    pPath.addEllipse(punto1.x()-radioAumentado,punto1.y()-radioAumentado,2*radioAumentado,2*radioAumentado);
+    pPath.addRect(QRect(-5, -ancho/2-5, 10, ancho + 10));
+    pPath.addEllipse(-radioAumentado,-ancho/2-radioAumentado,2*radioAumentado,2*radioAumentado);
+    pPath.addEllipse(-radioAumentado,ancho/2-radioAumentado,2*radioAumentado,2*radioAumentado);
+    //pPath.addRect(circ1->mapRectToParent(circ1->rect()));
+    //pPath.addRect(circ2->mapRectToParent(circ2->rect()));
+
+//    if (scene()) {
+//        QTransform tr = circ1->deviceTransform(scene()->views()[0]->viewportTransform());
+//        pPath.addRect(tr.mapRect(circ1->rect()));
+//    }
     pPath.setFillRule(Qt::WindingFill);
     pPath = pPath.simplified();
-}
-
-void LineaUmbral::actualizarPosicion(qreal delta)
-{
-
-    punto1 += QPoint(delta,0);
-    punto2 += QPoint(delta,0);
-    prepareGeometryChange();
-    calcularShape();
-    calcularBoundingRect();
 }
 
 QPainterPath LineaUmbral::shape() const
@@ -100,4 +112,34 @@ QPainterPath LineaUmbral::shape() const
 QRectF LineaUmbral::boundingRect() const
 {
     return bRect;
+}
+
+CirculoLlenoConst::CirculoLlenoConst(QRectF rect, QColor color, QGraphicsItem *parent) :
+    QGraphicsEllipseItem(rect,parent),
+    colorBase(color)
+{
+    brush1 = QBrush(color,Qt::SolidPattern);
+    pincel1 = QPen(brush1,1);
+    pincel1.setCosmetic(true);
+}
+
+void CirculoLlenoConst::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option)
+    Q_UNUSED(widget)
+    painter->setPen(pincel1);
+    painter->setBrush(brush1);
+    painter->drawEllipse(rect());
+}
+
+void CirculoLlenoConst::setColor(QColor nuevoColor)
+{
+    brush1.setColor(nuevoColor);
+    pincel1.setColor(nuevoColor);
+}
+
+void CirculoLlenoConst::unsetColor()
+{
+    brush1.setColor(colorBase);
+    pincel1.setColor(colorBase);
 }

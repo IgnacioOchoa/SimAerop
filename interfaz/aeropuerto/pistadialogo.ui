@@ -117,7 +117,7 @@
      <item>
       <layout class="QVBoxLayout" name="vlDial">
        <item>
-        <widget class="DialPista" name="dialPista">
+        <widget class="PistaDial" name="dialPista">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
            <horstretch>0</horstretch>
@@ -303,7 +303,7 @@
     </layout>
    </item>
    <item>
-    <widget class="VistaConfPista" name="gvPreVisualizacion"/>
+    <widget class="PistaVista" name="gvPreVisualizacion"/>
    </item>
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -364,14 +364,14 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>VistaConfPista</class>
+   <class>PistaVista</class>
    <extends>QGraphicsView</extends>
-   <header>interfaz/aeropuerto/vistaconfpista.h</header>
+   <header>interfaz/aeropuerto/pistavista.h</header>
   </customwidget>
   <customwidget>
-   <class>DialPista</class>
+   <class>PistaDial</class>
    <extends>QDial</extends>
-   <header>interfaz/aeropuerto/dialpista.h</header>
+   <header>interfaz/aeropuerto/pistadial.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
