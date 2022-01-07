@@ -3,27 +3,21 @@
 LineaUmbral::LineaUmbral(int posX, int anchoPista, int longitudPista) :
     ancho(anchoPista),
     radio(8),
+    radioAumentado(11),
     posicion(posX),
     hover(false)
 {
-
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 
     setAcceptHoverEvents(true);
     setPos(posX,0);
-    radioAumentado = radio+3;
 
-    circ1 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
-    circ2 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
-    circ1->setPos(0,-ancho/2);
-    circ2->setPos(0,ancho/2);
-    circ1->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    circ2->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    circ1 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,QPointF(0,-ancho/2),this);
+    circ2 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,QPointF(0,ancho/2),this);
 
     calcularBoundingRect();
     calcularShape();
-
 }
 
 void LineaUmbral::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -47,8 +41,6 @@ void LineaUmbral::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
         circ2->setColor(cNaranja);
     }
     painter->drawLine(0,-ancho/2,0, ancho/2);
-    //painter->drawEllipse(-radio, -ancho/2-radio, 2*radio,2*radio);
-    //painter->drawEllipse(-radio, ancho/2-radio,2*radio,2*radio);
 
 //    painter->setBrush(Qt::NoBrush);
 //    painter->setPen(QPen("red"));
@@ -84,22 +76,28 @@ QVariant LineaUmbral::itemChange(QGraphicsItem::GraphicsItemChange change, const
 
 void LineaUmbral::calcularBoundingRect()
 {
-    bRect = QRectF(-radioAumentado, -ancho/2-radioAumentado, 2*radioAumentado, ancho + 2*radioAumentado);
+    qreal escala = 1;
+    if (scene()) {
+        escala = scene()->views()[0]->viewportTransform().m11();
+    }
+    qreal radioShape = radio/escala*1.2;
+    bRect = QRectF(-radioShape, -ancho/2-radioShape, 2*radioShape, ancho + 2*radioShape);
 }
 
 void LineaUmbral::calcularShape()
 {
     pPath.clear();
-    pPath.addRect(QRect(-5, -ancho/2-5, 10, ancho + 10));
-    pPath.addEllipse(-radioAumentado,-ancho/2-radioAumentado,2*radioAumentado,2*radioAumentado);
-    pPath.addEllipse(-radioAumentado,ancho/2-radioAumentado,2*radioAumentado,2*radioAumentado);
-    //pPath.addRect(circ1->mapRectToParent(circ1->rect()));
-    //pPath.addRect(circ2->mapRectToParent(circ2->rect()));
+    qreal escala = 1;
+    if (scene()) {
+        escala = scene()->views()[0]->viewportTransform().m11();
+    }
+    qreal radioShape = radio/escala;
+    qreal ladoRect = 10.0/escala;
 
-//    if (scene()) {
-//        QTransform tr = circ1->deviceTransform(scene()->views()[0]->viewportTransform());
-//        pPath.addRect(tr.mapRect(circ1->rect()));
-//    }
+    pPath.addRect(QRectF(-ladoRect/2, -ancho/2, ladoRect, ancho));
+    pPath.addEllipse(-radioShape,-ancho/2-radioShape,2*radioShape,2*radioShape);
+    pPath.addEllipse(-radioShape, ancho/2-radioShape,2*radioShape,2*radioShape);
+
     pPath.setFillRule(Qt::WindingFill);
     pPath = pPath.simplified();
 }
@@ -114,10 +112,12 @@ QRectF LineaUmbral::boundingRect() const
     return bRect;
 }
 
-CirculoLlenoConst::CirculoLlenoConst(QRectF rect, QColor color, QGraphicsItem *parent) :
+CirculoLlenoConst::CirculoLlenoConst(QRectF rect, QColor color, QPointF pos, QGraphicsItem *parent) :
     QGraphicsEllipseItem(rect,parent),
     colorBase(color)
 {
+    setPos(pos);
+    setFlag(QGraphicsItem::ItemIgnoresTransformations);
     brush1 = QBrush(color,Qt::SolidPattern);
     pincel1 = QPen(brush1,1);
     pincel1.setCosmetic(true);

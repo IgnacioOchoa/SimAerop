@@ -19,12 +19,15 @@ public:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
-    void calcularBoundingRect();
-    void calcularShape();
 
     virtual QPainterPath shape() const override;
     virtual QRectF boundingRect() const override;
+
 private:
+
+    void calcularBoundingRect();
+    void calcularShape();
+
     CirculoLlenoConst* circ1;
     CirculoLlenoConst* circ2;
 
@@ -49,7 +52,7 @@ private:
 class CirculoLlenoConst : public QGraphicsEllipseItem
 {
 public:
-    CirculoLlenoConst(QRectF rect, QColor color, QGraphicsItem *parent = nullptr);
+    CirculoLlenoConst(QRectF rect, QColor color, QPointF pos, QGraphicsItem *parent = nullptr);
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void setColor(QColor);
     void unsetColor();
