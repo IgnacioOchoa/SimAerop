@@ -61,7 +61,7 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     connect(this, SIGNAL(sigGuardarFlota(QString, QList<Aeronave>)), k, SLOT(sloGuardarFlota(QString, QList<Aeronave>)));
 
     //Conexiones Diálogo Configuración de Pista
-    connect(dialogConfPista, SIGNAL(pistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
+    connect(dialogConfPista, SIGNAL(sigPistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
 
     // Valores por default
     pista = {2500,45,0,"",""};

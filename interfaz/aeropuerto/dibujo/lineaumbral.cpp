@@ -1,23 +1,30 @@
 #include "lineaumbral.h"
 
-LineaUmbral::LineaUmbral(int posX, int anchoPista, int longitudPista) :
-    ancho(anchoPista),
+LineaUmbral::LineaUmbral() :
     radio(8),
     radioAumentado(11),
-    posicion(posX),
     hover(false)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
 
     setAcceptHoverEvents(true);
-    setPos(posX,0);
 
-    circ1 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,QPointF(0,-ancho/2),this);
-    circ2 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,QPointF(0,ancho/2),this);
+
+    circ1 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
+    circ2 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
 
     calcularBoundingRect();
     calcularShape();
+}
+
+void LineaUmbral::setDimensiones(int posX, int anchoPista)
+{
+    posicion = posX;
+    setPos(posX,0);
+    ancho = anchoPista;
+    circ1->setPos(QPointF(0,-ancho/2));
+    circ2->setPos(QPointF(0,ancho/2));
 }
 
 void LineaUmbral::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -69,6 +76,7 @@ QVariant LineaUmbral::itemChange(QGraphicsItem::GraphicsItemChange change, const
         if (change == ItemPositionChange && scene()) {
             QPointF nuevaPos = value.toPointF();
             nuevaPos.setY(0);
+            emit sigPosCambiada(nuevaPos.x());
             return nuevaPos;
         }
         return QGraphicsItem::itemChange(change, value);
@@ -112,11 +120,10 @@ QRectF LineaUmbral::boundingRect() const
     return bRect;
 }
 
-CirculoLlenoConst::CirculoLlenoConst(QRectF rect, QColor color, QPointF pos, QGraphicsItem *parent) :
+CirculoLlenoConst::CirculoLlenoConst(QRectF rect, QColor color, QGraphicsItem *parent) :
     QGraphicsEllipseItem(rect,parent),
     colorBase(color)
-{
-    setPos(pos);
+{   
     setFlag(QGraphicsItem::ItemIgnoresTransformations);
     brush1 = QBrush(color,Qt::SolidPattern);
     pincel1 = QPen(brush1,1);
@@ -136,6 +143,11 @@ void CirculoLlenoConst::setColor(QColor nuevoColor)
 {
     brush1.setColor(nuevoColor);
     pincel1.setColor(nuevoColor);
+}
+
+void CirculoLlenoConst::setPosicion(QPointF pos)
+{
+    setPos(pos);
 }
 
 void CirculoLlenoConst::unsetColor()

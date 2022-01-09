@@ -40,6 +40,13 @@ private:
     void poblarPista();
     void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
     bool datosCompletos();
+    bool verificarUmbrales(PistaEscena::Umbral umbral, int& desplazamiento);
+    void actualizarMaxUmbrales();
+
+    int desplUmbral1 = 0;
+    int maxUmbral1;
+    int desplUmbral2 = 0;
+    int maxUmbral2;
 
     QPushButton* botonAceptar;
     QPushButton* botonCancelar;
@@ -70,6 +77,7 @@ private:
     QCheckBox* cbActivarCotas;
 
     Pista pista;
+    const int margenMinUmbral = 10;
 
 private slots:
     void dialogoAceptado();
@@ -82,9 +90,12 @@ private slots:
     void botonGraficarApretado();
     void actualizarCBUmbrales(const QString& s1, const QString& s2);
     void actualizarLEOrientacion(int value);
+    void leUmbralModificado();
+    void slotLineaUmbralMovida(PistaEscena::Umbral, int valor);
 
 signals:
-    void pistaActualizada(const Pista&);
+    void sigPistaActualizada(const Pista&);
+    void sigUmbralActualizado(PistaEscena::Umbral umbral, int valor);
 
 };
 

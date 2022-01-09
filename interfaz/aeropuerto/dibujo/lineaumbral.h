@@ -10,18 +10,23 @@
 #include <QGraphicsSceneEvent>
 class CirculoLlenoConst;
 
-class LineaUmbral : public QGraphicsItem
+class LineaUmbral : public QGraphicsObject
 {
+    Q_OBJECT
 public:
-    LineaUmbral(int posX, int anchoPista, int longitudPista);
+    LineaUmbral();
+    void setDimensiones(int posX, int anchoPista);
 
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
+    virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
     virtual QPainterPath shape() const override;
     virtual QRectF boundingRect() const override;
+
+signals:
+    void sigPosCambiada(int pos);
 
 private:
 
@@ -52,9 +57,10 @@ private:
 class CirculoLlenoConst : public QGraphicsEllipseItem
 {
 public:
-    CirculoLlenoConst(QRectF rect, QColor color, QPointF pos, QGraphicsItem *parent = nullptr);
+    CirculoLlenoConst(QRectF rect, QColor color, QGraphicsItem *parent = nullptr);
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     void setColor(QColor);
+    void setPosicion(QPointF pos);
     void unsetColor();
 private:
     QPen pincel1;
