@@ -50,9 +50,13 @@ void PistaEscena::graficarPista(Pista pista)
     lineaUmbral1->setDimensiones(-pista.largo/2, pista.ancho);
     addItem(lineaUmbral1);
     lineaUmbral1->hide();
+    lineaUmbral1->setLimiteInf(-pista.largo/2);
+    lineaUmbral1->setLimiteSup(pista.largo/2);
     lineaUmbral2->setDimensiones(pista.largo/2, pista.ancho);
     addItem(lineaUmbral2);
     lineaUmbral2->hide();
+    lineaUmbral2->setLimiteSup(pista.largo/2);
+    lineaUmbral2->setLimiteInf(-pista.largo/2);
 
 }
 
@@ -141,4 +145,10 @@ void PistaEscena::slotLineaUmbralMovida(int pos)
     {
         emit sigLineaUmbralMovida(Umbral::UMBRAL2, rectPista.width()/2 - pos);
     }
+}
+
+void PistaEscena::slotSetLimUmbrales(int limUmbral1, int limUmbral2)
+{
+    lineaUmbral1->setLimiteSup(limUmbral1-rectPista.width()/2);
+    lineaUmbral2->setLimiteInf(rectPista.width()/2-limUmbral2);
 }

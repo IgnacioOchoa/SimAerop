@@ -16,6 +16,8 @@ class LineaUmbral : public QGraphicsObject
 public:
     LineaUmbral();
     void setDimensiones(int posX, int anchoPista);
+    void setLimiteInf(int lim) {limiteInf = lim;}
+    void setLimiteSup(int lim) {limiteSup = lim;}
 
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
@@ -40,6 +42,8 @@ private:
     qreal radio;
     qreal radioAumentado;
     qreal posicion;
+    int limiteInf;
+    int limiteSup;
 
     QRectF bRect;
     QPainterPath pPath;

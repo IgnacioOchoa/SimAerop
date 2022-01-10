@@ -76,6 +76,10 @@ QVariant LineaUmbral::itemChange(QGraphicsItem::GraphicsItemChange change, const
         if (change == ItemPositionChange && scene()) {
             QPointF nuevaPos = value.toPointF();
             nuevaPos.setY(0);
+
+            if (nuevaPos.x()<limiteInf) nuevaPos.setX(limiteInf);
+            else if (nuevaPos.x()>limiteSup) nuevaPos.setX(limiteSup);
+
             emit sigPosCambiada(nuevaPos.x());
             return nuevaPos;
         }

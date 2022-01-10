@@ -60,6 +60,9 @@ PistaDialogo::PistaDialogo(QWidget *parent) :
     // actualizar los LineEdits
     connect(static_cast<PistaEscena*>(vistaPreliminar->scene()), &PistaEscena::sigLineaUmbralMovida,
             this, &PistaDialogo::slotLineaUmbralMovida);
+
+    connect(this, &PistaDialogo::sigUmbralMaxActualizado,static_cast<PistaEscena*>(vistaPreliminar->scene()),
+            &PistaEscena::slotSetLimUmbrales);
 }
 
 PistaDialogo::~PistaDialogo()
@@ -224,6 +227,7 @@ void PistaDialogo::slotLineaUmbralMovida(PistaEscena::Umbral um, int valor)
         leUmbral2->setText(QString::number(valor));
         desplUmbral2 = valor;
     }
+    actualizarMaxUmbrales();
 }
 
 bool PistaDialogo::verificarUmbrales(PistaEscena::Umbral umbral, int &desplazamiento)
@@ -247,8 +251,9 @@ bool PistaDialogo::verificarUmbrales(PistaEscena::Umbral umbral, int &desplazami
 
 void PistaDialogo::actualizarMaxUmbrales()
 {
-    maxUmbral1 = pista.largo - desplUmbral2;
-    maxUmbral2 = pista.largo - desplUmbral1;
+    maxUmbral1 = pista.largo - desplUmbral2 - margenMinUmbral;
+    maxUmbral2 = pista.largo - desplUmbral1 - margenMinUmbral;
+    emit sigUmbralMaxActualizado(maxUmbral1,maxUmbral2);
 }
 
 bool PistaDialogo::datosCompletos()

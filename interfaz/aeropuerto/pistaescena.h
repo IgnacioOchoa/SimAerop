@@ -28,6 +28,7 @@ public slots:
     void slotUmbralActivado(Umbral um, bool estado);
     void slotUmbralModificado(Umbral umbral, int valor);
     void slotLineaUmbralMovida(int pos);
+    void slotSetLimUmbrales(int limUmbral1, int limUmbral2);
 
 private:
     QList<CotaGrafica*> listaCotas;

@@ -77,7 +77,7 @@ private:
     QCheckBox* cbActivarCotas;
 
     Pista pista;
-    const int margenMinUmbral = 10;
+    const int margenMinUmbral = 20;
 
 private slots:
     void dialogoAceptado();
@@ -96,6 +96,7 @@ private slots:
 signals:
     void sigPistaActualizada(const Pista&);
     void sigUmbralActualizado(PistaEscena::Umbral umbral, int valor);
+    void sigUmbralMaxActualizado(int maxUmbral1, int maxUmbral2);
 
 };
 
