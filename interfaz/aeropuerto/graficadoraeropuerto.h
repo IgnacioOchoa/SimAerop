@@ -34,7 +34,9 @@ private:
     QBrush* fondoPista;
     QBrush* colorPavimento;
     QBrush* colorMargen;
-    QPen* bordePavimento;
+    QPen* bordeNegro;
+    QPen* bordeBlanco;
+    QPen* bordeTransparente;
     qint8 fajas;
     double anchoFajasUm;
     double anchoFajasLa;
