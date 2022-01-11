@@ -16,18 +16,23 @@ GraficadorAeropuerto::GraficadorAeropuerto(AeropuertoVista *gv) :
     bordeTransparente = new QPen(Qt::black, 0, Qt::NoPen);
 }
 
-void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p, const Rodaje& r, const Plataforma& a)
+void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p, const Rodaje& r1, const Rodaje& r2, const Plataforma& a)
 {
     escenaAeropuerto->clear();
     escenaAeropuerto->setBackgroundBrush(*fondoPista);
 
-    //RECTANGULO RODAJE
-    QRectF* primitivaRodaje = new QRectF(r.posicion,-r.ancho/2.0,r.largo,r.ancho);
-    QTransform t = QTransform().translate( r.posicion,0 ).rotate( -r.angulo ).translate(-r.posicion,0 );
-    QRectF pavRodaje = t.mapRect(*primitivaRodaje);
+    //RECTANGULO RODAJE1
+    QRectF* primitivaRodaje1 = new QRectF(r1.posicion,-r1.ancho/2.0,r1.largo,r1.ancho);
+    QTransform t1 = QTransform().translate( r1.posicion,0 ).rotate( -r1.angulo ).translate(-r1.posicion,0 );
+    QRectF pavRodaje1 = t1.mapRect(*primitivaRodaje1);
+
+    //RECTANGULO RODAJE1
+    QRectF* primitivaRodaje2 = new QRectF(r2.posicion,-r2.ancho/2.0,r2.largo,r2.ancho);
+    QTransform t2 = QTransform().translate( r2.posicion,0 ).rotate( -r2.angulo ).translate(-r2.posicion,0 );
+    QRectF pavRodaje2 = t2.mapRect(*primitivaRodaje2);
 
     //RECTANGULO PLATAFORMA
-    QRectF* pavPlataforma = new QRectF(-150,-300,300,100);
+    QRectF* pavPlataforma = new QRectF(-250,-300,500,100);//AÚN NO LEE DATOS POR DEFAULT
 
     //RECTANGULO PISTA
     QRectF* pavPista = new QRectF(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho);
@@ -49,8 +54,10 @@ void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p, const Rodaje& r,
     path.addRect(*pavPista);
     //Agrega Plataforma
     path.addRect(*pavPlataforma);
-    //Agrega Rodaje
-    path.addRect(pavRodaje);
+    //Agrega Rodaje1
+    path.addRect(pavRodaje1);
+    //Agrega Rodaje2
+    path.addRect(pavRodaje2);
 
     QPainterPath path2;
     path2 = path.simplified();

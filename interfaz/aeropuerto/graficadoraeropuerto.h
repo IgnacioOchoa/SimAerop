@@ -22,7 +22,7 @@ public:
     GraficadorAeropuerto(AeropuertoVista* gv);
 
 public slots:
-    void actualizarAeropuerto(const Pista&, const Rodaje&, const Plataforma&);
+    void actualizarAeropuerto(const Pista&, const Rodaje&, const Rodaje&, const Plataforma&);
 
 private:
     void reportarDatosEscena();

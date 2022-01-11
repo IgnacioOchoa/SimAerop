@@ -19,14 +19,14 @@ void Kernel::inicializar(InterfazPrincipal *ip)
 bool Kernel::inicializarGraficadorAeropuerto(InterfazPrincipal* ip)
 {
     graficadorAeropuerto = new GraficadorAeropuerto(ip->getVistaAeropuerto());
-    connect(this, SIGNAL(aeropuertoActualizado(const Pista&, const Rodaje&, const Plataforma&)), graficadorAeropuerto, SLOT(actualizarAeropuerto(const Pista&, const Rodaje&, const Plataforma&)));
+    connect(this, SIGNAL(aeropuertoActualizado(const Pista&, const Rodaje&, const Rodaje&, const Plataforma&)), graficadorAeropuerto, SLOT(actualizarAeropuerto(const Pista&, const Rodaje&, const Rodaje&, const Plataforma&)));
     //connect(ip->ui->botonGraficarPista, SIGNAL(clicked()), editor)
     return true;
 }
 
 void Kernel::graficarPista()
 {
-    emit aeropuertoActualizado(interfazPpal->getPista(), interfazPpal->getRodaje(), interfazPpal->getPlataforma());
+    emit aeropuertoActualizado(interfazPpal->getPista(), interfazPpal->getRodaje1(), interfazPpal->getRodaje2(), interfazPpal->getPlataforma());
 }
 
 void Kernel::sloCargarFlota(QString filename)

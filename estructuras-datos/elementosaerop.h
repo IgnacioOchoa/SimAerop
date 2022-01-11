@@ -48,7 +48,6 @@ inline QDebug operator<<(QDebug stream, const Rodaje& rod)
 
 struct Plataforma {
     QList<QPointF> coordPerimetro;
-    QList<QPointF> coordParking;
 };
 
 inline QDebug operator<<(QDebug stream, const Plataforma& plat)
@@ -60,16 +59,11 @@ inline QDebug operator<<(QDebug stream, const Plataforma& plat)
         stream << "Punto " << i << ": x=" << plat.coordPerimetro[i].x() << " ; y="
                << plat.coordPerimetro[i].y() << endl;
     }
-    stream << "Coordenadas puntos de parking: " << endl;
-    for (int i=0; i<plat.coordParking.size(); i++)
-    {
-        stream << "Punto " << i << ": x=" << plat.coordParking[i].x() << " ; y="
-               << plat.coordParking[i].y() << endl;
-    }
-
     return stream;
 }
 
 Q_DECLARE_METATYPE(Pista);
+Q_DECLARE_METATYPE(Rodaje);
+Q_DECLARE_METATYPE(Plataforma);
 
 #endif // ELEMENTOSAEROP_H

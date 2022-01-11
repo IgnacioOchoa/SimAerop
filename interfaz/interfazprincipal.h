@@ -40,9 +40,15 @@ public:
     InterfazPrincipal(Kernel *k, QWidget* parent = nullptr);
     ~InterfazPrincipal();
     AeropuertoVista *getVistaAeropuerto();
+
+    //FUNCIONES PARA OBJETOS DE PRUEBA
+    //********
     const Pista& getPista() const {return pista;}
-    const Rodaje& getRodaje() const {return rodaje;}
+    const Rodaje& getRodaje1() const {return rodaje1;}
+    const Rodaje& getRodaje2() const {return rodaje2;}
     const Plataforma& getPlataforma() const {return plataforma;}
+    //********
+
     void mostradorFlota(const QList<Aeronave>&);
 
 signals:
@@ -69,9 +75,13 @@ private:
 
     PistaParser pistaParser;
 
+    //OBJETOS DE PRUEBA
+    //********
     Pista pista;
-    Rodaje rodaje;
+    Rodaje rodaje1;
+    Rodaje rodaje2;
     Plataforma plataforma;
+    //********
 
 private slots:
     void botonPrincipalSeleccionado(bool checked);

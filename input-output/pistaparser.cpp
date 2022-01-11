@@ -18,8 +18,7 @@
  *                      ...
  *                   ],
  * "plataformas" : [
- *                      { coordPerimetro : [[xx.x,xx.x] , [xx.x,xx.x] , ... ],
- *                        coordParking   : [[xx.x,xx.x] , [xx.x,xx.x] , ... ] },
+ *                      { coordPerimetro : [[xx.x,xx.x] , [xx.x,xx.x] , ... ]},
  *                      ...
  *                 ]
  */
@@ -74,13 +73,8 @@ void PistaParser::parsearPlataforma(const QList<Plataforma> &plat)
         {
             vListaPerimetro.append(p.coordPerimetro[j]);
         }
-        QVariantList vListaParking;
-        for(int k=0; k<p.coordParking.size(); k++)
-        {
-            vListaParking.append(p.coordParking[k]);
-        }
+
         vm[variablesPlataforma.at(0)] = vListaPerimetro;
-        vm[variablesPlataforma.at(1)] = vListaParking;
 
         listaPlataformas.append(vm);
     }
@@ -233,23 +227,7 @@ QList<Plataforma> PistaParser::cargarPlataforma(const QString &file)
                 listaPer = {};
             }
 
-            if (vm["coordParking"].canConvert<QVariantList>())
-            {
-                QVariantList cpark = vm["coordParking"].value<QVariantList>();
-                foreach(QVariant varPto, cpark)
-                {
-                    QVariantList coordPto = qvariant_cast<QVariantList>(varPto);
-                    QPointF punto = {coordPto[0].toFloat(), coordPto[1].toFloat()};
-                    listaPark.append(punto);
-                }
-            }
-            else
-            {
-                qInfo() << "No se pueden cargar las coordenadas del parking";
-                listaPark = {};
-            }
-
-            Plataforma plat = {listaPer, listaPark};
+            Plataforma plat = {listaPer};
 
             listaPlataformas.append(plat);
         }

@@ -63,13 +63,17 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     //Conexiones Diálogo Configuración de Pista
     connect(dialogConfPista, SIGNAL(sigPistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
 
-    // Valores por default
+    // VALORES POR DEFAULT OBJETOS DE PRUEBA
+    //********
     pista = {2500,45,0,"",""};
-    rodaje = {"",0,90,23,200,550};
+    rodaje1 = {"",-200,90,23,200,550};
+    rodaje2 = {"",200,90,23,200,550};
     plataforma.coordPerimetro.append(QPointF (0,0));
     plataforma.coordPerimetro.append(QPointF (100,0));
     plataforma.coordPerimetro.append(QPointF (100,100));
     plataforma.coordPerimetro.append(QPointF (0,100));
+    //********
+
     actualizarDatosPista(pista);
 }
 
