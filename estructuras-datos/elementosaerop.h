@@ -16,11 +16,11 @@ struct Pista {
 
 inline QDebug operator<<(QDebug stream, const Pista& p)
 {
-    stream << "Pista" << endl;
-    stream << "Largo: " << p.largo << "m" << endl;
-    stream << "Ancho: " << p.ancho << "m" << endl;
-    stream << "Orientacion: " << p.orientacion << " grados" << endl;
-    stream << "Cabecera 1: " << p.cabecera1 << endl;
+    stream << "Pista" << Qt::endl;
+    stream << "Largo: " << p.largo << "m" << Qt::endl;
+    stream << "Ancho: " << p.ancho << "m" << Qt::endl;
+    stream << "Orientacion: " << p.orientacion << " grados" << Qt::endl;
+    stream << "Cabecera 1: " << p.cabecera1 << Qt::endl;
     stream << "Cabecera 2: " << p.cabecera2 << "\n \n";
     return stream;
 }
@@ -36,28 +36,30 @@ struct Rodaje {
 
 inline QDebug operator<<(QDebug stream, const Rodaje& rod)
 {
-    stream << "Calle rodaje" << endl;
-    stream << "Cabecera: " << rod.cabecera << endl;
-    stream << "Posicion: " << rod.posicion << "m" << endl;
-    stream << "Largo: " << rod.largo << "m" << endl;
-    stream << "Ancho: " << rod.ancho << "m" << endl;
-    stream << "Radio: " << rod.radio << "m" << endl;
+    stream << "Calle rodaje" << Qt::endl;
+    stream << "Cabecera: " << rod.cabecera << Qt::endl;
+    stream << "Posicion: " << rod.posicion << "m" << Qt::endl;
+    stream << "Largo: " << rod.largo << "m" << Qt::endl;
+    stream << "Ancho: " << rod.ancho << "m" << Qt::endl;
+    stream << "Radio: " << rod.radio << "m" << Qt::endl;
     stream << "Angulo: " << rod.angulo << " grados" << "\n \n";
     return stream;
 }
 
 struct Plataforma {
+    Plataforma (){};
+    Plataforma (const QList<QPointF>& l){coordPerimetro = l;}
     QList<QPointF> coordPerimetro;
 };
 
 inline QDebug operator<<(QDebug stream, const Plataforma& plat)
 {
-    stream << "Plataforma" << endl;
-    stream << "Coordenadas perimetro: " << endl;
+    stream << "Plataforma" << Qt::endl;
+    stream << "Coordenadas perimetro: " << Qt::endl;
     for (int i=0; i<plat.coordPerimetro.size(); i++)
     {
         stream << "Punto " << i << ": x=" << plat.coordPerimetro[i].x() << " ; y="
-               << plat.coordPerimetro[i].y() << endl;
+               << plat.coordPerimetro[i].y() << Qt::endl;
     }
     return stream;
 }

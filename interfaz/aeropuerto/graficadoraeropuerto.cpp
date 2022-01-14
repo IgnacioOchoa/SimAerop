@@ -26,8 +26,7 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
         QRectF* primitivaRodaje = new QRectF(rs.at(i).posicion,-rs.at(i).ancho/2.0,rs.at(i).largo,rs.at(i).ancho);
         QPolygonF polyRodaje(*primitivaRodaje);
         QTransform t = QTransform().translate(rs.at(i).posicion,0 ).rotate( -rs.at(i).angulo ).translate(-rs.at(i).posicion,0 );
-        QPolygonF pavRodaje = t.map(polyRodaje);
-        listaGraficosRodajes.append(pavRodaje);
+        listaGraficosRodajes.append(t.map(polyRodaje));
     }
 
     //POLIGONOS PLATAFORMA
@@ -61,9 +60,8 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
     for (int i = 0; i <listaGraficosRodajes.size(); ++i) {
         path.addPolygon(listaGraficosRodajes.at(i));
     }
-    QPainterPath path2;
-    path2 = path.simplified();
-    QGraphicsPathItem* pavRigido = escenaAeropuerto->addPath(path2, *bordeNegro, *colorPavimento);
+    path = path.simplified();
+    QGraphicsPathItem* pavRigido = escenaAeropuerto->addPath(path, *bordeNegro, *colorPavimento);
 
     vistaAeropuerto->fitInView(pavRigido,Qt::KeepAspectRatio);
 
@@ -199,11 +197,10 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
 void GraficadorAeropuerto::graficarMargenes(const Pista& p)
 {
     //Grafica márgenes de pista1 y áreas anterior al umbral
-    QGraphicsRectItem* pavFlexible = new QGraphicsRectItem;
     if(p.ancho <60){
-        pavFlexible = escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0-(60-p.ancho)/2.0,p.largo+60,60, *bordeTransparente, *colorMargen);
+        escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0-(60-p.ancho)/2.0,p.largo+60,60, *bordeTransparente, *colorMargen);
     }
     else{
-        pavFlexible = escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, *bordeTransparente, *colorMargen);
+        escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, *bordeTransparente, *colorMargen);
     }
 }

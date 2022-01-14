@@ -41,7 +41,7 @@ public:
     ~InterfazPrincipal();
     AeropuertoVista *getVistaAeropuerto();
 
-    //METODOS PARA CONETENDORES
+    //METODOS PARA CONTENEDORES
     //********
     const QList<Pista>& getPistas() const {return listaPistas;}
     const QList<Rodaje>& getRodajes() const {return listaRodajes;}

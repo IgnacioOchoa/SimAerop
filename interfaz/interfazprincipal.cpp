@@ -68,12 +68,8 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     listaPistas.append({2500,45,0,"",""});//Por ahora solo se grafica con una sola pista (listaPissta[0])
     listaRodajes.append({{"",-200,90,23,200,550}, {"",200,90,23,200,550}});
     listaRodajes.append({{"",-50,-135,23,300,550}, {"",50,-45,23,300,550}});
-    Plataforma pl1;
-    Plataforma pl2;
-    pl1.coordPerimetro.append({QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)});
-    pl2.coordPerimetro.append({QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)});
-    listaPlataformas.append(pl1);
-    listaPlataformas.append(pl2);
+    listaPlataformas.append(Plataforma ({QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)}));
+    listaPlataformas.append(Plataforma ({QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)}));
     //********
 
     actualizarDatosPista(listaPistas.at(0));
