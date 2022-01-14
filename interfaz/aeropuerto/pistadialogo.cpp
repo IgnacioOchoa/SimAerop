@@ -85,7 +85,7 @@ void PistaDialogo::configurarWidgets()
     leLargoPista->setValidator(new QIntValidator(0,7000));
 
     leAnchoPista = ui->leAncho;
-    leAnchoPista->setValidator(new QIntValidator(0,1000));
+    leAnchoPista->setValidator(new QIntValidator(0,100));
 
     dialPista = ui->dialPista;
 

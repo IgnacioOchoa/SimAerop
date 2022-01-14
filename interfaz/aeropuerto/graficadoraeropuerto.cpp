@@ -16,59 +16,77 @@ GraficadorAeropuerto::GraficadorAeropuerto(AeropuertoVista *gv) :
     bordeTransparente = new QPen(Qt::black, 0, Qt::NoPen);
 }
 
-void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p, const Rodaje& r1, const Rodaje& r2, const Plataforma& a)
+void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QList<Rodaje>& rs, const QList<Plataforma>& as)
 {
     escenaAeropuerto->clear();
     escenaAeropuerto->setBackgroundBrush(*fondoPista);
 
-    //RECTANGULO RODAJE1
-    QRectF* primitivaRodaje1 = new QRectF(r1.posicion,-r1.ancho/2.0,r1.largo,r1.ancho);
-    QTransform t1 = QTransform().translate( r1.posicion,0 ).rotate( -r1.angulo ).translate(-r1.posicion,0 );
-    QRectF pavRodaje1 = t1.mapRect(*primitivaRodaje1);
+    //RECTANGULOS RODAJES
+    for (int i = 0; i < rs.size(); ++i) {
+        QRectF* primitivaRodaje = new QRectF(rs.at(i).posicion,-rs.at(i).ancho/2.0,rs.at(i).largo,rs.at(i).ancho);
+        QPolygonF polyRodaje(*primitivaRodaje);
+        QTransform t = QTransform().translate(rs.at(i).posicion,0 ).rotate( -rs.at(i).angulo ).translate(-rs.at(i).posicion,0 );
+        QPolygonF pavRodaje = t.map(polyRodaje);
+        listaGraficosRodajes.append(pavRodaje);
+    }
 
-    //RECTANGULO RODAJE1
-    QRectF* primitivaRodaje2 = new QRectF(r2.posicion,-r2.ancho/2.0,r2.largo,r2.ancho);
-    QTransform t2 = QTransform().translate( r2.posicion,0 ).rotate( -r2.angulo ).translate(-r2.posicion,0 );
-    QRectF pavRodaje2 = t2.mapRect(*primitivaRodaje2);
-
-    //RECTANGULO PLATAFORMA
-    QRectF* pavPlataforma = new QRectF(-250,-300,500,100);//AÚN NO LEE DATOS POR DEFAULT
+    //POLIGONOS PLATAFORMA
+    for (int i = 0; i < as.size(); ++i) {
+        QPolygonF* pavPlataforma = new QPolygonF;
+        for (int j = 0; j < as.at(i).coordPerimetro.size(); ++j) {
+            pavPlataforma->append(as.at(i).coordPerimetro.at(j));
+        }
+        listaGraficosPlataformas.append(*pavPlataforma);
+    }
 
     //RECTANGULO PISTA
-    QRectF* pavPista = new QRectF(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho);
-
-    //GRAFICADOR DE PISTA
-    //Grafica márgenes de pista y áreas anterior al umbral
-    QGraphicsRectItem* pavFlexible = new QGraphicsRectItem;
-    if(p.ancho <60){
-        pavFlexible = escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0-(60-p.ancho)/2.0,p.largo+60,60, *bordeTransparente, *colorMargen);
-    }
-    else{
-        pavFlexible = escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, *bordeTransparente, *colorMargen);
+    for (int i = 0; i < ps.size(); ++i) {
+        QRectF* pavPista = new QRectF(-ps.at(i).largo/2.0,-ps.at(i).ancho/2.0,ps.at(i).largo,ps.at(i).ancho);
+        listaGraficosPistas.append(*pavPista);
+        graficarMargenes(ps.at(i));
     }
 
-    //Grafica el conjunto de los pavimentos
+    //GRAFICA EL CONJUNTO DE LOS PAVIMENTOS
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);
     //Agrega Pista
-    path.addRect(*pavPista);
-    //Agrega Plataforma
-    path.addRect(*pavPlataforma);
-    //Agrega Rodaje1
-    path.addRect(pavRodaje1);
-    //Agrega Rodaje2
-    path.addRect(pavRodaje2);
-
+    for (int i = 0; i <listaGraficosPistas.size(); ++i) {
+        path.addRect(listaGraficosPistas.at(i));
+    }
+    //Agrega Plataformas
+    for (int i = 0; i <listaGraficosPlataformas.size(); ++i) {
+        path.addPolygon(listaGraficosPlataformas.at(i));
+    }
+    //Agrega Rodajes
+    for (int i = 0; i <listaGraficosRodajes.size(); ++i) {
+        path.addPolygon(listaGraficosRodajes.at(i));
+    }
     QPainterPath path2;
     path2 = path.simplified();
-
     QGraphicsPathItem* pavRigido = escenaAeropuerto->addPath(path2, *bordeNegro, *colorPavimento);
 
-    //Area invisible que engloba la pista
-    escenaAeropuerto->addRect(-p.largo/2.0 - 200, -p.ancho/2.0, p.largo + 400, p.ancho, *bordeTransparente);
+    vistaAeropuerto->fitInView(pavRigido,Qt::KeepAspectRatio);
 
-    //GRAFICADOR DE PINTURA DE PISTA
+    //Grafica la pintura de la pista 0 solamente
+    graficarPinturaPista(ps.at(0));
+}
 
+void GraficadorAeropuerto::reportarDatosEscena()
+{
+    qInfo() << "escenaPista->sceneRect() = " << escenaAeropuerto->sceneRect();
+    qInfo() << "ui->graficoPista->sceneRect() = " << vistaAeropuerto->sceneRect();
+    qInfo() << "Item at (0,0): " << vistaAeropuerto->itemAt(vistaAeropuerto->mapFromScene(0,0));
+    qInfo() << "ui->graficoPista->transform() = " << vistaAeropuerto->transform();
+    qInfo() << "ui->graficoPista->rect() (from QWidget) = " << vistaAeropuerto->rect();
+    qInfo() << "ui->graficoPista->contentsRect() (from QWidget) = " << vistaAeropuerto->contentsRect();
+    qInfo() << "ui->graficoPista->mapToScene(ui->graficoPista->viewport()->geometry()).boundingRect() "
+               "(from QAbstractScrollArea) = "
+            << vistaAeropuerto->mapToScene(vistaAeropuerto->viewport()->geometry()).boundingRect();
+
+}
+
+void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
+{
     //Determinación de Parámetros según ancho de pista
     if (p.ancho<23){
         fajas = 2;
@@ -176,22 +194,16 @@ void GraficadorAeropuerto::actualizarAeropuerto(const Pista& p, const Rodaje& r1
     //Grafica centro de la pista
     escenaAeropuerto->addLine(QLineF(-5,-5,5,5), *bordeNegro);
     escenaAeropuerto->addLine(QLineF(-5,5,5,-5), *bordeNegro);
-
-    vistaAeropuerto->fitInView(pavFlexible,Qt::KeepAspectRatio);
-    //vistaPista->scale(0.98, 0.98);
-
 }
 
-void GraficadorAeropuerto::reportarDatosEscena()
+void GraficadorAeropuerto::graficarMargenes(const Pista& p)
 {
-    qInfo() << "escenaPista->sceneRect() = " << escenaAeropuerto->sceneRect();
-    qInfo() << "ui->graficoPista->sceneRect() = " << vistaAeropuerto->sceneRect();
-    qInfo() << "Item at (0,0): " << vistaAeropuerto->itemAt(vistaAeropuerto->mapFromScene(0,0));
-    qInfo() << "ui->graficoPista->transform() = " << vistaAeropuerto->transform();
-    qInfo() << "ui->graficoPista->rect() (from QWidget) = " << vistaAeropuerto->rect();
-    qInfo() << "ui->graficoPista->contentsRect() (from QWidget) = " << vistaAeropuerto->contentsRect();
-    qInfo() << "ui->graficoPista->mapToScene(ui->graficoPista->viewport()->geometry()).boundingRect() "
-               "(from QAbstractScrollArea) = "
-            << vistaAeropuerto->mapToScene(vistaAeropuerto->viewport()->geometry()).boundingRect();
-
+    //Grafica márgenes de pista1 y áreas anterior al umbral
+    QGraphicsRectItem* pavFlexible = new QGraphicsRectItem;
+    if(p.ancho <60){
+        pavFlexible = escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0-(60-p.ancho)/2.0,p.largo+60,60, *bordeTransparente, *colorMargen);
+    }
+    else{
+        pavFlexible = escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, *bordeTransparente, *colorMargen);
+    }
 }

@@ -65,16 +65,18 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
 
     // VALORES POR DEFAULT OBJETOS DE PRUEBA
     //********
-    pista = {2500,45,0,"",""};
-    rodaje1 = {"",-200,90,23,200,550};
-    rodaje2 = {"",200,90,23,200,550};
-    plataforma.coordPerimetro.append(QPointF (0,0));
-    plataforma.coordPerimetro.append(QPointF (100,0));
-    plataforma.coordPerimetro.append(QPointF (100,100));
-    plataforma.coordPerimetro.append(QPointF (0,100));
+    listaPistas.append({2500,45,0,"",""});//Por ahora solo se grafica con una sola pista (listaPissta[0])
+    listaRodajes.append({{"",-200,90,23,200,550}, {"",200,90,23,200,550}});
+    listaRodajes.append({{"",-50,-135,23,300,550}, {"",50,-45,23,300,550}});
+    Plataforma pl1;
+    Plataforma pl2;
+    pl1.coordPerimetro.append({QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)});
+    pl2.coordPerimetro.append({QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)});
+    listaPlataformas.append(pl1);
+    listaPlataformas.append(pl2);
     //********
 
-    actualizarDatosPista(pista);
+    actualizarDatosPista(listaPistas.at(0));
 }
 
 InterfazPrincipal::~InterfazPrincipal()
@@ -118,10 +120,10 @@ void InterfazPrincipal::crearPista()
 
 void InterfazPrincipal::actualizarDatosPista(const Pista& p)
 {
+    listaPistas[0] = p;
     escenaAeropuerto->clear();
-    pista = p;
-    ui->lbValorAncho->setText(QString::number(pista.ancho) + " m");
-    ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");
+    ui->lbValorAncho->setText(QString::number(p.ancho) + " m");
+    ui->lbValorLongitud->setText(QString::number(p.largo) + " m");
 }
 
 void InterfazPrincipal::mostradorFlota(const QList<Aeronave>& f)

@@ -36,7 +36,7 @@ private:
     GraficadorAeropuerto* graficadorAeropuerto;
 
 signals:
-    void aeropuertoActualizado(const Pista&, const Rodaje&, const Rodaje&, const Plataforma&);
+    void aeropuertoActualizado(const QList<Pista>&, const QList<Rodaje>&, const QList<Plataforma>&);
 };
 
 #endif // KERNEL_H

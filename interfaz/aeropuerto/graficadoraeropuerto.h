@@ -22,13 +22,19 @@ public:
     GraficadorAeropuerto(AeropuertoVista* gv);
 
 public slots:
-    void actualizarAeropuerto(const Pista&, const Rodaje&, const Rodaje&, const Plataforma&);
+    void actualizarAeropuerto(const QList<Pista>&, const QList<Rodaje>&, const QList<Plataforma>&);
 
 private:
     void reportarDatosEscena();
+    void graficarPinturaPista(const Pista&);
+    void graficarMargenes(const Pista&);
 
     AeropuertoVista* vistaAeropuerto;
     AeropuertoEscena* escenaAeropuerto;
+
+    QList<QRectF> listaGraficosPistas;
+    QList<QPolygonF> listaGraficosRodajes;
+    QList<QPolygonF> listaGraficosPlataformas;
 
     QLinearGradient* gradienteFondoPista;
     QBrush* fondoPista;

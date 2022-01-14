@@ -41,12 +41,11 @@ public:
     ~InterfazPrincipal();
     AeropuertoVista *getVistaAeropuerto();
 
-    //FUNCIONES PARA OBJETOS DE PRUEBA
+    //METODOS PARA CONETENDORES
     //********
-    const Pista& getPista() const {return pista;}
-    const Rodaje& getRodaje1() const {return rodaje1;}
-    const Rodaje& getRodaje2() const {return rodaje2;}
-    const Plataforma& getPlataforma() const {return plataforma;}
+    const QList<Pista>& getPistas() const {return listaPistas;}
+    const QList<Rodaje>& getRodajes() const {return listaRodajes;}
+    const QList<Plataforma>& getPlataformas() const {return listaPlataformas;}
     //********
 
     void mostradorFlota(const QList<Aeronave>&);
@@ -75,12 +74,11 @@ private:
 
     PistaParser pistaParser;
 
-    //OBJETOS DE PRUEBA
+    //CONTENEDORES DE ELEMENTOS
     //********
-    Pista pista;
-    Rodaje rodaje1;
-    Rodaje rodaje2;
-    Plataforma plataforma;
+    QList<Pista> listaPistas;
+    QList<Rodaje> listaRodajes;
+    QList<Plataforma> listaPlataformas;
     //********
 
 private slots:
