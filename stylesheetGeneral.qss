@@ -99,3 +99,10 @@ QCheckBox#confPlatChk::indicator:checked
 {
     image: url(:/imagenes/imagenes/Check_mark.png)
 }
+
+QHeaderView
+{
+    border-style: solid;
+    border-bottom-width : 2px;
+    border-color: black
+}

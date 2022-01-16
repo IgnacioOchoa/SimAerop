@@ -41,10 +41,19 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     btnGroup->setExclusive(true);
     listaBotones[0]->setChecked(true);
 
+    // VALORES POR DEFAULT OBJETOS DE PRUEBA
+    //********
+    listaPistas.append({2500,45,0,"",""});//Por ahora solo se grafica con una sola pista (listaPissta[0])
+    listaRodajes.append({{"",-200,90,23,200,550}, {"",200,90,23,200,550}});
+    listaRodajes.append({{"",-50,-135,23,300,550}, {"",50,-45,23,300,550}});
+    listaPlataformas.append(Plataforma ({QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)}));
+    listaPlataformas.append(Plataforma ({QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)}));
+    //********
+
     //Conexiones Página Aeropuertos
-    PistaDialogo* dialogConfPista = new PistaDialogo;
-    RodajeDialogo* dialogConfRodaje = new RodajeDialogo;
-    PlataformaDialogo* dialogConfPlataformas = new PlataformaDialogo;
+    PistaDialogo* dialogConfPista = new PistaDialogo(this);
+    RodajeDialogo* dialogConfRodaje = new RodajeDialogo(listaRodajes, this);
+    PlataformaDialogo* dialogConfPlataformas = new PlataformaDialogo(this);
 
     connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::crearPista);
     connect(this, SIGNAL(sigPistaCambiada()), k, SLOT(graficarPista()));
@@ -62,15 +71,6 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
 
     //Conexiones Diálogo Configuración de Pista
     connect(dialogConfPista, SIGNAL(sigPistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
-
-    // VALORES POR DEFAULT OBJETOS DE PRUEBA
-    //********
-    listaPistas.append({2500,45,0,"",""});//Por ahora solo se grafica con una sola pista (listaPissta[0])
-    listaRodajes.append({{"",-200,90,23,200,550}, {"",200,90,23,200,550}});
-    listaRodajes.append({{"",-50,-135,23,300,550}, {"",50,-45,23,300,550}});
-    listaPlataformas.append(Plataforma ({QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)}));
-    listaPlataformas.append(Plataforma ({QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)}));
-    //********
 
     actualizarDatosPista(listaPistas.at(0));
 }
