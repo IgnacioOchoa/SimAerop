@@ -24,7 +24,6 @@ public:
     void ajustarContenidos();
 
     void graficarPista(Pista p);
-    void dibujarUmbral(float pos, PistaEscena::Lado);
     void vaciarContenido();
 
 public slots:

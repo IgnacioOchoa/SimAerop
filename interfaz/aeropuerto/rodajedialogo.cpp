@@ -46,24 +46,15 @@ void RodajeDialogo::configurarWidgets()
 
 void RodajeDialogo::poblarTabla()
 {
-    qInfo() << "listaRodajes.size(): " << listaRodajes.size();
     tablaRodaje->setRowCount(listaRodajes.size());
     for (int i=0; i < listaRodajes.size(); i++)
     {
-        qInfo() << "Cabecera: " << listaRodajes[i].cabecera;
-        qInfo() << "Posicion: " << listaRodajes[i].posicion;
         tablaRodaje->setItem(i,0, new QTableWidgetItem(listaRodajes[i].cabecera));
         tablaRodaje->setItem(i,1, new QTableWidgetItem(QString::number(listaRodajes[i].posicion)));
         tablaRodaje->setItem(i,2, new QTableWidgetItem(QString::number(listaRodajes[i].angulo)));
         tablaRodaje->setItem(i,3, new QTableWidgetItem(QString::number(listaRodajes[i].ancho)));
         tablaRodaje->setItem(i,4, new QTableWidgetItem(QString::number(listaRodajes[i].largo)));
         tablaRodaje->setItem(i,5, new QTableWidgetItem(QString::number(listaRodajes[i].radio)));
-
-//        tablaRodaje->item(i,1)->setData(Qt::DisplayRole,listaRodajes[i].posicion);
-//        tablaRodaje->item(i,2)->setData(Qt::DisplayRole,listaRodajes[i].angulo);
-//        tablaRodaje->item(i,3)->setData(Qt::DisplayRole,listaRodajes[i].ancho);
-//        tablaRodaje->item(i,4)->setData(Qt::DisplayRole,listaRodajes[i].largo);
-//        tablaRodaje->item(i,5)->setData(Qt::DisplayRole,listaRodajes[i].radio);
     }
 }
 

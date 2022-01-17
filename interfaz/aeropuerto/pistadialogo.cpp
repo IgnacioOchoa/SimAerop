@@ -134,26 +134,6 @@ void PistaDialogo::dibujarPista()
 {
     vistaPreliminar->graficarPista(pista);
     maxUmbral1 = maxUmbral2 = pista.largo;
-    QString um1 = ui->leUmbral1->text();
-    if(um1 != "")
-    {
-        bool ok;
-        float um = um1.toFloat(&ok);
-        if (ok)
-        {
-            vistaPreliminar->dibujarUmbral(um, PistaEscena::Lado::IZQ);
-        }
-    }
-    QString um2 = ui->leUmbral2->text();
-    if(um2 != "")
-    {
-        bool ok;
-        float um = um2.toFloat(&ok);
-        if (ok)
-        {
-            vistaPreliminar->dibujarUmbral(um, PistaEscena::Lado::DER);
-        }
-    }
 }
 
 void PistaDialogo::botonGraficarApretado()
@@ -219,12 +199,12 @@ void PistaDialogo::slotLineaUmbralMovida(PistaEscena::Umbral um, int valor)
 {
     if(um == PistaEscena::Umbral::UMBRAL1)
     {
-        leUmbral1->setText(QString::number(valor));
+        if(cbUmbral1->isChecked()) leUmbral1->setText(QString::number(valor));
         desplUmbral1 = valor;
     }
     else if(um == PistaEscena::Umbral::UMBRAL2)
     {
-        leUmbral2->setText(QString::number(valor));
+        if(cbUmbral2->isChecked()) leUmbral2->setText(QString::number(valor));
         desplUmbral2 = valor;
     }
     actualizarMaxUmbrales();
@@ -348,4 +328,6 @@ void PistaDialogo::resetDialogoPista()
     leNombreArchivo->clear();
     leLargoPista->clear();
     leAnchoPista->clear();
+    leUmbral1->setText("0");
+    leUmbral2->setText("0");
 }

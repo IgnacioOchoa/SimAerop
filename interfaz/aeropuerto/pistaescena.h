@@ -18,8 +18,8 @@ public:
     void mostrarCotas(bool);
     void limpiar();
     virtual void mousePressEvent(QGraphicsSceneMouseEvent *mouseEvent) override;
-    void graficarUmbral(float, Lado);
     enum class Umbral {UMBRAL1,UMBRAL2};
+
 signals:
     void contenidoCambiado();
     void sigLineaUmbralMovida(Umbral umbral, int nuevaPos);
@@ -31,6 +31,12 @@ public slots:
     void slotSetLimUmbrales(int limUmbral1, int limUmbral2);
 
 private:
+
+    void crearRectanguloPista();
+    void crearCotas();
+    void crearLineasUmbral();
+    void actualizarLineasUmbral();
+
     QList<CotaGrafica*> listaCotas;
     QGraphicsRectItem* grRectItm;
     CotaGrafica* cota1;
@@ -39,7 +45,11 @@ private:
     LineaUmbral* lineaUmbral2;
     bool umbral1Visible;
     bool umbral2Visible;
+
+    Pista pistaGraficada;
     QRect rectPista;
+
+    bool escenaLimpia;
 };
 
 #endif // PISTAESCENA_H

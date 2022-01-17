@@ -1,7 +1,8 @@
 #include "lineaumbral.h"
 
 LineaUmbral::LineaUmbral() :
-    radio(8),
+    QGraphicsObject(),
+    radio(5),
     radioAumentado(11),
     hover(false)
 {

@@ -96,11 +96,6 @@ void PistaVista::graficarPista(Pista p)
     ajustarContenidos();
 }
 
-void PistaVista::dibujarUmbral(float pos, PistaEscena::Lado lado)
-{
-    escena->graficarUmbral(pos, lado);
-}
-
 void PistaVista::vaciarContenido()
 {
     escena->limpiar();
