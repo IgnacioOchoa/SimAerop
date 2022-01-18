@@ -35,6 +35,7 @@ private:
     void crearRectanguloPista();
     void crearCotas();
     void crearLineasUmbral();
+    void crearZonasExt();
     void actualizarLineasUmbral();
 
     QList<CotaGrafica*> listaCotas;

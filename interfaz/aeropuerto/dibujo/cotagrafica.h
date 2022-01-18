@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QDebug>
 #include <QGraphicsSceneEvent>
+#include <QtMath>
 
 class CotaGrafica : public QGraphicsItem
 {
@@ -14,28 +15,30 @@ public:
     enum class Direccion {ARRIBA,ABAJO,DERECHA,IZQUIERDA};
     enum class Sentido {HOR,VER};
 
-    CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist = 0, QFont font = QFont());
+    CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist = 0, QFont font = QFont());
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
-    void graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter);
-    void graficarTexto(QPointF posCentro, QString texto, QPainter *painter);
 
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
 
+    virtual QPainterPath shape() const override;
+    virtual QRectF boundingRect() const override;
+
+
+private:
+    void graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter);
+    void graficarTexto(QPointF posCentro, QString texto, QPainter *painter);
     void ordenarPuntos(QPointF p1, QPointF p2);
     void procesarTexto();
     void calcularBoundingRect();
     void calcularShape();
     void actualizarPosicion(float delta);
 
-    virtual QPainterPath shape() const override;
-    virtual QRectF boundingRect() const override;
+private slots:
+    void actualizarLongitud(QPointF p1, QPointF p2);
 
-
-private:
     QPointF punto1;
     QPointF punto2;
     Sentido sentido;
@@ -55,6 +58,7 @@ private:
     QPointF posInfIzqTexto;
 
     const int sizeFlechaRef = 30;
+    const int sizeLineaFlechaExt = 80;
 
     QPen penCota;
     QBrush brushCota;

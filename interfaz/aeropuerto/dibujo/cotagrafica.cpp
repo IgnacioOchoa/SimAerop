@@ -1,8 +1,7 @@
 #include "cotagrafica.h"
 
-CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, float dist, QFont font) :
+CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist, QFont font) :
     sentido(sen),
-    texto(valor),
     hover(false)
 {
     // Para entender que es cada variable, ver el archivo referenciaCotas.png, en la misma carpeta
@@ -15,11 +14,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
     penCotaHover = QPen(QColor("#9f63bf"),6);
     brushCotaHover = QBrush("#9f63bf");
 
-    ordenarPuntos(p1, p2);
-
-    //Distancia entre los dos puntos, depende de si la orientacion es horizontal o vertical
-    longitud = sentido == Sentido::HOR ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
-    longitudCorta = longitud < sizeFlechaRef*3;
+    actualizarLongitud(p1,p2);
 
     //Si no se ingresa un valor para dist se lo calcula como 1/4 de la distancia
     //entre puntos, y la posicion de la cota es por debajo de los puntos (caso HOR) o a la
@@ -30,7 +25,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, QString valor, flo
     fuente = font == QFont() ? QFont("Arial",30) : font;
 
     anchoTexto = QFontMetrics(fuente).boundingRect(texto).width();
-    altoTexto = QFontMetrics(fuente).ascent();
+    altoTexto = QFontMetrics(fuente).capHeight();
     margin = altoTexto/2;
     tramoAdicional = altoTexto;
     anchoRect = margin; //Ancho del rectangulo alrededor de las lineas creado para la shape
@@ -159,6 +154,27 @@ void CotaGrafica::graficarFlecha(QPointF posVertice, Direccion ori, QPainter *pa
     }
 
     painter->drawConvexPolygon(QPolygonF(tri));
+
+    if(longitudCorta) {
+        switch(ori) {
+        case Direccion::DERECHA: {
+            painter->drawLine(posVertice, posVertice + QPointF(-sizeLineaFlechaExt,0));
+            break;
+        }
+        case Direccion::IZQUIERDA: {
+            painter->drawLine(posVertice, posVertice + QPointF(sizeLineaFlechaExt,0));
+            break;
+        }
+        case Direccion::ARRIBA: {
+            painter->drawLine(posVertice, posVertice + QPointF(0,sizeLineaFlechaExt));
+            break;
+        }
+        case Direccion::ABAJO: {
+            painter->drawLine(posVertice, posVertice + QPointF(0,-sizeLineaFlechaExt));
+            break;
+        }
+        }
+    }
 }
 
 void CotaGrafica::graficarTexto(QPointF posCentro, QString texto, QPainter *painter)
@@ -284,8 +300,8 @@ void CotaGrafica::calcularBoundingRect()
     if(longitudCorta)
     {
         switch(sentido) {
-        case Sentido::HOR: xMin-=sizeFlechaRef; xMax+=sizeFlechaRef; break;
-        case Sentido::VER: yMin-=sizeFlechaRef; yMax+=sizeFlechaRef; break;
+        case Sentido::HOR: xMin-=sizeLineaFlechaExt; xMax+=sizeLineaFlechaExt; break;
+        case Sentido::VER: yMin-=sizeLineaFlechaExt; yMax+=sizeLineaFlechaExt; break;
         }
     }
 
@@ -298,7 +314,8 @@ void CotaGrafica::calcularBoundingRect()
 void CotaGrafica::calcularShape()
 {
     pPath.clear();
-    QRectF r1, r2, r3, r4, r5, r6;
+    QRectF r1, r2, r3, r4, r5, r6, r7, r8;
+    pPath.setFillRule(Qt::WindingFill);
     if(sentido == Sentido::HOR)
     {
         if(distanciaPerp > 0) // La línea de cota está por debajo de los puntos
@@ -350,6 +367,11 @@ void CotaGrafica::calcularShape()
     r4 = QRectF(posInfIzqTexto + QPointF(0,-altoTexto),
                       posInfIzqTexto + QPointF(anchoTexto,0));
 
+    pPath.addRect(r1.normalized());
+    pPath.addRect(r2.normalized());
+    pPath.addRect(r3.normalized());
+    pPath.addRect(r4.normalized());
+
     //Rectangulos de flechas
     if (sentido==Sentido::HOR && longitudCorta == false)
     {
@@ -360,6 +382,12 @@ void CotaGrafica::calcularShape()
     {
         r5 = QRect(punto1.x()-sizeFlechaRef, punto2.y()-sizeFlechaRef/2+distanciaPerp, sizeFlechaRef,sizeFlechaRef);
         r6 = QRect(punto2.x(), punto2.y()-sizeFlechaRef/2+distanciaPerp, sizeFlechaRef, sizeFlechaRef);
+        r7 = QRect(punto1.x()-sizeLineaFlechaExt, punto1.y()+distanciaPerp-sizeFlechaRef/4,
+                   sizeLineaFlechaExt,sizeFlechaRef/2);
+        r8 = QRect(punto2.x(),punto1.y()+distanciaPerp-sizeFlechaRef/4,
+                   sizeLineaFlechaExt,sizeFlechaRef/2);
+        pPath.addRect(r7.normalized());
+        pPath.addRect(r8.normalized());
     }
     else if (sentido ==Sentido::VER && longitudCorta == false)
     {
@@ -370,13 +398,14 @@ void CotaGrafica::calcularShape()
     {
         r5 = QRect(punto1.x()-sizeFlechaRef/2+distanciaPerp, punto1.y()-sizeFlechaRef, sizeFlechaRef,sizeFlechaRef);
         r6 = QRect(punto2.x()-sizeFlechaRef/2+distanciaPerp, punto2.y(), sizeFlechaRef,sizeFlechaRef);
+        r7 = QRect(punto1.x()+distanciaPerp-sizeFlechaRef/4, punto1.y()-sizeLineaFlechaExt,
+                   sizeFlechaRef/2,sizeLineaFlechaExt);
+        r8 = QRect(punto2.x()+distanciaPerp-sizeFlechaRef/4, punto2.y(),
+                   sizeFlechaRef/2,sizeLineaFlechaExt);
+        pPath.addRect(r7.normalized());
+        pPath.addRect(r8.normalized());
     }
 
-    pPath.setFillRule(Qt::WindingFill);
-    pPath.addRect(r1.normalized());
-    pPath.addRect(r2.normalized());
-    pPath.addRect(r3.normalized());
-    pPath.addRect(r4.normalized());
     pPath.addRect(r5.normalized().adjusted(-4,-4,4,4));
     pPath.addRect(r6.normalized().adjusted(-4,-4,4,4));
 
@@ -391,6 +420,17 @@ void CotaGrafica::actualizarPosicion(float delta)
     procesarTexto();
     calcularShape();
     calcularBoundingRect();
+}
+
+void CotaGrafica::actualizarLongitud(QPointF p1, QPointF p2)
+{
+    ordenarPuntos(p1, p2);
+
+    //Distancia entre los dos puntos, depende de si la orientacion es horizontal o vertical
+    longitud = sentido == Sentido::HOR ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
+    longitudCorta = longitud < sizeFlechaRef*3;
+
+    texto = QString::number(qFloor(longitud));
 }
 
 QPainterPath CotaGrafica::shape() const

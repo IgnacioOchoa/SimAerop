@@ -18,6 +18,7 @@ void PistaEscena::graficarPista(Pista pista)
     crearRectanguloPista();
     crearCotas();
     actualizarLineasUmbral();
+    //crearZonasExt();
     escenaLimpia = false;
 }
 
@@ -103,20 +104,28 @@ void PistaEscena::crearRectanguloPista()
 
 void PistaEscena::crearCotas()
 {
+//  p3-----------------p4
+//  |                   |
+//  p1-----------------p2
     QPointF p1 = {grRectItm->rect().x(),grRectItm->rect().y()+grRectItm->rect().height()};
     QPointF p2 = {grRectItm->rect().x()+grRectItm->rect().width(),
                   grRectItm->rect().y()+grRectItm->rect().height()};
     QPointF p3 = {grRectItm->rect().x(), grRectItm->rect().y()};
     QPointF p4 = {grRectItm->rect().x() + grRectItm->rect().width(),grRectItm->rect().y()};
 
-    cota1 = new CotaGrafica(p3,p4,CotaGrafica::Sentido::HOR,QString::number(pistaGraficada.largo), -100);
+    cota1 = new CotaGrafica(p3,p4,CotaGrafica::Sentido::HOR, -100);
     addItem(cota1);
     cota1->hide();
-    cota2 = new CotaGrafica(p1,p3,CotaGrafica::Sentido::VER,QString::number(pistaGraficada.ancho), -100);
+    cota2 = new CotaGrafica(p1,p3,CotaGrafica::Sentido::VER, -100);
     addItem(cota2);
     cota2->hide();
+
+    CotaGrafica* cota3 = new CotaGrafica(p1,p1,CotaGrafica::Sentido::HOR, 100);
+    addItem(cota3);
+    cota3->hide();
     listaCotas.append(cota1);
     listaCotas.append(cota2);
+    listaCotas.append(cota3);
 }
 
 void PistaEscena::crearLineasUmbral()
@@ -132,6 +141,13 @@ void PistaEscena::crearLineasUmbral()
 
     connect(lineaUmbral1, &LineaUmbral::sigPosCambiada, this, &PistaEscena::slotLineaUmbralMovida);
     connect(lineaUmbral2, &LineaUmbral::sigPosCambiada, this, &PistaEscena::slotLineaUmbralMovida);
+}
+
+void PistaEscena::crearZonasExt()
+{
+    QGraphicsRectItem* zonaExt1 = addRect(QRect(-pistaGraficada.largo/2, -pistaGraficada.ancho/2,
+                                                 300, pistaGraficada.ancho),
+                                          QPen("black"), QBrush(Qt::Dense5Pattern));
 }
 
 void PistaEscena::actualizarLineasUmbral()
