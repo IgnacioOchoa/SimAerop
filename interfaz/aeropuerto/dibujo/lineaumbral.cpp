@@ -8,15 +8,10 @@ LineaUmbral::LineaUmbral() :
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemSendsGeometryChanges);
-
+    setZValue(2);
     setAcceptHoverEvents(true);
-
-
     circ1 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
     circ2 = new CirculoLlenoConst(QRectF(-radio,-radio,2*radio,2*radio),cNaranja,this);
-
-    calcularBoundingRect();
-    calcularShape();
 }
 
 void LineaUmbral::setDimensiones(int posX, int anchoPista)
@@ -58,6 +53,7 @@ void LineaUmbral::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 
     calcularBoundingRect();
     calcularShape();
+
 }
 
 void LineaUmbral::hoverEnterEvent(QGraphicsSceneHoverEvent *event)
@@ -70,6 +66,12 @@ void LineaUmbral::hoverLeaveEvent(QGraphicsSceneHoverEvent *event)
 {
     hover = false;
     QGraphicsItem::hoverLeaveEvent(event);
+}
+
+void LineaUmbral::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    emit sigLineaUmbralPosicionada();
+    QGraphicsItem::mouseReleaseEvent(event);
 }
 
 QVariant LineaUmbral::itemChange(QGraphicsItem::GraphicsItemChange change, const QVariant &value)

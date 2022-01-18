@@ -3,7 +3,8 @@
 PistaEscena::PistaEscena(QObject* ob) :
     QGraphicsScene(ob),
     umbral1Visible(false),
-    umbral2Visible(false)
+    umbral2Visible(false),
+    cotasVisibles(false)
 {
     setSceneRect(QRect(-10000,-3000,20000,6000));
     setBackgroundBrush(QBrush("#f5f0f3"));
@@ -26,10 +27,12 @@ void PistaEscena::mostrarCotas(bool mostrar)
 {
     if(mostrar) foreach(CotaGrafica* cot, listaCotas) {cot->show();}
     else        foreach(CotaGrafica* cot, listaCotas) {cot->hide();}
+    cotasVisibles = mostrar;
 }
 
 void PistaEscena::limpiar()
 {
+    qDeleteAll(listaCotas);
     listaCotas.clear();
     lineaUmbral1->setVisible(false);
     lineaUmbral2->setVisible(false);
@@ -48,12 +51,18 @@ void PistaEscena::slotUmbralActivado(PistaEscena::Umbral um, bool estado)
     if(um == Umbral::UMBRAL1) {
         umbral1Visible = estado;
         if(!lineaUmbral1) return;
-        if(!escenaLimpia) lineaUmbral1->setVisible(estado);
+        if(!escenaLimpia) {
+            lineaUmbral1->setVisible(estado);
+            if(cotasVisibles) cota3->setVisible(estado);
+        }
     }
     else if (um == Umbral::UMBRAL2) {
         umbral2Visible = estado;
         if(!lineaUmbral2) return;
-        if(!escenaLimpia) lineaUmbral2->setVisible(estado);
+        if(!escenaLimpia) {
+            lineaUmbral2->setVisible(estado);
+            if(cotasVisibles) cota4->setVisible(estado);
+        }
     }
 }
 
@@ -67,6 +76,7 @@ void PistaEscena::slotUmbralModificado(PistaEscena::Umbral umbral, int valor)
     {
         lineaUmbral2->setPos(QPointF(rectPista.width()/2-valor,0));
     }
+    update();
 }
 
 void PistaEscena::slotLineaUmbralMovida(int pos)
@@ -76,10 +86,14 @@ void PistaEscena::slotLineaUmbralMovida(int pos)
     if (linea->property("Nombre").toString() == "LineaUmbral1")
     {
         emit sigLineaUmbralMovida(Umbral::UMBRAL1, rectPista.width()/2 + pos);
+        cota3->slotActualizarLongitud(QPointF(-pistaGraficada.largo/2 ,pistaGraficada.ancho/2),
+                                  QPointF(pos,pistaGraficada.ancho/2));
     }
     else if (linea->property("Nombre").toString() == "LineaUmbral2")
     {
         emit sigLineaUmbralMovida(Umbral::UMBRAL2, rectPista.width()/2 - pos);
+        cota4->slotActualizarLongitud(QPointF(pos,pistaGraficada.ancho/2),
+                                  QPointF(pistaGraficada.largo/2,pistaGraficada.ancho/2));
     }
 }
 
@@ -119,13 +133,20 @@ void PistaEscena::crearCotas()
     cota2 = new CotaGrafica(p1,p3,CotaGrafica::Sentido::VER, -100);
     addItem(cota2);
     cota2->hide();
-
-    CotaGrafica* cota3 = new CotaGrafica(p1,p1,CotaGrafica::Sentido::HOR, 100);
+    cota3 = new CotaGrafica(p1,p1,CotaGrafica::Sentido::HOR, 100);
     addItem(cota3);
     cota3->hide();
+    cota4 = new CotaGrafica(p2,p2,CotaGrafica::Sentido::HOR, 100);
+    addItem(cota4);
+    cota4->hide();
     listaCotas.append(cota1);
     listaCotas.append(cota2);
     listaCotas.append(cota3);
+    listaCotas.append(cota4);
+
+    connect(lineaUmbral1, &LineaUmbral::sigLineaUmbralPosicionada, cota3, &CotaGrafica::slotActualizarGeometria);
+    connect(lineaUmbral2, &LineaUmbral::sigLineaUmbralPosicionada, cota4, &CotaGrafica::slotActualizarGeometria);
+
 }
 
 void PistaEscena::crearLineasUmbral()

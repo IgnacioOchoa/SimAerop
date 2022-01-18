@@ -14,7 +14,7 @@ CotaGrafica::CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist, QFont 
     penCotaHover = QPen(QColor("#9f63bf"),6);
     brushCotaHover = QBrush("#9f63bf");
 
-    actualizarLongitud(p1,p2);
+    slotActualizarLongitud(p1,p2);
 
     //Si no se ingresa un valor para dist se lo calcula como 1/4 de la distancia
     //entre puntos, y la posicion de la cota es por debajo de los puntos (caso HOR) o a la
@@ -225,6 +225,12 @@ void CotaGrafica::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     actualizarPosicion(delta);
 }
 
+void CotaGrafica::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+{
+    slotActualizarGeometria();
+    QGraphicsItem::mouseReleaseEvent(event);
+}
+
 void CotaGrafica::ordenarPuntos(QPointF p1, QPointF p2)
 {
     if (sentido == Sentido::HOR)
@@ -243,6 +249,7 @@ void CotaGrafica::ordenarPuntos(QPointF p1, QPointF p2)
 
 void CotaGrafica::procesarTexto()
 {
+    anchoTexto = QFontMetrics(fuente).boundingRect(texto).width();
     if (sentido == Sentido::HOR)
     {
         float offset = anchoTexto/2;
@@ -408,29 +415,31 @@ void CotaGrafica::calcularShape()
 
     pPath.addRect(r5.normalized().adjusted(-4,-4,4,4));
     pPath.addRect(r6.normalized().adjusted(-4,-4,4,4));
-
     pPath = pPath.simplified();
-
 }
 
 void CotaGrafica::actualizarPosicion(float delta)
 {
     distanciaPerp += delta;
+    procesarTexto();
+}
+
+void CotaGrafica::slotActualizarLongitud(QPointF p1, QPointF p2)
+{
+    ordenarPuntos(p1, p2);
+    //Distancia entre los dos puntos, depende de si la orientacion es horizontal o vertical
+    longitud = sentido == Sentido::HOR ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
+    longitudCorta = longitud < sizeFlechaRef*3;
+    texto = QString::number(qFloor(longitud));
+    procesarTexto();
+}
+
+void CotaGrafica::slotActualizarGeometria()
+{
     prepareGeometryChange();
     procesarTexto();
     calcularShape();
     calcularBoundingRect();
-}
-
-void CotaGrafica::actualizarLongitud(QPointF p1, QPointF p2)
-{
-    ordenarPuntos(p1, p2);
-
-    //Distancia entre los dos puntos, depende de si la orientacion es horizontal o vertical
-    longitud = sentido == Sentido::HOR ? abs(punto1.x()-punto2.x()) : abs(punto1.y()-punto2.y());
-    longitudCorta = longitud < sizeFlechaRef*3;
-
-    texto = QString::number(qFloor(longitud));
 }
 
 QPainterPath CotaGrafica::shape() const

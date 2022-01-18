@@ -21,7 +21,6 @@ public:
     enum class Umbral {UMBRAL1,UMBRAL2};
 
 signals:
-    void contenidoCambiado();
     void sigLineaUmbralMovida(Umbral umbral, int nuevaPos);
 
 public slots:
@@ -42,11 +41,13 @@ private:
     QGraphicsRectItem* grRectItm;
     CotaGrafica* cota1;
     CotaGrafica* cota2;
+    CotaGrafica* cota3;
+    CotaGrafica* cota4;
     LineaUmbral* lineaUmbral1;
     LineaUmbral* lineaUmbral2;
     bool umbral1Visible;
     bool umbral2Visible;
-
+    bool cotasVisibles;
     Pista pistaGraficada;
     QRect rectPista;
 

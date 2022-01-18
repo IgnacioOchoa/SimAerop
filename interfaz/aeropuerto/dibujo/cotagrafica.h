@@ -8,9 +8,9 @@
 #include <QGraphicsSceneEvent>
 #include <QtMath>
 
-class CotaGrafica : public QGraphicsItem
+class CotaGrafica : public QGraphicsObject
 {
-
+Q_OBJECT
 public:
     enum class Direccion {ARRIBA,ABAJO,DERECHA,IZQUIERDA};
     enum class Sentido {HOR,VER};
@@ -22,6 +22,7 @@ public:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
 
     virtual QPainterPath shape() const override;
     virtual QRectF boundingRect() const override;
@@ -36,9 +37,11 @@ private:
     void calcularShape();
     void actualizarPosicion(float delta);
 
-private slots:
-    void actualizarLongitud(QPointF p1, QPointF p2);
+public slots:
+    void slotActualizarLongitud(QPointF p1, QPointF p2);
+    void slotActualizarGeometria();
 
+private:
     QPointF punto1;
     QPointF punto2;
     Sentido sentido;

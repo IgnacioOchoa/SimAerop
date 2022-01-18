@@ -22,6 +22,7 @@ public:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
     virtual void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     virtual void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
+    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event) override;
     virtual QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
     virtual QPainterPath shape() const override;
@@ -29,6 +30,7 @@ public:
 
 signals:
     void sigPosCambiada(int pos);
+    void sigLineaUmbralPosicionada();
 
 private:
 
