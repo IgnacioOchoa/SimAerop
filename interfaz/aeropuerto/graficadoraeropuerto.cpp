@@ -19,6 +19,9 @@ GraficadorAeropuerto::GraficadorAeropuerto(AeropuertoVista *gv) :
 void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QList<Rodaje>& rs, const QList<Plataforma>& as)
 {
     escenaAeropuerto->clear();
+    listaGraficosRodajes.clear();
+    listaGraficosPlataformas.clear();
+    listaGraficosPistas.clear();
     escenaAeropuerto->setBackgroundBrush(*fondoPista);
 
     //RECTANGULOS RODAJES

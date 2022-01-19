@@ -60,6 +60,10 @@ void RodajeDialogo::poblarTabla()
 
 void RodajeDialogo::dialogoAceptado()
 {
+    //Vaciar listaRodajes para que al hacer el append no se repitan rodajes
+    listaRodajes.clear();
+    qDebug() << listaRodajes.length();
+
     //Llenar lista de rodajes
     for (int i=0; i<tablaRodaje->rowCount(); i++)
     {
