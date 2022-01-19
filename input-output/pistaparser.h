@@ -37,7 +37,7 @@ private:
 
     QStringList variablesPista = {"largo", "ancho", "cabecera1", "cabecera2", "orientacion"};
     QStringList variablesRodaje = {"cabecera","posicion","angulo","ancho","largo","radio"};
-    QStringList variablesPlataforma = {"coordPerimetro", "coordParking"};
+    QStringList variablesPlataforma = {"nombre", "coordPerimetro"};
 
     void parsearPista(const Pista& pista);
     void parsearRodaje(const QList<Rodaje>& rod);

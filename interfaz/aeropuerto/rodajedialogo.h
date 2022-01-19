@@ -19,6 +19,9 @@ public:
     explicit RodajeDialogo(QList<Rodaje>& lr, QWidget* parent = nullptr);
     ~RodajeDialogo();
 
+protected :
+    void showEvent(QShowEvent *event);
+
 private:
     Ui::RodajeDialogo *ui;
     QList<Rodaje>& listaRodajes;

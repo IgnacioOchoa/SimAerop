@@ -22,6 +22,12 @@ RodajeDialogo::~RodajeDialogo()
     delete ui;
 }
 
+void RodajeDialogo::showEvent(QShowEvent *event)
+{
+    QWidget::showEvent(event);
+    poblarTabla();
+}
+
 void RodajeDialogo::configurarWidgets()
 {
     botonAceptar = ui->pbAceptar;
@@ -67,7 +73,6 @@ void RodajeDialogo::dialogoAceptado()
 {
     //Vaciar listaRodajes para que al hacer el append no se repitan rodajes
     listaRodajes.clear();
-    qDebug() << listaRodajes.length();
 
     //Llenar lista de rodajes
     for (int i=0; i<tablaRodaje->rowCount(); i++)
@@ -103,5 +108,5 @@ void RodajeDialogo::slotBotonAgregar()
 
 void RodajeDialogo::slotBotonEliminar()
 {
-    tablaRodaje->removeRow(tablaRodaje->rowCount()-1);
+    tablaRodaje->removeRow(tablaRodaje->currentRow());
 }

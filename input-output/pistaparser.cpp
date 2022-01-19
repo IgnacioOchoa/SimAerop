@@ -18,7 +18,8 @@
  *                      ...
  *                   ],
  * "plataformas" : [
- *                      { coordPerimetro : [[xx.x,xx.x] , [xx.x,xx.x] , ... ]},
+ *                      { nombre: "xx",
+ *                        coordPerimetro : [[xx.x,xx.x] , [xx.x,xx.x] , ... ]},
  *                      ...
  *                 ]
  */
@@ -68,13 +69,15 @@ void PistaParser::parsearPlataforma(const QList<Plataforma> &plat)
         QVariantMap vm;
         Plataforma p = plat[i];
 
+        vm[variablesPlataforma.at(0)] = p.nombre;
+
         QVariantList vListaPerimetro;
         for(int j=0; j<p.coordPerimetro.size(); j++)
         {
             vListaPerimetro.append(p.coordPerimetro[j]);
         }
 
-        vm[variablesPlataforma.at(0)] = vListaPerimetro;
+        vm[variablesPlataforma.at(1)] = vListaPerimetro;
 
         listaPlataformas.append(vm);
     }
@@ -209,7 +212,6 @@ QList<Plataforma> PistaParser::cargarPlataforma(const QString &file)
 
             QVariantMap vm = objetoPlataforma.toVariantMap();
             QList<QPointF> listaPer;
-            QList<QPointF> listaPark;
 
             if (vm["coordPerimetro"].canConvert<QVariantList>())
             {
@@ -227,7 +229,7 @@ QList<Plataforma> PistaParser::cargarPlataforma(const QString &file)
                 listaPer = {};
             }
 
-            Plataforma plat = {listaPer};
+            Plataforma plat = {"", listaPer};
 
             listaPlataformas.append(plat);
         }
