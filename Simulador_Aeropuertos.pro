@@ -22,6 +22,7 @@ SOURCES += \
     interfaz/aeropuerto/pistaescena.cpp \
     interfaz/aeropuerto/pistavista.cpp \
     interfaz/aeropuerto/plataformadialogo.cpp \
+    interfaz/aeropuerto/rodajecabeceradelegate.cpp \
     interfaz/aeropuerto/rodajedialogo.cpp \
     interfaz/interfazprincipal.cpp \
     kernel/kernel.cpp \
@@ -42,6 +43,7 @@ HEADERS += \
     interfaz/aeropuerto/pistaescena.h \
     interfaz/aeropuerto/pistavista.h \
     interfaz/aeropuerto/plataformadialogo.h \
+    interfaz/aeropuerto/rodajecabeceradelegate.h \
     interfaz/aeropuerto/rodajedialogo.h \
     interfaz/interfazprincipal.h \
     kernel/kernel.h

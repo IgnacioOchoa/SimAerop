@@ -49,13 +49,18 @@ void RodajeDialogo::poblarTabla()
     tablaRodaje->setRowCount(listaRodajes.size());
     for (int i=0; i < listaRodajes.size(); i++)
     {
-        tablaRodaje->setItem(i,0, new QTableWidgetItem(listaRodajes[i].cabecera));
+        tablaRodaje->setItem(i,0, new QTableWidgetItem("Cabecera 1"));
         tablaRodaje->setItem(i,1, new QTableWidgetItem(QString::number(listaRodajes[i].posicion)));
         tablaRodaje->setItem(i,2, new QTableWidgetItem(QString::number(listaRodajes[i].angulo)));
         tablaRodaje->setItem(i,3, new QTableWidgetItem(QString::number(listaRodajes[i].ancho)));
         tablaRodaje->setItem(i,4, new QTableWidgetItem(QString::number(listaRodajes[i].largo)));
         tablaRodaje->setItem(i,5, new QTableWidgetItem(QString::number(listaRodajes[i].radio)));
     }
+
+    tablaRodaje->setItemDelegateForColumn(0, new RodajeCabeceraDelegate);
+    tablaRodaje->setEditTriggers(QAbstractItemView::DoubleClicked
+                                 | QAbstractItemView::CurrentChanged);
+
 }
 
 void RodajeDialogo::dialogoAceptado()
