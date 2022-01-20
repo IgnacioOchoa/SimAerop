@@ -88,11 +88,6 @@ void RodajeDialogo::dialogoAceptado()
         listaRodajes.append(rod);
     }
 
-    foreach(Rodaje r, listaRodajes)
-    {
-        qInfo() << r;
-    }
-
     this->close();
 }
 
@@ -103,10 +98,17 @@ void RodajeDialogo::dialogoCancelado()
 
 void RodajeDialogo::slotBotonAgregar()
 {
-    tablaRodaje->insertRow(tablaRodaje->rowCount());
+    int indx = tablaRodaje->rowCount();
+    tablaRodaje->insertRow(indx);
+    tablaRodaje->setItem(indx,0, new QTableWidgetItem("Cabecera 1"));
+    tablaRodaje->setItem(indx,1, new QTableWidgetItem(0));
+    tablaRodaje->setItem(indx,2, new QTableWidgetItem(0));
+    tablaRodaje->setItem(indx,3, new QTableWidgetItem(0));
+    tablaRodaje->setItem(indx,4, new QTableWidgetItem(0));
+    tablaRodaje->setItem(indx,5, new QTableWidgetItem(0));
 }
 
 void RodajeDialogo::slotBotonEliminar()
 {
-    tablaRodaje->removeRow(tablaRodaje->currentRow());
+    tablaRodaje->removeRow(tablaRodaje->rowCount()-1);
 }
