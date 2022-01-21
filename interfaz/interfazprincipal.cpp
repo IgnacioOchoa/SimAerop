@@ -135,9 +135,9 @@ void InterfazPrincipal::mostradorFlota(const QList<Aeronave>& f)
         ui->tablaFlota->setItem(row+i, LDA, new QTableWidgetItem(aeronave.getLda()));
         ui->tablaFlota->setItem(row+i, MTOW, new QTableWidgetItem(aeronave.getMtow()));
         ui->tablaFlota->setItem(row+i, PORCENTAJE, new QTableWidgetItem(aeronave.getPerc()));
-        for (int i = 0; i < ui->tablaFlota->columnCount() - 1; i++) {
-            QTableWidgetItem* pItem = ui->tablaFlota->item(row, i);
-            pItem->setFlags(pItem->flags() & (~Qt::ItemIsEditable));
+        for (int j = 0; j<ui->tablaFlota->columnCount()-1; ++j){
+            QTableWidgetItem* item = ui->tablaFlota->item(i, j);
+            item->setFlags(item->flags() & (~Qt::ItemIsEditable));
         }
     }
 }

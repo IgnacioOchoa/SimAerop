@@ -15,9 +15,10 @@ PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     connect(botonEliminarPlat, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarPlat);
     connect(botonAgregarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonAgregarVert);
     connect(botonEliminarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarVert);
+    connect(botonGuardarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonGuardarVert);
+    connect(tablaPlataformas, &QTableWidget::itemSelectionChanged, this, &PlataformaDialogo::slotMostrarVert);
 
     poblarTablaPlataformas();
-    poblarTablaVertices(0);
 }
 
 PlataformaDialogo::~PlataformaDialogo()
@@ -39,29 +40,30 @@ void PlataformaDialogo::configurarWidgets()
     botonEliminarPlat = ui->pbEliminarPlat;
     botonAgregarVert = ui->pbAgregarVert;
     botonEliminarVert = ui->pbEliminarVert;
+    botonGuardarVert = ui->pbGuardarVert;
     tablaPlataformas = ui->twPlataformas;
     tablaVertices = ui->twVertices;
 
-    //Configuración tabla plataformas
+    //Configuración lista nombres plataformas
     tablaPlataformas->setColumnCount(1);
-    tablaPlataformas->setHorizontalHeaderLabels({"Nombre Plataforma"});
+    tablaPlataformas->setHorizontalHeaderLabels({"Nombre"});
     tablaPlataformas->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    for (int i=0; i<1; i++) {
-        tablaPlataformas->setColumnWidth(i,150);
-    }
+    tablaPlataformas->setColumnWidth(1,150);
 
     int anchoMinPl = tablaPlataformas->horizontalHeader()->length();
     tablaPlataformas->verticalHeader()->hide();
     tablaPlataformas->setMinimumWidth(anchoMinPl);
     tablaPlataformas->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+    tablaPlataformas->setSelectionMode( QAbstractItemView::SingleSelection );
+    ;
+
     //Configuración tabla vértices
-    tablaVertices->setColumnCount(3);
-    tablaVertices->setHorizontalHeaderLabels({"# Vértice", "Posición X", "Posición Y"});
+    tablaVertices->setColumnCount(2);
+    tablaVertices->setHorizontalHeaderLabels({"Posición X", "Posición Y"});
     tablaVertices->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    for (int i=0; i<3; i++) {
+    for (int i=0; i<2; i++) {
         tablaVertices->setColumnWidth(i,150);
     }
 
@@ -69,6 +71,7 @@ void PlataformaDialogo::configurarWidgets()
     tablaVertices->verticalHeader()->hide();
     tablaVertices->setMinimumWidth(anchoMinVr);
     tablaVertices->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    tablaVertices->setSelectionMode( QAbstractItemView::SingleSelection );
 }
 
 void PlataformaDialogo::poblarTablaPlataformas()
@@ -78,9 +81,6 @@ void PlataformaDialogo::poblarTablaPlataformas()
     {
         tablaPlataformas->setItem(i,0, new QTableWidgetItem(listaPlataformas[i].nombre));
     }
-
-    tablaPlataformas->setEditTriggers(QAbstractItemView::DoubleClicked
-                                 | QAbstractItemView::CurrentChanged);
 }
 
 void PlataformaDialogo::poblarTablaVertices(int index)
@@ -88,27 +88,16 @@ void PlataformaDialogo::poblarTablaVertices(int index)
     tablaVertices->setRowCount(listaPlataformas.at(index).coordPerimetro.size());
     for (int i=0; i < listaPlataformas.at(index).coordPerimetro.size(); i++)
     {
-        tablaVertices->setItem(i,0, new QTableWidgetItem(QString::number(i)));
-        tablaVertices->setItem(i,1, new QTableWidgetItem(QString::number(listaPlataformas.at(index).coordPerimetro[i].x())));
-        tablaVertices->setItem(i,2, new QTableWidgetItem(QString::number(listaPlataformas.at(index).coordPerimetro[i].y())));
+        tablaVertices->setItem(i,0, new QTableWidgetItem(QString::number(listaPlataformas.at(index).coordPerimetro[i].x())));
+        tablaVertices->setItem(i,1, new QTableWidgetItem(QString::number(listaPlataformas.at(index).coordPerimetro[i].y())));
     }
-    tablaPlataformas->setEditTriggers(QAbstractItemView::DoubleClicked
-                                 | QAbstractItemView::CurrentChanged);
-}
-
-void PlataformaDialogo::dialogoAceptado()
-{
-    this->close();
-}
-
-void PlataformaDialogo::dialogoCancelado()
-{
-    this->close();
 }
 
 void PlataformaDialogo::slotBotonAgregarPlat()
 {
-    tablaPlataformas->insertRow(tablaPlataformas->rowCount());
+    int indx = tablaPlataformas->rowCount();
+    tablaPlataformas->insertRow(indx);
+    tablaPlataformas->setItem(indx,0, new QTableWidgetItem(0));
 }
 
 void PlataformaDialogo::slotBotonEliminarPlat()
@@ -118,7 +107,10 @@ void PlataformaDialogo::slotBotonEliminarPlat()
 
 void PlataformaDialogo::slotBotonAgregarVert()
 {
-    tablaVertices->insertRow(tablaVertices->rowCount());
+    int indx = tablaVertices->currentRow();
+    tablaVertices->insertRow(indx);
+    tablaVertices->setItem(indx,0, new QTableWidgetItem(0));
+    tablaVertices->setItem(indx,1, new QTableWidgetItem(0));
 }
 
 void PlataformaDialogo::slotBotonEliminarVert()
@@ -126,4 +118,44 @@ void PlataformaDialogo::slotBotonEliminarVert()
     tablaVertices->removeRow(tablaVertices->currentRow());
 }
 
+void PlataformaDialogo::slotMostrarVert()
+{
+    QString toFind = tablaPlataformas->currentItem()->data(Qt::DisplayRole).toString();
+    qDebug() << toFind;
+    bool found = false;
+    for (int i=0; i < listaPlataformas.size(); i++)
+    {
+        if (listaPlataformas[i].nombre == toFind)
+        {
+            found = true;
+            poblarTablaVertices(i);
+        }
+    }
+    if (!found)
+    {
+        tablaVertices->setRowCount(0);
+        tablaVertices->insertRow(0);
+        tablaVertices->setItem(0,0, new QTableWidgetItem(0));
+        tablaVertices->setItem(0,1, new QTableWidgetItem(0));
+    }
+}
+
+void PlataformaDialogo::slotBotonGuardarVert()
+{
+    // esta función debe modificar los valores de coordPuntos en listaPlataforma
+    qDebug()<< "Guardar Vértices";
+}
+
+void PlataformaDialogo::dialogoAceptado()
+{
+    // Debería guardar el listaPlataformas solo las plataformas válidas de la tablaPlataforma
+    qDebug()<< "Aceptar";
+    this->close();
+}
+
+void PlataformaDialogo::dialogoCancelado()
+{
+    qDebug()<< "Cancelar";
+    this->close();
+}
 

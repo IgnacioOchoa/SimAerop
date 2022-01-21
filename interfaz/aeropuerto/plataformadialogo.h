@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QTableWidget>
+#include <QListWidget>
 #include <QDebug>
 #include "../../estructuras-datos/elementosaerop.h"
 
@@ -35,6 +36,7 @@ private:
     QPushButton* botonEliminarPlat;
     QPushButton* botonAgregarVert;
     QPushButton* botonEliminarVert;
+    QPushButton* botonGuardarVert;
 
     QTableWidget* tablaPlataformas;
     QTableWidget* tablaVertices;
@@ -46,6 +48,8 @@ private slots:
     void slotBotonEliminarPlat();
     void slotBotonAgregarVert();
     void slotBotonEliminarVert();
+    void slotMostrarVert();
+    void slotBotonGuardarVert();
 };
 
 #endif // PLATAFORMADIALOGO_H
