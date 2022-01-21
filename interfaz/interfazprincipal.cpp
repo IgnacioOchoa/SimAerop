@@ -43,15 +43,6 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     btnGroup->setExclusive(true);
     listaBotones[0]->setChecked(true);
 
-    // VALORES POR DEFAULT OBJETOS DE PRUEBA
-    //********
-    //listaPistas.append({2500,45,0,"",""});//Por ahora solo se grafica con una sola pista (listaPissta[0])
-    listaRodajes.append({{"",-200,90,23,200,550}, {"",200,90,23,200,550}});
-    listaRodajes.append({{"",-50,-135,23,300,550}, {"",50,-45,23,300,550}});
-    listaPlataformas.append(Plataforma ("Norte", {QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)}));
-    listaPlataformas.append(Plataforma ("Sur", {QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)}));
-    //********
-
     //Conexiones Página Aeropuertos
     dialogConfPista = new PistaDialogo(listaPistas, this);
     dialogConfRodaje = new RodajeDialogo(listaRodajes, listaPistas, this);
@@ -73,6 +64,9 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
 
     //Conexiones Diálogo Configuración de Pista
     connect(dialogConfPista, SIGNAL(sigPistaActualizada()), this, SLOT(actualizarDatosPista()));
+
+    //Conexion del boton para establecer defaults
+    connect(ui->pbDefaults, &QAbstractButton::pressed, this, &InterfazPrincipal::setDefaults);
 
 }
 
@@ -103,6 +97,23 @@ void InterfazPrincipal::configurarWidgets()
     ui->confPistaChk->setFocusPolicy(Qt::NoFocus);
     ui->confCalleRodChk->setAttribute(Qt::WA_TransparentForMouseEvents);
     ui->confCalleRodChk->setFocusPolicy(Qt::NoFocus);
+}
+
+void InterfazPrincipal::setDefaults()
+{
+    listaPistas.clear();
+    listaRodajes.clear();
+    listaPlataformas.clear();
+    // VALORES POR DEFAULT OBJETOS DE PRUEBA
+    //********
+    listaPistas.append({2500,45,80,"01","19"});
+    listaRodajes.append({{"",-200,90,23,200,550}, {"",200,90,23,200,550}});
+    listaRodajes.append({{"",-50,-135,23,300,550}, {"",50,-45,23,300,550}});
+    listaPlataformas.append(Plataforma ("Norte", {QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)}));
+    listaPlataformas.append(Plataforma ("Sur", {QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)}));
+    //********
+    statusBar()->showMessage("Valores por default establecidos", 3000);
+    actualizarDatosPista();
 }
 
 void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)

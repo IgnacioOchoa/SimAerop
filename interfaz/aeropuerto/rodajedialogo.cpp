@@ -14,8 +14,6 @@ RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, const QList<Pista> &lp, QWidget 
     connect(botonCancelar, &QPushButton::pressed, this, &RodajeDialogo::dialogoCancelado);
     connect(botonAgregar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonAgregar);
     connect(botonEliminar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonEliminar);
-
-    //poblarTabla();
 }
 
 RodajeDialogo::~RodajeDialogo()

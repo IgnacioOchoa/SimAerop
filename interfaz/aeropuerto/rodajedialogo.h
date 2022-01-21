@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTableWidget>
 #include <QDebug>
+#include <QStatusBar>
 #include "rodajecabeceradelegate.h"
 #include "../../estructuras-datos/elementosaerop.h"
 

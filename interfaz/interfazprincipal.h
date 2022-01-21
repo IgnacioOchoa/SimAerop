@@ -58,6 +58,7 @@ signals:
 private:
     void crearMenu();
     void configurarWidgets();
+    void setDefaults();
 
     Ui::interfazPrincipal *ui;
     QList<QColor> colores;
