@@ -1,10 +1,11 @@
 #include "rodajedialogo.h"
 #include "ui_rodajedialogo.h"
 
-RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, QWidget *parent) :
+RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, const QList<Pista> &lp, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RodajeDialogo),
-    listaRodajes(lr)
+    listaRodajes(lr),
+    listaPistas(lp)
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -14,7 +15,7 @@ RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, QWidget *parent) :
     connect(botonAgregar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonAgregar);
     connect(botonEliminar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonEliminar);
 
-    poblarTabla();
+    //poblarTabla();
 }
 
 RodajeDialogo::~RodajeDialogo()
@@ -55,7 +56,7 @@ void RodajeDialogo::poblarTabla()
     tablaRodaje->setRowCount(listaRodajes.size());
     for (int i=0; i < listaRodajes.size(); i++)
     {
-        tablaRodaje->setItem(i,0, new QTableWidgetItem("Cabecera 1"));
+        //tablaRodaje->setItem(i,0, new QTableWidgetItem("Cabecera 1"));
         tablaRodaje->setItem(i,1, new QTableWidgetItem(QString::number(listaRodajes[i].posicion)));
         tablaRodaje->setItem(i,2, new QTableWidgetItem(QString::number(listaRodajes[i].angulo)));
         tablaRodaje->setItem(i,3, new QTableWidgetItem(QString::number(listaRodajes[i].ancho)));
@@ -63,7 +64,8 @@ void RodajeDialogo::poblarTabla()
         tablaRodaje->setItem(i,5, new QTableWidgetItem(QString::number(listaRodajes[i].radio)));
     }
 
-    tablaRodaje->setItemDelegateForColumn(0, new RodajeCabeceraDelegate);
+    QStringList cabeceras = {listaPistas.last().cabecera1, listaPistas.last().cabecera2};
+    tablaRodaje->setItemDelegateForColumn(0, new RodajeCabeceraDelegate(cabeceras));
     tablaRodaje->setEditTriggers(QAbstractItemView::DoubleClicked
                                  | QAbstractItemView::CurrentChanged);
 

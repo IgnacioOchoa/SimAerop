@@ -57,6 +57,7 @@ signals:
 
 private:
     void crearMenu();
+    void configurarWidgets();
 
     Ui::interfazPrincipal *ui;
     QList<QColor> colores;
@@ -74,6 +75,10 @@ private:
 
     PistaParser pistaParser;
 
+    PistaDialogo* dialogConfPista;
+    RodajeDialogo* dialogConfRodaje;
+    PlataformaDialogo* dialogConfPlataformas;
+
     //CONTENEDORES DE ELEMENTOS
     //********
     QList<Pista> listaPistas;
@@ -81,12 +86,17 @@ private:
     QList<Plataforma> listaPlataformas;
     //********
 
+    bool pistaCargado;
+    bool rodajeCargado;
+    bool plataformaCargado;
+
 private slots:
     void botonPrincipalSeleccionado(bool checked);
     void crearPista();
     void sloCargarFlota();
     void sloGuardarFlota();
-    void actualizarDatosPista(const Pista&);
+    void actualizarDatosPista();
+    void slotActivarDialogoRodaje();
 
 private:
     enum{

@@ -30,7 +30,7 @@ class PistaDialogo : public QDialog
     enum Orientacion {HOR, VER};
 
 public:
-    explicit PistaDialogo(QWidget *parent = nullptr);
+    explicit PistaDialogo(QList<Pista>& listaP, QWidget *parent = nullptr);
     ~PistaDialogo();
 
 private:
@@ -47,6 +47,9 @@ private:
     int maxUmbral1;
     int desplUmbral2 = 0;
     int maxUmbral2;
+
+    QString cabecera1;
+    QString cabecera2;
 
     QPushButton* botonAceptar;
     QPushButton* botonCancelar;
@@ -78,23 +81,23 @@ private:
 
     Pista pista;
     const int margenMinUmbral = 20;
+    QList<Pista>& listaPistas;
 
 private slots:
     void dialogoAceptado();
     void dialogoCancelado();
-    void poblarCabeceras();
     void seleccionarAbrirArchivo();
     void seleccionarGuardarArchivo();
     void resetDialogoPista();
     void dibujarPista();
     void botonGraficarApretado();
-    void actualizarCBUmbrales(const QString& s1, const QString& s2);
+    void actualizarUmbrales(const QString& s1, const QString& s2);
     void actualizarLEOrientacion(int value);
     void leUmbralModificado();
     void slotLineaUmbralMovida(PistaEscena::Umbral, int valor);
 
 signals:
-    void sigPistaActualizada(const Pista&);
+    void sigPistaActualizada();
     void sigUmbralActualizado(PistaEscena::Umbral umbral, int valor);
     void sigUmbralMaxActualizado(int maxUmbral1, int maxUmbral2);
 

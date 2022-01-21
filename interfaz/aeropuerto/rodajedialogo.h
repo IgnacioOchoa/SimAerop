@@ -16,7 +16,7 @@ class RodajeDialogo : public QDialog
     Q_OBJECT
 
 public:
-    explicit RodajeDialogo(QList<Rodaje>& lr, QWidget* parent = nullptr);
+    explicit RodajeDialogo(QList<Rodaje>& lr, const QList<Pista> &lp, QWidget* parent = nullptr);
     ~RodajeDialogo();
 
 protected :
@@ -25,6 +25,7 @@ protected :
 private:
     Ui::RodajeDialogo *ui;
     QList<Rodaje>& listaRodajes;
+    const QList<Pista>& listaPistas;
 
     void configurarWidgets();
     void poblarTabla();

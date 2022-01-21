@@ -2,10 +2,11 @@
 #include "ui_interfazprincipal.h"
 
 InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::interfazPrincipal)
-    , escenaAeropuerto(new AeropuertoEscena(this))
-    , pistaParser()
+    : QMainWindow(parent),
+    ui(new Ui::interfazPrincipal),
+    escenaAeropuerto(new AeropuertoEscena(this)),
+    pistaParser(),
+    pistaCargado(false), rodajeCargado(false), plataformaCargado(false)
 {
     ui->setupUi(this);
     setWindowTitle("SimAerop");
@@ -19,6 +20,7 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     ui->vistaAeropuerto->setScene(escenaAeropuerto);
 
     crearMenu();
+    configurarWidgets();
     k->inicializar(this);
 
     QList<QString> secciones = {"AERONAVES", "AEROPUERTO", "OPERACIONES", "SIMULACIÓN"};
@@ -43,7 +45,7 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
 
     // VALORES POR DEFAULT OBJETOS DE PRUEBA
     //********
-    listaPistas.append({2500,45,0,"",""});//Por ahora solo se grafica con una sola pista (listaPissta[0])
+    //listaPistas.append({2500,45,0,"",""});//Por ahora solo se grafica con una sola pista (listaPissta[0])
     listaRodajes.append({{"",-200,90,23,200,550}, {"",200,90,23,200,550}});
     listaRodajes.append({{"",-50,-135,23,300,550}, {"",50,-45,23,300,550}});
     listaPlataformas.append(Plataforma ("Norte", {QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)}));
@@ -51,16 +53,16 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     //********
 
     //Conexiones Página Aeropuertos
-    PistaDialogo* dialogConfPista = new PistaDialogo(this);
-    RodajeDialogo* dialogConfRodaje = new RodajeDialogo(listaRodajes, this);
-    PlataformaDialogo* dialogConfPlataformas = new PlataformaDialogo(listaPlataformas, this);
+    dialogConfPista = new PistaDialogo(listaPistas, this);
+    dialogConfRodaje = new RodajeDialogo(listaRodajes, listaPistas, this);
+    dialogConfPlataformas = new PlataformaDialogo(listaPlataformas, this);
 
     connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::crearPista);
     connect(this, SIGNAL(sigPistaCambiada()), k, SLOT(graficarPista()));
 
-    connect(ui->pbConfigurarPista, &QAbstractButton::pressed, [dialogConfPista](){dialogConfPista->show();});
-    connect(ui->pbConfigurarCallesRodaje, &QAbstractButton::pressed, [dialogConfRodaje](){dialogConfRodaje->show();});
-    connect(ui->pbConfigurarPlataformas, &QAbstractButton::pressed, [dialogConfPlataformas](){dialogConfPlataformas->show();});
+    connect(ui->pbConfigurarPista, &QAbstractButton::pressed, [this](){dialogConfPista->show();});
+    connect(ui->pbConfigurarCallesRodaje, &QAbstractButton::pressed, this, &InterfazPrincipal::slotActivarDialogoRodaje);
+    connect(ui->pbConfigurarPlataformas, &QAbstractButton::pressed, [this](){dialogConfPlataformas->show();});
 
     //Conexiones Página Aeronaves
     connect(ui->pbCargarFlota, &QAbstractButton::pressed, this, &InterfazPrincipal::sloCargarFlota);
@@ -70,9 +72,8 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     connect(this, SIGNAL(sigGuardarFlota(QString, QList<Aeronave>)), k, SLOT(sloGuardarFlota(QString, QList<Aeronave>)));
 
     //Conexiones Diálogo Configuración de Pista
-    connect(dialogConfPista, SIGNAL(sigPistaActualizada(const Pista&)), this, SLOT(actualizarDatosPista(const Pista&)));
+    connect(dialogConfPista, SIGNAL(sigPistaActualizada()), this, SLOT(actualizarDatosPista()));
 
-    actualizarDatosPista(listaPistas.at(0));
 }
 
 InterfazPrincipal::~InterfazPrincipal()
@@ -94,6 +95,16 @@ void InterfazPrincipal::crearMenu()
     menuExportar = menuBar()->addMenu("Ayuda");
 }
 
+void InterfazPrincipal::configurarWidgets()
+{
+    ui->confPlatChk->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->confPlatChk->setFocusPolicy(Qt::NoFocus);
+    ui->confPistaChk->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->confPistaChk->setFocusPolicy(Qt::NoFocus);
+    ui->confCalleRodChk->setAttribute(Qt::WA_TransparentForMouseEvents);
+    ui->confCalleRodChk->setFocusPolicy(Qt::NoFocus);
+}
+
 void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
 {
     if(checked)
@@ -104,22 +115,36 @@ void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
 
 void InterfazPrincipal::crearPista()
 {
-    //Pista pis = pistaParser.cargarPista("miPistaNueva.json");
-    //QList<Rodaje> rod = pistaParser.cargarRodaje("miPistaNueva.json");
-    //QList<Plataforma> plat = pistaParser.cargarPlataforma("miPistaNueva.json");
-
-    //pista = pis;
-    //pista = {1250,45,0,"",""};
     emit sigPistaCambiada();
 }
 
 
-void InterfazPrincipal::actualizarDatosPista(const Pista& p)
+void InterfazPrincipal::actualizarDatosPista()
 {
-    listaPistas[0] = p;
+    Pista pista;
+    if (listaPistas.size() > 0) {
+        pista = listaPistas.last();
+        ui->confPistaChk->setChecked(true);
+    }
+    else
+    {
+        qInfo() << "No hay datos en la lista de pistas";
+    }
     escenaAeropuerto->clear();
-    ui->lbValorAncho->setText(QString::number(p.ancho) + " m");
-    ui->lbValorLongitud->setText(QString::number(p.largo) + " m");
+    ui->lbValorAncho->setText(QString::number(pista.ancho) + " m");
+    ui->lbValorLongitud->setText(QString::number(pista.largo) + " m");
+}
+
+void InterfazPrincipal::slotActivarDialogoRodaje()
+{
+    if(listaPistas.isEmpty()) {
+        QMessageBox::warning(this, "Pista sin configurar", "No existe una pista configurada, por favor ingrese"
+                                                           " los datos de pista antes de proceder con las calles de"
+                                                           " rodaje");
+    }
+    else {
+        dialogConfRodaje->show();
+    }
 }
 
 void InterfazPrincipal::mostradorFlota(const QList<Aeronave>& f)

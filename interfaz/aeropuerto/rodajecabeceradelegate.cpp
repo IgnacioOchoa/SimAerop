@@ -1,7 +1,8 @@
 #include "rodajecabeceradelegate.h"
 
-RodajeCabeceraDelegate::RodajeCabeceraDelegate(QObject* parent) :
-    QStyledItemDelegate(parent)
+RodajeCabeceraDelegate::RodajeCabeceraDelegate(QStringList cabeceras, QObject* parent) :
+    QStyledItemDelegate(parent),
+    cabecerasPista(cabeceras)
 {
 
 }
@@ -9,7 +10,7 @@ RodajeCabeceraDelegate::RodajeCabeceraDelegate(QObject* parent) :
 QWidget *RodajeCabeceraDelegate::createEditor(QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index) const
 {
     QComboBox* comboBox = new QComboBox(parent);
-    comboBox->addItems({"Cabecera 1", "Cabecera 2"});
+    comboBox->addItems(cabecerasPista);
     return comboBox;
 }
 

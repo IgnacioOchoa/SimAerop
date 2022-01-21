@@ -3,9 +3,10 @@
 
 #include <QFileDialog>
 
-PistaDialogo::PistaDialogo(QWidget *parent) :
+PistaDialogo::PistaDialogo(QList<Pista>& listaP, QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::PistaDialogo)
+    ui(new Ui::PistaDialogo),
+    listaPistas(listaP)
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -127,7 +128,11 @@ void PistaDialogo::poblarPista()
 {
     pista.largo = leLargoPista->text().toInt();
     pista.ancho = leAnchoPista->text().toInt();
-    pista.orientacion = leOrientacion->text().toInt();
+    int angulo = 90 - (dialPista->value()%18)*10;
+    if (angulo < 0) angulo += 180;
+    pista.orientacion = angulo;
+    pista.cabecera1 = cabecera1;
+    pista.cabecera2 = cabecera2;
 }
 
 void PistaDialogo::dibujarPista()
@@ -151,8 +156,10 @@ void PistaDialogo::botonGraficarApretado()
     }
 }
 
-void PistaDialogo::actualizarCBUmbrales(const QString& s1, const QString& s2)
+void PistaDialogo::actualizarUmbrales(const QString& s1, const QString& s2)
 {
+    cabecera1 = s1;
+    cabecera2 = s2;
     cbUmbral1->setText("Umbral Cabecera " + s1);
     cbUmbral2->setText("Umbral Cabecera " + s2);
 }
@@ -167,7 +174,7 @@ void PistaDialogo::actualizarLEOrientacion(int value)
         s2 = "36";
     }
     leOrientacion->setText(s1 + " - " + s2);
-    actualizarCBUmbrales(s1,s2);
+    actualizarUmbrales(s1,s2);
 }
 
 void PistaDialogo::leUmbralModificado()
@@ -259,26 +266,14 @@ void PistaDialogo::dialogoAceptado()
         return;
     }
     poblarPista();
-    emit sigPistaActualizada(pista);
+    listaPistas.append(pista);
+    emit sigPistaActualizada();
     this->close();
 }
 
 void PistaDialogo::dialogoCancelado()
 {
     this->close();
-}
-
-void PistaDialogo::poblarCabeceras()
-{
-    /*for (int i=0; i<18; i++)
-    {
-        cbCabecera1->addItem(QString::number(i).rightJustified(2,'0'));
-        cbCabecera2->addItem(QString::number(i+18).rightJustified(2,'0'));
-    }
-
-    connect(cbCabecera1, QOverload<int>::of(&QComboBox::currentIndexChanged), cbCabecera2, &QComboBox::setCurrentIndex);
-    connect(cbCabecera2, QOverload<int>::of(&QComboBox::currentIndexChanged), cbCabecera1, &QComboBox::setCurrentIndex);
-    */
 }
 
 void PistaDialogo::seleccionarAbrirArchivo()
