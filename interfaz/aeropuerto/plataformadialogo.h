@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QTableWidget>
 #include <QListWidget>
+#include <QMessageBox>
 #include <QDebug>
 #include "../../estructuras-datos/elementosaerop.h"
 

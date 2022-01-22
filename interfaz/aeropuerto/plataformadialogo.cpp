@@ -17,8 +17,6 @@ PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     connect(botonEliminarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarVert);
     connect(botonGuardarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonGuardarVert);
     connect(tablaPlataformas, &QTableWidget::itemSelectionChanged, this, &PlataformaDialogo::slotMostrarVert);
-
-    poblarTablaPlataformas();
 }
 
 PlataformaDialogo::~PlataformaDialogo()
@@ -56,7 +54,6 @@ void PlataformaDialogo::configurarWidgets()
     tablaPlataformas->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
     tablaPlataformas->setSelectionMode( QAbstractItemView::SingleSelection );
-    ;
 
     //Configuración tabla vértices
     tablaVertices->setColumnCount(2);
@@ -95,19 +92,19 @@ void PlataformaDialogo::poblarTablaVertices(int index)
 
 void PlataformaDialogo::slotBotonAgregarPlat()
 {
-    int indx = tablaPlataformas->rowCount();
-    tablaPlataformas->insertRow(indx);
-    tablaPlataformas->setItem(indx,0, new QTableWidgetItem(0));
+//    int indx = tablaPlataformas->rowCount();
+//    tablaPlataformas->insertRow(indx);
+//    tablaPlataformas->setItem(indx,0, new QTableWidgetItem(0));
 }
 
 void PlataformaDialogo::slotBotonEliminarPlat()
 {
-    tablaPlataformas->removeRow(tablaPlataformas->currentRow());
+//    tablaPlataformas->removeRow(tablaPlataformas->currentRow());
 }
 
 void PlataformaDialogo::slotBotonAgregarVert()
 {
-    int indx = tablaVertices->currentRow();
+    int indx = tablaVertices->currentRow() + 1;
     tablaVertices->insertRow(indx);
     tablaVertices->setItem(indx,0, new QTableWidgetItem(0));
     tablaVertices->setItem(indx,1, new QTableWidgetItem(0));
@@ -121,7 +118,6 @@ void PlataformaDialogo::slotBotonEliminarVert()
 void PlataformaDialogo::slotMostrarVert()
 {
     QString toFind = tablaPlataformas->currentItem()->data(Qt::DisplayRole).toString();
-    qDebug() << toFind;
     bool found = false;
     for (int i=0; i < listaPlataformas.size(); i++)
     {
@@ -133,29 +129,48 @@ void PlataformaDialogo::slotMostrarVert()
     }
     if (!found)
     {
-        tablaVertices->setRowCount(0);
-        tablaVertices->insertRow(0);
-        tablaVertices->setItem(0,0, new QTableWidgetItem(0));
-        tablaVertices->setItem(0,1, new QTableWidgetItem(0));
+        tablaVertices->clearContents();
+        tablaVertices->setRowCount(4);
     }
 }
 
 void PlataformaDialogo::slotBotonGuardarVert()
 {
-    // esta función debe modificar los valores de coordPuntos en listaPlataforma
-    qDebug()<< "Guardar Vértices";
+    // esta función debe modificar los valores de coordPuntos en listaPlataformas
+    QMessageBox::StandardButton reply;
+    reply = QMessageBox::question(this, "Atención", "Al guardar se sobreescribiran valores anteriores"
+                                            " ¿Desea Continuar?",
+                                            QMessageBox::Yes|QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+
+        //Llenar lista de Vértices
+        QList<QPointF> verts;
+        for (int i=0; i<tablaVertices->rowCount(); i++)
+        {
+            verts.append(QPointF(tablaVertices->item(i,0)->data(Qt::DisplayRole).toReal(),tablaVertices->item(i,1)->data(Qt::DisplayRole).toReal()));
+        }
+        QString toFind = tablaPlataformas->currentItem()->data(Qt::DisplayRole).toString();
+        for (int j=0; j < listaPlataformas.size(); j++)
+        {
+            if (listaPlataformas[j].nombre == toFind)
+            {
+                listaPlataformas[j].coordPerimetro = verts;
+            }
+        }
+
+    } else {
+      return;
+    }
 }
 
 void PlataformaDialogo::dialogoAceptado()
 {
     // Debería guardar el listaPlataformas solo las plataformas válidas de la tablaPlataforma
-    qDebug()<< "Aceptar";
     this->close();
 }
 
 void PlataformaDialogo::dialogoCancelado()
 {
-    qDebug()<< "Cancelar";
     this->close();
 }
 

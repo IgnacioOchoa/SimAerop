@@ -151,7 +151,7 @@
            <item>
             <widget class="QPushButton" name="pbGuardarVert">
              <property name="text">
-              <string>Guardar</string>
+              <string>Guardar Vértices</string>
              </property>
             </widget>
            </item>
