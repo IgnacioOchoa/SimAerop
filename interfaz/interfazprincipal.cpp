@@ -126,6 +126,12 @@ void InterfazPrincipal::botonPrincipalSeleccionado(bool checked)
 
 void InterfazPrincipal::crearPista()
 {
+    if(listaPistas.isEmpty()) {
+        QMessageBox::warning(this, "No hay pista cargada",
+                             "Por favor carge los datos de pista");
+        return;
+    }
+
     emit sigPistaCambiada();
 }
 
