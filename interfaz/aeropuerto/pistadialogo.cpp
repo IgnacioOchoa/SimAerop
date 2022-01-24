@@ -289,8 +289,7 @@ void PistaDialogo::seleccionarAbrirArchivo()
     leNombreArchivo->setText(fileNameNoExt);
 
     PistaParser pistaParser;
-    pista = pistaParser.cargarPista(file_name);
-
+    pista = pistaParser.cargarPista(file_name)[0];
     poblarDatos();
 }
 
@@ -314,7 +313,7 @@ void PistaDialogo::seleccionarGuardarArchivo()
     if(file_name.isEmpty()) return;
 
     PistaParser pistaParser;
-    pistaParser.guardarPista(file_name,pista);
+    pistaParser.guardarPista(file_name, listaPistas);
 }
 
 void PistaDialogo::resetDialogoPista()

@@ -1,13 +1,14 @@
 #include "pistaparser.h"
 
 /* Formato archivo Json
- * "pista" : {
- *                   "largo" : xxx,
+ * "pistas" : [
+ *                 { "largo" : xxx,
  *                   "ancho: : xxx,
  *                   "orientacion" : xxx,
  *                   "cabecera1" : "xx",
- *                   "cabecera2" : "xx"
- *                 },
+ *                   "cabecera2" : "xx" },
+ *                  ...
+ *                 ],
  * "calles rodaje" : [
  *                      { cabecera : "xx",
  *                        posicion : xxx.x,
@@ -24,151 +25,154 @@
  *                 ]
  */
 
-PistaParser::PistaParser()
+void PistaParser::escribirPista(const QList<Pista> &listaPistas)
 {
-    pista = QVariantMap();
-    rodaje = QVariantMap();
-    plataforma = QVariantMap();
-    documento = QJsonDocument();
-}
-
-void PistaParser::parsearPista(const Pista &p)
-{
-    QVariantMap vm;
-    vm[variablesPista.at(0)] = p.largo;
-    vm[variablesPista.at(1)] = p.ancho;
-    vm[variablesPista.at(2)] = p.cabecera1;
-    vm[variablesPista.at(3)] = p.cabecera2;
-    vm[variablesPista.at(4)] = p.orientacion;
-    pista["pista"] = vm;
-}
-
-void PistaParser::parsearRodaje(const QList<Rodaje> &rod)
-{
-    QVariantList listaCallesRodaje;
-    for(int i = 0; i < rod.size(); i++)
+    QVariantList varListPistas;
+    foreach(const Pista& pista, listaPistas)
     {
         QVariantMap vm;
-        Rodaje r = rod[i];
-        vm[variablesRodaje.at(0)] = r.cabecera;
-        vm[variablesRodaje.at(1)] = r.posicion;
-        vm[variablesRodaje.at(2)] = r.angulo;
-        vm[variablesRodaje.at(3)] = r.ancho;
-        vm[variablesRodaje.at(4)] = r.largo;
-        vm[variablesRodaje.at(5)] = r.radio;
-        listaCallesRodaje.append(vm);
+        vm[variablesPista.at(0)] = pista.largo;
+        vm[variablesPista.at(1)] = pista.ancho;
+        vm[variablesPista.at(2)] = pista.cabecera1;
+        vm[variablesPista.at(3)] = pista.cabecera2;
+        vm[variablesPista.at(4)] = pista.orientacion;
+        varListPistas.append(vm);
     }
-    rodaje["calles rodaje"] = listaCallesRodaje;
+    pista["pistas"] = varListPistas;
 }
 
-void PistaParser::parsearPlataforma(const QList<Plataforma> &plat)
+void PistaParser::escribirRodaje(const QList<Rodaje> &listaRodajes)
 {
-    QVariantList listaPlataformas;
-    for(int i=0; i<plat.size(); i++)
+    QVariantList varListRodajes;
+    foreach(const Rodaje& rod, listaRodajes)
     {
         QVariantMap vm;
-        Plataforma p = plat[i];
+        vm[variablesRodaje.at(0)] = rod.cabecera;
+        vm[variablesRodaje.at(1)] = rod.posicion;
+        vm[variablesRodaje.at(2)] = rod.angulo;
+        vm[variablesRodaje.at(3)] = rod.ancho;
+        vm[variablesRodaje.at(4)] = rod.largo;
+        vm[variablesRodaje.at(5)] = rod.radio;
+        varListRodajes.append(vm);
+    }
+    rodaje["calles rodaje"] = varListRodajes;
+}
 
-        vm[variablesPlataforma.at(0)] = p.nombre;
+void PistaParser::escribirPlataforma(const QList<Plataforma> &listaPlataformas)
+{
+    QVariantList varListaPlataformas;
+    foreach(const Plataforma& plat, listaPlataformas)
+    {
+        QVariantMap vm;
+        vm[variablesPlataforma.at(0)] = plat.nombre;
 
         QVariantList vListaPerimetro;
-        for(int j=0; j<p.coordPerimetro.size(); j++)
+        foreach(QPointF pto, plat.coordPerimetro)
         {
-            vListaPerimetro.append(p.coordPerimetro[j]);
+            vListaPerimetro.append(pto);
         }
 
         vm[variablesPlataforma.at(1)] = vListaPerimetro;
-
-        listaPlataformas.append(vm);
+        varListaPlataformas.append(vm);
     }
-
-    plataforma["plataformas"] = listaPlataformas;
+    plataforma["plataformas"] = varListaPlataformas;
 }
 
-void PistaParser::guardarPista(const QString& file, const Pista &p)
+void PistaParser::guardarPista(const QString& file, const QList<Pista> &p)
 {
-    parsearPista(p);
+    escribirPista(p);
     documento.setObject(QJsonObject::fromVariantMap(pista));
-    guardar(file);
+    guardarArchivo(file);
 }
 
 void PistaParser::guardarRodaje(const QString& file, const QList<Rodaje> &rod)
 {
-    parsearRodaje(rod);
+    escribirRodaje(rod);
     documento.setObject(QJsonObject::fromVariantMap(rodaje));
-    guardar(file);
+    guardarArchivo(file);
 }
 
 void PistaParser::guardarPlataforma(const QString& file, const QList<Plataforma> &plat)
 {
-    parsearPlataforma(plat);
+    escribirPlataforma(plat);
     documento.setObject(QJsonObject::fromVariantMap(plataforma));
-    guardar(file);
+    guardarArchivo(file);
 }
 
-void PistaParser::guardarEscenario(const QString& file,const Pista& p, const QList<Rodaje>& rod,
+void PistaParser::guardarEscenario(const QString& file,const QList<Pista>& p, const QList<Rodaje>& rod,
                                    const QList<Plataforma>& plat)
 {
-    parsearPista(p);
-    parsearRodaje(rod);
-    parsearPlataforma(plat);
+    escribirPista(p);
+    escribirRodaje(rod);
+    escribirPlataforma(plat);
 
     QJsonObject contenedor;
     contenedor.insert("Pista", QJsonObject::fromVariantMap(pista));
     contenedor.insert("Rodaje", QJsonObject::fromVariantMap(rodaje));
     contenedor.insert("Plataformas", QJsonObject::fromVariantMap(plataforma));
-    guardar(file);
+    documento.setObject(contenedor);
+    guardarArchivo(file);
 }
 
-Pista PistaParser::cargarPista(const QString &file)
+QList<Pista> PistaParser::cargarPista(const QString &file)
 {
-    if(!cargar(file)) return {0,0,0,"",""};
+    if(!cargarArchivo(file)) return {pistaError};
 \
     QJsonObject ob = documento.object();
-    if (ob.contains("pista"))
+    if (ob.contains("pistas"))
     {
-        QJsonObject objetoPista = ob["pista"].toObject();
-        foreach(QString st, variablesPista)
+        QList<Pista> listaPistas;
+        QJsonArray arrPista = ob["pistas"].toArray();
+
+        foreach(QJsonValue val, arrPista)
         {
-            if (!objetoPista.contains(st))
+            QJsonObject objetoPista = val.toObject();
+            foreach(QString st, variablesPista)
             {
-                qInfo() << "El formato del archivo de pista no es correcto";
-                return {0,0,0,"",""};
+                if (!objetoPista.contains(st))
+                {
+                    qInfo() << "El formato JSON del archivo de pista no es correcto";
+                    return {pistaError};
+                }
             }
+            QVariantMap vm = objetoPista.toVariantMap();
+            Pista p = {vm["largo"].toInt(), vm["ancho"].toInt(), vm["orientacion"].toInt(),
+                       vm["cabecera1"].toString(), vm["cabecera2"].toString()};
+            listaPistas.append(p);
         }
-
-        QVariantMap vm = objetoPista.toVariantMap();
-        Pista p = {vm["largo"].toInt(), vm["ancho"].toInt(), vm["orientacion"].toInt(),
-                   vm["cabecera1"].toString(), vm["cabecera2"].toString()};
-
         qInfo() << "Pista cargada correctamente";
-
-        return p;
+        return listaPistas;
     }
     else
     {
         qInfo() << "El archivo cargado no es un archivo de pista";
-        return {0,0,0,"",""};
+        return {pistaError};
     }
 }
 
 QList<Rodaje> PistaParser::cargarRodaje(const QString &file)
 {
-    if(!cargar(file)) return {};
+    if(!cargarArchivo(file)) return {rodajeError};
     QJsonObject ob = documento.object();
     if (ob.contains("calles rodaje"))
     {
         QList<Rodaje> listaRodaje;
-        QJsonArray arr = ob["calles rodaje"].toArray();
-        for(int i=0; i<arr.size(); i++)
+        QJsonValue valArrRodaje = ob["calles rodaje"];
+        if(!valArrRodaje.isArray()) {
+            qInfo() << "El formato JSON de las calles de rodaje no es correcto";
+            return {rodajeError};
+        }
+        QJsonArray arrRodaje = valArrRodaje.toArray();
+
+        foreach(QJsonValue valRod, arrRodaje)
         {
-            QJsonObject objetoRodaje = arr.at(i).toObject();
+            QJsonObject objetoRodaje = valRod.toObject();
             foreach(QString st, variablesRodaje)
             {
                 if(!objetoRodaje.contains(st))
                 {
-                    qInfo() << "El formato del archivo de rodaje no es correcto";
-                    return {};
+                    qInfo() << "El formato JSON del archivo de rodaje no es correcto";
+                    return {rodajeError};
                 }
             }
 
@@ -179,82 +183,82 @@ QList<Rodaje> PistaParser::cargarRodaje(const QString &file)
         }
 
         qInfo() << "Rodaje cargado correctamente";
-
         return listaRodaje;
     }
     else
     {
         qInfo() << "El archivo cargado no es un archivo de rodaje";
-        return {{"",0.0,0.0,0,0,0}};
+        return {rodajeError};
     }
-
 }
 
 QList<Plataforma> PistaParser::cargarPlataforma(const QString &file)
 {
-    if(!cargar(file)) return {};
+    if(!cargarArchivo(file)) return {plataformaError};
     QJsonObject ob = documento.object();
     if (ob.contains("plataformas"))
     {
         QList<Plataforma> listaPlataformas;
-        QJsonArray arr = ob["plataformas"].toArray();
-        for(int i=0; i<arr.size(); i++)
+        QJsonArray arrPlataformas = ob["plataformas"].toArray();
+        foreach(QJsonValue val, arrPlataformas)
         {
-            QJsonObject objetoPlataforma = arr.at(i).toObject();
+            Plataforma plat;
+            QJsonObject objetoPlataforma = val.toObject();
             foreach(QString st, variablesPlataforma)
             {
                 if(!objetoPlataforma.contains(st))
                 {
-                    qInfo() << "El formato del archivo de plataforma no es correcto";
-                    return {};
+                    qInfo() << "El formato JSON del archivo de plataforma no es correcto";
+                    return {plataformaError};
                 }
             }
 
-            QVariantMap vm = objetoPlataforma.toVariantMap();
+            plat.nombre = objetoPlataforma["nombre"].toString();
+            QJsonValue valPerimetro = objetoPlataforma["coordPerimetro"];
+            if(!valPerimetro.isArray()) {
+                qInfo() << "No se pueden cargar las coordenadas del perimetro";
+                return {plataformaError};
+            }
+            QJsonArray arrPtos = objetoPlataforma["coordPerimetro"].toArray();
             QList<QPointF> listaPer;
 
-            if (vm["coordPerimetro"].canConvert<QVariantList>())
+            foreach(QJsonValue valPto, arrPtos)
             {
-                QVariantList cper = vm["coordPerimetro"].value<QVariantList>();
-                foreach(QVariant varPto, cper)
-                {
-                    QVariantList coordPto = qvariant_cast<QVariantList>(varPto);
-                    QPointF punto = {coordPto[0].toFloat(), coordPto[1].toFloat()};
+                    QVariant varPto = valPto.toVariant();
+                    if(!varPto.canConvert(QMetaType::QVariantList)) {
+                        qInfo() << "No se pueden convertir los puntos de perimetro de plataforma";
+                        return {plataformaError};
+                    }
+                    QVariantList variantPto = valPto.toVariant().toList();
+                    if(variantPto.size() != 2) {
+                        qInfo() << "Error en las coordenadas x-y de los puntos de plataforma";
+                        return {plataformaError};
+                    }
+                    QPointF punto  = {variantPto[0].toFloat(), variantPto[1].toFloat()};
                     listaPer.append(punto);
-                }
             }
-            else
-            {
-                qInfo() << "No se pueden cargar las coordenadas del perimetro";
-                listaPer = {};
-            }
-
-            Plataforma plat = {"", listaPer};
-
+            plat.coordPerimetro = listaPer;
             listaPlataformas.append(plat);
         }
-
         qInfo() << "Plataformas cargadas correctamente";
-
         return listaPlataformas;
     }
     else
     {
         qInfo() << "El archivo cargado no es un archivo de plataforma";
-        return {};
+        return {plataformaError};
     }
 }
 
-void PistaParser::cargarEscenario(const QString& file, Pista& p,
+void PistaParser::cargarEscenario(const QString& file, QList<Pista>& p,
                                   QList<Rodaje>& rod, QList<Plataforma>& plat)
 {
-    cargar(file);
     p = cargarPista(file);
     rod = cargarRodaje(file);
     plat = cargarPlataforma(file);
 }
 
-void PistaParser::guardar(const QString& file)
+void PistaParser::guardarArchivo(const QString& file)
 {
     QFile archivo(file);
     if (!archivo.open(QIODevice::WriteOnly))
@@ -266,7 +270,7 @@ void PistaParser::guardar(const QString& file)
     archivo.close();
 }
 
-bool PistaParser::cargar(const QString &file)
+bool PistaParser::cargarArchivo(const QString &file)
 {
     QFile archivo(file);
     if (!archivo.open(QIODevice::ReadOnly))
@@ -281,7 +285,7 @@ bool PistaParser::cargar(const QString &file)
 
     if(documento.isNull())
     {
-        qInfo() << "El documento se cargo pero es nulo";
+        qInfo() << "El documento se cargó pero es nulo";
         return false;
     }
     else return true;

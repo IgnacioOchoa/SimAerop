@@ -47,8 +47,8 @@ inline QDebug operator<<(QDebug stream, const Rodaje& rod)
 }
 
 struct Plataforma {
-    Plataforma (){};
-    Plataforma (const QString n, const QList<QPointF>& l){nombre = n, coordPerimetro = l;}
+    Plataforma () = default;
+    Plataforma (const QString& n, const QList<QPointF>& l){nombre = n, coordPerimetro = l;}
     QString nombre;
     QList<QPointF> coordPerimetro;
 };
