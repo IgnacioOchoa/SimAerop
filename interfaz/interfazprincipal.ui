@@ -701,6 +701,13 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_6">
         <item>
+         <widget class="QPushButton" name="pushButton">
+          <property name="text">
+           <string>PushButton</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="AeropuertoVista" name="vistaAeropuerto">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
@@ -863,6 +870,13 @@
                 <widget class="QPushButton" name="pbDefaults">
                  <property name="text">
                   <string>Defaults</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QPushButton" name="pbCargarAeropuerto">
+                 <property name="text">
+                  <string>Cargar aeropuerto</string>
                  </property>
                 </widget>
                </item>

@@ -98,6 +98,7 @@ private slots:
     void sloGuardarFlota();
     void actualizarDatosPista();
     void slotActivarDialogoRodaje();
+    void slotCargarAeropuerto();
 
 private:
     enum{

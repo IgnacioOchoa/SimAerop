@@ -1,0 +1,29 @@
+{
+    "pistas": [{
+        "ancho": 60,
+        "cabecera1": "Cab1",
+        "cabecera2": "Cab2",
+        "largo": 2000,
+        "orientacion": 0
+    }],
+    "calles rodaje" : [
+                       { "cabecera" : "11",
+                         "posicion" : 345,
+                         "angulo"   : 30,
+                         "ancho"    : 10,
+                         "largo"    : 75,
+                         "radio"    : 40 },
+                       { "cabecera" : "23",
+                         "posicion" : 872,
+                         "angulo"   : 45,
+                         "ancho"    : 12,
+                         "largo"    : 105,
+                         "radio"    : 50 }
+                    ],
+  "plataformas" : [
+                       { "nombre" : "Plataforma 1", 
+					     "coordPerimetro" : [ [0.0,0.0] , [50.0,0.0] , [50.0,50.0], [0.0,50.0] ] },
+					   { "nombre" : "Plataforma 2", 
+					     "coordPerimetro" : [ [100.0,0.0] , [150.0,0.0] , [150.0,150.0] , [100.0,150.0] ] }
+                  ]
+}

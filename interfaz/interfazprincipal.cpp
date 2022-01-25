@@ -68,6 +68,9 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     //Conexion del boton para establecer defaults
     connect(ui->pbDefaults, &QAbstractButton::pressed, this, &InterfazPrincipal::setDefaults);
 
+    //Conexion de boton para cargar aeropuerto
+    connect(ui->pbCargarAeropuerto, &QAbstractButton::pressed, this, &InterfazPrincipal::slotCargarAeropuerto);
+
 }
 
 InterfazPrincipal::~InterfazPrincipal()
@@ -162,6 +165,15 @@ void InterfazPrincipal::slotActivarDialogoRodaje()
     else {
         dialogConfRodaje->show();
     }
+}
+
+void InterfazPrincipal::slotCargarAeropuerto()
+{
+    QString nombreArchivoAeropuerto = QFileDialog::getOpenFileName(this, "Abrir archivo de aeropuerto", "../","(*.json)");
+    PistaParser pp;
+    pp.cargarEscenario(nombreArchivoAeropuerto, listaPistas, listaRodajes, listaPlataformas);
+    actualizarDatosPista();
+
 }
 
 void InterfazPrincipal::mostradorFlota(const QList<Aeronave>& f)
