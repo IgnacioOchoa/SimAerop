@@ -14,11 +14,11 @@
 #include "../estructuras-datos/elementosaerop.h"
 #include "aeropuerto/aeropuertovista.h"
 #include "aeropuerto/aeropuertoescena.h"
-#include "interfaz/aeropuerto/pistadialogo.h"
+#include "interfaz/aeropuerto/pistasUI/pistadialogo.h"
 #include "aeronaves/aeronave.h"
 #include "aeronaves/flota.h"
-#include "interfaz/aeropuerto/rodajedialogo.h"
-#include "interfaz/aeropuerto/plataformadialogo.h"
+#include "interfaz/aeropuerto/rodajesUI/rodajedialogo.h"
+#include "interfaz/aeropuerto/plataformasUI/plataformadialogo.h"
 #include "input-output/pistaparser.h"
 
 

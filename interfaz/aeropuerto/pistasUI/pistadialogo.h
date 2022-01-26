@@ -14,8 +14,8 @@
 #include <QDir>
 #include <QLabel>
 #include <QMessageBox>
-#include "../../input-output/pistaparser.h"
-#include "../../estructuras-datos/elementosaerop.h"
+#include "../../../input-output/pistaparser.h"
+#include "../../../estructuras-datos/elementosaerop.h"
 #include "pistaescena.h"
 #include "pistavista.h"
 #include "pistadial.h"

@@ -17,13 +17,15 @@ SOURCES += \
     interfaz/aeropuerto/dibujo/cotagrafica.cpp \
     interfaz/aeropuerto/dibujo/lineaumbral.cpp \
     interfaz/aeropuerto/graficadoraeropuerto.cpp \
-    interfaz/aeropuerto/pistadial.cpp \
-    interfaz/aeropuerto/pistadialogo.cpp \
-    interfaz/aeropuerto/pistaescena.cpp \
-    interfaz/aeropuerto/pistavista.cpp \
-    interfaz/aeropuerto/plataformadialogo.cpp \
-    interfaz/aeropuerto/rodajecabeceradelegate.cpp \
-    interfaz/aeropuerto/rodajedialogo.cpp \
+    interfaz/aeropuerto/pistasUI/pistadial.cpp \
+    interfaz/aeropuerto/pistasUI/pistadialogo.cpp \
+    interfaz/aeropuerto/pistasUI/pistavista.cpp \
+    interfaz/aeropuerto/pistasUI/pistaescena.cpp \
+    interfaz/aeropuerto/plataformasUI/modeloplataformas.cpp \
+    interfaz/aeropuerto/plataformasUI/plataformadialogo.cpp \
+    interfaz/aeropuerto/rodajesUI/modelorodajes.cpp \
+    interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.cpp \
+    interfaz/aeropuerto/rodajesUI/rodajedialogo.cpp \
     interfaz/interfazprincipal.cpp \
     kernel/kernel.cpp \
     main.cpp
@@ -38,13 +40,15 @@ HEADERS += \
     interfaz/aeropuerto/dibujo/cotagrafica.h \
     interfaz/aeropuerto/dibujo/lineaumbral.h \
     interfaz/aeropuerto/graficadoraeropuerto.h \
-    interfaz/aeropuerto/pistadial.h \
-    interfaz/aeropuerto/pistadialogo.h \
-    interfaz/aeropuerto/pistaescena.h \
-    interfaz/aeropuerto/pistavista.h \
-    interfaz/aeropuerto/plataformadialogo.h \
-    interfaz/aeropuerto/rodajecabeceradelegate.h \
-    interfaz/aeropuerto/rodajedialogo.h \
+    interfaz/aeropuerto/pistasUI/pistadial.h \
+    interfaz/aeropuerto/pistasUI/pistadialogo.h \
+    interfaz/aeropuerto/pistasUI/pistavista.h \
+    interfaz/aeropuerto/pistasUI/pistaescena.h \
+    interfaz/aeropuerto/plataformasUI/modeloplataformas.h \
+    interfaz/aeropuerto/plataformasUI/plataformadialogo.h \
+    interfaz/aeropuerto/rodajesUI/modelorodajes.h \
+    interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.h \
+    interfaz/aeropuerto/rodajesUI/rodajedialogo.h \
     interfaz/interfazprincipal.h \
     kernel/kernel.h
 

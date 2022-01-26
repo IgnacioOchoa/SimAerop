@@ -9,7 +9,7 @@
 #include <QPushButton>
 #include <QBoxLayout>
 #include "pistaescena.h"
-#include "../../estructuras-datos/elementosaerop.h"
+#include "../../../estructuras-datos/elementosaerop.h"
 
 class PistaVista : public QGraphicsView
 {

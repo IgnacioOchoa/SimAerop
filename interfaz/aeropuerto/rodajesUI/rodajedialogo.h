@@ -6,7 +6,7 @@
 #include <QDebug>
 #include <QStatusBar>
 #include "rodajecabeceradelegate.h"
-#include "../../estructuras-datos/elementosaerop.h"
+#include "../../../estructuras-datos/elementosaerop.h"
 
 namespace Ui {
 class RodajeDialogo;

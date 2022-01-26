@@ -6,7 +6,7 @@
 #include <QListWidget>
 #include <QMessageBox>
 #include <QDebug>
-#include "../../estructuras-datos/elementosaerop.h"
+#include "../../../estructuras-datos/elementosaerop.h"
 
 namespace Ui {
 class PlataformaDialogo;
