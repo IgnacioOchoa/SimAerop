@@ -32,12 +32,19 @@ void PistaEscena::mostrarCotas(bool mostrar)
 
 void PistaEscena::limpiar()
 {
-    qDeleteAll(listaCotas);
-    listaCotas.clear();
+    if(!listaCotas.isEmpty()) {
+        qDeleteAll(listaCotas);
+        listaCotas.clear();
+    }
     lineaUmbral1->setVisible(false);
     lineaUmbral2->setVisible(false);
-    removeItem(grRectItm);
-    if(grRectItm) delete grRectItm;
+    foreach(auto itm, items()) {
+        if(itm ==  qgraphicsitem_cast<QGraphicsItem*>(grRectItm)) {
+            removeItem(grRectItm);
+            delete grRectItm;
+            break;
+        }
+    }
     escenaLimpia = true;
 }
 
@@ -146,7 +153,6 @@ void PistaEscena::crearCotas()
 
     connect(lineaUmbral1, &LineaUmbral::sigLineaUmbralPosicionada, cota3, &CotaGrafica::slotActualizarGeometria);
     connect(lineaUmbral2, &LineaUmbral::sigLineaUmbralPosicionada, cota4, &CotaGrafica::slotActualizarGeometria);
-
 }
 
 void PistaEscena::crearLineasUmbral()

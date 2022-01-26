@@ -10,60 +10,7 @@ PistaDialogo::PistaDialogo(QList<Pista>& listaP, QWidget *parent) :
 {
     ui->setupUi(this);
     configurarWidgets();
-
-    // conexión de los botones
-    connect(botonAceptar, &QPushButton::pressed, this, &PistaDialogo::dialogoAceptado);
-    connect(botonCancelar, &QPushButton::pressed, this, &PistaDialogo::dialogoCancelado);
-    connect(botonCargar, &QPushButton::pressed, this, &PistaDialogo::seleccionarAbrirArchivo);
-    connect(botonGuardar, &QPushButton::pressed, this, &PistaDialogo::seleccionarGuardarArchivo);
-    connect(botonReset, &QPushButton::pressed, this, &PistaDialogo::resetDialogoPista);
-    connect(botonGraficar, &QAbstractButton::pressed, this, &PistaDialogo::botonGraficarApretado);
-    connect(botonCentrarVista, &QAbstractButton::pressed, this, [this](){vistaPreliminar->centrarVista();});
-
-    //activa o desactiva el LineEdit en funcion si el checkBox esta checkeado o no
-    connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
-            [this](int state){
-        leUmbral1->setEnabled(state);
-        lbUmbral1->setEnabled(state);
-        state ? leUmbral1->setText(QString::number(desplUmbral1)) : leUmbral1->setText("");
-    });
-
-    //Le envía una señal a la escena para que muestre o esconda la línea de umbral
-    connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
-            [this](int state){
-            static_cast<PistaEscena*>(vistaPreliminar->scene())->slotUmbralActivado(PistaEscena::Umbral::UMBRAL1,state);}
-    );
-
-    //Guarda el valor ingresado en el LineEdit
-    connect(leUmbral1, &QLineEdit::editingFinished, this, &PistaDialogo::leUmbralModificado);
-    connect(leUmbral2, &QLineEdit::editingFinished, this, &PistaDialogo::leUmbralModificado);
-
-    //activa o desactiva el LineEdit en funcion si el checkBox esta checkeado o no
-    connect(cbUmbral2, QOverload<int>::of(&QCheckBox::stateChanged),
-            [this](int state){
-        leUmbral2->setEnabled(state);
-        lbUmbral2->setEnabled(state);
-        state ? leUmbral2->setText(QString::number(desplUmbral2)) : leUmbral2->setText("");
-    });
-
-    //Le envía una señal a la escena para que muestre o esconda la línea de umbral
-    connect(cbUmbral2, QOverload<int>::of(&QCheckBox::stateChanged),
-            [this](int state){
-            static_cast<PistaEscena*>(vistaPreliminar->scene())->slotUmbralActivado(PistaEscena::Umbral::UMBRAL2,state);}
-    );
-
-    connect(this, &PistaDialogo::sigUmbralActualizado, static_cast<PistaEscena*>(vistaPreliminar->scene()), &PistaEscena::slotUmbralModificado);
-
-    //Actualiza el LineEdit de orientacion cuando se mueve el dial
-    connect(dialPista, &QDial::sliderMoved, this, &PistaDialogo::actualizarLEOrientacion);
-
-    // Conecta a la señal de la escena que avisa cuando la línea de umbral se movió con un slot propio para
-    // actualizar los LineEdits
-    connect(static_cast<PistaEscena*>(vistaPreliminar->scene()), &PistaEscena::sigLineaUmbralMovida,
-            this, &PistaDialogo::slotLineaUmbralMovida);
-
-    connect(this, &PistaDialogo::sigUmbralMaxActualizado,static_cast<PistaEscena*>(vistaPreliminar->scene()),
-            &PistaEscena::slotSetLimUmbrales);
+    conectarSlots();
 }
 
 PistaDialogo::~PistaDialogo()
@@ -71,57 +18,22 @@ PistaDialogo::~PistaDialogo()
     delete ui;
 }
 
-void PistaDialogo::configurarWidgets()
+void PistaDialogo::showEvent(QShowEvent *event)
 {
-    botonAceptar = ui->pbAceptar;
-    botonCancelar = ui->pbCancelar;
-    botonCargar = ui->pbCargar;
-    botonGuardar = ui->pbGuardar;
-    botonReset = ui->pbReset;
-    botonOpAvanzadas = ui->pbOpcionesAvanzadas;
-    botonGraficar = ui->pbGraficar;
-    botonCentrarVista = ui->pbCentrarVista;
-
-    leLargoPista = ui->leLargo;
-    leLargoPista->setValidator(new QIntValidator(0,7000));
-
-    leAnchoPista = ui->leAncho;
-    leAnchoPista->setValidator(new QIntValidator(0,100));
-
-    dialPista = ui->dialPista;
-
-    leNombreArchivo = ui->leNombreArchivo;
-    vistaPreliminar = ui->gvPreVisualizacion;
-    layoutDial = ui->vlDial;
-
-    leOrientacion = ui->leOrientacion;
-    leOrientacion->setReadOnly(true);
-
-    layoutDial->setAlignment(leOrientacion,Qt::AlignCenter);
-    cbUmbral1 = ui->chkUmbral1;
-    cbUmbral2 = ui->chkUmbral2;
-    leUmbral1 = ui->leUmbral1;
-    QIntValidator* intVal1 = new QIntValidator(this);
-    leUmbral1->setValidator(intVal1);
-    leUmbral1->setProperty("NroUmbral", 1);
-    leUmbral2 = ui->leUmbral2;
-    QIntValidator* intVal2 = new QIntValidator(this);
-    leUmbral2->setValidator(intVal2);
-    leUmbral2->setProperty("NroUmbral", 2);
-    lbUmbral1 = ui->lbUmbral1;
-    lbUmbral2 = ui->lbUmbral2;
-
-    leUmbral1->setEnabled(false);
-    leUmbral2->setEnabled(false);
-    lbUmbral1->setEnabled(false);
-    lbUmbral2->setEnabled(false);
+    poblarDatos();
+    QWidget::showEvent(event);
 }
 
 void PistaDialogo::poblarDatos()
 {
-    leLargoPista->setText(QString::number(pista.largo));
-    leAnchoPista->setText(QString::number(pista.ancho));
-    leOrientacion->setText(QString::number(pista.orientacion));
+    if(pista == pistaDefault) {
+        if(!listaPistas.isEmpty()) {
+            pista = listaPistas.last();
+        }
+    }
+    leLargoPista->setText(pista.largo == 0 ? "" : QString::number(pista.largo));
+    leAnchoPista->setText(pista.ancho == 0 ? "" : QString::number(pista.ancho));
+    //leOrientacion->setText(pista.orientacion == 0 ? "" : QString::number(pista.orientacion));
 }
 
 void PistaDialogo::poblarPista()
@@ -324,4 +236,107 @@ void PistaDialogo::resetDialogoPista()
     leAnchoPista->clear();
     leUmbral1->setText("0");
     leUmbral2->setText("0");
+}
+
+void PistaDialogo::configurarWidgets()
+{
+    botonAceptar = ui->pbAceptar;
+    botonCancelar = ui->pbCancelar;
+    botonCargar = ui->pbCargar;
+    botonGuardar = ui->pbGuardar;
+    botonReset = ui->pbReset;
+    botonOpAvanzadas = ui->pbOpcionesAvanzadas;
+    botonGraficar = ui->pbGraficar;
+    botonCentrarVista = ui->pbCentrarVista;
+
+    leLargoPista = ui->leLargo;
+    leLargoPista->setValidator(new QIntValidator(0,7000));
+
+    leAnchoPista = ui->leAncho;
+    leAnchoPista->setValidator(new QIntValidator(0,100));
+
+    dialPista = ui->dialPista;
+
+    leNombreArchivo = ui->leNombreArchivo;
+    vistaPreliminar = ui->gvPreVisualizacion;
+    layoutDial = ui->vlDial;
+
+    leOrientacion = ui->leOrientacion;
+    leOrientacion->setReadOnly(true);
+
+    layoutDial->setAlignment(leOrientacion,Qt::AlignCenter);
+    cbUmbral1 = ui->chkUmbral1;
+    cbUmbral2 = ui->chkUmbral2;
+    leUmbral1 = ui->leUmbral1;
+    QIntValidator* intVal1 = new QIntValidator(this);
+    leUmbral1->setValidator(intVal1);
+    leUmbral1->setProperty("NroUmbral", 1);
+    leUmbral2 = ui->leUmbral2;
+    QIntValidator* intVal2 = new QIntValidator(this);
+    leUmbral2->setValidator(intVal2);
+    leUmbral2->setProperty("NroUmbral", 2);
+    lbUmbral1 = ui->lbUmbral1;
+    lbUmbral2 = ui->lbUmbral2;
+
+    leUmbral1->setEnabled(false);
+    leUmbral2->setEnabled(false);
+    lbUmbral1->setEnabled(false);
+    lbUmbral2->setEnabled(false);
+}
+
+void PistaDialogo::conectarSlots()
+{
+    // conexión de los botones
+    connect(botonAceptar, &QPushButton::pressed, this, &PistaDialogo::dialogoAceptado);
+    connect(botonCancelar, &QPushButton::pressed, this, &PistaDialogo::dialogoCancelado);
+    connect(botonCargar, &QPushButton::pressed, this, &PistaDialogo::seleccionarAbrirArchivo);
+    connect(botonGuardar, &QPushButton::pressed, this, &PistaDialogo::seleccionarGuardarArchivo);
+    connect(botonReset, &QPushButton::pressed, this, &PistaDialogo::resetDialogoPista);
+    connect(botonGraficar, &QAbstractButton::pressed, this, &PistaDialogo::botonGraficarApretado);
+    connect(botonCentrarVista, &QAbstractButton::pressed, this, [this](){vistaPreliminar->centrarVista();});
+
+    //activa o desactiva el LineEdit en funcion si el checkBox esta checkeado o no
+    connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+        leUmbral1->setEnabled(state);
+        lbUmbral1->setEnabled(state);
+        state ? leUmbral1->setText(QString::number(desplUmbral1)) : leUmbral1->setText("");
+    });
+
+    //Le envía una señal a la escena para que muestre o esconda la línea de umbral
+    connect(cbUmbral1, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+            static_cast<PistaEscena*>(vistaPreliminar->scene())->slotUmbralActivado(PistaEscena::Umbral::UMBRAL1,state);}
+    );
+
+    //Guarda el valor ingresado en el LineEdit
+    connect(leUmbral1, &QLineEdit::editingFinished, this, &PistaDialogo::leUmbralModificado);
+    connect(leUmbral2, &QLineEdit::editingFinished, this, &PistaDialogo::leUmbralModificado);
+
+    //activa o desactiva el LineEdit en funcion si el checkBox esta checkeado o no
+    connect(cbUmbral2, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+        leUmbral2->setEnabled(state);
+        lbUmbral2->setEnabled(state);
+        state ? leUmbral2->setText(QString::number(desplUmbral2)) : leUmbral2->setText("");
+    });
+
+    //Le envía una señal a la escena para que muestre o esconda la línea de umbral
+    connect(cbUmbral2, QOverload<int>::of(&QCheckBox::stateChanged),
+            [this](int state){
+            static_cast<PistaEscena*>(vistaPreliminar->scene())->slotUmbralActivado(PistaEscena::Umbral::UMBRAL2,state);}
+    );
+
+    connect(this, &PistaDialogo::sigUmbralActualizado, static_cast<PistaEscena*>(vistaPreliminar->scene()), &PistaEscena::slotUmbralModificado);
+
+    //Actualiza el LineEdit de orientacion cuando se mueve el dial
+    connect(dialPista, &QDial::sliderMoved, this, &PistaDialogo::actualizarLEOrientacion);
+
+    // Conecta a la señal de la escena que avisa cuando la línea de umbral se movió con un slot propio para
+    // actualizar los LineEdits
+    connect(static_cast<PistaEscena*>(vistaPreliminar->scene()), &PistaEscena::sigLineaUmbralMovida,
+            this, &PistaDialogo::slotLineaUmbralMovida);
+
+    connect(this, &PistaDialogo::sigUmbralMaxActualizado,static_cast<PistaEscena*>(vistaPreliminar->scene()),
+            &PistaEscena::slotSetLimUmbrales);
 }

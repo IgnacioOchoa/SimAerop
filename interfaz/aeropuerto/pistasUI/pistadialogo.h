@@ -33,9 +33,13 @@ public:
     explicit PistaDialogo(QList<Pista>& listaP, QWidget *parent = nullptr);
     ~PistaDialogo();
 
+protected:
+    void showEvent(QShowEvent *event) override;
+
 private:
     Ui::PistaDialogo *ui;
     void configurarWidgets();
+    void conectarSlots();
     void poblarDatos();
     void poblarPista();
     void graficarCota(QPointF p1, QPointF p2, float distancia, Orientacion);
@@ -80,6 +84,7 @@ private:
     QCheckBox* cbActivarCotas;
 
     Pista pista;
+    Pista pistaDefault = {0,0,0,QString(),QString()};
     const int margenMinUmbral = 20;
     QList<Pista>& listaPistas;
 

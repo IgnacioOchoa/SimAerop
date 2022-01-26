@@ -14,6 +14,7 @@ Q_OBJECT
 public:
     enum class Direccion {ARRIBA,ABAJO,DERECHA,IZQUIERDA};
     enum class Sentido {HOR,VER};
+    enum { Type = UserType + 1 }; // 65537
 
     CotaGrafica(QPointF p1, QPointF p2, Sentido sen, float dist = 0, QFont font = QFont());
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
@@ -27,6 +28,7 @@ public:
     virtual QPainterPath shape() const override;
     virtual QRectF boundingRect() const override;
 
+    int type() const override {return Type;}
 
 private:
     void graficarFlecha(QPointF posVertice, Direccion ori, QPainter *painter);

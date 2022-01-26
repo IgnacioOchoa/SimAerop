@@ -20,8 +20,8 @@ public:
     explicit RodajeDialogo(QList<Rodaje>& lr, const QList<Pista> &lp, QWidget* parent = nullptr);
     ~RodajeDialogo();
 
-protected :
-    void showEvent(QShowEvent *event);
+protected:
+    void showEvent(QShowEvent *event) override;
 
 private:
     Ui::RodajeDialogo *ui;

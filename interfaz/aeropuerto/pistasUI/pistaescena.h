@@ -3,10 +3,13 @@
 
 #include <QGraphicsScene>
 #include <QObject>
+#include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include "../dibujo/cotagrafica.h"
 #include "../dibujo/lineaumbral.h"
 #include "../../../estructuras-datos/elementosaerop.h"
+
+#include <QGraphicsWidget>
 
 class PistaEscena : public QGraphicsScene
 {

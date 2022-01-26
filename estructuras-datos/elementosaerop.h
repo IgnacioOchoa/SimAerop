@@ -12,6 +12,10 @@ struct Pista {
     int orientacion;
     QString cabecera1;
     QString cabecera2;
+    bool operator==(const Pista& p){
+        return(largo==p.largo && ancho==p.ancho && orientacion==p.orientacion &&
+               cabecera1 == p.cabecera1 && cabecera2 == p.cabecera2);
+    }
 };
 
 inline QDebug operator<<(QDebug stream, const Pista& p)

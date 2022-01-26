@@ -14,6 +14,8 @@ class LineaUmbral : public QGraphicsObject
 {
     Q_OBJECT
 public:
+    enum { Type = UserType + 2 }; // 65538
+
     LineaUmbral();
     void setDimensiones(int posX, int anchoPista);
     void setLimiteInf(int lim) {limiteInf = lim;}
@@ -27,6 +29,8 @@ public:
 
     virtual QPainterPath shape() const override;
     virtual QRectF boundingRect() const override;
+
+    int type() const override {return Type;}
 
 signals:
     void sigPosCambiada(int pos);
