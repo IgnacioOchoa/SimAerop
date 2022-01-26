@@ -366,12 +366,12 @@
   <customwidget>
    <class>PistaVista</class>
    <extends>QGraphicsView</extends>
-   <header>interfaz/aeropuerto/pistavista.h</header>
+   <header>interfaz/aeropuerto/pistasUI/pistavista.h</header>
   </customwidget>
   <customwidget>
    <class>PistaDial</class>
    <extends>QDial</extends>
-   <header>interfaz/aeropuerto/pistadial.h</header>
+   <header>interfaz/aeropuerto/pistasUI/pistadial.h</header>
   </customwidget>
  </customwidgets>
  <tabstops>
