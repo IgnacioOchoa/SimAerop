@@ -22,11 +22,16 @@ public:
     virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
     void sincListas();
+    void setCabecerasActivas(const QString& c1, const QString& c2);
 
 private:
     const QList<Rodaje>& listaRodajes;
     QList<Rodaje> buffListaRodajes;
     const QStringList listaHeaders = {"Cabecera", "Posición", "Ángulo", "Ancho", "Largo", "Radio"};
+    QString cabActiva1;
+    QString cabActiva2;
+    Pista pistaDefault = Pista{0,0,0,"",""};
+    Rodaje rodajeDefault = Rodaje{"",0,0,0,0,0};
 };
 
 #endif // MODELORODAJES_H

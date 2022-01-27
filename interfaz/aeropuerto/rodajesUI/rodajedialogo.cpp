@@ -26,6 +26,18 @@ RodajeDialogo::~RodajeDialogo()
 void RodajeDialogo::showEvent(QShowEvent *event)
 {
     modelo->sincListas();
+    int n1;
+    QString cabeceras;
+    foreach(Pista p, listaPistas)
+    {
+        if(p.orientacion > 89) n1 = 9+(180-p.orientacion)/10;
+        else if(p.orientacion >= 0) n1 = (90-p.orientacion)/10;
+        QString c1 = QString::number(n1).rightJustified(2,'0');
+        QString c2 = QString::number(n1+18).rightJustified(2,'0');
+        cabeceras = c1 + " - " + c2;
+        ui->cbPista->addItem(cabeceras);
+        modelo->setCabecerasActivas(c1, c2);
+    }
     QWidget::showEvent(event);
 }
 
@@ -41,6 +53,7 @@ void RodajeDialogo::configurarWidgets()
     int anchoMin = tablaRodaje->horizontalHeader()->length();
     tablaRodaje->verticalHeader()->hide();
     tablaRodaje->setMinimumWidth(anchoMin*2);
+    tablaRodaje->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 void RodajeDialogo::dialogoAceptado()
@@ -56,10 +69,12 @@ void RodajeDialogo::dialogoCancelado()
 
 void RodajeDialogo::slotBotonAgregar()
 {
-
+    int row = tablaRodaje->currentIndex().row();
+    modelo->insertRows(row,1,QModelIndex());
 }
 
 void RodajeDialogo::slotBotonEliminar()
 {
-
+    int row = tablaRodaje->currentIndex().row();
+    modelo->removeRows(row,1,QModelIndex());
 }

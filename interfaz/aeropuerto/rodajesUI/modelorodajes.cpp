@@ -76,17 +76,38 @@ Qt::ItemFlags ModeloRodajes::flags(const QModelIndex &index) const
 
 bool ModeloRodajes::insertRows(int row, int count, const QModelIndex &parent)
 {
-    return QAbstractTableModel::insertRows(row, count, parent);
+    Q_UNUSED(parent);
+    Q_UNUSED(count);
+    beginInsertRows(QModelIndex(), row+1, row+1);
+    buffListaRodajes.insert(row+1, rodajeDefault);
+    endInsertRows();
+    return true;
 }
 
 bool ModeloRodajes::removeRows(int row, int count, const QModelIndex &parent)
 {
-    return QAbstractTableModel::removeRows(row, count, parent);
+    Q_UNUSED(parent);
+    Q_UNUSED(count);
+    if (buffListaRodajes.count() == 0) return true;
+    beginRemoveRows(QModelIndex(), row, row);
+    buffListaRodajes.removeAt(row);
+    endRemoveRows();
+    return true;
 }
 
 void ModeloRodajes::sincListas()
 {
-    buffListaRodajes = listaRodajes;
-    beginInsertRows(QModelIndex(),0,buffListaRodajes.count()-1);
-    endInsertRows();
+    if(listaRodajes.count() > buffListaRodajes.count()) {
+        int diff = listaRodajes.count() - buffListaRodajes.count();
+        beginInsertRows(QModelIndex(),buffListaRodajes.count(), buffListaRodajes.count() + diff - 1);
+        buffListaRodajes = listaRodajes;
+        endInsertRows();
+    }
+}
+
+void ModeloRodajes::setCabecerasActivas(const QString &c1, const QString &c2)
+{
+    cabActiva1 = c1;
+    cabActiva2 = c2;
+    rodajeDefault.cabecera = c1;
 }
