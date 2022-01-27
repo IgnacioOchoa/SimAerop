@@ -5,7 +5,8 @@ RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, const QList<Pista> &lp, QWidget 
     QDialog(parent),
     ui(new Ui::RodajeDialogo),
     listaRodajes(lr),
-    listaPistas(lp)
+    listaPistas(lp),
+    modelo(new ModeloRodajes(lr, this))
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -14,6 +15,7 @@ RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, const QList<Pista> &lp, QWidget 
     connect(botonCancelar, &QPushButton::pressed, this, &RodajeDialogo::dialogoCancelado);
     connect(botonAgregar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonAgregar);
     connect(botonEliminar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonEliminar);
+
 }
 
 RodajeDialogo::~RodajeDialogo()
@@ -23,8 +25,8 @@ RodajeDialogo::~RodajeDialogo()
 
 void RodajeDialogo::showEvent(QShowEvent *event)
 {
+    modelo->sincListas();
     QWidget::showEvent(event);
-    poblarTabla();
 }
 
 void RodajeDialogo::configurarWidgets()
@@ -34,59 +36,15 @@ void RodajeDialogo::configurarWidgets()
     botonAgregar = ui->pbAgregar;
     botonEliminar = ui->pbEliminar;
     tablaRodaje = ui->twCallesRodaje;
-
-    tablaRodaje->setColumnCount(6);
-    tablaRodaje->setHorizontalHeaderLabels({"Cabecera","Posición","Ángulo","Ancho","Largo","Radio"});
-    tablaRodaje->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-    for (int i=0; i<6; i++) {
-        tablaRodaje->setColumnWidth(i,150);
-    }
-
+    tablaRodaje->setModel(modelo);
+    tablaRodaje->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     int anchoMin = tablaRodaje->horizontalHeader()->length();
     tablaRodaje->verticalHeader()->hide();
-    tablaRodaje->setMinimumWidth(anchoMin);
-    tablaRodaje->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-}
-
-void RodajeDialogo::poblarTabla()
-{
-    tablaRodaje->setRowCount(listaRodajes.size());
-    for (int i=0; i < listaRodajes.size(); i++)
-    {
-        //tablaRodaje->setItem(i,0, new QTableWidgetItem("Cabecera 1"));
-        tablaRodaje->setItem(i,1, new QTableWidgetItem(QString::number(listaRodajes[i].posicion)));
-        tablaRodaje->setItem(i,2, new QTableWidgetItem(QString::number(listaRodajes[i].angulo)));
-        tablaRodaje->setItem(i,3, new QTableWidgetItem(QString::number(listaRodajes[i].ancho)));
-        tablaRodaje->setItem(i,4, new QTableWidgetItem(QString::number(listaRodajes[i].largo)));
-        tablaRodaje->setItem(i,5, new QTableWidgetItem(QString::number(listaRodajes[i].radio)));
-    }
-
-    QStringList cabeceras = {listaPistas.last().cabecera1, listaPistas.last().cabecera2};
-    tablaRodaje->setItemDelegateForColumn(0, new RodajeCabeceraDelegate(cabeceras));
-    tablaRodaje->setEditTriggers(QAbstractItemView::DoubleClicked
-                                 | QAbstractItemView::CurrentChanged);
-
+    tablaRodaje->setMinimumWidth(anchoMin*2);
 }
 
 void RodajeDialogo::dialogoAceptado()
 {
-    //Vaciar listaRodajes para que al hacer el append no se repitan rodajes
-    listaRodajes.clear();
-
-    //Llenar lista de rodajes
-    for (int i=0; i<tablaRodaje->rowCount(); i++)
-    {
-        Rodaje rod {
-            tablaRodaje->item(i,0)->data(Qt::DisplayRole).toString(),
-            tablaRodaje->item(i,1)->data(Qt::DisplayRole).toFloat(),
-            tablaRodaje->item(i,2)->data(Qt::DisplayRole).toFloat(),
-            tablaRodaje->item(i,3)->data(Qt::DisplayRole).toInt(),
-            tablaRodaje->item(i,4)->data(Qt::DisplayRole).toInt(),
-            tablaRodaje->item(i,5)->data(Qt::DisplayRole).toInt()
-        };
-        listaRodajes.append(rod);
-    }
 
     this->close();
 }
@@ -98,17 +56,10 @@ void RodajeDialogo::dialogoCancelado()
 
 void RodajeDialogo::slotBotonAgregar()
 {
-    int indx = tablaRodaje->rowCount();
-    tablaRodaje->insertRow(indx);
-    tablaRodaje->setItem(indx,0, new QTableWidgetItem("Cabecera 1"));
-    tablaRodaje->setItem(indx,1, new QTableWidgetItem(0));
-    tablaRodaje->setItem(indx,2, new QTableWidgetItem(0));
-    tablaRodaje->setItem(indx,3, new QTableWidgetItem(0));
-    tablaRodaje->setItem(indx,4, new QTableWidgetItem(0));
-    tablaRodaje->setItem(indx,5, new QTableWidgetItem(0));
+
 }
 
 void RodajeDialogo::slotBotonEliminar()
 {
-    tablaRodaje->removeRow(tablaRodaje->rowCount()-1);
+
 }

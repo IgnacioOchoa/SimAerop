@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QStatusBar>
 #include "rodajecabeceradelegate.h"
+#include "modelorodajes.h"
 #include "../../../estructuras-datos/elementosaerop.h"
 
 namespace Ui {
@@ -29,14 +30,14 @@ private:
     const QList<Pista>& listaPistas;
 
     void configurarWidgets();
-    void poblarTabla();
 
     QPushButton* botonAceptar;
     QPushButton* botonCancelar;
     QPushButton* botonAgregar;
     QPushButton* botonEliminar;
 
-    QTableWidget* tablaRodaje;
+    QTableView* tablaRodaje;
+    ModeloRodajes* modelo;
 
 private slots:
     void dialogoAceptado();
