@@ -15,6 +15,7 @@ RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, const QList<Pista> &lp, QWidget 
     connect(botonCancelar, &QPushButton::pressed, this, &RodajeDialogo::dialogoCancelado);
     connect(botonAgregar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonAgregar);
     connect(botonEliminar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonEliminar);
+    connect(botonPrevisualizar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonPrevisualizar);
 
 }
 
@@ -47,13 +48,17 @@ void RodajeDialogo::configurarWidgets()
     botonCancelar = ui->pbCancelar;
     botonAgregar = ui->pbAgregar;
     botonEliminar = ui->pbEliminar;
+    botonPrevisualizar = ui->pbPrevisualizacion;
     tablaRodaje = ui->twCallesRodaje;
     tablaRodaje->setModel(modelo);
     tablaRodaje->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     int anchoMin = tablaRodaje->horizontalHeader()->length();
     tablaRodaje->verticalHeader()->hide();
     tablaRodaje->setMinimumWidth(anchoMin*2);
+    tablaRodaje->setMinimumHeight(300);
     tablaRodaje->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->grBoxPrevisualizacion->hide();
+    ui->grBoxPrevisualizacion->setMinimumWidth(400);
 }
 
 void RodajeDialogo::dialogoAceptado()
@@ -77,4 +82,9 @@ void RodajeDialogo::slotBotonEliminar()
 {
     int row = tablaRodaje->currentIndex().row();
     modelo->removeRows(row,1,QModelIndex());
+}
+
+void RodajeDialogo::slotBotonPrevisualizar()
+{
+    ui->grBoxPrevisualizacion->setVisible(ui->grBoxPrevisualizacion->isVisible() ? false : true);
 }
