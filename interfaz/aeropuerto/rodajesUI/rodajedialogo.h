@@ -7,6 +7,7 @@
 #include <QStatusBar>
 #include "rodajecabeceradelegate.h"
 #include "modelorodajes.h"
+#include "rodajeediciondialogo.h"
 #include "../../../estructuras-datos/elementosaerop.h"
 
 namespace Ui {
@@ -23,6 +24,7 @@ public:
 
 protected:
     void showEvent(QShowEvent *event) override;
+    virtual bool eventFilter(QObject* ob, QEvent* event) override;
 
 private:
     Ui::RodajeDialogo *ui;
@@ -39,6 +41,8 @@ private:
 
     QTableView* tablaRodaje;
     ModeloRodajes* modelo;
+
+    RodajeEdicionDialogo* rodajeEdicionDialogo;
 
 private slots:
     void dialogoAceptado();

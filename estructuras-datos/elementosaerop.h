@@ -38,6 +38,10 @@ struct Rodaje {
     int radio;
 };
 
+struct RodajeParametros {
+    const QStringList tiposRodaje = {"Desde pista", "Paralela a pista", "Dos puntos"};
+};
+
 inline QDebug operator<<(QDebug stream, const Rodaje& rod)
 {
     stream << "Calle rodaje" << Qt::endl;

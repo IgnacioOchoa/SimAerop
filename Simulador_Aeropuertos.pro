@@ -26,6 +26,7 @@ SOURCES += \
     interfaz/aeropuerto/rodajesUI/modelorodajes.cpp \
     interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.cpp \
     interfaz/aeropuerto/rodajesUI/rodajedialogo.cpp \
+    interfaz/aeropuerto/rodajesUI/rodajeediciondialogo.cpp \
     interfaz/interfazprincipal.cpp \
     kernel/kernel.cpp \
     main.cpp
@@ -49,13 +50,15 @@ HEADERS += \
     interfaz/aeropuerto/rodajesUI/modelorodajes.h \
     interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.h \
     interfaz/aeropuerto/rodajesUI/rodajedialogo.h \
+    interfaz/aeropuerto/rodajesUI/rodajeediciondialogo.h \
     interfaz/interfazprincipal.h \
     kernel/kernel.h
 
 FORMS += \
-    interfaz/aeropuerto/pistadialogo.ui \
-    interfaz/aeropuerto/plataformadialogo.ui \
-    interfaz/aeropuerto/rodajedialogo.ui \
+    interfaz/aeropuerto/pistasUI/pistadialogo.ui \
+    interfaz/aeropuerto/plataformasUI/plataformadialogo.ui \
+    interfaz/aeropuerto/rodajesUI/rodajedialogo.ui \
+    interfaz/aeropuerto/rodajesUI/rodajeediciondialogo.ui \
     interfaz/interfazprincipal.ui
 
 # Default rules for deployment.

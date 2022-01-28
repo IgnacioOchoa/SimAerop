@@ -6,7 +6,8 @@ RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, const QList<Pista> &lp, QWidget 
     ui(new Ui::RodajeDialogo),
     listaRodajes(lr),
     listaPistas(lp),
-    modelo(new ModeloRodajes(lr, this))
+    modelo(new ModeloRodajes(lr, this)),
+    rodajeEdicionDialogo(new RodajeEdicionDialogo(this))
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -42,6 +43,18 @@ void RodajeDialogo::showEvent(QShowEvent *event)
     QWidget::showEvent(event);
 }
 
+bool RodajeDialogo::eventFilter(QObject *ob, QEvent *event)
+{
+    if (ob == tablaRodaje->viewport())
+    {
+        if (event->type() == QEvent::MouseButtonDblClick)
+        {
+            rodajeEdicionDialogo->show();
+        }
+    }
+    return false;
+}
+
 void RodajeDialogo::configurarWidgets()
 {
     botonAceptar = ui->pbAceptar;
@@ -57,6 +70,9 @@ void RodajeDialogo::configurarWidgets()
     tablaRodaje->setMinimumWidth(anchoMin*2);
     tablaRodaje->setMinimumHeight(300);
     tablaRodaje->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tablaRodaje->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    tablaRodaje->viewport()->installEventFilter(this);
+    rodajeEdicionDialogo->setModal(true);
     ui->grBoxPrevisualizacion->hide();
     ui->grBoxPrevisualizacion->setMinimumWidth(400);
 }
