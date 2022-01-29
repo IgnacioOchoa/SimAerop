@@ -4,7 +4,8 @@
 PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlataformaDialogo),
-    listaPlataformas(la)
+    listaPlataformas(la),
+    modelo(new ModeloNombresPlataformas(la, this))
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -24,8 +25,8 @@ PlataformaDialogo::~PlataformaDialogo()
 
 void PlataformaDialogo::showEvent(QShowEvent *event)
 {
+    modelo->sincListas();
     QWidget::showEvent(event);
-    poblarListNomb();
 }
 
 void PlataformaDialogo::configurarWidgets()
@@ -38,31 +39,22 @@ void PlataformaDialogo::configurarWidgets()
     botonEliminarVert = ui->pbEliminarVert;
     listaNombres = ui->lvNombres;
     tablaVertices = ui->tvVertices;
-}
-
-void PlataformaDialogo::poblarListNomb()
-{
-    listNomb.clear();
-
-    for (int i = 0; i < listaPlataformas.size(); i++)
-    {
-        listNomb.append(listaPlataformas.at(i).nombre);
-        qDebug() << listNomb.at(listNomb.size()-1);
-    }
-
-    //Configuración lista nombres plataformas
-    model = new modeloPlataformas(listNomb,this);
-    listaNombres->setModel(model);
+    listaNombres->setModel(modelo);
+    listaNombres->setSelectionBehavior(QAbstractItemView::SelectRows);
+    listaNombres->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    listaNombres->viewport()->installEventFilter(this);
 }
 
 void PlataformaDialogo::slotBotonAgregarPlat()
 {
-
+    int row = listaNombres->currentIndex().row();
+    modelo->insertRows(row,1,QModelIndex());
 }
 
 void PlataformaDialogo::slotBotonEliminarPlat()
 {
-
+    int row = listaNombres->currentIndex().row();
+    modelo->removeRows(row,1,QModelIndex());
 }
 
 void PlataformaDialogo::slotBotonAgregarVert()
@@ -77,7 +69,6 @@ void PlataformaDialogo::slotBotonEliminarVert()
 
 void PlataformaDialogo::dialogoAceptado()
 {
-    // Debería guardar el listaPlataformas solo las plataformas válidas de la tablaPlataforma
     this->close();
 }
 

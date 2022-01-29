@@ -7,7 +7,7 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "../../../estructuras-datos/elementosaerop.h"
-#include "modeloplataformas.h"
+#include "modelonombresplataformas.h"
 
 namespace Ui {
 class PlataformaDialogo;
@@ -28,9 +28,6 @@ private:
     Ui::PlataformaDialogo *ui;
     QList<Plataforma>& listaPlataformas;
 
-    modeloPlataformas *model;
-    QStringList listNomb;
-
     void configurarWidgets();
     void poblarListNomb();
 
@@ -41,8 +38,9 @@ private:
     QPushButton* botonAgregarVert;
     QPushButton* botonEliminarVert;
 
-    QListView *listaNombres;
-    QTableView *tablaVertices;
+    QListView* listaNombres;
+    QTableView* tablaVertices;
+    ModeloNombresPlataformas* modelo;
 
 private slots:
     void dialogoAceptado();
