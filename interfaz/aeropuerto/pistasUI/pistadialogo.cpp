@@ -230,7 +230,7 @@ void PistaDialogo::seleccionarGuardarArchivo()
 
 void PistaDialogo::resetDialogoPista()
 {
-    vistaPreliminar->vaciarContenido();
+    vistaPreliminar->borrar();
     leNombreArchivo->clear();
     leLargoPista->clear();
     leAnchoPista->clear();
