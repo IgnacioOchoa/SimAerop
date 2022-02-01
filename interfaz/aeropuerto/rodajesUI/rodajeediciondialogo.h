@@ -2,6 +2,8 @@
 #define RODAJEEDICIONDIALOGO_H
 
 #include <QDialog>
+#include <QGraphicsScene>
+#include "rodajeedicionvista.h"
 #include "../../../estructuras-datos/elementosaerop.h"
 
 namespace Ui {
@@ -15,9 +17,12 @@ class RodajeEdicionDialogo : public QDialog
 public:
     explicit RodajeEdicionDialogo(QWidget *parent = nullptr);
     ~RodajeEdicionDialogo();
+    virtual void showEvent(QShowEvent *event) override;
 
 private:
+    void prepararEscena();
     Ui::RodajeEdicionDialogo *ui;
+    QGraphicsScene* escena;
 };
 
 #endif // RODAJEEDICIONDIALOGO_H

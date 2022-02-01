@@ -119,7 +119,7 @@ void VistaGraficaBase::actualizarScRect()
         minScale = vpRectH/vpMaxHeight * transform().m11();
         //En el caso de que en la situacion actual ya me esté pasando del tamaño máximo, tengo que ajustar la escala
         if (vpRectH > vpMaxHeight) {
-            sc = vpRectH/vpMaxHeight;
+            sc = vpRectH/vpMaxHeight;        
         }
     }
     // El item es mas achatado que el viewport, entonces chequeamos que el elemento
@@ -154,8 +154,13 @@ void VistaGraficaBase::actualizarScRect()
 //    qInfo() << "m11" << transform().m11();
 //    qInfo() << "vpRectW / vpMaxWidth (sc) = " << sc;
 //    qInfo() << "    vpRectW = " << vpRectW;
+//    qInfo() << "    vpRectH = " << vpRectH;
+//    qInfo() << "    brW     = " << brW;
+//    qInfo() << "    brH     = " << brH;
 //    qInfo() << "        scWidth = " << sceneWidth;
 //    qInfo() << "        scHeight = " << sceneHeight;
 //    qInfo() << "            vpMaxWidth = " << vpMaxWidth;
+//    qInfo() << "            vpMaxHeight = " << vpMaxHeight;
+//    qInfo() << "            REL_VACIO = " << REL_VACIO;
 //    qInfo() << "                suma elementos = " << 2*vpRectW + scene()->itemsBoundingRect().width();
 }

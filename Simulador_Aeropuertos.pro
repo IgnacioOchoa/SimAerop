@@ -27,6 +27,7 @@ SOURCES += \
     interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.cpp \
     interfaz/aeropuerto/rodajesUI/rodajedialogo.cpp \
     interfaz/aeropuerto/rodajesUI/rodajeediciondialogo.cpp \
+    interfaz/aeropuerto/rodajesUI/rodajeedicionvista.cpp \
     interfaz/aeropuerto/vistagraficabase.cpp \
     interfaz/interfazprincipal.cpp \
     kernel/kernel.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.h \
     interfaz/aeropuerto/rodajesUI/rodajedialogo.h \
     interfaz/aeropuerto/rodajesUI/rodajeediciondialogo.h \
+    interfaz/aeropuerto/rodajesUI/rodajeedicionvista.h \
     interfaz/aeropuerto/vistagraficabase.h \
     interfaz/interfazprincipal.h \
     kernel/kernel.h

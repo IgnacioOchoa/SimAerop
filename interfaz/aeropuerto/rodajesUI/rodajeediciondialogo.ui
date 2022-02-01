@@ -109,12 +109,19 @@
       </layout>
      </item>
      <item>
-      <widget class="QGraphicsView" name="graphicsView"/>
+      <widget class="RodajeEdicionVista" name="gvRodajeEdicion"/>
      </item>
     </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>RodajeEdicionVista</class>
+   <extends>QGraphicsView</extends>
+   <header>interfaz/aeropuerto/rodajesUI/rodajeedicionvista.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
