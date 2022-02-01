@@ -5,24 +5,14 @@
 #include <QGraphicsView>
 #include <QDebug>
 #include <QWheelEvent>
+#include "vistagraficabase.h"
 
-class AeropuertoVista : public QGraphicsView
+class AeropuertoVista : public VistaGraficaBase
 {
     Q_OBJECT
 public:
     AeropuertoVista(QWidget* w = nullptr);
-
-    virtual void wheelEvent(QWheelEvent *event) override;
-    virtual void mouseMoveEvent(QMouseEvent *event) override;
-    virtual void mousePressEvent(QMouseEvent *event) override;
-    virtual void mouseReleaseEvent(QMouseEvent *event) override;
-
-
-private:
-    bool ruedaApretada;
-    QPointF puntoInicioRueda;
-    QPointF centroAnterior;
-
+    void actualizarEntorno() {actualizarScRect();};
 };
 
 #endif // AEROPUERTOVISTA_H

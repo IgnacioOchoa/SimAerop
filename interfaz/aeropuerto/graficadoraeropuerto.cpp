@@ -4,13 +4,8 @@ GraficadorAeropuerto::GraficadorAeropuerto(AeropuertoVista *gv) :
     vistaAeropuerto(gv)
 {
     escenaAeropuerto = static_cast<AeropuertoEscena*>(gv->scene());
-    gradienteFondoPista = new QLinearGradient(QPointF(-1000, -1000), QPointF(1000, 1000));
-    gradienteFondoPista->setColorAt(0, "#faf0e3");
-    gradienteFondoPista->setColorAt(1, "#e0d1bc");
-    fondoPista = new QBrush(*gradienteFondoPista);
     colorPavimento = new QBrush("#A4B3B6");
     colorMargen = new QBrush("#828282");
-    escenaAeropuerto->setBackgroundBrush(*fondoPista);
     bordeNegro = new QPen(Qt::black, 0);
     bordeBlanco = new QPen(Qt::white, 0);
     bordeTransparente = new QPen(Qt::black, 0, Qt::NoPen);
@@ -22,7 +17,6 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
     listaGraficosRodajes.clear();
     listaGraficosPlataformas.clear();
     listaGraficosPistas.clear();
-    escenaAeropuerto->setBackgroundBrush(*fondoPista);
 
     //RECTANGULOS RODAJES
     for (int i = 0; i < rs.size(); ++i) {
@@ -70,6 +64,8 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
 
     //Grafica la pintura de la pista 0 solamente
     graficarPinturaPista(ps.at(0));
+
+    vistaAeropuerto->actualizarEntorno();
 }
 
 void GraficadorAeropuerto::reportarDatosEscena()
@@ -195,6 +191,8 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     //Grafica centro de la pista
     escenaAeropuerto->addLine(QLineF(-5,-5,5,5), *bordeNegro);
     escenaAeropuerto->addLine(QLineF(-5,5,5,-5), *bordeNegro);
+
+    vistaAeropuerto->actualizarEntorno();
 }
 
 void GraficadorAeropuerto::graficarMargenes(const Pista& p)
@@ -206,4 +204,6 @@ void GraficadorAeropuerto::graficarMargenes(const Pista& p)
     else{
         escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, *bordeTransparente, *colorMargen);
     }
+
+    vistaAeropuerto->actualizarEntorno();
 }
