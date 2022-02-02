@@ -1,9 +1,8 @@
 #include "modelonombresplataformas.h"
 
-ModeloNombresPlataformas::ModeloNombresPlataformas(const QList<Plataforma>& lstPlataformas, QObject *parent)
+ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &bl, QObject *parent)
     : QAbstractListModel(parent),
-      listaPlataformas(lstPlataformas),
-      buffListaPlataformas(lstPlataformas)
+      buffListaPlataformas(bl)
 {
 
 }
@@ -57,12 +56,12 @@ bool ModeloNombresPlataformas::removeRows(int row, int count, const QModelIndex 
     return true;
 }
 
-void ModeloNombresPlataformas::sincListas()
-{
-    if(listaPlataformas.count() > buffListaPlataformas.count()) {
-        int diff = listaPlataformas.count() - buffListaPlataformas.count();
-        beginInsertRows(QModelIndex(),buffListaPlataformas.count(), buffListaPlataformas.count() + diff - 1);
-        buffListaPlataformas = listaPlataformas;
-        endInsertRows();
-    }
-}
+//void ModeloNombresPlataformas::sincListas()
+//{
+//    if(listaPlataformas.count() > buffListaPlataformas.count()) {
+//        int diff = listaPlataformas.count() - buffListaPlataformas.count();
+//        beginInsertRows(QModelIndex(),buffListaPlataformas.count(), buffListaPlataformas.count() + diff - 1);
+//        buffListaPlataformas = listaPlataformas;
+//        endInsertRows();
+//    }
+//}

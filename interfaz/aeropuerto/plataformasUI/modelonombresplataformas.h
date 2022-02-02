@@ -9,7 +9,7 @@ class ModeloNombresPlataformas : public QAbstractListModel
     Q_OBJECT
 
 public:
-    ModeloNombresPlataformas(const QList<Plataforma>& lstPlataformas, QObject *parent);
+    ModeloNombresPlataformas(QList<Plataforma>& bl, QObject *parent);
 
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -22,8 +22,7 @@ public:
     void sincListas();
 
 private:
-    const QList<Plataforma>& listaPlataformas;
-    QList<Plataforma> buffListaPlataformas;
+    QList<Plataforma> &buffListaPlataformas;
     Plataforma  plataformaDefault = Plataforma{"Foo", {QPointF (500,500), QPointF (500,450),  QPointF (450,450), QPointF (450,500)}};
 
 };

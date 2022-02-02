@@ -27,6 +27,7 @@ protected :
 private:
     Ui::PlataformaDialogo *ui;
     QList<Plataforma>& listaPlataformas;
+    QList<Plataforma> buffListaPlataformas;
 
     void configurarWidgets();
     void poblarListNomb();

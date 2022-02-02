@@ -25,7 +25,7 @@ PlataformaDialogo::~PlataformaDialogo()
 
 void PlataformaDialogo::showEvent(QShowEvent *event)
 {
-    modelo->sincListas();
+    buffListaPlataformas = listaPlataformas;
     QWidget::showEvent(event);
 }
 
