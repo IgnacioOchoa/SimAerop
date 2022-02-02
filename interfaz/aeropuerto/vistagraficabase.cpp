@@ -90,20 +90,25 @@ void VistaGraficaBase::centrarVista()
     moverAOrigien();
 }
 
-void VistaGraficaBase::actualizarScRect()
+void VistaGraficaBase::actualizarScRect(QRectF rectElementos)
 {
     // La idea es que la escena sea lo suficientemente grande como para permitir un
     // movimiento fluido del viewport por sobre ella. Para eso el viewport en su maximo
     // tamaño (que corresponde a la minima escala del contenido) debe poder scrollear
     // completamente en la escena. Ver Viewport&graphicsScene.png.
 
-    if(!contenidoGraficado) return; // Cuando no hay nada graficado no ajusto nada
+    if(!contenidoGraficado) return;
 
     double vpMaxHeight;
     double vpMaxWidth;
+    double brW;
+    double brH;
 
-    double brW = scene()->itemsBoundingRect().width();
-    double brH = scene()->itemsBoundingRect().height();
+    if(rectElementos == QRectF()) rectElementos = scene()->itemsBoundingRect();
+
+    brW = rectElementos.width();
+    brH = rectElementos.height();
+
     double brR = brH/brW;  //Relacion de aspecto del items bounding rect
 
     vpRect = mapToScene(viewport()->rect()).boundingRect();
@@ -144,7 +149,7 @@ void VistaGraficaBase::actualizarScRect()
     sceneHeight = vpMaxHeight*2 + brH;
 
     //Ajusto la escena con respecto al centro del gráfico
-    QPointF centroDibujo = scene()->itemsBoundingRect().center();
+    QPointF centroDibujo = rectElementos.center();
     sceneXmin = centroDibujo.x() - sceneWidth/2;
     sceneYmin = centroDibujo.y() - sceneHeight/2;
     sceneXmax = centroDibujo.x() + sceneWidth/2;
@@ -166,5 +171,5 @@ void VistaGraficaBase::actualizarScRect()
 //    qInfo() << "            vpMaxWidth = " << vpMaxWidth;
 //    qInfo() << "            vpMaxHeight = " << vpMaxHeight;
 //    qInfo() << "            REL_VACIO = " << REL_VACIO;
-//    qInfo() << "                suma elementos = " << 2*vpRectW + scene()->itemsBoundingRect().width();
+//    qInfo() << "                suma elementos = " << 2*vpRectW + rectElementos.width();
 }

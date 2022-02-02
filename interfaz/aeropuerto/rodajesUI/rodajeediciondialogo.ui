@@ -60,6 +60,19 @@
          <property name="title">
           <string>Parámetros</string>
          </property>
+         <widget class="QPushButton" name="pbGrid">
+          <property name="geometry">
+           <rect>
+            <x>190</x>
+            <y>160</y>
+            <width>93</width>
+            <height>28</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Grid</string>
+          </property>
+         </widget>
         </widget>
        </item>
        <item>

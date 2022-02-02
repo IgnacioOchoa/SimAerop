@@ -11,7 +11,8 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(QWidget *parent) :
     RodajeParametros rp;
     ui->cbModoEdicion->addItems(rp.tiposRodaje);
     ui->gvRodajeEdicion->configEscena(escena);
-    prepararEscena();
+    escena->graficar();
+    connect(ui->pbGrid, &QAbstractButton::pressed, escena, &RodajeEdicionEscena::actualizarGrid);
 }
 
 RodajeEdicionDialogo::~RodajeEdicionDialogo()
@@ -23,9 +24,4 @@ void RodajeEdicionDialogo::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
     ui->gvRodajeEdicion->actualizarVista();
-}
-
-void RodajeEdicionDialogo::prepararEscena()
-{ 
-    escena->addRect(QRectF(-100,-100,200,200));
 }

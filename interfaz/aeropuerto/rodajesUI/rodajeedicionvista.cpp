@@ -9,18 +9,22 @@ RodajeEdicionVista::RodajeEdicionVista(QWidget* parent) :
 void RodajeEdicionVista::resizeEvent(QResizeEvent *event)
 {
     QGraphicsView::resizeEvent(event);
-    actualizarVista();
+    if(contenidoGraficado)
+    {
+        actualizarVista();
+        qobject_cast<RodajeEdicionEscena*>(scene())->actualizarGrid();
+    }
+    //qInfo() << "RodajeEdicionVista::resizeEvent";
 }
 
 void RodajeEdicionVista::configEscena(QGraphicsScene* es)
 {
     setScene(es);
-    connect(es, &QGraphicsScene::changed, this, &RodajeEdicionVista::actualizarVista);
 }
 
 void RodajeEdicionVista::actualizarVista()
 {
     if(scene()->items().size() > 0) contenidoGraficado = true;
+    actualizarScRect(qobject_cast<RodajeEdicionEscena*>(scene())->brectPpal());
     centerOn(0,0);
-    actualizarScRect();
 }

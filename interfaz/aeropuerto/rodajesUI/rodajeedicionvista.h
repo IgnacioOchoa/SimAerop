@@ -8,6 +8,7 @@
 
 class RodajeEdicionVista : public VistaGraficaBase
 {
+    Q_OBJECT
 public:
     RodajeEdicionVista(QWidget* parent = nullptr);    
     virtual void resizeEvent(QResizeEvent *event) override;

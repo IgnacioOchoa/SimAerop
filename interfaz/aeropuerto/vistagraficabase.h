@@ -24,7 +24,7 @@ public:
     inline void moverAOrigien() {centerOn(0,0); centroVista = {0,0};};
 
 protected:
-    void actualizarScRect();
+    void actualizarScRect(QRectF rectElementos = QRectF());
     bool contenidoGraficado;
     int REL_VACIO = 5;
     int SENS_WHEEL = 5; //Recomendado entre 1 y 10

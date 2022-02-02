@@ -12,7 +12,7 @@ class AeropuertoVista : public VistaGraficaBase
     Q_OBJECT
 public:
     AeropuertoVista(QWidget* w = nullptr);
-    void actualizarEntorno() {actualizarScRect();};
+    void actualizarEntorno() {contenidoGraficado=true;actualizarScRect();};
 };
 
 #endif // AEROPUERTOVISTA_H

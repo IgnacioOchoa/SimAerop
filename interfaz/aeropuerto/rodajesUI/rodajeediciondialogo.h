@@ -13,7 +13,6 @@ class RodajeEdicionDialogo;
 class RodajeEdicionDialogo : public QDialog
 {
     Q_OBJECT
-
 public:
     explicit RodajeEdicionDialogo(QWidget *parent = nullptr);
     ~RodajeEdicionDialogo();

@@ -25,8 +25,8 @@ void PistaVista::graficarPista(Pista p)
     escena->graficarPista(p);
     escena->mostrarCotas(cbActivarCotas->isChecked());
     centrarVista();
-    actualizarScRect();
     contenidoGraficado = true;
+    actualizarScRect();
 }
 
 void PistaVista::borrar()
