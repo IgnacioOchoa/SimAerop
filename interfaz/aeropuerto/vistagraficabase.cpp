@@ -11,6 +11,7 @@ VistaGraficaBase::VistaGraficaBase(QWidget* w) :
 
 void VistaGraficaBase::mouseMoveEvent(QMouseEvent *event)
 {
+    if(!contenidoGraficado) return; // Cuando no hay nada graficado no tiene sentido scrollear
     if (event->buttons() == Qt::MidButton)
        {
            QPointF movimiento = mapToScene(event->pos())-inicioRueda;
@@ -40,6 +41,7 @@ void VistaGraficaBase::mousePressEvent(QMouseEvent *event)
 
 void VistaGraficaBase::wheelEvent(QWheelEvent *event)
 {
+    if(!contenidoGraficado) return; // Cuando no hay nada graficado no tiene sentido hacer zoom
     QPoint puntoMouseEnView1 = event->pos();
     QPointF puntoMouseEnScene1 = mapToScene(puntoMouseEnView1);
     qreal sc = 1+event->angleDelta().y()/(10000.0 / SENS_WHEEL); //SENS_WHEEL regula la sensibilidad
@@ -94,6 +96,8 @@ void VistaGraficaBase::actualizarScRect()
     // movimiento fluido del viewport por sobre ella. Para eso el viewport en su maximo
     // tamaño (que corresponde a la minima escala del contenido) debe poder scrollear
     // completamente en la escena. Ver Viewport&graphicsScene.png.
+
+    if(!contenidoGraficado) return; // Cuando no hay nada graficado no ajusto nada
 
     double vpMaxHeight;
     double vpMaxWidth;

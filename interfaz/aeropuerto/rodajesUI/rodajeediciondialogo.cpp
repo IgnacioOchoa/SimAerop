@@ -3,15 +3,15 @@
 
 RodajeEdicionDialogo::RodajeEdicionDialogo(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::RodajeEdicionDialogo)
+    ui(new Ui::RodajeEdicionDialogo),
+    escena(new RodajeEdicionEscena(this))
 {
     ui->setupUi(this);
 
     RodajeParametros rp;
     ui->cbModoEdicion->addItems(rp.tiposRodaje);
-
-    escena = new QGraphicsScene(this);
-    ui->gvRodajeEdicion->setScene(escena);
+    ui->gvRodajeEdicion->configEscena(escena);
+    prepararEscena();
 }
 
 RodajeEdicionDialogo::~RodajeEdicionDialogo()
@@ -22,12 +22,10 @@ RodajeEdicionDialogo::~RodajeEdicionDialogo()
 void RodajeEdicionDialogo::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
-    prepararEscena();
-    ui->gvRodajeEdicion->centerOn(0,0);
+    ui->gvRodajeEdicion->actualizarVista();
 }
 
 void RodajeEdicionDialogo::prepararEscena()
-{
+{ 
     escena->addRect(QRectF(-100,-100,200,200));
-    ui->gvRodajeEdicion->actualizarScRect();
 }

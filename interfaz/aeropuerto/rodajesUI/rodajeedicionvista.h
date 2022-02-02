@@ -2,6 +2,8 @@
 #define RODAJEEDICIONVISTA_H
 
 #include "../vistagraficabase.h"
+#include "rodajeedicionescena.h"
+#include <QGraphicsItem>
 #include <QObject>
 
 class RodajeEdicionVista : public VistaGraficaBase
@@ -9,8 +11,8 @@ class RodajeEdicionVista : public VistaGraficaBase
 public:
     RodajeEdicionVista(QWidget* parent = nullptr);    
     virtual void resizeEvent(QResizeEvent *event) override;
-
-    friend class RodajeEdicionDialogo;
+    void configEscena(QGraphicsScene* es);
+    void actualizarVista();
 };
 
 #endif // RODAJEEDICIONVISTA_H

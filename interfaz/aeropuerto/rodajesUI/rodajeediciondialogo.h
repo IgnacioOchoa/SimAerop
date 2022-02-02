@@ -2,7 +2,7 @@
 #define RODAJEEDICIONDIALOGO_H
 
 #include <QDialog>
-#include <QGraphicsScene>
+#include "rodajeedicionescena.h"
 #include "rodajeedicionvista.h"
 #include "../../../estructuras-datos/elementosaerop.h"
 
@@ -22,7 +22,7 @@ public:
 private:
     void prepararEscena();
     Ui::RodajeEdicionDialogo *ui;
-    QGraphicsScene* escena;
+    RodajeEdicionEscena* escena;
 };
 
 #endif // RODAJEEDICIONDIALOGO_H
