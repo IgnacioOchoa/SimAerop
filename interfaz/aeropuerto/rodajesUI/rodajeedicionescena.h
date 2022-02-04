@@ -5,6 +5,7 @@
 #include <QObject>
 #include <QGraphicsView>
 #include <QGraphicsItem>
+#include "RodajeEdicionVista.h"
 #include <QtMath>
 #include <QDebug>
 
@@ -19,9 +20,11 @@ public:
 
 public slots:
     void slotCentroVistaMovido();
+    void slotMostrarGrilla(bool);
 
 private:
     int gridSize;
+    bool gridCreada;
     QVector<QGraphicsLineItem*> elementosGridX;
     QVector<QGraphicsLineItem*> elementosGridY;
     QVector<QGraphicsItem*> elementosPpales;

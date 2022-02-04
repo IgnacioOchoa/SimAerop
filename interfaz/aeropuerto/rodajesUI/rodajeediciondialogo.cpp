@@ -12,7 +12,7 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(QWidget *parent) :
     ui->cbModoEdicion->addItems(rp.tiposRodaje);
     ui->gvRodajeEdicion->configEscena(escena);
     escena->graficar();
-    connect(ui->pbGrid, &QAbstractButton::pressed, escena, &RodajeEdicionEscena::actualizarGrid);
+    connect(ui->cbGrilla, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotMostrarGrilla);
 }
 
 RodajeEdicionDialogo::~RodajeEdicionDialogo()

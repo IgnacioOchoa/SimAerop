@@ -2,6 +2,7 @@
 
 RodajeEdicionEscena::RodajeEdicionEscena(QObject* parent) :
     QGraphicsScene(parent),
+    gridCreada(false),
     elementosGridX(NRO_LIN),
     elementosGridY(NRO_LIN)
 {
@@ -155,4 +156,18 @@ void RodajeEdicionEscena::slotCentroVistaMovido()
     }
     // El nuevo centro pasa a ser el viejo centro para la siguiente llamada a esta función
     centroVisible = nuevoRect.center();
+}
+
+void RodajeEdicionEscena::slotMostrarGrilla(bool mostrar)
+{
+    if(!gridCreada)
+    {
+        qobject_cast<RodajeEdicionVista*>(vista)->actualizarVista();
+        actualizarGrid();
+        gridCreada = true;
+    }
+    else {
+        foreach(QGraphicsLineItem* itm, elementosGridX) itm->setVisible(mostrar);
+        foreach(QGraphicsLineItem* itm, elementosGridY) itm->setVisible(mostrar);
+    }
 }
