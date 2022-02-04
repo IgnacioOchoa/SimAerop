@@ -17,11 +17,31 @@ public:
     void graficar();
     QRectF brectPpal();
 
+public slots:
+    void slotCentroVistaMovido();
+
 private:
     int gridSize;
     QVector<QGraphicsLineItem*> elementosGridX;
     QVector<QGraphicsLineItem*> elementosGridY;
     QVector<QGraphicsItem*> elementosPpales;
+
+    QGraphicsView* vista;
+
+    static constexpr int NRO_LIN = 14;
+    int xMayor;
+    int yMayor;
+    int xMenor;
+    int yMenor;
+    int indxXmenor;
+    int indxYmenor;
+
+    float sceneXmin;
+    float sceneYmin;
+    float sceneXmax;
+    float sceneYmax;
+
+    QPointF centroVisible;
 };
 
 #endif // RODAJEEDICIONESCENA_H

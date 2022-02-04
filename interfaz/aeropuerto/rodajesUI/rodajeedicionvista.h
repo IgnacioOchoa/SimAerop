@@ -14,6 +14,12 @@ public:
     virtual void resizeEvent(QResizeEvent *event) override;
     void configEscena(QGraphicsScene* es);
     void actualizarVista();
+
+    void mouseMoveEvent(QMouseEvent* event) override;
+
+signals:
+    void centroMovido();
+
 };
 
 #endif // RODAJEEDICIONVISTA_H
