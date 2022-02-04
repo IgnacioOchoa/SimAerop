@@ -10,6 +10,7 @@ class ModeloNombresPlataformas : public QAbstractListModel
 
 public:
     ModeloNombresPlataformas(QList<Plataforma>& bl, QObject *parent);
+    ~ModeloNombresPlataformas(void);
 
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -20,9 +21,11 @@ public:
     virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
     void sincListas();
+    void guardarLista();
 
 private:
-    QList<Plataforma> &buffListaPlataformas;
+    QList<Plataforma> &listaPlataformas;
+    QList<Plataforma> buffListaPlataformas;
     Plataforma  plataformaDefault = Plataforma{"Foo", {QPointF (500,500), QPointF (500,450),  QPointF (450,450), QPointF (450,500)}};
 
 };

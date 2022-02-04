@@ -4,7 +4,6 @@
 PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlataformaDialogo),
-    listaPlataformas(la),
     modelo(new ModeloNombresPlataformas(la, this))
 {
     ui->setupUi(this);
@@ -25,7 +24,7 @@ PlataformaDialogo::~PlataformaDialogo()
 
 void PlataformaDialogo::showEvent(QShowEvent *event)
 {
-    buffListaPlataformas = listaPlataformas;
+    modelo->sincListas();
     QWidget::showEvent(event);
 }
 
@@ -69,6 +68,7 @@ void PlataformaDialogo::slotBotonEliminarVert()
 
 void PlataformaDialogo::dialogoAceptado()
 {
+    modelo->guardarLista();
     this->close();
 }
 

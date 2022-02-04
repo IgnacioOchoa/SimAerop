@@ -1,8 +1,14 @@
 #include "modelonombresplataformas.h"
 
-ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &bl, QObject *parent)
+ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &la, QObject *parent)
     : QAbstractListModel(parent),
-      buffListaPlataformas(bl)
+      listaPlataformas(la),
+      buffListaPlataformas(la)
+{
+
+}
+
+ModeloNombresPlataformas::~ModeloNombresPlataformas(void)
 {
 
 }
@@ -12,7 +18,6 @@ int ModeloNombresPlataformas::rowCount(const QModelIndex &parent) const
     Q_UNUSED(parent);
     return buffListaPlataformas.count();
 }
-
 
 QVariant ModeloNombresPlataformas::data(const QModelIndex &index, int role) const
 {
@@ -26,6 +31,7 @@ QVariant ModeloNombresPlataformas::data(const QModelIndex &index, int role) cons
     {
         return buffListaPlataformas.at(index.row()).nombre;
     }
+
     else
         return QVariant();
 }
@@ -56,12 +62,17 @@ bool ModeloNombresPlataformas::removeRows(int row, int count, const QModelIndex 
     return true;
 }
 
-//void ModeloNombresPlataformas::sincListas()
-//{
-//    if(listaPlataformas.count() > buffListaPlataformas.count()) {
-//        int diff = listaPlataformas.count() - buffListaPlataformas.count();
-//        beginInsertRows(QModelIndex(),buffListaPlataformas.count(), buffListaPlataformas.count() + diff - 1);
-//        buffListaPlataformas = listaPlataformas;
-//        endInsertRows();
-//    }
-//}
+void ModeloNombresPlataformas::sincListas()
+{
+    beginInsertRows(QModelIndex(),0, buffListaPlataformas.count() - 1);
+    buffListaPlataformas = listaPlataformas;
+    endInsertRows();
+}
+
+void ModeloNombresPlataformas::guardarLista()
+{
+    listaPlataformas.clear();
+    for (int i = 0; i < buffListaPlataformas.count();i++){
+        listaPlataformas.append(buffListaPlataformas.at(i));
+    }
+}
