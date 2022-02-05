@@ -53,14 +53,12 @@ void RodajeEdicionEscena::actualizarGrid()
     //A partir de ese valor calculado calculo y guardo el resto de las lineas`
     for(int i = 0; i < NRO_LIN; i++)
     {
-        elementosGridX[i]->setLine(xMenor+i*gridSize,
-                                   sceneYmin,
-                                   xMenor+i*gridSize,
-                                   sceneYmax);
-        elementosGridY[i]->setLine(sceneXmin,
-                                   yMenor+i*gridSize,
-                                   sceneXmax,
-                                   yMenor+i*gridSize);
+        elementosGridX[i]->setLine(0,sceneYmin,0,sceneYmax);
+        elementosGridX[i]->setPos(xMenor+i*gridSize, 0);
+
+        elementosGridY[i]->setLine(sceneXmin,0,sceneXmax,0);
+        elementosGridY[i]->setPos(0,yMenor+i*gridSize);
+
     }
     indxXmenor = 0;
     indxYmenor = 0;
@@ -97,15 +95,12 @@ void RodajeEdicionEscena::slotCentroVistaMovido()
        //El viewport se movió hacia la derecha sobre la escena
        //Mirar cual elemento en el vector es el que tiene la linea vertical con X mas grande
        int indxXmayor = (indxXmenor + NRO_LIN - 1) % NRO_LIN; //Restar 1 circular
-       xMayor = elementosGridX[indxXmayor]->line().p1().x();
+       xMayor = elementosGridX[indxXmayor]->x();
        // Si me fui mas alla de la zona graficada tengo que actualizar posicion de las lineas
        while((xMayor + gridSize*0.9) < nuevoRect.right())
        {
            indxXmayor = (indxXmayor+1)%NRO_LIN;  // Suma 1 circular
-           elementosGridX[indxXmayor]->setLine(xMayor+gridSize,
-                                              sceneYmin,
-                                              xMayor+gridSize,
-                                              sceneYmax);
+           elementosGridX[indxXmayor]->setPos(xMayor+gridSize,0);
            indxXmenor = (indxXmenor+1)%NRO_LIN; // Suma 1 circular
            xMayor += gridSize;
        }
@@ -113,14 +108,11 @@ void RodajeEdicionEscena::slotCentroVistaMovido()
     else
     {
         //El viewport se movió hacia la izquierda sobre la escena
-        xMenor = elementosGridX[indxXmenor]->line().p1().x();
+        xMenor = elementosGridX[indxXmenor]->x();
         while((xMenor - gridSize*0.9) > nuevoRect.left())
         {
             indxXmenor = (indxXmenor + NRO_LIN - 1) % NRO_LIN; // Resta 1 circular
-            elementosGridX[indxXmenor]->setLine(xMenor-gridSize,
-                                                sceneYmin,
-                                                xMenor-gridSize,
-                                                sceneYmax);
+            elementosGridX[indxXmenor]->setPos(xMenor-gridSize,0);
             xMenor -= gridSize;
         }
     }
@@ -128,14 +120,11 @@ void RodajeEdicionEscena::slotCentroVistaMovido()
     {
         //El viewport se movió hacia arriba sobre la escena
         int indxYmayor = (indxYmenor + NRO_LIN -1) % NRO_LIN;
-        yMayor = elementosGridY[indxYmayor]->line().p1().y();
+        yMayor = elementosGridY[indxYmayor]->y();
         while((yMayor + gridSize*0.9) < nuevoRect.bottom())
         {
             indxYmayor = (indxYmayor+1)%NRO_LIN;  // Suma 1 circular
-            elementosGridY[indxYmayor]->setLine(sceneXmin,
-                                                yMayor + gridSize,
-                                                sceneXmax,
-                                                yMayor + gridSize);
+            elementosGridY[indxYmayor]->setPos(0,yMayor + gridSize);
             indxYmenor = (indxYmenor+1)%NRO_LIN; // Suma 1 circular
             yMayor += gridSize;
         }
@@ -143,14 +132,11 @@ void RodajeEdicionEscena::slotCentroVistaMovido()
     else
     {
         //El viewport se movió hacia abajo sobre la escena
-        yMenor = elementosGridY[indxYmenor]->line().p1().y();
+        yMenor = elementosGridY[indxYmenor]->y();
         while((yMenor - gridSize*0.9) > nuevoRect.top())
         {
             indxYmenor = (indxYmenor + NRO_LIN - 1) % NRO_LIN; //Resta 1 circular
-            elementosGridY[indxYmenor]->setLine(sceneXmin,
-                                                yMenor - gridSize,
-                                                sceneXmax,
-                                                yMenor - gridSize);
+            elementosGridY[indxYmenor]->setPos(0,yMenor - gridSize);
             yMenor -= gridSize;
         }
     }
