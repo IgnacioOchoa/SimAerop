@@ -112,8 +112,8 @@ void InterfazPrincipal::setDefaults()
     listaPistas.append({2500,45,80,"01","19"});
     listaRodajes.append({{"01",-200,90,23,200,550}, {"19",200,90,23,200,550}});
     listaRodajes.append({{"01",-50,-135,23,300,550}, {"19",50,-45,23,300,550}});
-    listaPlataformas.append(Plataforma ("Norte", {QPointF (-300,-300), QPointF (-300,-200),  QPointF (300,-200), QPointF (300,-300)}));
-    listaPlataformas.append(Plataforma ("Sur", {QPointF (-300,300), QPointF (-300,200),  QPointF (300,200), QPointF (300,300)}));
+    listaPlataformas.append(Plataforma ("Norte", QVector<QPointF> {{-300,-300}, {-300,-200},  {300,-200}, {300,-300}}));
+    listaPlataformas.append(Plataforma ("Sur", QVector<QPointF> {{-300,300}, {-300,200},  {300,200}, {300,300}}));
     //********
     statusBar()->showMessage("Valores por default establecidos", 3000);
     actualizarDatosPista();

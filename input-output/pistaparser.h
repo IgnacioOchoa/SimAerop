@@ -38,7 +38,7 @@ private:
 
     const Pista pistaError = {0,0,0,"",""};
     const Rodaje rodajeError = {"",0.0,0.0,0,0,0};
-    const Plataforma plataformaError = {"", QList<QPointF>()};
+    const Plataforma plataformaError = {"", QVector<QPointF> {}};
 
     void escribirPista(const QList<Pista>& pista);
     void escribirRodaje(const QList<Rodaje>& rod);

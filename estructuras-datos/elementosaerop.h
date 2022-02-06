@@ -4,6 +4,7 @@
 #include <QMetaType>
 #include <QList>
 #include <QPointF>
+#include <QPolygonF>
 #include <QDebug>
 
 struct Pista {
@@ -56,9 +57,9 @@ inline QDebug operator<<(QDebug stream, const Rodaje& rod)
 
 struct Plataforma {
     Plataforma () = default;
-    Plataforma (const QString& n, const QList<QPointF>& l){nombre = n, coordPerimetro = l;}
+    Plataforma (const QString& n, const QPolygonF& l){nombre = n, coordPerimetro = l;}
     QString nombre;
-    QList<QPointF> coordPerimetro;
+    QPolygonF coordPerimetro;
 };
 
 inline QDebug operator<<(QDebug stream, const Plataforma& plat)

@@ -220,7 +220,7 @@ QList<Plataforma> PistaParser::cargarPlataforma(const QString &file)
                 return {plataformaError};
             }
             QJsonArray arrPtos = objetoPlataforma["coordPerimetro"].toArray();
-            QList<QPointF> listaPer;
+            QPolygonF listaPer;
 
             foreach(QJsonValue valPto, arrPtos)
             {

@@ -4,7 +4,7 @@
 PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlataformaDialogo),
-    modelo(new ModeloNombresPlataformas(la, this))
+    modelo1(new ModeloNombresPlataformas(la, this))
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -15,6 +15,10 @@ PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     connect(botonEliminarPlat, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarPlat);
     connect(botonAgregarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonAgregarVert);
     connect(botonEliminarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarVert);
+
+    QItemSelectionModel* selectionModel = ui->lvNombres->selectionModel();
+    connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &PlataformaDialogo::onSelectionChanged);
+
 }
 
 PlataformaDialogo::~PlataformaDialogo()
@@ -24,7 +28,7 @@ PlataformaDialogo::~PlataformaDialogo()
 
 void PlataformaDialogo::showEvent(QShowEvent *event)
 {
-    modelo->sincListas();
+    modelo1->sincListas();
     QWidget::showEvent(event);
 }
 
@@ -38,22 +42,33 @@ void PlataformaDialogo::configurarWidgets()
     botonEliminarVert = ui->pbEliminarVert;
     listaNombres = ui->lvNombres;
     tablaVertices = ui->tvVertices;
-    listaNombres->setModel(modelo);
+    listaNombres->setModel(modelo1);
     listaNombres->setSelectionBehavior(QAbstractItemView::SelectRows);
     listaNombres->setEditTriggers(QAbstractItemView::NoEditTriggers);
     listaNombres->viewport()->installEventFilter(this);
 }
 
+void PlataformaDialogo::onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+{
+    Q_UNUSED(deselected)
+
+//    QModelIndexList list = selected.indexes();
+//    const int& index = toString(list.first());
+
+//    modelo2(new ModeloVerticesPlataformas(index, this));
+//    tablaVertices->setModel(modelo2);
+}
+
 void PlataformaDialogo::slotBotonAgregarPlat()
 {
     int row = listaNombres->currentIndex().row();
-    modelo->insertRows(row,1,QModelIndex());
+    modelo1->insertRows(row,1,QModelIndex());
 }
 
 void PlataformaDialogo::slotBotonEliminarPlat()
 {
     int row = listaNombres->currentIndex().row();
-    modelo->removeRows(row,1,QModelIndex());
+    modelo1->removeRows(row,1,QModelIndex());
 }
 
 void PlataformaDialogo::slotBotonAgregarVert()
@@ -68,7 +83,7 @@ void PlataformaDialogo::slotBotonEliminarVert()
 
 void PlataformaDialogo::dialogoAceptado()
 {
-    modelo->guardarLista();
+    modelo1->guardarLista();
     this->close();
 }
 
@@ -76,4 +91,3 @@ void PlataformaDialogo::dialogoCancelado()
 {
     this->close();
 }
-

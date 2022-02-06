@@ -28,11 +28,7 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
 
     //POLIGONOS PLATAFORMA
     for (int i = 0; i < as.size(); ++i) {
-        QPolygonF* pavPlataforma = new QPolygonF;
-        for (int j = 0; j < as.at(i).coordPerimetro.size(); ++j) {
-            pavPlataforma->append(as.at(i).coordPerimetro.at(j));
-        }
-        listaGraficosPlataformas.append(*pavPlataforma);
+        listaGraficosPlataformas.append(as.at(i).coordPerimetro);
     }
 
     //RECTANGULO PISTA

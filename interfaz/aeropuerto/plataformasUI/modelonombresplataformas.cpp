@@ -1,14 +1,9 @@
 #include "modelonombresplataformas.h"
 
 ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &la, QObject *parent)
-    : QAbstractListModel(parent),
+    : QAbstractItemModel(parent),
       listaPlataformas(la),
       buffListaPlataformas(la)
-{
-
-}
-
-ModeloNombresPlataformas::~ModeloNombresPlataformas(void)
 {
 
 }
@@ -17,6 +12,12 @@ int ModeloNombresPlataformas::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return buffListaPlataformas.count();
+}
+
+int ModeloNombresPlataformas::columnCount(const QModelIndex &parent) const
+{
+    Q_UNUSED(parent);
+    return _END;
 }
 
 QVariant ModeloNombresPlataformas::data(const QModelIndex &index, int role) const
@@ -31,14 +32,8 @@ QVariant ModeloNombresPlataformas::data(const QModelIndex &index, int role) cons
     {
         return buffListaPlataformas.at(index.row()).nombre;
     }
-
     else
         return QVariant();
-}
-
-Qt::ItemFlags ModeloNombresPlataformas::flags(const QModelIndex &index) const
-{
-    return QAbstractListModel::flags(index) | Qt::ItemIsEnabled | Qt::ItemIsEditable | Qt::ItemIsSelectable;
 }
 
 bool ModeloNombresPlataformas::insertRows(int row, int count, const QModelIndex &parent)
