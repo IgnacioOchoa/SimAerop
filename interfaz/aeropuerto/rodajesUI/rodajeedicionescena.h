@@ -5,18 +5,22 @@
 #include <QObject>
 #include <QGraphicsView>
 #include <QGraphicsItem>
-#include "RodajeEdicionVista.h"
+#include "rodajeedicionvista.h"
 #include <QtMath>
 #include <QDebug>
+
+class RodajeEdicionVista;
 
 class RodajeEdicionEscena : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    RodajeEdicionEscena(QObject* parent = nullptr);
+    RodajeEdicionEscena(const QList<Pista>& listaPistas, QObject* parent = nullptr);
     void actualizarGrid();
     void graficar();
     QRectF brectPpal();
+    void graficarPistas();
+    void crearGrid();
 
 public slots:
     void slotCentroVistaMovido();
@@ -29,7 +33,7 @@ private:
     QVector<QGraphicsLineItem*> elementosGridY;
     QVector<QGraphicsItem*> elementosPpales;
 
-    QGraphicsView* vista;
+    RodajeEdicionVista* vista;
 
     static constexpr int NRO_LIN = 14;
     int xMayor;
@@ -45,6 +49,7 @@ private:
     float sceneYmax;
 
     QPointF centroVisible;
+    const QList<Pista>& pistas;
 };
 
 #endif // RODAJEEDICIONESCENA_H

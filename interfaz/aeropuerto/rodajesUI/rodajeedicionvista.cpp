@@ -3,7 +3,7 @@
 RodajeEdicionVista::RodajeEdicionVista(QWidget* parent) :
     VistaGraficaBase(parent)
 {
-
+    setCursor(Qt::CrossCursor);
 }
 
 void RodajeEdicionVista::resizeEvent(QResizeEvent *event)

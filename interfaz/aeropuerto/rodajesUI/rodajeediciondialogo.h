@@ -14,7 +14,7 @@ class RodajeEdicionDialogo : public QDialog
 {
     Q_OBJECT
 public:
-    explicit RodajeEdicionDialogo(QWidget *parent = nullptr);
+    explicit RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWidget *parent = nullptr);
     ~RodajeEdicionDialogo();
     virtual void showEvent(QShowEvent *event) override;
 

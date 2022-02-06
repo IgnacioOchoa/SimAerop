@@ -1,17 +1,16 @@
 #include "rodajeediciondialogo.h"
 #include "ui_rodajeediciondialogo.h"
 
-RodajeEdicionDialogo::RodajeEdicionDialogo(QWidget *parent) :
+RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RodajeEdicionDialogo),
-    escena(new RodajeEdicionEscena(this))
+    escena(new RodajeEdicionEscena(listaPistas, this))
 {
     ui->setupUi(this);
 
     RodajeParametros rp;
     ui->cbModoEdicion->addItems(rp.tiposRodaje);
     ui->gvRodajeEdicion->configEscena(escena);
-    escena->graficar();
     connect(ui->cbGrilla, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotMostrarGrilla);
 }
 
@@ -23,5 +22,5 @@ RodajeEdicionDialogo::~RodajeEdicionDialogo()
 void RodajeEdicionDialogo::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
-    ui->gvRodajeEdicion->actualizarVista();
+    escena->graficar();
 }
