@@ -17,8 +17,11 @@ public:
 
     void crearGrid();
     void actualizarGrid();
+    void regenerarGrid();
     void mostrarGrilla(bool mostrar);
     void centroMovido();
+    int calcularGridSize();
+    void verificarEscala();
     void setVista(const QGraphicsView* v) {vista = v;}
     void setPen(QPen p) {penGrilla = p;}
 
@@ -35,7 +38,7 @@ private:
 
     QPointF centroVisible;
 
-    static constexpr int NRO_LIN = 14;
+    static constexpr int NRO_LIN = 24;
 
     float sceneXmin;
     float sceneYmin;

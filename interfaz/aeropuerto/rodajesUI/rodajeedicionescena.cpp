@@ -12,6 +12,7 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     QPen pLineaActiva("orange");
     pLineaActiva.setWidth(3) ; pLineaActiva.setCosmetic(true);
     lineaActiva->setPen(pLineaActiva);
+    connect(vista, &RodajeEdicionVista::sigVistaZoom, this, &RodajeEdicionEscena::slotVistaZoomeada);
 }
 
 void RodajeEdicionEscena::graficar()
@@ -70,4 +71,9 @@ void RodajeEdicionEscena::slotChckMostrarGrilla(bool mostrar)
 {
     mostrarGrilla = mostrar;
     grilla.mostrarGrilla(mostrar);
+}
+
+void RodajeEdicionEscena::slotVistaZoomeada()
+{
+    grilla.verificarEscala();
 }

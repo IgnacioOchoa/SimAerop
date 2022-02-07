@@ -29,6 +29,12 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
     VistaGraficaBase::mousePressEvent(event);
 }
 
+void RodajeEdicionVista::wheelEvent(QWheelEvent *event)
+{
+    emit sigVistaZoom();
+    VistaGraficaBase::wheelEvent(event);
+}
+
 void RodajeEdicionVista::configEscena(QGraphicsScene* es)
 {
     setScene(es);

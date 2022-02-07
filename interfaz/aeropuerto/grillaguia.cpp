@@ -33,18 +33,12 @@ void GrillaGuia::crearGrid()
 
 void GrillaGuia::actualizarGrid()
 {
-    if(!vista) {qInfo() << "No hay una vista asociada a la grilla"; return;}
-    QRectF rVisible = vista->mapToScene(vista->viewport()->rect()).boundingRect();
-    centroVisible = rVisible.center();
-    float w = rVisible.width();
-    float h = rVisible.height();
-    float d = w > h ? w : h;
+    gridSize = calcularGridSize();
+    regenerarGrid();
+}
 
-    if (d <= 20) gridSize = 1;
-    else if (d > 20 && w <= 200) gridSize = 10;
-    else if (d > 200 && w <= 2000) gridSize = 100;
-    else if (d > 2000) gridSize = 1000;
-
+void GrillaGuia::regenerarGrid()
+{
     sceneXmin = escena->sceneRect().left();
     sceneYmin = escena->sceneRect().top();
     sceneXmax = escena->sceneRect().right();
@@ -131,6 +125,39 @@ void GrillaGuia::centroMovido()
     }
     // El nuevo centro pasa a ser el viejo centro para la siguiente llamada a esta función
     centroVisible = nuevoRect.center();
+}
+
+int GrillaGuia::calcularGridSize()
+{
+    if(!vista) {qInfo() << "No hay una vista asociada a la grilla"; return 0;}
+    QRectF rVisible = vista->mapToScene(vista->viewport()->rect()).boundingRect();
+
+    int reqGridSize = 0;
+
+    centroVisible = rVisible.center();
+    float w = rVisible.width();
+    float h = rVisible.height();
+    float d = w > h ? w : h;
+
+    if (d <= 20) reqGridSize = 1;
+    else if (d > 20 && d <= 200) reqGridSize = 10;
+    else if (d > 200 && d <= 1000) reqGridSize = 50;
+    else if (d > 1000 && d <= 2000) reqGridSize = 100;
+    else if (d > 2000 && d <=4000) reqGridSize =  200;
+    else if (d > 4000 && d <=8000) reqGridSize =  500;
+    else if (d > 8000) reqGridSize =  1000;
+
+    return reqGridSize;
+}
+
+void GrillaGuia::verificarEscala()
+{
+    int newGridSize = calcularGridSize();
+    if(gridSize != newGridSize)
+    {
+        gridSize = newGridSize;
+        regenerarGrid();
+    }
 }
 
 void GrillaGuia::mostrarGrilla(bool mostrar)

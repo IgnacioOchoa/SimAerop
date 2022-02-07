@@ -4,5 +4,8 @@
     </qresource>
     <qresource prefix="/imagenes">
         <file>imagenes/Check_mark.png</file>
+        <file>imagenes/BotonRodaje1.png</file>
+        <file>imagenes/BotonRodaje2.png</file>
+        <file>imagenes/BotonRodaje3.png</file>
     </qresource>
 </RCC>

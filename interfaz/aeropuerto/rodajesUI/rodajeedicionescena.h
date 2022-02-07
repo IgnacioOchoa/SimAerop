@@ -26,6 +26,7 @@ public:
 public slots:
     void slotCentroVistaMovido();
     void slotChckMostrarGrilla(bool);
+    void slotVistaZoomeada();
 
 private:
     GrillaGuia grilla;
