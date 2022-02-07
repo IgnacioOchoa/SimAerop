@@ -1,7 +1,8 @@
 #include "rodajeedicionvista.h"
 
 RodajeEdicionVista::RodajeEdicionVista(QWidget* parent) :
-    VistaGraficaBase(parent)
+    VistaGraficaBase(parent),
+    lineaIniciada(false)
 {
     setCursor(Qt::CrossCursor);
 }
@@ -17,10 +18,26 @@ void RodajeEdicionVista::resizeEvent(QResizeEvent *event)
     //qInfo() << "RodajeEdicionVista::resizeEvent";
 }
 
+void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        if(lineaIniciada == false) {
+            lineaIniciada = true;
+            puntoInicioLinea = event->pos();
+        }
+        else {
+            lineaIniciada = false;
+        }
+    }
+
+    VistaGraficaBase::mousePressEvent(event);
+}
+
 void RodajeEdicionVista::configEscena(QGraphicsScene* es)
 {
     setScene(es);
-    connect(this, &RodajeEdicionVista::centroMovido, qobject_cast<RodajeEdicionEscena*>(es), &RodajeEdicionEscena::slotCentroVistaMovido);
+    connect(this, &VistaGraficaBase::centroMovido, qobject_cast<RodajeEdicionEscena*>(es), &RodajeEdicionEscena::slotCentroVistaMovido);
 }
 
 void RodajeEdicionVista::actualizarVista()
@@ -32,6 +49,11 @@ void RodajeEdicionVista::actualizarVista()
 
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
 {
+    if(event->modifiers() == Qt::ShiftModifier) lineaIniciada = false;
+    else if(lineaIniciada) {
+        QPoint pFinal = event->pos();
+        qobject_cast<RodajeEdicionEscena*>(scene())->setLineaActiva(mapToScene(puntoInicioLinea),
+                                                                    mapToScene(pFinal));
+    }
     VistaGraficaBase::mouseMoveEvent(event);
-    emit centroMovido();
 }

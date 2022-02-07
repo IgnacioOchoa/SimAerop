@@ -12,6 +12,7 @@
 
 class VistaGraficaBase : public QGraphicsView
 {
+    Q_OBJECT
 public:
     VistaGraficaBase(QWidget* = nullptr);
 
@@ -28,6 +29,9 @@ protected:
     bool contenidoGraficado;
     int REL_VACIO = 5;
     int SENS_WHEEL = 5; //Recomendado entre 1 y 10
+
+signals:
+    void centroMovido();
 
 private:
     QPointF inicioRueda;

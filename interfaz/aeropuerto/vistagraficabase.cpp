@@ -6,6 +6,8 @@ VistaGraficaBase::VistaGraficaBase(QWidget* w) :
 {
     this->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
+    setRenderHints(QPainter::Antialiasing);
+    setMouseTracking(true);
     centroVista = QPointF();
 }
 
@@ -26,6 +28,7 @@ void VistaGraficaBase::mouseMoveEvent(QMouseEvent *event)
 
            centerOn(centroVista);
            inicioRueda = mapToScene(event->pos());
+           emit centroMovido();
        }
        QGraphicsView::mouseMoveEvent(event);
        viewport()->update(); //Esto es clave para que no sucedan cosas raras en el fondo al mover los items

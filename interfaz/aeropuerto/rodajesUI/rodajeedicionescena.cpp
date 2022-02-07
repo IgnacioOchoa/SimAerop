@@ -5,9 +5,13 @@ RodajeEdicionEscena::RodajeEdicionEscena(const QList<Pista>& listaPistas, QObjec
     gridCreada(false),
     elementosGridX(NRO_LIN),
     elementosGridY(NRO_LIN),
-    pistas(listaPistas)
+    pistas(listaPistas),
+    lineaActiva(new QGraphicsLineItem)
 {
-
+    lineaActiva->setLine(QLine());
+    QPen pLineaActiva("orange");
+    pLineaActiva.setWidth(3) ; pLineaActiva.setCosmetic(true);
+    lineaActiva->setPen(pLineaActiva);
 }
 
 void RodajeEdicionEscena::actualizarGrid()
@@ -58,11 +62,11 @@ void RodajeEdicionEscena::graficar()
     p.setWidth(3);
     p.setCosmetic(true);
     vista = qobject_cast<RodajeEdicionVista*>(views()[0]);
-    // QGraphicsItem* gr = qgraphicsitem_cast<QGraphicsItem*>(addRect(QRectF(-100,-100,200,200), p));
-    // elementosPpales.append(gr);
     graficarPistas();
     vista->actualizarVista();
     vista->centrarVista();
+    if (!gridCreada) crearGrid();
+    addItem(lineaActiva);
 }
 
 QRectF RodajeEdicionEscena::brectPpal()
@@ -81,6 +85,7 @@ void RodajeEdicionEscena::graficarPistas()
     QPen penPista("black");
     penPista.setWidth(5);
     penPista.setCosmetic(true);
+    penPista.setCapStyle(Qt::RoundCap);
 
     foreach(Pista p, pistas)
     {
@@ -109,6 +114,11 @@ void RodajeEdicionEscena::crearGrid()
     }
     gridCreada = true;
     actualizarGrid();
+}
+
+void RodajeEdicionEscena::setLineaActiva(QPointF p1, QPointF p2)
+{
+    lineaActiva->setLine(QLineF(p1,p2));
 }
 
 void RodajeEdicionEscena::slotCentroVistaMovido()

@@ -12,13 +12,15 @@ class RodajeEdicionVista : public VistaGraficaBase
 public:
     RodajeEdicionVista(QWidget* parent = nullptr);    
     virtual void resizeEvent(QResizeEvent *event) override;
+    virtual void mousePressEvent(QMouseEvent* event) override;
     void configEscena(QGraphicsScene* es);
     void actualizarVista();
 
     void mouseMoveEvent(QMouseEvent* event) override;
 
-signals:
-    void centroMovido();
+private:
+    bool lineaIniciada;
+    QPoint puntoInicioLinea;
 
 };
 

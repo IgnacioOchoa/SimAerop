@@ -21,6 +21,7 @@ public:
     QRectF brectPpal();
     void graficarPistas();
     void crearGrid();
+    void setLineaActiva(QPointF p1, QPointF p2);
 
 public slots:
     void slotCentroVistaMovido();
@@ -34,6 +35,7 @@ private:
     QVector<QGraphicsItem*> elementosPpales;
 
     RodajeEdicionVista* vista;
+    QGraphicsLineItem* lineaActiva;
 
     static constexpr int NRO_LIN = 14;
     int xMayor;
