@@ -50,7 +50,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
-        <widget class="QPushButton" name="pushButton_3">
+        <widget class="QPushButton" name="pbEditorRodaje1">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -76,13 +76,16 @@
            <height>60</height>
           </size>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
          <property name="flat">
           <bool>true</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_4">
+        <widget class="QPushButton" name="pbEditorRodaje2">
          <property name="minimumSize">
           <size>
            <width>64</width>
@@ -102,13 +105,16 @@
            <height>60</height>
           </size>
          </property>
+         <property name="checkable">
+          <bool>true</bool>
+         </property>
          <property name="flat">
           <bool>true</bool>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton_5">
+        <widget class="QPushButton" name="pbEditorRodaje3">
          <property name="minimumSize">
           <size>
            <width>64</width>
@@ -127,6 +133,9 @@
            <width>60</width>
            <height>60</height>
           </size>
+         </property>
+         <property name="checkable">
+          <bool>true</bool>
          </property>
          <property name="flat">
           <bool>true</bool>

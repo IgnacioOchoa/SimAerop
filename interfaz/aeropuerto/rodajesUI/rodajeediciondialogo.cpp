@@ -14,7 +14,9 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWid
     ui->cbGrilla->setChecked(false);
     connect(ui->cbGrilla, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotChckMostrarGrilla);
 
-    //QPixmap bt1(":/imagenes/imagenes/BotonRodaje1.png");
+    btnsEdicionRodaje.addButton(ui->pbEditorRodaje1);
+    btnsEdicionRodaje.addButton(ui->pbEditorRodaje2);
+    btnsEdicionRodaje.addButton(ui->pbEditorRodaje3);
 }
 
 RodajeEdicionDialogo::~RodajeEdicionDialogo()

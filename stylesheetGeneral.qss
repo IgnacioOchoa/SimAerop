@@ -108,3 +108,11 @@ QHeaderView
     border-bottom-width : 2px;
     border-color: black
 }
+
+QPushButton#pbEditorRodaje1:checked,
+QPushButton#pbEditorRodaje2:checked,
+QPushButton#pbEditorRodaje3:checked
+{background-color : transparent;
+ border-color : gray;
+ border-width: 2;
+ border-style: solid}

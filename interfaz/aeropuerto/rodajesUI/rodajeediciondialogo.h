@@ -2,6 +2,7 @@
 #define RODAJEEDICIONDIALOGO_H
 
 #include <QDialog>
+#include <QButtonGroup>
 #include "rodajeedicionescena.h"
 #include "rodajeedicionvista.h"
 #include "../../../estructuras-datos/elementosaerop.h"
@@ -23,6 +24,7 @@ private:
     Ui::RodajeEdicionDialogo *ui;
     RodajeEdicionEscena* escena;
     RodajeEdicionVista* vista;
+    QButtonGroup btnsEdicionRodaje;
 };
 
 #endif // RODAJEEDICIONDIALOGO_H
