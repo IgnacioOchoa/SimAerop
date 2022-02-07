@@ -22,6 +22,7 @@ private:
     void prepararEscena();
     Ui::RodajeEdicionDialogo *ui;
     RodajeEdicionEscena* escena;
+    RodajeEdicionVista* vista;
 };
 
 #endif // RODAJEEDICIONDIALOGO_H

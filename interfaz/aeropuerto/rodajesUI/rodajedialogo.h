@@ -38,6 +38,7 @@ private:
     QPushButton* botonAgregar;
     QPushButton* botonEliminar;
     QPushButton* botonPrevisualizar;
+    QPushButton* botonAbrirEditor;
 
     QTableView* tablaRodaje;
     ModeloRodajes* modelo;
@@ -50,6 +51,7 @@ private slots:
     void slotBotonAgregar();
     void slotBotonEliminar();
     void slotBotonPrevisualizar();
+    void slotLanzarEditorRodaje();
 };
 
 #endif // RODAJEDIALOGO_H

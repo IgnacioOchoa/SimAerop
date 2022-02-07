@@ -16,7 +16,7 @@ RodajeDialogo::RodajeDialogo(QList<Rodaje> &lr, const QList<Pista> &lp, QWidget 
     connect(botonAgregar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonAgregar);
     connect(botonEliminar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonEliminar);
     connect(botonPrevisualizar, &QPushButton::pressed, this, &RodajeDialogo::slotBotonPrevisualizar);
-
+    connect(botonAbrirEditor, &QPushButton::pressed, this, &RodajeDialogo::slotLanzarEditorRodaje);
 }
 
 RodajeDialogo::~RodajeDialogo()
@@ -48,12 +48,17 @@ bool RodajeDialogo::eventFilter(QObject *ob, QEvent *event)
     {
         if (event->type() == QEvent::MouseButtonDblClick)
         {
-            rodajeEdicionDialogo = new RodajeEdicionDialogo(listaPistas,this);
-            rodajeEdicionDialogo->setModal(true);
-            rodajeEdicionDialogo->show();
+            slotLanzarEditorRodaje();
         }
     }
     return false;
+}
+
+void RodajeDialogo::slotLanzarEditorRodaje()
+{
+    rodajeEdicionDialogo = new RodajeEdicionDialogo(listaPistas,this);
+    rodajeEdicionDialogo->setModal(true);
+    rodajeEdicionDialogo->show();
 }
 
 void RodajeDialogo::configurarWidgets()
@@ -62,6 +67,7 @@ void RodajeDialogo::configurarWidgets()
     botonCancelar = ui->pbCancelar;
     botonAgregar = ui->pbAgregar;
     botonEliminar = ui->pbEliminar;
+    botonAbrirEditor = ui->pbEditorRodaje;
     botonPrevisualizar = ui->pbPrevisualizacion;
     tablaRodaje = ui->twCallesRodaje;
     tablaRodaje->setModel(modelo);

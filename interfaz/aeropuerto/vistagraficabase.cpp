@@ -14,8 +14,7 @@ VistaGraficaBase::VistaGraficaBase(QWidget* w) :
 void VistaGraficaBase::mouseMoveEvent(QMouseEvent *event)
 {
     if(!contenidoGraficado) return; // Cuando no hay nada graficado no tiene sentido scrollear
-    if (event->buttons() == Qt::MidButton || (event->buttons () == Qt::LeftButton && event->modifiers() == Qt::ShiftModifier))
-    //CORREGIR CUANDO HAYA RUEDA
+    if (event->buttons() == Qt::MidButton)
     {
            QPointF movimiento = mapToScene(event->pos())-inicioRueda;
            centroVista -= movimiento;
@@ -36,7 +35,7 @@ void VistaGraficaBase::mouseMoveEvent(QMouseEvent *event)
 
 void VistaGraficaBase::mousePressEvent(QMouseEvent *event)
 {
-    if (event->buttons() == Qt::MidButton || event->buttons() == Qt::LeftButton) //CORREGIR CUANDO HAYA RUEDA
+    if (event->buttons() == Qt::MidButton) //CORREGIR CUANDO HAYA RUEDA
     {
         inicioRueda = mapToScene(event->pos());
     }

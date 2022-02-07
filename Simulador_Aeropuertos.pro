@@ -24,6 +24,7 @@ SOURCES += \
     interfaz/aeropuerto/plataformasUI/modelonombresplataformas.cpp \
     interfaz/aeropuerto/plataformasUI/modeloverticesplataformas.cpp \
     interfaz/aeropuerto/plataformasUI/plataformadialogo.cpp \
+    interfaz/aeropuerto/grillaguia.cpp \
     interfaz/aeropuerto/rodajesUI/modelorodajes.cpp \
     interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.cpp \
     interfaz/aeropuerto/rodajesUI/rodajedialogo.cpp \
@@ -52,6 +53,7 @@ HEADERS += \
     interfaz/aeropuerto/plataformasUI/modelonombresplataformas.h \
     interfaz/aeropuerto/plataformasUI/modeloverticesplataformas.h \
     interfaz/aeropuerto/plataformasUI/plataformadialogo.h \
+    interfaz/aeropuerto/grillaguia.h \
     interfaz/aeropuerto/rodajesUI/modelorodajes.h \
     interfaz/aeropuerto/rodajesUI/rodajecabeceradelegate.h \
     interfaz/aeropuerto/rodajesUI/rodajedialogo.h \

@@ -6,6 +6,7 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include "rodajeedicionvista.h"
+#include "../grillaguia.h"
 #include <QtMath>
 #include <QDebug>
 
@@ -15,42 +16,26 @@ class RodajeEdicionEscena : public QGraphicsScene
 {
     Q_OBJECT
 public:
-    RodajeEdicionEscena(const QList<Pista>& listaPistas, QObject* parent = nullptr);
-    void actualizarGrid();
+    RodajeEdicionEscena(RodajeEdicionVista* vista, const QList<Pista>& listaPistas, QObject* parent = nullptr);
+
     void graficar();
     QRectF brectPpal();
-    void graficarPistas();
-    void crearGrid();
+    void graficarPistas();    
     void setLineaActiva(QPointF p1, QPointF p2);
 
 public slots:
     void slotCentroVistaMovido();
-    void slotMostrarGrilla(bool);
+    void slotChckMostrarGrilla(bool);
 
 private:
-    int gridSize;
-    bool gridCreada;
-    QVector<QGraphicsLineItem*> elementosGridX;
-    QVector<QGraphicsLineItem*> elementosGridY;
+    GrillaGuia grilla;
+    bool mostrarGrilla;
+
     QVector<QGraphicsItem*> elementosPpales;
 
     RodajeEdicionVista* vista;
     QGraphicsLineItem* lineaActiva;
 
-    static constexpr int NRO_LIN = 14;
-    int xMayor;
-    int yMayor;
-    int xMenor;
-    int yMenor;
-    int indxXmenor;
-    int indxYmenor;
-
-    float sceneXmin;
-    float sceneYmin;
-    float sceneXmax;
-    float sceneYmax;
-
-    QPointF centroVisible;
     const QList<Pista>& pistas;
 };
 

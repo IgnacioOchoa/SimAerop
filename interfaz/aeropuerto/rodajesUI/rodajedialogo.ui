@@ -112,6 +112,13 @@
            </spacer>
           </item>
           <item>
+           <widget class="QPushButton" name="pbEditorRodaje">
+            <property name="text">
+             <string>Editor</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pbPrevisualizacion">
             <property name="text">
              <string>Previsualizacion</string>
