@@ -67,7 +67,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../Recursos.qrc">
+          <iconset>
            <normaloff>:/imagenes/imagenes/BotonRodaje1.png</normaloff>:/imagenes/imagenes/BotonRodaje1.png</iconset>
          </property>
          <property name="iconSize">
@@ -96,7 +96,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../Recursos.qrc">
+          <iconset>
            <normaloff>:/imagenes/imagenes/BotonRodaje2.png</normaloff>:/imagenes/imagenes/BotonRodaje2.png</iconset>
          </property>
          <property name="iconSize">
@@ -125,7 +125,7 @@
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../Recursos.qrc">
+          <iconset>
            <normaloff>:/imagenes/imagenes/BotonRodaje3.png</normaloff>:/imagenes/imagenes/BotonRodaje3.png</iconset>
          </property>
          <property name="iconSize">
@@ -222,8 +222,6 @@
    <header>interfaz/aeropuerto/rodajesUI/rodajeedicionvista.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../../../Recursos.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

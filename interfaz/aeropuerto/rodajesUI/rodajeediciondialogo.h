@@ -19,12 +19,15 @@ public:
     ~RodajeEdicionDialogo();
     virtual void showEvent(QShowEvent *event) override;
 
+private slots:
+    void slotModoEdicion(int id);
+
 private:
     void prepararEscena();
     Ui::RodajeEdicionDialogo *ui;
     RodajeEdicionEscena* escena;
     RodajeEdicionVista* vista;
-    QButtonGroup btnsEdicionRodaje;
+    QButtonGroup* btnsEdicionRodaje;
 };
 
 #endif // RODAJEEDICIONDIALOGO_H

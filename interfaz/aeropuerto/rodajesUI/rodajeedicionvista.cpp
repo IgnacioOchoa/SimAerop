@@ -15,11 +15,16 @@ void RodajeEdicionVista::resizeEvent(QResizeEvent *event)
 
 void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
 {
+    QPoint pos = event->pos();
+    if(mEdicion == modoEdicion::PISTA)
+    {
+        pos = mapFromScene(qobject_cast<RodajeEdicionEscena*>(scene())->posSnapPuntero());
+    }
     if (event->button() == Qt::LeftButton)
     {
         if(lineaIniciada == false) {
             lineaIniciada = true;
-            puntoInicioLinea = event->pos();
+            puntoInicioLinea = pos;
         }
         else {
             lineaIniciada = false;
@@ -51,11 +56,15 @@ void RodajeEdicionVista::actualizarVista()
 
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
 {
-    if(event->modifiers() == Qt::ShiftModifier) lineaIniciada = false;
-    else if(lineaIniciada) {
+    if(lineaIniciada) {
         QPoint pFinal = event->pos();
         qobject_cast<RodajeEdicionEscena*>(scene())->setLineaActiva(mapToScene(puntoInicioLinea),
                                                                     mapToScene(pFinal));
+    }
+    else if(mEdicion == modoEdicion::PISTA)
+    {
+        // Hacer algo con la escena
+        qobject_cast<RodajeEdicionEscena*>(scene())->inputModoPista(mapToScene(event->pos()));
     }
     VistaGraficaBase::mouseMoveEvent(event);
 }
