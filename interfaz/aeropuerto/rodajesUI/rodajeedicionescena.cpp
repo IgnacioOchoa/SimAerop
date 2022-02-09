@@ -20,7 +20,7 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     addItem(snapPuntero);
     snapPuntero->hide();
     connect(vista, &RodajeEdicionVista::sigVistaZoom, this, &RodajeEdicionEscena::slotVistaZoomeada);
-    connect(vista, &RodajeEdicionVista::sigModoEdicion, this, &RodajeEdicionEscena::slotModoEdicionCambiado);
+    connect(vista, &RodajeEdicionVista::sigMostrarSnapPuntero, this, &RodajeEdicionEscena::slotMostrarSnapPuntero);
 }
 
 void RodajeEdicionEscena::graficar()
@@ -77,9 +77,14 @@ void RodajeEdicionEscena::graficarPistas()
     }
 }
 
-void RodajeEdicionEscena::setLineaActiva(QPointF p1, QPointF p2)
+void RodajeEdicionEscena::iniciarLinea(QPointF pos)
 {
-    lineaActiva->setLine(QLineF(p1,p2));
+    inicioLineaActiva = pos;
+}
+
+void RodajeEdicionEscena::setLineaActiva(QPointF p2)
+{
+    lineaActiva->setLine(QLineF(inicioLineaActiva,p2));
 }
 
 void RodajeEdicionEscena::slotCentroVistaMovido()
@@ -98,18 +103,18 @@ void RodajeEdicionEscena::slotVistaZoomeada()
     grilla.verificarEscala();
 }
 
-void RodajeEdicionEscena::slotModoEdicionCambiado(int mod)
+void RodajeEdicionEscena::slotMostrarSnapPuntero(bool mostrar)
 {
-    if (mod != RodajeEdicionVista::modoEdicion::PISTA) snapPuntero->hide();
+    snapPuntero->setVisible(mostrar);
 }
 
 
-void RodajeEdicionEscena::inputModoPista(QPointF posMouse)
+void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 {
     snapPuntero->show();
 
-    float y1 = posMouse.y();
-    float x1 = posMouse.x();
+    float y1 = posCursor.y();
+    float x1 = posCursor.x();
     float m = paramRectasPistas[0][0];
     float a = paramRectasPistas[0][1];
     float xMin = paramRectasPistas[0][2];
@@ -129,4 +134,22 @@ void RodajeEdicionEscena::inputModoPista(QPointF posMouse)
 QPointF RodajeEdicionEscena::posSnapPuntero()
 {
     return snapPuntero->pos();
+}
+
+QPoint RodajeEdicionEscena::calcularPuntoEnParalela(QPointF posCursor)
+{
+    float m = paramRectasPistas[0][0];
+    //float a = paramRectasPistas[0][1];
+
+    //Hay que recalcular a
+    float a = lineaActiva->line().p1().y() - m * lineaActiva->line().p1().x();
+
+    float y1 = posCursor.y();
+    float x1 = posCursor.x();
+
+    float b = y1 + 1/m * x1;
+    float x = (b-a)/(m+1/m);
+    float y = (-1/m)*x + b;
+
+    return QPoint(x,y);
 }

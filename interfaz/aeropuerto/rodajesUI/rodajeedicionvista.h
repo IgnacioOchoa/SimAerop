@@ -6,6 +6,8 @@
 #include <QGraphicsItem>
 #include <QObject>
 
+class RodajeEdicionEscena;
+
 class RodajeEdicionVista : public VistaGraficaBase
 {
     Q_OBJECT
@@ -14,7 +16,6 @@ public:
     enum modoEdicion {NULO, PISTA, DOSPUNTOS, PARALELA};
     Q_ENUM(modoEdicion)
 
-    void setModEdicion(modoEdicion m) {mEdicion = m; emit sigModoEdicion(m);};
     virtual void resizeEvent(QResizeEvent *event) override;
     virtual void mousePressEvent(QMouseEvent* event) override;
     virtual void wheelEvent(QWheelEvent* event) override;
@@ -24,11 +25,15 @@ public:
 
 signals:
     void sigVistaZoom();
-    void sigModoEdicion(modoEdicion m);
+    void sigMostrarSnapPuntero(bool);
+
+public slots:
+    void slotSetModEdicion(int m);
 
 private:
     bool lineaIniciada;
     QPoint puntoInicioLinea;
+    RodajeEdicionEscena* escena;
     modoEdicion mEdicion;
 };
 

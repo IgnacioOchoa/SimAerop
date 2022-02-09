@@ -19,9 +19,6 @@ public:
     ~RodajeEdicionDialogo();
     virtual void showEvent(QShowEvent *event) override;
 
-private slots:
-    void slotModoEdicion(int id);
-
 private:
     void prepararEscena();
     Ui::RodajeEdicionDialogo *ui;

@@ -21,16 +21,18 @@ public:
 
     void graficar();
     QRectF brectPpal();
-    void graficarPistas();    
-    void setLineaActiva(QPointF p1, QPointF p2);
-    void inputModoPista(QPointF posMouse);
+    void graficarPistas();
+    void iniciarLinea(QPointF pos);
+    void setLineaActiva(QPointF p2);
+    void proyectarSobrePista(QPointF posMouse);
     QPointF posSnapPuntero();
+    QPoint calcularPuntoEnParalela(QPointF posCursor);
 
 public slots:
     void slotCentroVistaMovido();
     void slotChckMostrarGrilla(bool);
     void slotVistaZoomeada();
-    void slotModoEdicionCambiado(int m);
+    void slotMostrarSnapPuntero(bool mostrar);
 
 private:
     GrillaGuia grilla;
@@ -40,11 +42,9 @@ private:
 
     RodajeEdicionVista* vista;
     QGraphicsLineItem* lineaActiva;
-
     QGraphicsEllipseItem* snapPuntero;
-
+    QPointF inicioLineaActiva;
     const QList<Pista>& pistas;
-
     QVector<QVector<float>> paramRectasPistas;  // vector que contiene m y a, de la ecuacion y = mx + a
 };
 

@@ -15,11 +15,11 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWid
     ui->cbGrilla->setChecked(false);
     connect(ui->cbGrilla, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotChckMostrarGrilla);
 
-    btnsEdicionRodaje->addButton(ui->pbEditorRodaje1,1);
-    btnsEdicionRodaje->addButton(ui->pbEditorRodaje2,2);
-    btnsEdicionRodaje->addButton(ui->pbEditorRodaje3,3);
+    btnsEdicionRodaje->addButton(ui->pbEditorRodaje1, RodajeEdicionVista::modoEdicion::PISTA);
+    btnsEdicionRodaje->addButton(ui->pbEditorRodaje2, RodajeEdicionVista::modoEdicion::DOSPUNTOS);
+    btnsEdicionRodaje->addButton(ui->pbEditorRodaje3, RodajeEdicionVista::modoEdicion::PARALELA);
 
-    connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &RodajeEdicionDialogo::slotModoEdicion);
+    connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::buttonClicked), vista, &RodajeEdicionVista::slotSetModEdicion);
 }
 
 RodajeEdicionDialogo::~RodajeEdicionDialogo()
@@ -31,13 +31,4 @@ void RodajeEdicionDialogo::showEvent(QShowEvent *event)
 {
     QDialog::showEvent(event);
     escena->graficar();
-}
-
-void RodajeEdicionDialogo::slotModoEdicion(int id)
-{
-    switch (id) {
-    case 1: {vista->setModEdicion(RodajeEdicionVista::modoEdicion::PISTA); break;}
-    case 2: {vista->setModEdicion(RodajeEdicionVista::modoEdicion::DOSPUNTOS); break;}
-    case 3: {vista->setModEdicion(RodajeEdicionVista::modoEdicion::PARALELA); break;}
-    }
 }
