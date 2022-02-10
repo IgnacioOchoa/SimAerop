@@ -40,7 +40,7 @@ struct Rodaje {
 };
 
 struct RodajeParametros {
-    const QStringList tiposRodaje = {"Desde pista", "Paralela a pista", "Dos puntos"};
+    const QStringList tiposRodaje = {"Rodaje desde pista", "Rodaje paralelo a pista", "Rodaje entre dos puntos"};
 };
 
 inline QDebug operator<<(QDebug stream, const Rodaje& rod)
