@@ -22,6 +22,7 @@ SOURCES += \
     interfaz/aeropuerto/pistasUI/pistavista.cpp \
     interfaz/aeropuerto/pistasUI/pistaescena.cpp \
     interfaz/aeropuerto/plataformasUI/modelonombresplataformas.cpp \
+    interfaz/aeropuerto/plataformasUI/modeloplataformasdelegate.cpp \
     interfaz/aeropuerto/plataformasUI/modeloverticesplataformas.cpp \
     interfaz/aeropuerto/plataformasUI/plataformadialogo.cpp \
     interfaz/aeropuerto/grillaguia.cpp \
@@ -51,6 +52,7 @@ HEADERS += \
     interfaz/aeropuerto/pistasUI/pistavista.h \
     interfaz/aeropuerto/pistasUI/pistaescena.h \
     interfaz/aeropuerto/plataformasUI/modelonombresplataformas.h \
+    interfaz/aeropuerto/plataformasUI/modeloplataformasdelegate.h \
     interfaz/aeropuerto/plataformasUI/modeloverticesplataformas.h \
     interfaz/aeropuerto/plataformasUI/plataformadialogo.h \
     interfaz/aeropuerto/grillaguia.h \

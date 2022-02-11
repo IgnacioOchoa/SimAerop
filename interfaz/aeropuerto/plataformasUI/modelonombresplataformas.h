@@ -1,7 +1,7 @@
 #ifndef MODELONOMBRESPLATAFORMAS_H
 #define MODELONOMBRESPLATAFORMAS_H
 
-#include <QAbstractTableModel>
+#include <QItemSelection>
 #include "modeloverticesplataformas.h"
 #include "../../../estructuras-datos/elementosaerop.h"
 
@@ -11,12 +11,23 @@ class ModeloNombresPlataformas : public QAbstractItemModel
     using BaseClass = QAbstractItemModel;
 
 public:
-    enum Columns
+    enum platCol
     {
         E_NOMBRE,
         E_VERTICES,
+    };
+    enum vertCol
+    {
+        E_POS_X,
+        E_POS_Y,
         _END
     };
+
+    enum misRoles
+    {
+        tablaRol = Qt::UserRole
+    };
+
     ModeloNombresPlataformas(QList<Plataforma>& bl, QObject *parent);
     virtual QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override
         {
@@ -36,12 +47,15 @@ public:
     void sincListas();
     void guardarLista();
 
+public slots:
+    void sloSeleccionCambiada(const QItemSelection& itemSeleccion, const QItemSelection& itemDeseleccion);
+
 private:
     friend class ModeloVerticesPlataformas;
     QList<Plataforma> &listaPlataformas;
     QList<Plataforma> buffListaPlataformas;
     Plataforma  plataformaDefault = Plataforma {"Foo", QVector<QPointF> {{500,500}, {500,450}, {450,450}, {450,500}}};
-
+    int ultimoSeleccionado;
 };
 
 #endif // MODELONOMBRESPLATAFORMAS_H

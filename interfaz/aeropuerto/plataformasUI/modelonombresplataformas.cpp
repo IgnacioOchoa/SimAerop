@@ -3,7 +3,8 @@
 ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &la, QObject *parent)
     : QAbstractItemModel(parent),
       listaPlataformas(la),
-      buffListaPlataformas(la)
+      buffListaPlataformas(la),
+      ultimoSeleccionado(-1)
 {
 
 }
@@ -11,6 +12,7 @@ ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &la, QObjec
 int ModeloNombresPlataformas::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
+    qDebug() << buffListaPlataformas.count();
     return buffListaPlataformas.count();
 }
 
@@ -22,15 +24,31 @@ int ModeloNombresPlataformas::columnCount(const QModelIndex &parent) const
 
 QVariant ModeloNombresPlataformas::data(const QModelIndex &index, int role) const
 {
-    if (!index.isValid())
+    if (!index.isValid()){
         return QVariant();
-
-    if (index.row() >= buffListaPlataformas.size())
+    }
+    if (index.row() >= buffListaPlataformas.size()){
         return QVariant();
-
+    }
     if (role == Qt::DisplayRole)
     {
         return buffListaPlataformas.at(index.row()).nombre;
+    }
+    if (role == tablaRol)
+    {
+        const auto& poligono = buffListaPlataformas.at(ultimoSeleccionado).coordPerimetro;
+        switch (index.column()) {
+        case E_POS_X:
+            qDebug() << "Pos X";
+            return poligono.at(index.row()).x();
+            break;
+        case E_POS_Y:
+            qDebug() << "Pos Y";
+            return poligono.at(index.row()).y();
+            break;
+        default:
+            break;
+        }
     }
     else
         return QVariant();
@@ -67,7 +85,11 @@ void ModeloNombresPlataformas::sincListas()
 void ModeloNombresPlataformas::guardarLista()
 {
     listaPlataformas.clear();
-    for (int i = 0; i < buffListaPlataformas.count();i++){
-        listaPlataformas.append(buffListaPlataformas.at(i));
-    }
+    listaPlataformas = buffListaPlataformas;
+}
+
+void ModeloNombresPlataformas::sloSeleccionCambiada(const QItemSelection& itemSeleccion, const QItemSelection& itemDeseleccion)
+{
+    ultimoSeleccionado = itemSeleccion.indexes()[0].row();
+    qDebug() << "Ultimo Seleccionado" << ultimoSeleccionado;
 }

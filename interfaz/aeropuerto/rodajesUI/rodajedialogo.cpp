@@ -85,7 +85,6 @@ void RodajeDialogo::configurarWidgets()
 
 void RodajeDialogo::dialogoAceptado()
 {
-
     this->close();
 }
 

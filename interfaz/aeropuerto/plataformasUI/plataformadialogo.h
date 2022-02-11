@@ -8,6 +8,7 @@
 #include <QDebug>
 #include "../../../estructuras-datos/elementosaerop.h"
 #include "modelonombresplataformas.h"
+#include "modeloplataformasdelegate.h"
 
 namespace Ui {
 class PlataformaDialogo;
@@ -43,7 +44,7 @@ private:
     ModeloVerticesPlataformas* modelo2;
 
 private slots:
-    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+//    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void dialogoAceptado();
     void dialogoCancelado();
     void slotBotonAgregarPlat();

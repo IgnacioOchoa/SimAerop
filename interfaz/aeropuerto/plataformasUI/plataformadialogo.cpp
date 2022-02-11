@@ -17,8 +17,7 @@ PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     connect(botonEliminarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarVert);
 
     QItemSelectionModel* selectionModel = ui->lvNombres->selectionModel();
-    connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &PlataformaDialogo::onSelectionChanged);
-
+    connect(selectionModel, &QItemSelectionModel::selectionChanged, modelo1, &ModeloNombresPlataformas::sloSeleccionCambiada);
 }
 
 PlataformaDialogo::~PlataformaDialogo()
@@ -43,21 +42,20 @@ void PlataformaDialogo::configurarWidgets()
     listaNombres = ui->lvNombres;
     tablaVertices = ui->tvVertices;
     listaNombres->setModel(modelo1);
+    tablaVertices->setModel(modelo1);
+    tablaVertices->setItemDelegate(new ModeloPlataformasDelegate);
     listaNombres->setSelectionBehavior(QAbstractItemView::SelectRows);
     listaNombres->setEditTriggers(QAbstractItemView::NoEditTriggers);
     listaNombres->viewport()->installEventFilter(this);
 }
 
-void PlataformaDialogo::onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
-{
-    Q_UNUSED(deselected)
+//void PlataformaDialogo::onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
+//{
+//    Q_UNUSED(deselected)
 
-//    QModelIndexList list = selected.indexes();
-//    const int& index = toString(list.first());
+//    qDebug() << "Selección";
 
-//    modelo2(new ModeloVerticesPlataformas(index, this));
-//    tablaVertices->setModel(modelo2);
-}
+//}
 
 void PlataformaDialogo::slotBotonAgregarPlat()
 {
