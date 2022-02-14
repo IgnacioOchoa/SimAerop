@@ -4,8 +4,8 @@ GraficadorAeropuerto::GraficadorAeropuerto(AeropuertoVista *gv) :
     vistaAeropuerto(gv)
 {
     escenaAeropuerto = static_cast<AeropuertoEscena*>(gv->scene());
-    colorPavimento = new QBrush("#A4B3B6");
-    colorMargen = new QBrush("#828282");
+    colorPavimento = new QBrush(Qt::lightGray);
+    colorMargen = new QBrush(Qt::darkGray);
     bordeNegro = new QPen(Qt::black, 0);
     bordeBlanco = new QPen(Qt::white, 0);
     bordeTransparente = new QPen(Qt::black, 0, Qt::NoPen);
@@ -157,7 +157,7 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
 
     //Graficación de centerline
 
-    //Nota: Dadas la definición de centerline, y con el fin de facilitar la graficación, se fija el valor del
+    //Nota: Dada la definición de centerline, y con el fin de facilitar la graficación, se fija el valor del
     //intervalo a 2/3 de la longitud de la faja de eje. Dada la formulación matemática, el valor del largo de
     //faja de eje se mantendrá entre 30 y 35 m para pistas de mas de 500 m. ANCHO DEPENDE DE CAT APP.
 

@@ -7,7 +7,8 @@
 #include <QMessageBox>
 #include <QDebug>
 #include "../../../estructuras-datos/elementosaerop.h"
-#include "modelonombresplataformas.h"
+#include "modeloplataformas.h"
+#include "modeloproxyplataformas.h"
 
 namespace Ui {
 class PlataformaDialogo;
@@ -39,8 +40,8 @@ private:
 
     QListView* listaNombres;
     QTableView* tablaVertices;
-    ModeloNombresPlataformas* modelo1;
-    ModeloVerticesPlataformas* modelo2;
+    ModeloPlataformas* modelo;
+    ModeloProxyPlataformas* modeloProxy;
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
