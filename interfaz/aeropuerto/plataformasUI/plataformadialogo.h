@@ -44,7 +44,7 @@ private:
     ModeloVerticesPlataformas* modelo2;
 
 private slots:
-//    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+    //void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void dialogoAceptado();
     void dialogoCancelado();
     void slotBotonAgregarPlat();

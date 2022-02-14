@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>859</width>
-    <height>592</height>
+    <width>973</width>
+    <height>524</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -39,6 +39,12 @@
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>400</width>
+         <height>0</height>
+        </size>
        </property>
        <property name="maximumSize">
         <size>
@@ -123,7 +129,14 @@
          </widget>
         </item>
         <item>
-         <widget class="QTableView" name="tvVertices"/>
+         <widget class="QTableView" name="tvVertices">
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
         </item>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_4">

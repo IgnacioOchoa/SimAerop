@@ -18,6 +18,9 @@ PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
 
     QItemSelectionModel* selectionModel = ui->lvNombres->selectionModel();
     connect(selectionModel, &QItemSelectionModel::selectionChanged, modelo1, &ModeloNombresPlataformas::sloSeleccionCambiada);
+    connect(selectionModel, &QItemSelectionModel::selectionChanged,
+            [this](const QItemSelection& itemSeleccion, const QItemSelection& itemDeseleccion){tablaVertices->reset();});
+
 }
 
 PlataformaDialogo::~PlataformaDialogo()
@@ -43,9 +46,15 @@ void PlataformaDialogo::configurarWidgets()
     tablaVertices = ui->tvVertices;
     listaNombres->setModel(modelo1);
     tablaVertices->setModel(modelo1);
+    qInfo() << "antes de tablaVertices->setItemDelegate";
     tablaVertices->setItemDelegate(new ModeloPlataformasDelegate);
+    qInfo() << "despues de tablaVertices->setItemDelegate";
     listaNombres->setSelectionBehavior(QAbstractItemView::SelectRows);
     listaNombres->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    tablaVertices->setEditTriggers(QAbstractItemView::DoubleClicked);
+    tablaVertices->update();
+
     listaNombres->viewport()->installEventFilter(this);
 }
 

@@ -4,7 +4,7 @@ ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &la, QObjec
     : QAbstractItemModel(parent),
       listaPlataformas(la),
       buffListaPlataformas(la),
-      ultimoSeleccionado(-1)
+      ultimoSeleccionado(0)
 {
 
 }
@@ -12,13 +12,15 @@ ModeloNombresPlataformas::ModeloNombresPlataformas(QList<Plataforma> &la, QObjec
 int ModeloNombresPlataformas::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    qDebug() << buffListaPlataformas.count();
+    //qDebug() << "rowCount ModeloNombresPlataformas: " << buffListaPlataformas.count();
     return buffListaPlataformas.count();
 }
 
 int ModeloNombresPlataformas::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
+    //qDebug() << "columnCount ModeloNombresPlataformas: " << 2;
+    return 2;
     return _END;
 }
 
@@ -36,14 +38,14 @@ QVariant ModeloNombresPlataformas::data(const QModelIndex &index, int role) cons
     }
     if (role == tablaRol)
     {
-        const auto& poligono = buffListaPlataformas.at(ultimoSeleccionado).coordPerimetro;
+        QPolygonF poligono = buffListaPlataformas.at(ultimoSeleccionado).coordPerimetro;
         switch (index.column()) {
         case E_POS_X:
-            qDebug() << "Pos X";
+            //qDebug() << "Pos X";
             return poligono.at(index.row()).x();
             break;
         case E_POS_Y:
-            qDebug() << "Pos Y";
+            //qDebug() << "Pos Y";
             return poligono.at(index.row()).y();
             break;
         default:
@@ -73,6 +75,11 @@ bool ModeloNombresPlataformas::removeRows(int row, int count, const QModelIndex 
     buffListaPlataformas.removeAt(row);
     endRemoveRows();
     return true;
+}
+
+Qt::ItemFlags ModeloNombresPlataformas::flags(const QModelIndex &index) const
+{
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
 }
 
 void ModeloNombresPlataformas::sincListas()
