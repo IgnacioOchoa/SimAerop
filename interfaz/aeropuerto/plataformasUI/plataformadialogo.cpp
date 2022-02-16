@@ -4,8 +4,9 @@
 PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlataformaDialogo),
-    modelo(new ModeloPlataformas(la, this)),
-    modeloProxy(new ModeloProxyPlataformas(this))
+    modelo(new ModeloPlataformas(la, this))
+//    modeloProxy(new ModeloProxyPlataformas(this))
+
 {
     ui->setupUi(this);
     configurarWidgets();
@@ -35,7 +36,7 @@ void PlataformaDialogo::showEvent(QShowEvent *event)
 
 void PlataformaDialogo::configurarWidgets()
 {
-    modeloProxy->setSourceModel(modelo);
+//    modeloProxy->setSourceModel(modelo);
     botonAceptar = ui->pbAceptar;
     botonCancelar = ui->pbCancelar;
     botonAgregarPlat = ui->pbAgregarPlat;
@@ -50,7 +51,7 @@ void PlataformaDialogo::configurarWidgets()
     listaNombres->viewport()->installEventFilter(this);
 
     tablaVertices = ui->tvVertices;
-    tablaVertices->setModel(modelo);
+//    tablaVertices->setModel(modeloProxy);
     tablaVertices->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     int anchoMin = tablaVertices->horizontalHeader()->length();
     tablaVertices->verticalHeader()->hide();
@@ -66,11 +67,13 @@ void PlataformaDialogo::onSelectionChanged(const QItemSelection &selected, const
 {
     Q_UNUSED(deselected)
 
-//    QModelIndexList list = selected.indexes();
-//    const int& index = toString(list.first());
+    QModelIndexList list = selected.indexes();
+    const int& index = list.first().row();
 
-//    modelo2(new ModeloVerticesPlataformas(index, this));
-//    tablaVertices->setModel(modelo2);
+    qDebug() << index;
+    Plataforma pl = modelo->buffListaPlataformas.at(index);
+    modeloVertices = new ModeloVerticesPlataformas(pl, this);
+    tablaVertices->setModel(modeloVertices);
 }
 
 void PlataformaDialogo::slotBotonAgregarPlat()

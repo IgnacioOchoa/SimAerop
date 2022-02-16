@@ -1,8 +1,8 @@
 #include "modeloverticesplataformas.h"
 
-ModeloVerticesPlataformas::ModeloVerticesPlataformas(const QModelIndex& index, QObject *parent)
-    : QAbstractItemModel(parent)
-//    plataforma()
+ModeloVerticesPlataformas::ModeloVerticesPlataformas(Plataforma& pl, QObject *parent)
+    : QAbstractTableModel(parent),
+    plataforma(pl)
 {
 
 }
@@ -10,7 +10,7 @@ ModeloVerticesPlataformas::ModeloVerticesPlataformas(const QModelIndex& index, Q
 int ModeloVerticesPlataformas::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return plataforma->coordPerimetro.count();
+    return plataforma.coordPerimetro.count();
 }
 
 int ModeloVerticesPlataformas::columnCount(const QModelIndex &parent) const
@@ -24,12 +24,12 @@ QVariant ModeloVerticesPlataformas::data(const QModelIndex &index, int role) con
     if (!index.isValid())
         return QVariant();
 
-    if (index.row() >= plataforma->coordPerimetro.size())
+    if (index.row() >= plataforma.coordPerimetro.size())
         return QVariant();
 
     if (role == Qt::DisplayRole)
     {
-        const auto& vertice = plataforma->coordPerimetro.at(index.row());
+        const auto& vertice = plataforma.coordPerimetro.at(index.row());
         switch (index.column()) {
         case E_POS_X:
             return vertice.x();
@@ -42,21 +42,21 @@ QVariant ModeloVerticesPlataformas::data(const QModelIndex &index, int role) con
 }
 bool ModeloVerticesPlataformas::insertRows(int row, int count, const QModelIndex &parent)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(count);
-    beginInsertRows(QModelIndex(), row+1, row+1);
-    plataforma->coordPerimetro.insert(row+1, puntoDefault);
-    endInsertRows();
-    return true;
+//    Q_UNUSED(parent);
+//    Q_UNUSED(count);
+//    beginInsertRows(QModelIndex(), row+1, row+1);
+//    plataforma.coordPerimetro.insert(row+1, puntoDefault);
+//    endInsertRows();
+//    return true;
 }
 
 bool ModeloVerticesPlataformas::removeRows(int row, int count, const QModelIndex &parent)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(count);
-    if (plataforma->coordPerimetro.count() == 0) return true;
-    beginRemoveRows(QModelIndex(), row, row);
-    plataforma->coordPerimetro.removeAt(row);
-    endRemoveRows();
-    return true;
+//    Q_UNUSED(parent);
+//    Q_UNUSED(count);
+//    if (plataforma.coordPerimetro.count() == 0) return true;
+//    beginRemoveRows(QModelIndex(), row, row);
+//    plataforma.coordPerimetro.removeAt(row);
+//    endRemoveRows();
+//    return true;
 }

@@ -9,7 +9,7 @@ ModeloProxyPlataformas::ModeloProxyPlataformas(QObject *parent)
 int ModeloProxyPlataformas::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-//    return;
+    return 5;
 }
 
 int ModeloProxyPlataformas::columnCount(const QModelIndex &parent) const
@@ -20,8 +20,28 @@ int ModeloProxyPlataformas::columnCount(const QModelIndex &parent) const
 
 QVariant ModeloProxyPlataformas::data(const QModelIndex &index, int role) const
 {
-    qDebug() << index;
-    qDebug() << role;
+    if (!index.isValid())
+        return QVariant();
+
+//    if (index.row() >= buffListaPlataformas.size())
+//        return QVariant();
+
+    if (role == Qt::DisplayRole)
+    {
+        switch(index.column()) {
+        case 0:
+            return index.row();
+            break;
+        case 1:
+            return index.column();
+            break;
+        default:
+            return QVariant();
+            break;
+        }
+     }
+    else
+        return QVariant();
 }
 
 bool ModeloProxyPlataformas::insertRows(int row, int count, const QModelIndex &parent)
@@ -36,10 +56,8 @@ bool ModeloProxyPlataformas::removeRows(int row, int count, const QModelIndex &p
 
 QModelIndex ModeloProxyPlataformas::mapFromSource(const QModelIndex &sourceIndex) const
 {
-
 }
 
 QModelIndex ModeloProxyPlataformas::mapToSource(const QModelIndex &proxyIndex) const
 {
-
 }

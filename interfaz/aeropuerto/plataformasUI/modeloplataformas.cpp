@@ -30,9 +30,10 @@ QVariant ModeloPlataformas::data(const QModelIndex &index, int role) const
 
     if (role == Qt::DisplayRole)
     {
+        const auto& plataforma = buffListaPlataformas.at(index.row());
         switch(index.column()) {
         case 0:
-            return buffListaPlataformas.at(index.row()).nombre;
+            return plataforma.nombre;
             break;
         case 1:
             return "Vertice";

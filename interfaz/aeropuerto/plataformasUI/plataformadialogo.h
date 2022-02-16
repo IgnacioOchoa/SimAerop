@@ -8,6 +8,7 @@
 #include <QDebug>
 #include "../../../estructuras-datos/elementosaerop.h"
 #include "modeloplataformas.h"
+#include "modeloverticesplataformas.h"
 #include "modeloproxyplataformas.h"
 
 namespace Ui {
@@ -41,6 +42,7 @@ private:
     QListView* listaNombres;
     QTableView* tablaVertices;
     ModeloPlataformas* modelo;
+    ModeloVerticesPlataformas* modeloVertices;
     ModeloProxyPlataformas* modeloProxy;
 
 private slots:

@@ -5,10 +5,9 @@
 #include "modeloplataformas.h"
 #include "../../../estructuras-datos/elementosaerop.h"
 
-class ModeloVerticesPlataformas : public QAbstractItemModel
+class ModeloVerticesPlataformas : public QAbstractTableModel
 {
     Q_OBJECT
-    using BaseClass = QAbstractItemModel;
 
 public:
     enum Columns
@@ -17,7 +16,9 @@ public:
         E_POS_Y,
         _END
     };
-    ModeloVerticesPlataformas(const QModelIndex& index, QObject* parent);
+
+    ModeloVerticesPlataformas(Plataforma& pl, QObject* parent);
+
     virtual QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override
         {
             return createIndex(row, column, nullptr);
@@ -33,7 +34,7 @@ public:
     virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
 
 private:
-    Plataforma* plataforma;
+    Plataforma plataforma;
     QPointF puntoDefault = QPointF (500,500);
 };
 Q_DECLARE_METATYPE(ModeloVerticesPlataformas*)
