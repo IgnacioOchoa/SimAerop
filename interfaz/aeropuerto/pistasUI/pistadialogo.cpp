@@ -43,8 +43,8 @@ void PistaDialogo::poblarPista()
     int angulo = 90 - (dialPista->value()%18)*10;
     if (angulo < 0) angulo += 180;
     pista.orientacion = angulo;
-    pista.cabecera1 = cabecera1;
-    pista.cabecera2 = cabecera2;
+    //pista.cabecera1 = cabecera1;
+    //pista.cabecera2 = cabecera2;
 }
 
 void PistaDialogo::dibujarPista()

@@ -27,11 +27,11 @@ public:
 private:
     const QList<Rodaje>& listaRodajes;
     QList<Rodaje> buffListaRodajes;
-    const QStringList listaHeaders = {"Cabecera", "Posición", "Ángulo", "Ancho", "Largo", "Radio"};
+    const QStringList listaHeaders = {"Nombre", "Grupo", "Pista asociada", "Tipo"};
     QString cabActiva1;
     QString cabActiva2;
-    Pista pistaDefault = Pista{0,0,0,"",""};
-    Rodaje rodajeDefault = Rodaje{"",0,0,0,0,0};
+    Pista pistaDefault;
+    Rodaje rodajeDefault;
 };
 
 #endif // MODELORODAJES_H

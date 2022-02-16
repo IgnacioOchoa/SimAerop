@@ -18,13 +18,14 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
     listaGraficosPlataformas.clear();
     listaGraficosPistas.clear();
 
+//  ### FIX ME ###
     //RECTANGULOS RODAJES
-    for (int i = 0; i < rs.size(); ++i) {
-        QRectF* primitivaRodaje = new QRectF(rs.at(i).posicion,-rs.at(i).ancho/2.0,rs.at(i).largo,rs.at(i).ancho);
-        QPolygonF polyRodaje(*primitivaRodaje);
-        QTransform t = QTransform().translate(rs.at(i).posicion,0 ).rotate( -rs.at(i).angulo ).translate(-rs.at(i).posicion,0 );
-        listaGraficosRodajes.append(t.map(polyRodaje));
-    }
+//    for (int i = 0; i < rs.size(); ++i) {
+//        QRectF* primitivaRodaje = new QRectF(rs.at(i).posicion,-rs.at(i).ancho/2.0,rs.at(i).largo,rs.at(i).ancho);
+//        QPolygonF polyRodaje(*primitivaRodaje);
+//        QTransform t = QTransform().translate(rs.at(i).posicion,0 ).rotate( -rs.at(i).angulo ).translate(-rs.at(i).posicion,0 );
+//        listaGraficosRodajes.append(t.map(polyRodaje));
+//    }
 
     //POLIGONOS PLATAFORMA
     for (int i = 0; i < as.size(); ++i) {

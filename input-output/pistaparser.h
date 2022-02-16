@@ -32,12 +32,12 @@ private:
     QVariantMap rodaje;
     QVariantMap plataforma;
 
-    QStringList variablesPista = {"largo", "ancho", "cabecera1", "cabecera2", "orientacion"};
-    QStringList variablesRodaje = {"cabecera","posicion","angulo","ancho","largo","radio"};
+    QStringList variablesPista = Pista::getParametros();
+    QStringList variablesRodaje = Rodaje::getParametros();
     QStringList variablesPlataforma = {"nombre", "coordPerimetro"};
 
-    const Pista pistaError = {0,0,0,"",""};
-    const Rodaje rodajeError = {"",0.0,0.0,0,0,0};
+    const Pista pistaError;
+    const Rodaje rodajeError;
     const Plataforma plataformaError = {"", QVector<QPointF> {}};
 
     void escribirPista(const QList<Pista>& pista);

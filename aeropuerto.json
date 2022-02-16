@@ -1,24 +1,34 @@
 {
     "pistas": [{
-        "ancho": 60,
-        "cabecera1": "Cab1",
-        "cabecera2": "Cab2",
+		"nombre": "Pista principal",
         "largo": 2000,
-        "orientacion": 0
+        "ancho": 60,
+        "orientacion": 80,
+		"puntoOrigen": [0.0, 0.0]
     }],
-    "calles rodaje" : [
-                       { "cabecera" : "11",
-                         "posicion" : 345,
-                         "angulo"   : 30,
+    "rodajes" : [
+                       { "nombre" : "Rodaje salida",
+                         "coordInicio" : [200.0,200.0],
+                         "coordFinal"  : [300.0,300.0],
                          "ancho"    : 10,
-                         "largo"    : 75,
-                         "radio"    : 40 },
-                       { "cabecera" : "23",
-                         "posicion" : 872,
-                         "angulo"   : 45,
-                         "ancho"    : 12,
-                         "largo"    : 105,
-                         "radio"    : 50 }
+                         "grupo"    : "Sector izquierdo",
+						 "pista"    : "Pista principal",
+						 "tipo"     : "Salida rapida",
+                         "radio1"    : 10,
+						 "radio2"    : 10,
+						 "radio3"    : 10,
+						 "radio4"    : 10},
+                       { "nombre" : "Rodaje paralela",
+                         "coordInicio" : [100.0,400.0],
+                         "coordFinal"  : [-100.0,300.0],
+                         "ancho"    : 10,
+                         "grupo"    : "Sector derecho",
+						 "pista"    : "Pista secundaria",
+						 "tipo"     : "Acceso plataforma",
+                         "radio1"    : 10,
+						 "radio2"    : 10,
+						 "radio3"    : 10,
+						 "radio4"    : 10}
                     ],
   "plataformas" : [
                        { "nombre" : "Plataforma 1", 

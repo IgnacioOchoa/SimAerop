@@ -8,35 +8,76 @@
 #include <QDebug>
 
 struct Pista {
+    Pista(QString nombre = "---",
+          int largo = 0,
+          int ancho = 0,
+          int orientacion = 0,
+          QPointF puntoOrigen = QPointF())
+    {
+        this->nombre = nombre;
+        this->largo = largo;
+        this->ancho = ancho;
+        this->orientacion = orientacion;
+        this->puntoOrigen = puntoOrigen;
+    }
+    QString nombre;
     int largo;
     int ancho;
     int orientacion;
-    QString cabecera1;
-    QString cabecera2;
+    QPointF puntoOrigen;
+    static QStringList getParametros() {return {"nombre", "largo", "ancho", "orientacion", "puntoOrigen"};}
     bool operator==(const Pista& p){
-        return(largo==p.largo && ancho==p.ancho && orientacion==p.orientacion &&
-               cabecera1 == p.cabecera1 && cabecera2 == p.cabecera2);
+        return(nombre==p.nombre && largo==p.largo && ancho==p.ancho && orientacion==p.orientacion &&
+               puntoOrigen==p.puntoOrigen);
     }
 };
 
 inline QDebug operator<<(QDebug stream, const Pista& p)
 {
     stream << "Pista" << Qt::endl;
+    stream << "Nombre: " << p.nombre << Qt::endl;
     stream << "Largo: " << p.largo << "m" << Qt::endl;
     stream << "Ancho: " << p.ancho << "m" << Qt::endl;
     stream << "Orientacion: " << p.orientacion << " grados" << Qt::endl;
-    stream << "Cabecera 1: " << p.cabecera1 << Qt::endl;
-    stream << "Cabecera 2: " << p.cabecera2 << "\n \n";
     return stream;
 }
 
 struct Rodaje {
-    QString cabecera;
-    float posicion;
-    float angulo;
+    Rodaje(QString nombre = "---",
+           QPointF coordInicio = QPointF(),
+           QPointF coordFinal = QPointF(),
+           int ancho = 0,
+           QString grupo = QString(),
+           QString pista = QString(),
+           QString tipo = QString(),
+           int radio1 = 0,
+           int radio2 = 0,
+           int radio3 = 0,
+           int radio4 = 0)
+    {
+        this->nombre = nombre;
+        this->coordInicio = coordInicio;
+        this->coordFinal = coordFinal;
+        this->ancho = ancho;
+        this->grupo = grupo;
+        this->pista = pista;
+        this->tipo = tipo;
+        this->radio1 = radio1; this->radio2 = radio2;
+        this->radio3 = radio3; this->radio4 = radio4;
+    }
+    QString nombre;
+    QPointF coordInicio;
+    QPointF coordFinal;
     int ancho;
-    int largo;
-    int radio;
+    QString grupo;
+    QString pista;
+    QString tipo;
+    int radio1;
+    int radio2;
+    int radio3;
+    int radio4;
+    static QStringList getParametros() { return {"nombre", "coordInicio", "coordFinal", "ancho", "grupo", "pista",
+                                   "tipo", "radio1", "radio2", "radio3", "radio4"}; }
 };
 
 struct RodajeParametros {
@@ -46,12 +87,16 @@ struct RodajeParametros {
 inline QDebug operator<<(QDebug stream, const Rodaje& rod)
 {
     stream << "Calle rodaje" << Qt::endl;
-    stream << "Cabecera: " << rod.cabecera << Qt::endl;
-    stream << "Posicion: " << rod.posicion << "m" << Qt::endl;
-    stream << "Largo: " << rod.largo << "m" << Qt::endl;
-    stream << "Ancho: " << rod.ancho << "m" << Qt::endl;
-    stream << "Radio: " << rod.radio << "m" << Qt::endl;
-    stream << "Angulo: " << rod.angulo << " grados" << "\n \n";
+    stream << "Nombre: " << rod.nombre << Qt::endl;
+    stream << "Coord Inicio: " << rod.coordInicio;
+    stream << "Coord Final: " << rod.coordFinal;
+    stream << "Grupo: " << rod.grupo << Qt::endl;
+    stream << "Pista: " << rod.pista << Qt::endl;
+    stream << "Tipo: " << rod.tipo << Qt::endl;
+    stream << "Radio1: " << rod.radio1 << " m" << Qt::endl;
+    stream << "Radio2: " << rod.radio2 << " m" << Qt::endl;
+    stream << "Radio3: " << rod.radio3 << " m" << Qt::endl;
+    stream << "Radio4: " << rod.radio4 << " m" << Qt::endl;
     return stream;
 }
 

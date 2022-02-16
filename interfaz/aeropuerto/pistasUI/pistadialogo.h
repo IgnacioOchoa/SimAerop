@@ -84,7 +84,7 @@ private:
     QCheckBox* cbActivarCotas;
 
     Pista pista;
-    Pista pistaDefault = {0,0,0,QString(),QString()};
+    Pista pistaDefault;
     const int margenMinUmbral = 20;
     QList<Pista>& listaPistas;
 

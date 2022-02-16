@@ -11,7 +11,7 @@ ModeloRodajes::ModeloRodajes(const QList<Rodaje>& lstRodaje, QObject *parent)
 int ModeloRodajes::columnCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 6;
+    return listaHeaders.size();
 }
 
 int ModeloRodajes::rowCount(const QModelIndex &parent) const
@@ -32,22 +32,16 @@ QVariant ModeloRodajes::data(const QModelIndex &index, int role) const
     {
         switch(index.column()) {
         case 0:
-            return buffListaRodajes.at(index.row()).cabecera;
+            return buffListaRodajes.at(index.row()).nombre;
             break;
         case 1:
-            return buffListaRodajes.at(index.row()).posicion;
+            return buffListaRodajes.at(index.row()).grupo;
             break;
         case 2:
-            return buffListaRodajes.at(index.row()).angulo;
+            return buffListaRodajes.at(index.row()).pista;
             break;
         case 3:
-            return buffListaRodajes.at(index.row()).ancho;
-            break;
-        case 4:
-            return buffListaRodajes.at(index.row()).largo;
-            break;
-        case 5:
-            return buffListaRodajes.at(index.row()).radio;
+            return buffListaRodajes.at(index.row()).tipo;
             break;
         default:
             return QVariant();
@@ -107,7 +101,7 @@ void ModeloRodajes::sincListas()
 
 void ModeloRodajes::setCabecerasActivas(const QString &c1, const QString &c2)
 {
-    cabActiva1 = c1;
-    cabActiva2 = c2;
-    rodajeDefault.cabecera = c1;
+//    cabActiva1 = c1;
+//    cabActiva2 = c2;
+//    rodajeDefault.cabecera = c1;
 }

@@ -27,18 +27,18 @@ RodajeDialogo::~RodajeDialogo()
 void RodajeDialogo::showEvent(QShowEvent *event)
 {
     modelo->sincListas();
-    int n1;
-    QString cabeceras;
-    foreach(Pista p, listaPistas)
-    {
-        if(p.orientacion > 89) n1 = 9+(180-p.orientacion)/10;
-        else if(p.orientacion >= 0) n1 = (90-p.orientacion)/10;
-        QString c1 = QString::number(n1).rightJustified(2,'0');
-        QString c2 = QString::number(n1+18).rightJustified(2,'0');
-        cabeceras = c1 + " - " + c2;
-        ui->cbPista->addItem(cabeceras);
-        modelo->setCabecerasActivas(c1, c2);
-    }
+//    int n1;
+//    QString cabeceras;
+//    foreach(Pista p, listaPistas)
+//    {
+//        if(p.orientacion > 89) n1 = 9+(180-p.orientacion)/10;
+//        else if(p.orientacion >= 0) n1 = (90-p.orientacion)/10;
+//        QString c1 = QString::number(n1).rightJustified(2,'0');
+//        QString c2 = QString::number(n1+18).rightJustified(2,'0');
+//        cabeceras = c1 + " - " + c2;
+//        ui->cbPista->addItem(cabeceras);
+//        modelo->setCabecerasActivas(c1, c2);
+//    }
     QWidget::showEvent(event);
 }
 

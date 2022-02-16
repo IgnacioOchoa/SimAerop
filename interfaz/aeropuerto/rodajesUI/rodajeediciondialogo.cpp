@@ -10,6 +10,7 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWid
     escena = new RodajeEdicionEscena(ui->gvRodajeEdicion,listaPistas, this);
     configurarWidgets();
     actualizarPanelParametros();
+    ui->pbEditorRodaje1->setChecked(true);
     slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
     vista->slotSetModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
 }
