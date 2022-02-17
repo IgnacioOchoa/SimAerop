@@ -63,6 +63,7 @@ void RodajeEdicionEscena::graficarPistas()
 
         elementosPpales.append(addLine(QLineF(p1,p2),penPista));
 
+        //Calcular deltaX y deltaY de la pista para luego calcular la pendiente
         float deltaX;
         float deltaY;
         deltaX = p2.x() - p1.x();
@@ -71,9 +72,20 @@ void RodajeEdicionEscena::graficarPistas()
             deltaX *= -1;
             deltaY *= -1;
         }
+        if (deltaX < 1e-4f) deltaX = 0;
+        float min;
+        float max;
 
-        paramRectasPistas.append({deltaY/deltaX,0,qMin(float(p1.x()),float(p2.x())),
-                                  qMax(float(p1.x()),float(p2.x()))});
+        if(deltaX != 0) { //Linea no vertical
+        min = qMin(float(p1.x()),float(p2.x()));
+        max = qMax(float(p1.x()),float(p2.x()));
+        }
+        else {  //Linea vertical
+        min = qMin(float(p1.y()),float(p2.y()));
+        max = qMax(float(p1.y()),float(p2.y()));
+        }
+        //Guardar pendiente, ordenada al origen, punto inicio y punto final de la pista
+        paramRectasPistas.append({deltaX, deltaY, 0, min, max});
     }
 }
 
@@ -115,18 +127,37 @@ void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 
     float y1 = posCursor.y();
     float x1 = posCursor.x();
-    float m = paramRectasPistas[0][0];
-    float a = paramRectasPistas[0][1];
-    float xMin = paramRectasPistas[0][2];
-    float xMax = paramRectasPistas[0][3];
+    float dx = paramRectasPistas[0][0];
+    float dy = paramRectasPistas[0][1];
+    float a = paramRectasPistas[0][2];
+    float min = paramRectasPistas[0][3];
+    float max = paramRectasPistas[0][4];
 
-    float b = y1 + 1/m * x1;
-    float x = (b-a)/(m+1/m);
-    x = qMin(x,xMax);
-    x = qMax(x,xMin);
-    float y = (-1/m)*x + b;
-    y = qMin(y,xMax*m+a);
-    y = qMax(y,xMin*m+a);
+    float x;
+    float y;
+
+    if(dy == 0) {   // Recta horizontal
+        x = x1;
+        y = a;
+        x = qMin(x,max);
+        x = qMax(x,min);
+    }
+    else if (dx == 0) { //Recta vertical
+        y = y1;
+        x = 0; //Esto hay que actualizarlo cuando se implementen pistas que no pasen por 0
+        y = qMin(y,max);
+        y = qMax(y,min);
+    }
+    else {
+        float m = dy/dx;
+        float b = y1 + 1/m * x1;
+        x = (b-a)/(m+1/m);
+        x = qMin(x,max);
+        x = qMax(x,min);
+        y = (-1/m)*x + b;
+        y = qMin(y,max*m+a);
+        y = qMax(y,min*m+a);
+    }
 
     snapPuntero->setPos(x,y);
 }

@@ -63,8 +63,8 @@ void RodajeEdicionDialogo::configurarWidgets()
     btnsEdicionRodaje->addButton(ui->pbEditorRodaje2, RodajeEdicionVista::modoEdicion::DOSPUNTOS);
     btnsEdicionRodaje->addButton(ui->pbEditorRodaje3, RodajeEdicionVista::modoEdicion::PARALELA);
     connect(ui->cbGrilla, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotChckMostrarGrilla);
-    connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::buttonPressed), vista, &RodajeEdicionVista::slotSetModEdicion);
-    connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::buttonPressed), this, &RodajeEdicionDialogo::slotModoEdicionCambiado);
+    connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::idPressed), vista, &RodajeEdicionVista::slotSetModEdicion);
+    connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::idPressed), this, &RodajeEdicionDialogo::slotModoEdicionCambiado);
     ui->pbEditorRodaje1->setToolTip(rp.tiposRodaje[0]);
     ui->pbEditorRodaje2->setToolTip(rp.tiposRodaje[1]);
     ui->pbEditorRodaje3->setToolTip(rp.tiposRodaje[2]);

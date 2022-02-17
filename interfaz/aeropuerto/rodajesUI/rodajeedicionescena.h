@@ -45,7 +45,7 @@ private:
     QGraphicsEllipseItem* snapPuntero;
     QPointF inicioLineaActiva;
     const QList<Pista>& pistas;
-    QVector<QVector<float>> paramRectasPistas;  // vector que contiene m y a, de la ecuacion y = mx + a
+    QVector<QVector<float>> paramRectasPistas;  // vector que contiene dx, dy y a, de la ecuacion y = (dy/dx)*x + a
 };
 
 
