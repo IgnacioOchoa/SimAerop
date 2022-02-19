@@ -40,11 +40,11 @@ void PistaDialogo::poblarPista()
 {
     pista.largo = leLargoPista->text().toInt();
     pista.ancho = leAnchoPista->text().toInt();
-    int angulo = 90 - (dialPista->value()%18)*10;
+    //int angulo = 90 - (dialPista->value()%18)*10;
+    int angulo = 180 - (dialPista->value()-9)*10;
     if (angulo < 0) angulo += 180;
+    if (angulo > 180) angulo -= 180;
     pista.orientacion = angulo;
-    //pista.cabecera1 = cabecera1;
-    //pista.cabecera2 = cabecera2;
 }
 
 void PistaDialogo::dibujarPista()
@@ -78,6 +78,7 @@ void PistaDialogo::actualizarUmbrales(const QString& s1, const QString& s2)
 
 void PistaDialogo::actualizarLEOrientacion(int value)
 {
+    //qInfo() << "Valor del dial = " << value;
     QString s1 = QString::number(value%18).rightJustified(2,'0');
     QString s2 = QString::number(value%18+18).rightJustified(2,'0');
     if (s1=="00")

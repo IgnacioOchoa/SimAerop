@@ -89,7 +89,7 @@ void VistaGraficaBase::centrarVista()
     double cociente2 = r2.height()/r1.height();
     double escala = qMin(cociente1,cociente2)*0.9;
     scale(escala,escala);
-
+    //qInfo() << "Escala vistraGraficaBase = " << escala;
     moverAOrigien();
 }
 

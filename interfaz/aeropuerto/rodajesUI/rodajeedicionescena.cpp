@@ -31,6 +31,7 @@ void RodajeEdicionEscena::graficar()
     graficarPistas();
     vista->actualizarVista();
     vista->centrarVista();
+    graficarCabeceras();
     grilla.crearGrid();
     grilla.mostrarGrilla(mostrarGrilla);
     addItem(lineaActiva);
@@ -48,6 +49,7 @@ QRectF RodajeEdicionEscena::brectPpal()
 
 void RodajeEdicionEscena::graficarPistas()
 {
+
     QPen penPista("black");
     penPista.setWidth(5);
     penPista.setCosmetic(true);
@@ -55,24 +57,29 @@ void RodajeEdicionEscena::graficarPistas()
 
     foreach(Pista p, pistas)
     {
+        qInfo() << "pista.orientacion = " << p.orientacion;
+
         QPointF p1(p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
-                   p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
+                   -p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
 
         QPointF p2(-p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
-                   -p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
+                   p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
 
         elementosPpales.append(addLine(QLineF(p1,p2),penPista));
 
         //Calcular deltaX y deltaY de la pista para luego calcular la pendiente
         float deltaX;
         float deltaY;
+
         deltaX = p2.x() - p1.x();
         deltaY = p2.y() - p1.y();
-        if (p2.x() < p1.x()) {
-            deltaX *= -1;
-            deltaY *= -1;
-        }
-        if (deltaX < 1e-4f) deltaX = 0;
+
+        if (abs(deltaX) < 1e-4f) deltaX = 0;
+
+        qInfo() << "deltaX = " << deltaX;
+        qInfo() << "deltaY = " << deltaY;
+
+
         float min;
         float max;
 
@@ -86,6 +93,49 @@ void RodajeEdicionEscena::graficarPistas()
         }
         //Guardar pendiente, ordenada al origen, punto inicio y punto final de la pista
         paramRectasPistas.append({deltaX, deltaY, 0, min, max});
+
+        qInfo() << "min = " << min;
+        qInfo() << "max = " << max;
+    }
+}
+
+void RodajeEdicionEscena::graficarCabeceras()
+{
+    foreach(Pista p, pistas)
+    {
+        QPointF p1(p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
+                   -p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
+
+        QPointF p2(-p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
+                   p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
+
+    QFont font("arial",15);
+    QFontMetrics fontMetrics(font);
+    int height = fontMetrics.height();
+
+    QGraphicsTextItem* textoCabecera1 = addText(p.getCabecera1(),font);
+    textoCabecera1->setDefaultTextColor("blue");
+    QTransform t1;
+    t1.translate(-textoCabecera1->boundingRect().width()/2,-height);
+    textoCabecera1->setTransform(t1,true);
+    textoCabecera1->setPos(p1);
+    textoCabecera1->setFlags(textoCabecera1->flags() | QGraphicsItem::ItemIgnoresTransformations);
+
+    QGraphicsTextItem* textoCabecera2 = addText(p.getCabecera2(),font);
+    textoCabecera2->setDefaultTextColor("blue");
+    QTransform t2;
+    t2.translate(-textoCabecera2->boundingRect().width()/2,0);
+    textoCabecera2->setTransform(t2,true);
+    textoCabecera2->setPos(p2);
+    textoCabecera2->setFlags(textoCabecera2->flags() | QGraphicsItem::ItemIgnoresTransformations);
+\
+    textoCabeceras.append(textoCabecera1);
+    textoCabeceras.append(textoCabecera2);
+    }
+
+    foreach(QGraphicsTextItem* itm, textoCabeceras)
+    {
+        itm->hide();
     }
 }
 
@@ -108,6 +158,14 @@ void RodajeEdicionEscena::slotChckMostrarGrilla(bool mostrar)
 {
     mostrarGrilla = mostrar;
     grilla.mostrarGrilla(mostrar);
+}
+
+void RodajeEdicionEscena::slotMostrarCabeceras(bool visible)
+{
+    foreach(QGraphicsTextItem* itm, textoCabeceras)
+    {
+        itm->setVisible(visible);
+    }
 }
 
 void RodajeEdicionEscena::slotVistaZoomeada()
@@ -137,26 +195,32 @@ void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
     float y;
 
     if(dy == 0) {   // Recta horizontal
+        //qInfo() << "Recta horizontal";
         x = x1;
         y = a;
         x = qMin(x,max);
         x = qMax(x,min);
     }
     else if (dx == 0) { //Recta vertical
+        //qInfo() << "Recta vertical";
         y = y1;
         x = 0; //Esto hay que actualizarlo cuando se implementen pistas que no pasen por 0
         y = qMin(y,max);
         y = qMax(y,min);
     }
     else {
+        //qInfo() << "Recta oblicua";
         float m = dy/dx;
         float b = y1 + 1/m * x1;
         x = (b-a)/(m+1/m);
         x = qMin(x,max);
         x = qMax(x,min);
+       // qInfo() << "x = " << x;
         y = (-1/m)*x + b;
+        if(m < 0) {std::swap(min,max);}
         y = qMin(y,max*m+a);
         y = qMax(y,min*m+a);
+        //qInfo() << "y = " << y;
     }
 
     snapPuntero->setPos(x,y);
@@ -169,8 +233,9 @@ QPointF RodajeEdicionEscena::posSnapPuntero()
 
 QPoint RodajeEdicionEscena::calcularPuntoEnParalela(QPointF posCursor)
 {
-    float m = paramRectasPistas[0][0];
-    //float a = paramRectasPistas[0][1];
+    float deltaX = paramRectasPistas[0][0];
+    float deltaY = paramRectasPistas[0][1];
+    float m = deltaY/deltaX;
 
     //Hay que recalcular a
     float a = lineaActiva->line().p1().y() - m * lineaActiva->line().p1().x();

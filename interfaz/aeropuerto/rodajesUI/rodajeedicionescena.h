@@ -22,6 +22,7 @@ public:
     void graficar();
     QRectF brectPpal();
     void graficarPistas();
+    void graficarCabeceras();
     void iniciarLinea(QPointF pos);
     void setLineaActiva(QPointF p2);
     void proyectarSobrePista(QPointF posMouse);
@@ -31,6 +32,7 @@ public:
 public slots:
     void slotCentroVistaMovido();
     void slotChckMostrarGrilla(bool);
+    void slotMostrarCabeceras(bool);
     void slotVistaZoomeada();
     void slotMostrarSnapPuntero(bool mostrar);
 
@@ -39,6 +41,7 @@ private:
     bool mostrarGrilla;
 
     QVector<QGraphicsItem*> elementosPpales;
+    QVector<QGraphicsTextItem*> textoCabeceras;
 
     RodajeEdicionVista* vista;
     QGraphicsLineItem* lineaActiva;

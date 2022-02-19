@@ -30,6 +30,19 @@ struct Pista {
         return(nombre==p.nombre && largo==p.largo && ancho==p.ancho && orientacion==p.orientacion &&
                puntoOrigen==p.puntoOrigen);
     }
+    QString getCabecera1() const {
+        int nro = (90 - orientacion)/10;
+        if (nro < 0) nro += 36;
+        if (nro == 0) nro = 36;
+        return QString::number(nro).rightJustified(2,'0');
+    }
+    QString getCabecera2() const {
+        int nro = (90 - orientacion)/10;
+        if (nro < 0) nro += 36;
+        if (nro == 0) nro = 36;
+        nro = (nro + 18) % 36;
+        return QString::number(nro).rightJustified(2,'0');
+    }
 };
 
 inline QDebug operator<<(QDebug stream, const Pista& p)
