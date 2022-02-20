@@ -7,6 +7,7 @@
 #include <QGraphicsItem>
 #include <QDebug>
 #include <QFloat16>
+#include <QtMath>
 #include "aeropuertoescena.h"
 #include "aeropuertovista.h"
 
@@ -28,6 +29,9 @@ private:
     void reportarDatosEscena();
     void graficarPinturaPista(const Pista&);
     void graficarMargenes(const Pista&);
+    qreal largoVector(const QPointF ini, const QPointF fin);
+    qreal anguloVector(const QPointF ini, const QPointF fin);
+    QPolygonF poligonoVector(const QPointF ini, const QPointF fin, qreal offset);
 
     AeropuertoVista* vistaAeropuerto;
     AeropuertoEscena* escenaAeropuerto;
