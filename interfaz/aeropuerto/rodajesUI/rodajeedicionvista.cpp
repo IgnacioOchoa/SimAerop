@@ -21,6 +21,9 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
         case modoEdicion::PISTA:
             escena->iniciarLinea(escena->posSnapPuntero());
             break;
+        case modoEdicion::SNAP_CABECERAS:
+            //
+            break;
         case modoEdicion::DOSPUNTOS:
             escena->iniciarLinea(mapToScene(pos));
             break;
@@ -64,6 +67,7 @@ void RodajeEdicionVista::slotSetModEdicion(int m)
 {
     mEdicion = static_cast<RodajeEdicionVista::modoEdicion>(m);
     escena->slotMostrarSnapPuntero(m == modoEdicion::PISTA);
+    escena->slotMostrarCabPuntero(m == modoEdicion::SNAP_CABECERAS);
 }
 
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
@@ -82,14 +86,19 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
             break;
         case modoEdicion::NULO:
             break;
+        default:
+            break;
         }
     }
     else  //lineaIniciada != true
     {
         switch(mEdicion) {
         case modoEdicion::PISTA:
-            escena->proyectarSobrePista(mapToScene(pFinal));
-            break;
+          escena->proyectarSobrePista(mapToScene(pFinal));
+          break;
+        case modoEdicion::SNAP_CABECERAS:
+          escena->resaltarCabecera(mapToScene(pFinal));
+          break;
         default:
             break;
         }

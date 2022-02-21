@@ -8,19 +8,15 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     lineaActiva(new QGraphicsLineItem),
     pistas(listaPistas)
 {
+    prepararSimbolosSnap();
     lineaActiva->setLine(QLine());
     QPen pLineaActiva("orange");
     pLineaActiva.setWidth(3) ; pLineaActiva.setCosmetic(true);
     lineaActiva->setPen(pLineaActiva);
-    snapPuntero = new QGraphicsEllipseItem(QRectF(-6,-6,12,12));
-    QPen penPuntero(QBrush("red"),3);
-    penPuntero.setCosmetic(true);
-    snapPuntero->setPen(penPuntero);
-    snapPuntero->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    addItem(snapPuntero);
-    snapPuntero->hide();
+
     connect(vista, &RodajeEdicionVista::sigVistaZoom, this, &RodajeEdicionEscena::slotVistaZoomeada);
     connect(vista, &RodajeEdicionVista::sigMostrarSnapPuntero, this, &RodajeEdicionEscena::slotMostrarSnapPuntero);
+
 }
 
 void RodajeEdicionEscena::graficar()
@@ -49,7 +45,6 @@ QRectF RodajeEdicionEscena::brectPpal()
 
 void RodajeEdicionEscena::graficarPistas()
 {
-
     QPen penPista("black");
     penPista.setWidth(5);
     penPista.setCosmetic(true);
@@ -57,8 +52,6 @@ void RodajeEdicionEscena::graficarPistas()
 
     foreach(Pista p, pistas)
     {
-        qInfo() << "pista.orientacion = " << p.orientacion;
-
         QPointF p1(p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
                    -p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
 
@@ -74,11 +67,7 @@ void RodajeEdicionEscena::graficarPistas()
         deltaX = p2.x() - p1.x();
         deltaY = p2.y() - p1.y();
 
-        if (abs(deltaX) < 1e-4f) deltaX = 0;
-
-        qInfo() << "deltaX = " << deltaX;
-        qInfo() << "deltaY = " << deltaY;
-
+        if (abs(deltaX) < 1e-4f) deltaX = 0; //Como son floats, redondeo
 
         float min;
         float max;
@@ -93,9 +82,7 @@ void RodajeEdicionEscena::graficarPistas()
         }
         //Guardar pendiente, ordenada al origen, punto inicio y punto final de la pista
         paramRectasPistas.append({deltaX, deltaY, 0, min, max});
-
-        qInfo() << "min = " << min;
-        qInfo() << "max = " << max;
+        extremosPista.append({p1,p2});
     }
 }
 
@@ -178,6 +165,29 @@ void RodajeEdicionEscena::slotMostrarSnapPuntero(bool mostrar)
     snapPuntero->setVisible(mostrar);
 }
 
+void RodajeEdicionEscena::slotMostrarCabPuntero(bool mostrar)
+{
+    cabPuntero->setVisible(mostrar);
+}
+
+void RodajeEdicionEscena::prepararSimbolosSnap()
+{
+    snapPuntero = new QGraphicsEllipseItem(QRectF(-6,-6,12,12));
+    QPen penPuntero(QBrush("red"),3);
+    penPuntero.setCosmetic(true);
+    snapPuntero->setPen(penPuntero);
+    snapPuntero->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    addItem(snapPuntero);
+    snapPuntero->hide();
+
+    cabPuntero = new QGraphicsRectItem(QRectF(-7,-7,14,14));
+    QPen penSnapCabecera(QBrush("green"),4);
+    penSnapCabecera.setCosmetic(true);
+    cabPuntero->setPen(penSnapCabecera);
+    cabPuntero->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    addItem(cabPuntero);
+    cabPuntero->hide();
+}
 
 void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 {
@@ -224,6 +234,24 @@ void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
     }
 
     snapPuntero->setPos(x,y);
+}
+
+void RodajeEdicionEscena::resaltarCabecera(QPointF posMouse)
+{
+    QPointF puntoCercano;
+    float distMin = 1e7;
+    foreach(auto pair, extremosPista)
+    {
+        foreach(QPointF pto, pair) {
+            float distancia = sqrt(qPow(posMouse.x()-pto.x(),2)+qPow(posMouse.y()-pto.y(),2));
+            if ( distancia < distMin)
+            {
+                distMin = distancia;
+                puntoCercano = pto;
+            }
+        }
+    }
+    cabPuntero->setPos(puntoCercano);
 }
 
 QPointF RodajeEdicionEscena::posSnapPuntero()
