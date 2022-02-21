@@ -14,49 +14,35 @@ GraficadorAeropuerto::GraficadorAeropuerto(AeropuertoVista *gv) :
 void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QList<Rodaje>& rs, const QList<Plataforma>& as)
 {
     escenaAeropuerto->clear();
-    listaGraficosRodajes.clear();
-    listaGraficosPlataformas.clear();
-    listaGraficosPistas.clear();
 
-    //RECTANGULOS RODAJES
-    for (int i = 0; i < rs.size(); ++i) {
-        listaGraficosRodajes.append(poligonoVector(rs.at(i).coordInicio, rs.at(i).coordFinal, rs.at(i).ancho/2));
-    }
-
-    //POLIGONOS PLATAFORMA
-    for (int i = 0; i < as.size(); ++i) {
-        listaGraficosPlataformas.append(as.at(i).coordPerimetro);
-    }
-
-    //RECTANGULO PISTA
-    for (int i = 0; i < ps.size(); ++i) {
-        QRectF* pavPista = new QRectF(-ps.at(i).largo/2.0,-ps.at(i).ancho/2.0,ps.at(i).largo,ps.at(i).ancho);
-        listaGraficosPistas.append(*pavPista);
-        graficarMargenes(ps.at(i));
-    }
-
-    //GRAFICA EL CONJUNTO DE LOS PAVIMENTOS. ALGO NO FUNCIONA CON SIMPLIFIED()
+    //GRAFICA EL CONJUNTO DE LOS PAVIMENTOS
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);
+
     //Agrega Pista
-    for (int i = 0; i <listaGraficosPistas.size(); ++i) {
-        path.addRect(listaGraficosPistas.at(i));
+    for (int i = 0; i <ps.size(); ++i) {
+        QPolygonF *pista = new QPolygonF(poligonoVector(QPointF(-ps.at(i).largo/2, 0), QPointF(ps.at(i).largo/2, 0), ps.at(i).ancho/2.0));
+        path.addPolygon(*pista);
+        graficarMargenes(ps.at(i));
     }
     //Agrega Plataformas
-    for (int i = 0; i <listaGraficosPlataformas.size(); ++i) {
-        path.addPolygon(listaGraficosPlataformas.at(i));
+    for (int i = 0; i <as.size(); ++i) {
+        QPolygonF *plataforma = new QPolygonF(as.at(i).coordPerimetro);
+        path.addPolygon(*plataforma);
     }
     //Agrega Rodajes
-    for (int i = 0; i <listaGraficosRodajes.size(); ++i) {
-        path.addPolygon(listaGraficosRodajes.at(i));
+    for (int i = 0; i <rs.size(); ++i) {
+        QPolygonF *rodaje = new QPolygonF(poligonoVector(rs.at(i).coordInicio, rs.at(i).coordFinal, rs.at(i).ancho/2.0));
+        path.addPolygon(*rodaje);
     }
+
     path = path.simplified();
     QGraphicsPathItem* pavRigido = escenaAeropuerto->addPath(path, *bordeNegro, *colorPavimento);
 
     vistaAeropuerto->fitInView(pavRigido,Qt::KeepAspectRatio);
 
     //Grafica la pintura de la pista 0 solamente
-//    graficarPinturaPista(ps.at(0));
+    graficarPinturaPista(ps.at(0));
 
     vistaAeropuerto->actualizarEntorno();
 }
@@ -192,7 +178,7 @@ void GraficadorAeropuerto::graficarMargenes(const Pista& p)
 {
     //Grafica márgenes de pista1 y áreas anterior al umbral
     if(p.ancho <60){
-        escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0-(60-p.ancho)/2.0,p.largo+60,60, *bordeTransparente, *colorMargen);
+       escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0-(60-p.ancho)/2.0,p.largo+60,60, *bordeTransparente, *colorMargen);
     }
     else{
         escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, *bordeTransparente, *colorMargen);
@@ -209,16 +195,62 @@ qreal GraficadorAeropuerto::largoVector(const QPointF ini, const QPointF fin)
 
 qreal GraficadorAeropuerto::anguloVector(const QPointF ini, const QPointF fin)
 {
-    qreal angulo = qAtan((fin.y()-ini.y())/(fin.x()-ini.x()));
-    return angulo;
+    qreal num = fin.y()-ini.y();
+    qreal den = fin.x()-ini.x();
+    int quad;
+    if (num >= 0 and den > 0){
+        quad = 1;
+    }
+    if (num >= 0 and den < 0){
+        quad = 2;
+    }
+    if (num < 0 and den < 0){
+        quad = 3;
+    }
+    if (num < 0 and den > 0){
+        quad = 4;
+    }
+    if (den == 0){
+        if (num > 0){
+            quad = 5;
+        }
+        else{
+            quad = 6;
+        }
+    }
+
+    switch(quad)
+    {
+    case 1:
+        return qAtan((fin.y()-ini.y())/(fin.x()-ini.x()));
+        break;
+    case 2:
+        return M_PI+qAtan((fin.y()-ini.y())/(fin.x()-ini.x()));
+        break;
+    case 3:
+        return -M_PI+qAtan((fin.y()-ini.y())/(fin.x()-ini.x()));
+        break;
+    case 4:
+        return qAtan((fin.y()-ini.y())/(fin.x()-ini.x()));
+        break;
+    case 5:
+        return M_PI_2;
+        break;
+    case 6:
+        return -M_PI_2;
+        break;
+    }
 }
 
-QPolygonF GraficadorAeropuerto::poligonoVector(const QPointF ini, const QPointF fin, qreal offset)
-{
-    QPointF ini1 = QPointF(ini.x()+qCos(anguloVector(ini, fin)+M_PI_2)*offset, ini.y()+qSin(anguloVector(ini, fin)+M_PI_2)*offset);
-    QPointF ini2 = QPointF(ini.x()+qCos(anguloVector(ini, fin)-M_PI_2)*offset, ini.y()+qSin(anguloVector(ini, fin)-M_PI_2)*offset);
-    QPointF fin1 = QPointF(fin.x()+qCos(anguloVector(ini, fin)+M_PI_2)*offset, fin.y()+qSin(anguloVector(ini, fin)+M_PI_2)*offset);
-    QPointF fin2 = QPointF(fin.x()+qCos(anguloVector(ini, fin)-M_PI_2)*offset, fin.y()+qSin(anguloVector(ini, fin)-M_PI_2)*offset);
-    QPolygonF polyRodaje({ini1, fin1, fin2, ini2, ini1});
-    return polyRodaje;
+QVector<QPointF> GraficadorAeropuerto::poligonoVector(const QPointF ini, const QPointF fin, qreal offset){
+    float x1 = static_cast<float>(ini.x());
+    float y1 = static_cast<float>(ini.y());
+    float x2 = static_cast<float>(fin.x());
+    float y2 = static_cast<float>(fin.y());
+    QPointF ini1 = QPointF(x1+qCos(anguloVector(ini, fin)+M_PI_2)*offset, y1+qSin(anguloVector(ini, fin)+M_PI_2)*offset);
+    QPointF ini2 = QPointF(x1+qCos(anguloVector(ini, fin)-M_PI_2)*offset, y1+qSin(anguloVector(ini, fin)-M_PI_2)*offset);
+    QPointF fin1 = QPointF(x2+qCos(anguloVector(ini, fin)+M_PI_2)*offset, y2+qSin(anguloVector(ini, fin)+M_PI_2)*offset);
+    QPointF fin2 = QPointF(x2+qCos(anguloVector(ini, fin)-M_PI_2)*offset, y2+qSin(anguloVector(ini, fin)-M_PI_2)*offset);
+    QVector<QPointF> poliVector({ini1, fin1, fin2, ini2, ini1});
+    return poliVector;
 }

@@ -31,14 +31,10 @@ private:
     void graficarMargenes(const Pista&);
     qreal largoVector(const QPointF ini, const QPointF fin);
     qreal anguloVector(const QPointF ini, const QPointF fin);
-    QPolygonF poligonoVector(const QPointF ini, const QPointF fin, qreal offset);
+    QVector<QPointF> poligonoVector(const QPointF ini, const QPointF fin, qreal offset);
 
     AeropuertoVista* vistaAeropuerto;
     AeropuertoEscena* escenaAeropuerto;
-
-    QList<QRectF> listaGraficosPistas;
-    QList<QPolygonF> listaGraficosRodajes;
-    QList<QPolygonF> listaGraficosPlataformas;
 
     QLinearGradient* gradienteFondoPista;
     QBrush* fondoPista;

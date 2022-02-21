@@ -110,12 +110,16 @@ void InterfazPrincipal::setDefaults()
     // VALORES POR DEFAULT OBJETOS DE PRUEBA
     //********
     listaPistas.append({"Pista principal", 2500,45,80,QPointF(0,0)});
-    listaRodajes.append({{"Rodaje1",QPointF(200,0), QPointF(200,250), 30, "Grupo1", "Pista1", "TipoNulo",
+    listaRodajes.append({{"Rodaje1",QPointF(220,0), QPointF(240,-250), 30, "Grupo1", "Pista1", "TipoNulo",
                          5,5,5,5},
-                         {"Rodaje2",QPointF(-200,0), QPointF(-200,250), 30, "Grupo2", "Pista1", "TipoNulo",
+                         {"Rodaje2",QPointF(-220,0), QPointF(-240,-250), 30, "Grupo2", "Pista1", "TipoNulo",
+                         5,5,5,5},
+                         {"Rodaje3",QPointF(220,0), QPointF(240,250), 30, "Grupo1", "Pista1", "TipoNulo",
+                         5,5,5,5},
+                         {"Rodaje4",QPointF(-220,0), QPointF(-240,250), 30, "Grupo2", "Pista1", "TipoNulo",
                          5,5,5,5}});
-    listaPlataformas.append(Plataforma ("Norte", QVector<QPointF> {{-300,-300}, {-300,-20},  {300,-20}, {300,-300}, {-300,-300}}));
-    listaPlataformas.append(Plataforma ("Sur", QVector<QPointF> {{-300,300}, {-300,200},  {300,200}, {300,300}, {-300,300}}));
+    listaPlataformas.append(Plataforma ("Norte", QVector<QPointF> {{-300,-300}, {-300,-200},  {300,-200}, {300,-300}, {-300,-300}}));
+    listaPlataformas.append(Plataforma ("Sur", QVector<QPointF> {{-300,200}, {-300,300},  {300,300}, {300,200}, {-300,200}}));
     //********
     statusBar()->showMessage("Valores por default establecidos", 3000);
     actualizarDatosPista();
