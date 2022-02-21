@@ -13,7 +13,7 @@ class RodajeEdicionVista : public VistaGraficaBase
     Q_OBJECT
 public:
     RodajeEdicionVista(QWidget* parent = nullptr);
-    enum modoEdicion {NULO, PISTA, DOSPUNTOS, PARALELA};
+    enum modoEdicion {NULO, PISTA, SNAP_CABECERAS, DOSPUNTOS, PARALELA};
     Q_ENUM(modoEdicion)
 
     virtual void resizeEvent(QResizeEvent *event) override;

@@ -26,6 +26,7 @@ public:
     void iniciarLinea(QPointF pos);
     void setLineaActiva(QPointF p2);
     void proyectarSobrePista(QPointF posMouse);
+    void resaltarCabecera(QPointF posMouse);
     QPointF posSnapPuntero();
     QPoint calcularPuntoEnParalela(QPointF posCursor);
 
@@ -35,8 +36,10 @@ public slots:
     void slotMostrarCabeceras(bool);
     void slotVistaZoomeada();
     void slotMostrarSnapPuntero(bool mostrar);
+    void slotMostrarCabPuntero(bool mostrar);
 
 private:
+    void prepararSimbolosSnap();
     GrillaGuia grilla;
     bool mostrarGrilla;
 
@@ -46,9 +49,11 @@ private:
     RodajeEdicionVista* vista;
     QGraphicsLineItem* lineaActiva;
     QGraphicsEllipseItem* snapPuntero;
+    QGraphicsRectItem* cabPuntero;
     QPointF inicioLineaActiva;
     const QList<Pista>& pistas;
     QVector<QVector<float>> paramRectasPistas;  // vector que contiene dx, dy y a, de la ecuacion y = (dy/dx)*x + a
+    QVector<QList<QPointF>> extremosPista;
 };
 
 

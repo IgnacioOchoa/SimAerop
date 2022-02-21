@@ -7,12 +7,20 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWid
     btnsEdicionRodaje(new QButtonGroup(this))
 {
     ui->setupUi(this);
+    setStyleSheet("QLabel#lbSeleccionCabecera { background-color: transparent; border-color: black; "
+                  "border-width: 2; border-style: solid; border-radius: 10;"
+                  "color: blue }"
+                  "QLabel#lbSeleccionCabecera:hover {background-color: #e1eaeb}"
+                  "QLabel#lbSeleccionCabecera:focus { background-color: #defdff}");
+    ui->lbSeleccionCabecera->setFocusPolicy(Qt::ClickFocus);
+    ui->lbSeleccionCabecera->installEventFilter(this);
     escena = new RodajeEdicionEscena(ui->gvRodajeEdicion,listaPistas, this);
     configurarWidgets();
     actualizarPanelParametros();
     ui->pbEditorRodaje1->setChecked(true);
     slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
     vista->slotSetModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
+
 }
 
 RodajeEdicionDialogo::~RodajeEdicionDialogo()
@@ -26,6 +34,19 @@ void RodajeEdicionDialogo::showEvent(QShowEvent *event)
     escena->graficar();
 }
 
+bool RodajeEdicionDialogo::eventFilter(QObject *obj, QEvent *event)
+{
+    if(obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusIn)
+    {
+        slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::SNAP_CABECERAS);
+    }
+    else if (obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusOut)
+    {
+        slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
+    }
+    return false;
+}
+
 void RodajeEdicionDialogo::slotModoEdicionCambiado(int m)
 {
     RodajeParametros rp;
@@ -34,7 +55,11 @@ void RodajeEdicionDialogo::slotModoEdicionCambiado(int m)
     case RodajeEdicionVista::modoEdicion::PISTA:
         ui->lbModoEdicion->setText("Modo edición: " + rp.tiposRodaje[0]);
         ui->swPanelParametros->setCurrentIndex(0);
+        vista->slotSetModEdicion(m);
         //ui->gbParametros->
+        break;
+    case RodajeEdicionVista::modoEdicion::SNAP_CABECERAS:
+        vista->slotSetModEdicion(m);
         break;
     case RodajeEdicionVista::modoEdicion::DOSPUNTOS:
         ui->lbModoEdicion->setText("Modo edición: " + rp.tiposRodaje[1]);
@@ -49,6 +74,8 @@ void RodajeEdicionDialogo::slotModoEdicionCambiado(int m)
     case RodajeEdicionVista::modoEdicion::NULO:
         break;
         //ui->gbParametros->
+    default:
+        break;
     }
 }
 

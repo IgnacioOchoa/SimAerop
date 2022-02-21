@@ -18,6 +18,7 @@ public:
     explicit RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWidget *parent = nullptr);
     ~RodajeEdicionDialogo();
     virtual void showEvent(QShowEvent *event) override;
+    virtual bool eventFilter(QObject *obj, QEvent *event) override;
 
 private slots:
     void slotModoEdicionCambiado(int m);
