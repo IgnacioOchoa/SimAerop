@@ -6,6 +6,7 @@
 #include <QPointF>
 #include <QPolygonF>
 #include <QDebug>
+#include <QtMath>
 
 struct Pista {
     Pista(QString nombre = "---",
@@ -20,6 +21,7 @@ struct Pista {
         this->orientacion = orientacion;
         this->puntoOrigen = puntoOrigen;
     }
+    enum Cabecera {CAB1, CAB2};
     QString nombre;
     int largo;
     int ancho;
@@ -30,18 +32,34 @@ struct Pista {
         return(nombre==p.nombre && largo==p.largo && ancho==p.ancho && orientacion==p.orientacion &&
                puntoOrigen==p.puntoOrigen);
     }
-    QString getCabecera1() const {
+    QString getCabecera(Cabecera cab) const {
         int nro = (90 - orientacion)/10;
         if (nro < 0) nro += 36;
         if (nro == 0) nro = 36;
+        if (cab == CAB2) nro = (nro + 18) % 36;
         return QString::number(nro).rightJustified(2,'0');
     }
-    QString getCabecera2() const {
-        int nro = (90 - orientacion)/10;
-        if (nro < 0) nro += 36;
-        if (nro == 0) nro = 36;
-        nro = (nro + 18) % 36;
-        return QString::number(nro).rightJustified(2,'0');
+    QPointF getPuntoCabecera(Cabecera cab) const {
+        if(cab == CAB1)
+        {
+            return QPointF(largo/2.0*qCos(qDegreesToRadians(float(orientacion))),
+                       -largo/2.0*qSin(qDegreesToRadians(float(orientacion))));
+        }
+        else //(cab == CAB2)
+        {
+            return QPointF(-largo/2.0*qCos(qDegreesToRadians(float(orientacion))),
+                       largo/2.0*qSin(qDegreesToRadians(float(orientacion))));
+        }
+    }
+    QString getCabecera(QPointF pos) const
+    {
+        if(abs(pos.x()-getPuntoCabecera(CAB1).x()) < 1e-3 &&
+           abs(pos.y()-getPuntoCabecera(CAB1).y()) < 1e-3)
+            return getCabecera(CAB1);
+        else if(abs(pos.x()-getPuntoCabecera(CAB2).x()) < 1e-3 &&
+                abs(pos.y()-getPuntoCabecera(CAB2).y()) < 1e-3)
+            return getCabecera(CAB2);
+        else return "??";
     }
 };
 

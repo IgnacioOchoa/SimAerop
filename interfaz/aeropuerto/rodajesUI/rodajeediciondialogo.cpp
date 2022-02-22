@@ -4,7 +4,8 @@
 RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::RodajeEdicionDialogo),
-    btnsEdicionRodaje(new QButtonGroup(this))
+    btnsEdicionRodaje(new QButtonGroup(this)),
+    pistas(listaPistas)
 {
     ui->setupUi(this);
     setStyleSheet("QLabel#lbSeleccionCabecera { background-color: transparent; border-color: black; "
@@ -42,7 +43,8 @@ bool RodajeEdicionDialogo::eventFilter(QObject *obj, QEvent *event)
     }
     else if (obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusOut)
     {
-        slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
+        RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
+        if(!rod) slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
     }
     return false;
 }
@@ -55,11 +57,9 @@ void RodajeEdicionDialogo::slotModoEdicionCambiado(int m)
     case RodajeEdicionVista::modoEdicion::PISTA:
         ui->lbModoEdicion->setText("Modo edición: " + rp.tiposRodaje[0]);
         ui->swPanelParametros->setCurrentIndex(0);
-        vista->slotSetModEdicion(m);
         //ui->gbParametros->
         break;
     case RodajeEdicionVista::modoEdicion::SNAP_CABECERAS:
-        vista->slotSetModEdicion(m);
         break;
     case RodajeEdicionVista::modoEdicion::DOSPUNTOS:
         ui->lbModoEdicion->setText("Modo edición: " + rp.tiposRodaje[1]);
@@ -77,6 +77,12 @@ void RodajeEdicionDialogo::slotModoEdicionCambiado(int m)
     default:
         break;
     }
+    vista->slotSetModEdicion(m);
+}
+
+void RodajeEdicionDialogo::slotCabeceraSeleccionada(QPointF pto) const
+{
+    ui->lbSeleccionCabecera->setText(pistas[0].getCabecera(pto));
 }
 
 void RodajeEdicionDialogo::configurarWidgets()
@@ -91,8 +97,9 @@ void RodajeEdicionDialogo::configurarWidgets()
     btnsEdicionRodaje->addButton(ui->pbEditorRodaje3, RodajeEdicionVista::modoEdicion::PARALELA);
     connect(ui->cbGrilla, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotChckMostrarGrilla);
     connect(ui->cbCabeceras, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotMostrarCabeceras);
-    connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::idPressed), vista, &RodajeEdicionVista::slotSetModEdicion);
     connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::idPressed), this, &RodajeEdicionDialogo::slotModoEdicionCambiado);
+    connect(vista, QOverload<int>::of(&RodajeEdicionVista::sigCambiarModo), this, &RodajeEdicionDialogo::slotModoEdicionCambiado);
+    connect(vista, QOverload<QPointF>::of(&RodajeEdicionVista::sigCabeceraSeleccionada), this, &RodajeEdicionDialogo::slotCabeceraSeleccionada);
     ui->pbEditorRodaje1->setToolTip(rp.tiposRodaje[0]);
     ui->pbEditorRodaje2->setToolTip(rp.tiposRodaje[1]);
     ui->pbEditorRodaje3->setToolTip(rp.tiposRodaje[2]);

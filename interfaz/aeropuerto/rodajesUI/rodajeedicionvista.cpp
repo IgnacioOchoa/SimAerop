@@ -20,20 +20,24 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
         switch(mEdicion) {
         case modoEdicion::PISTA:
             escena->iniciarLinea(escena->posSnapPuntero());
+            lineaIniciada = true;
             break;
         case modoEdicion::SNAP_CABECERAS:
-            //
+            escena->seleccionarCabecera(escena->posSnapCabecera());
+            emit sigCambiarModo(modoEdicion::PISTA);
+            emit sigCabeceraSeleccionada(escena->posSnapCabecera());
             break;
         case modoEdicion::DOSPUNTOS:
             escena->iniciarLinea(mapToScene(pos));
+            lineaIniciada = true;
             break;
         case modoEdicion::PARALELA:
             escena->iniciarLinea(mapToScene(pos));
+            lineaIniciada = true;
             break;
         case modoEdicion::NULO:
             break;
         }
-        lineaIniciada = true;
     }
     else if (event->button() == Qt::LeftButton && lineaIniciada==true)
     {
@@ -90,14 +94,14 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
             break;
         }
     }
-    else  //lineaIniciada != true
+    else  //lineaIniciada = false
     {
         switch(mEdicion) {
         case modoEdicion::PISTA:
           escena->proyectarSobrePista(mapToScene(pFinal));
           break;
         case modoEdicion::SNAP_CABECERAS:
-          escena->resaltarCabecera(mapToScene(pFinal));
+          escena->proyectarSobreCabecera(mapToScene(pFinal));
           break;
         default:
             break;

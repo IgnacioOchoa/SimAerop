@@ -31,6 +31,7 @@ void RodajeEdicionEscena::graficar()
     grilla.crearGrid();
     grilla.mostrarGrilla(mostrarGrilla);
     addItem(lineaActiva);
+    snapCabecera->setPos(pistas[0].getPuntoCabecera(Pista::CAB1));
 }
 
 QRectF RodajeEdicionEscena::brectPpal()
@@ -52,11 +53,8 @@ void RodajeEdicionEscena::graficarPistas()
 
     foreach(Pista p, pistas)
     {
-        QPointF p1(p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
-                   -p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
-
-        QPointF p2(-p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
-                   p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
+        QPointF p1 = p.getPuntoCabecera(Pista::CAB1);
+        QPointF p2 = p.getPuntoCabecera(Pista::CAB2);
 
         elementosPpales.append(addLine(QLineF(p1,p2),penPista));
 
@@ -90,17 +88,14 @@ void RodajeEdicionEscena::graficarCabeceras()
 {
     foreach(Pista p, pistas)
     {
-        QPointF p1(p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
-                   -p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
-
-        QPointF p2(-p.largo/2.0*qCos(qDegreesToRadians(float(p.orientacion))),
-                   p.largo/2.0*qSin(qDegreesToRadians(float(p.orientacion))));
+    QPointF p1 = p.getPuntoCabecera(Pista::CAB1);
+    QPointF p2 = p.getPuntoCabecera(Pista::CAB2);
 
     QFont font("arial",15);
     QFontMetrics fontMetrics(font);
     int height = fontMetrics.height();
 
-    QGraphicsTextItem* textoCabecera1 = addText(p.getCabecera1(),font);
+    QGraphicsTextItem* textoCabecera1 = addText(p.getCabecera(Pista::CAB1),font);
     textoCabecera1->setDefaultTextColor("blue");
     QTransform t1;
     t1.translate(-textoCabecera1->boundingRect().width()/2,-height);
@@ -108,7 +103,7 @@ void RodajeEdicionEscena::graficarCabeceras()
     textoCabecera1->setPos(p1);
     textoCabecera1->setFlags(textoCabecera1->flags() | QGraphicsItem::ItemIgnoresTransformations);
 
-    QGraphicsTextItem* textoCabecera2 = addText(p.getCabecera2(),font);
+    QGraphicsTextItem* textoCabecera2 = addText(p.getCabecera(Pista::CAB2),font);
     textoCabecera2->setDefaultTextColor("blue");
     QTransform t2;
     t2.translate(-textoCabecera2->boundingRect().width()/2,0);
@@ -162,36 +157,47 @@ void RodajeEdicionEscena::slotVistaZoomeada()
 
 void RodajeEdicionEscena::slotMostrarSnapPuntero(bool mostrar)
 {
-    snapPuntero->setVisible(mostrar);
+    snapPista->setVisible(mostrar);
 }
 
 void RodajeEdicionEscena::slotMostrarCabPuntero(bool mostrar)
 {
-    cabPuntero->setVisible(mostrar);
+    snapCabecera->setVisible(mostrar);
 }
 
 void RodajeEdicionEscena::prepararSimbolosSnap()
 {
-    snapPuntero = new QGraphicsEllipseItem(QRectF(-6,-6,12,12));
+    snapPista = new QGraphicsEllipseItem(QRectF(-6,-6,12,12));
     QPen penPuntero(QBrush("red"),3);
     penPuntero.setCosmetic(true);
-    snapPuntero->setPen(penPuntero);
-    snapPuntero->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    addItem(snapPuntero);
-    snapPuntero->hide();
+    snapPista->setPen(penPuntero);
+    snapPista->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    addItem(snapPista);
+    snapPista->hide();
 
-    cabPuntero = new QGraphicsRectItem(QRectF(-7,-7,14,14));
+    snapCabecera = new QGraphicsRectItem(QRectF(-7,-7,14,14));
     QPen penSnapCabecera(QBrush("green"),4);
     penSnapCabecera.setCosmetic(true);
-    cabPuntero->setPen(penSnapCabecera);
-    cabPuntero->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    addItem(cabPuntero);
-    cabPuntero->hide();
+    snapCabecera->setPen(penSnapCabecera);
+    snapCabecera->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    addItem(snapCabecera);
+    snapCabecera->hide();
+
+    selCabecera = new QGraphicsRectItem(QRectF(-6,-6,12,12));
+    QBrush br("#9dedb1");
+    QPen penSelCabecera(br,1);
+    penSelCabecera.setCosmetic(true);
+    selCabecera->setPen(penSelCabecera);
+    selCabecera->setBrush(br);
+    selCabecera->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    addItem(selCabecera);
+    selCabecera->hide();
+
 }
 
 void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 {
-    snapPuntero->show();
+    snapPista->show();
 
     float y1 = posCursor.y();
     float x1 = posCursor.x();
@@ -232,11 +238,10 @@ void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
         y = qMax(y,min*m+a);
         //qInfo() << "y = " << y;
     }
-
-    snapPuntero->setPos(x,y);
+    snapPista->setPos(x,y);
 }
 
-void RodajeEdicionEscena::resaltarCabecera(QPointF posMouse)
+void RodajeEdicionEscena::proyectarSobreCabecera(QPointF posMouse)
 {
     QPointF puntoCercano;
     float distMin = 1e7;
@@ -251,12 +256,7 @@ void RodajeEdicionEscena::resaltarCabecera(QPointF posMouse)
             }
         }
     }
-    cabPuntero->setPos(puntoCercano);
-}
-
-QPointF RodajeEdicionEscena::posSnapPuntero()
-{
-    return snapPuntero->pos();
+    snapCabecera->setPos(puntoCercano);
 }
 
 QPoint RodajeEdicionEscena::calcularPuntoEnParalela(QPointF posCursor)
@@ -276,4 +276,11 @@ QPoint RodajeEdicionEscena::calcularPuntoEnParalela(QPointF posCursor)
     float y = (-1/m)*x + b;
 
     return QPoint(x,y);
+}
+
+void RodajeEdicionEscena::seleccionarCabecera(QPointF pos)
+{
+    selCabecera->setPos(pos);
+    selCabecera->show();
+    //Dibujar cuadrado verde sobre esa posicion
 }

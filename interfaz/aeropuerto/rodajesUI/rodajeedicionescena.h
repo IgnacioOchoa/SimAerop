@@ -26,9 +26,11 @@ public:
     void iniciarLinea(QPointF pos);
     void setLineaActiva(QPointF p2);
     void proyectarSobrePista(QPointF posMouse);
-    void resaltarCabecera(QPointF posMouse);
-    QPointF posSnapPuntero();
+    void proyectarSobreCabecera(QPointF posMouse);
+    QPointF posSnapPuntero() {return snapPista->pos();}
+    QPointF posSnapCabecera() {return snapCabecera->pos();};
     QPoint calcularPuntoEnParalela(QPointF posCursor);
+    void seleccionarCabecera(QPointF pos);
 
 public slots:
     void slotCentroVistaMovido();
@@ -48,8 +50,10 @@ private:
 
     RodajeEdicionVista* vista;
     QGraphicsLineItem* lineaActiva;
-    QGraphicsEllipseItem* snapPuntero;
-    QGraphicsRectItem* cabPuntero;
+    QGraphicsEllipseItem* snapPista;
+    QGraphicsRectItem* snapCabecera;
+    QGraphicsRectItem* selCabecera;
+
     QPointF inicioLineaActiva;
     const QList<Pista>& pistas;
     QVector<QVector<float>> paramRectasPistas;  // vector que contiene dx, dy y a, de la ecuacion y = (dy/dx)*x + a

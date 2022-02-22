@@ -26,6 +26,8 @@ public:
 signals:
     void sigVistaZoom();
     void sigMostrarSnapPuntero(bool);
+    void sigCambiarModo(int modo);
+    void sigCabeceraSeleccionada(QPointF pto);
 
 public slots:
     void slotSetModEdicion(int m);

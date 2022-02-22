@@ -22,6 +22,7 @@ public:
 
 private slots:
     void slotModoEdicionCambiado(int m);
+    void slotCabeceraSeleccionada(QPointF pto) const;
 
 private:
     void prepararEscena();
@@ -31,6 +32,7 @@ private:
     RodajeEdicionEscena* escena;
     RodajeEdicionVista* vista;
     QButtonGroup* btnsEdicionRodaje;
+    const QList<Pista>& pistas;
 
 };
 
