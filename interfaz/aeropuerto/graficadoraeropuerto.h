@@ -31,6 +31,8 @@ private:
     void graficarMargenes(const Pista&);
     qreal anguloVector(const QPointF ini, const QPointF fin);
     QVector<QPointF> poligonoVector(const QPointF ini, const QPointF fin, qreal offset);
+    qreal areaPoligono(const QPolygonF poli);
+    QPolygonF poligonoHorario(const QPolygonF&);
 
     AeropuertoVista* vistaAeropuerto;
     AeropuertoEscena* escenaAeropuerto;

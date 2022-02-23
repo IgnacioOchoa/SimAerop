@@ -32,8 +32,13 @@ struct Pista {
         return(nombre==p.nombre && largo==p.largo && ancho==p.ancho && orientacion==p.orientacion &&
                puntoOrigen==p.puntoOrigen);
     }
+    //FUNCIONES QUE UTILIZAN ORIENTACIÓN:
+    //La orientación geográfica, siempre se toma respecto al
+    //norte en sentido horario. Una orientación de 80° como la default debería
+    //dar un número de cabecera 08. Reimplementar getCabecera y getPuntoCabecera
+
     QString getCabecera(Cabecera cab) const {
-        int nro = (90 - orientacion)/10;
+        int nro = (90 - orientacion)/10; //<--nro sería orientación/10 directamente. Debe redondearse, Ej 42° == 04, 46° == 05
         if (nro < 0) nro += 36;
         if (nro == 0) nro = 36;
         if (cab == CAB2) nro = (nro + 18) % 36;

@@ -21,14 +21,15 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
 
     //Agrega Pista
     for (int i = 0; i <ps.size(); ++i) {
-        QPolygonF *pista = new QPolygonF(poligonoVector(QPointF(-ps.at(i).largo/2, 0), QPointF(ps.at(i).largo/2, 0), ps.at(i).ancho/2.0));
+        QPolygonF *pista = new QPolygonF(poligonoVector(ps.at(i).getPuntoCabecera(Pista::CAB1), ps.at(i).getPuntoCabecera(Pista::CAB2), ps.at(i).ancho/2.0));
         path.addPolygon(*pista);
-        graficarMargenes(ps.at(i));
+        //ARREGLAR ORIENTACIÓN
+//        graficarMargenes(ps.at(i));
     }
     //Agrega Plataformas
     for (int i = 0; i <as.size(); ++i) {
         QPolygonF *plataforma = new QPolygonF(as.at(i).coordPerimetro);
-        path.addPolygon(*plataforma);
+        path.addPolygon(poligonoHorario(*plataforma));
     }
     //Agrega Rodajes
     for (int i = 0; i <rs.size(); ++i) {
@@ -39,8 +40,9 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
     path = path.simplified();
     QGraphicsPathItem* pavRigido = escenaAeropuerto->addPath(path, *bordeNegro, *colorPavimento);
 
-    //Grafica la pintura de la pista 0 solamente
-    graficarPinturaPista(ps.at(0));
+    //Grafica la pintura de las pistas
+    // ARREGLAR ORIENTACIÓN
+//    graficarPinturaPista(ps.at(0));
 
     vistaAeropuerto->actualizarEntorno();
     vistaAeropuerto->centrarVista();
@@ -127,6 +129,7 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
         QGraphicsRectItem* barraUm4 = escenaAeropuerto->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, *bordeBlanco, QBrush("white"));
         barraUm4->moveBy((p.largo/2.0 - 21),(p.ancho/2.0 - 3 - anchoFajasUm/2) - i*anchoFajasUm*2);
     }
+
 
     //Graficación de fajas transversales de umbral y fajas laterales de pista
     //Nota: No se programó limitación a 60 m de ancho de pista.
@@ -247,4 +250,35 @@ QVector<QPointF> GraficadorAeropuerto::poligonoVector(const QPointF ini, const Q
     QPointF fin2 = QPointF(x2+qCos(anguloVector(ini, fin)-M_PI_2)*offset, y2+qSin(anguloVector(ini, fin)-M_PI_2)*offset);
     QVector<QPointF> poliVector({ini1, fin1, fin2, ini2, ini1});
     return poliVector;
+}
+
+qreal GraficadorAeropuerto::areaPoligono(const QPolygonF poli)
+{
+    qreal area = 0;
+    int j;
+    for (int i = 0; i < poli.size(); i++){
+        if (i == poli.size()-1){
+            j = 0;
+        }
+        else {
+            j = i + 1;
+        }
+        area = area + poli.at(i).x()*poli.at(j).y()-poli.at(i).y()*poli.at(j).x();
+    }
+    area = area/2.0;
+    return area;
+}
+
+QPolygonF GraficadorAeropuerto::poligonoHorario(const QPolygonF& poli)
+{
+    QPolygonF poliHorario;
+    if (areaPoligono(poli) > 0){
+        for (int i = poli.size()-1; i >= 0; i--){
+            poliHorario.append(poli.at(i));
+        }
+    }
+    else {
+        poliHorario = poli;
+    }
+    return poliHorario;
 }
