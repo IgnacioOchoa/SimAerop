@@ -42,7 +42,7 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
 
     //Grafica la pintura de las pistas
     // ARREGLAR ORIENTACIÓN
-//    graficarPinturaPista(ps.at(0));
+    graficarPinturaPista(ps.at(0));
 
     vistaAeropuerto->actualizarEntorno();
     vistaAeropuerto->centrarVista();
@@ -65,6 +65,8 @@ void GraficadorAeropuerto::reportarDatosEscena()
 
 void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
 {
+    QGraphicsItemGroup* grpPinturaPista = new QGraphicsItemGroup;
+
     //Determinación de Parámetros según ancho de pista
     if (p.ancho<23){
         fajas = 2;
@@ -117,17 +119,24 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     //Graficación de barras de umbral
     for (int i=0; i<fajas; i++)
     {
-        QGraphicsRectItem* barraUm1 = escenaAeropuerto->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, *bordeBlanco, QBrush("white"));
+        QRectF* barraUm = new QRectF(-15,-anchoFajasUm/2,30,anchoFajasUm);
+
+        QGraphicsRectItem* barraUm1 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
         barraUm1->moveBy(-(p.largo/2.0 - 21),-(p.ancho/2.0 - 3  -anchoFajasUm/2) + i*anchoFajasUm*2);
 
-        QGraphicsRectItem* barraUm2 = escenaAeropuerto->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, *bordeBlanco, QBrush("white"));
+        QGraphicsRectItem* barraUm2 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
         barraUm2->moveBy(-(p.largo/2.0 - 21),(p.ancho/2.0 - 3  -anchoFajasUm/2) - i*anchoFajasUm*2);
 
-        QGraphicsRectItem* barraUm3 = escenaAeropuerto->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, *bordeBlanco, QBrush("white"));
+        QGraphicsRectItem* barraUm3 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
         barraUm3->moveBy((p.largo/2.0 - 21),-(p.ancho/2.0 - 3 - anchoFajasUm/2) + i*anchoFajasUm*2);
 
-        QGraphicsRectItem* barraUm4 = escenaAeropuerto->addRect(-15,-anchoFajasUm/2,30,anchoFajasUm, *bordeBlanco, QBrush("white"));
+        QGraphicsRectItem* barraUm4 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
         barraUm4->moveBy((p.largo/2.0 - 21),(p.ancho/2.0 - 3 - anchoFajasUm/2) - i*anchoFajasUm*2);
+
+        grpPinturaPista->addToGroup(barraUm1);
+        grpPinturaPista->addToGroup(barraUm2);
+        grpPinturaPista->addToGroup(barraUm3);
+        grpPinturaPista->addToGroup(barraUm4);
     }
 
 
@@ -140,7 +149,7 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     outer = outer.subtracted(inner);
 
     QGraphicsPathItem* fajasTransyLat = escenaAeropuerto->addPath(outer, *bordeBlanco,  QBrush("white"));
-
+    fajasTransyLat->setParentItem(grpPinturaPista);
     //Graficación de centerline
 
     //Nota: Dada la definición de centerline, y con el fin de facilitar la graficación, se fija el valor del
@@ -153,6 +162,7 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     {
         QGraphicsRectItem* ejePista = escenaAeropuerto->addRect(-largoEjes/2.0,-0.45,largoEjes,0.9, *bordeBlanco, QBrush("white"));
         ejePista->moveBy(-(p.largo/2.0-69-largoEjes/2.0)+5*largoEjes*i/3.0,0);
+        grpPinturaPista->addToGroup(ejePista);
     }
 
     //Graficación de puntos de visada
@@ -170,10 +180,21 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     QGraphicsRectItem* barraVi4 = escenaAeropuerto->addRect(-22.5,-anchoFajasVi/2.0,45,anchoFajasVi, *bordeBlanco, QBrush("white"));
     barraVi4->moveBy((p.largo/2.0-distanciaUmVi+22.5),-(espaciadoFajasVi/2.0+anchoFajasVi/2.0));
 
-    //Grafica centro de la pista
-    escenaAeropuerto->addLine(QLineF(-5,-5,5,5), *bordeNegro);
-    escenaAeropuerto->addLine(QLineF(-5,5,5,-5), *bordeNegro);
+    grpPinturaPista->addToGroup(barraVi1);
+    grpPinturaPista->addToGroup(barraVi2);
+    grpPinturaPista->addToGroup(barraVi3);
+    grpPinturaPista->addToGroup(barraVi4);
 
+    //Grafica centro de la pista
+    QGraphicsLineItem* centro1 = escenaAeropuerto->addLine(QLineF(-5,-5,5,5), *bordeNegro);
+    QGraphicsLineItem* centro2 = escenaAeropuerto->addLine(QLineF(-5,5,5,-5), *bordeNegro);
+    grpPinturaPista->addToGroup(centro1);
+    grpPinturaPista->addToGroup(centro2);
+
+    QTransform t;
+    t.rotate(-p.orientacion);
+    grpPinturaPista->setTransform(t);
+    escenaAeropuerto->addItem(grpPinturaPista);
     vistaAeropuerto->actualizarEntorno();
 }
 
