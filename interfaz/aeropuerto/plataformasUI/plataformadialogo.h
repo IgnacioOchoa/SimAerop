@@ -10,6 +10,8 @@
 #include "modeloplataformas.h"
 #include "modeloverticesplataformas.h"
 #include "modeloproxyplataformas.h"
+#include "plataformavista.h"
+#include "plataformaescena.h"
 
 namespace Ui {
 class PlataformaDialogo;
@@ -20,7 +22,7 @@ class PlataformaDialogo : public QDialog
     Q_OBJECT
 
 public:
-    explicit PlataformaDialogo(QList<Plataforma>& la, QWidget *parent = nullptr);
+    explicit PlataformaDialogo(QList<Pista>& lp, QList<Plataforma>& la, QWidget *parent = nullptr);
     ~PlataformaDialogo();
 
 protected :
@@ -44,6 +46,9 @@ private:
     ModeloPlataformas* modelo;
     ModeloVerticesPlataformas* modeloVertices;
     ModeloProxyPlataformas* modeloProxy;
+
+    PlataformaEscena* escena;
+    PlataformaVista* vista;
 
 private slots:
     void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);

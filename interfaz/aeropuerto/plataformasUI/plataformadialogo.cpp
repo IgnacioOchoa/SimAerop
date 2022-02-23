@@ -1,7 +1,7 @@
 #include "plataformadialogo.h"
 #include "ui_plataformadialogo.h"
 
-PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
+PlataformaDialogo::PlataformaDialogo(QList<Pista>& lp, QList<Plataforma> &la, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlataformaDialogo),
     modelo(new ModeloPlataformas(la, this))
@@ -9,6 +9,8 @@ PlataformaDialogo::PlataformaDialogo(QList<Plataforma> &la, QWidget *parent) :
 
 {
     ui->setupUi(this);
+    escena = new PlataformaEscena(ui->gvPlataforma, lp, this);
+
     configurarWidgets();
 
     connect(botonAceptar, &QPushButton::pressed, this, &PlataformaDialogo::dialogoAceptado);
@@ -31,12 +33,17 @@ PlataformaDialogo::~PlataformaDialogo()
 void PlataformaDialogo::showEvent(QShowEvent *event)
 {
     modelo->sincListas();
+    escena->limpiarEscena();
     QWidget::showEvent(event);
+    escena->graficar();
 }
 
 void PlataformaDialogo::configurarWidgets()
 {
 //    modeloProxy->setSourceModel(modelo);
+    vista = ui->gvPlataforma;
+    vista->configEscena(escena);
+
     botonAceptar = ui->pbAceptar;
     botonCancelar = ui->pbCancelar;
     botonAgregarPlat = ui->pbAgregarPlat;
@@ -69,8 +76,6 @@ void PlataformaDialogo::onSelectionChanged(const QItemSelection &selected, const
 
     QModelIndexList list = selected.indexes();
     const int& index = list.first().row();
-
-    qDebug() << index;
     Plataforma pl = modelo->buffListaPlataformas.at(index);
     modeloVertices = new ModeloVerticesPlataformas(pl, this);
     tablaVertices->setModel(modeloVertices);

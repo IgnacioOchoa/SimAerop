@@ -29,7 +29,6 @@ private:
     void reportarDatosEscena();
     void graficarPinturaPista(const Pista&);
     void graficarMargenes(const Pista&);
-    qreal largoVector(const QPointF ini, const QPointF fin);
     qreal anguloVector(const QPointF ini, const QPointF fin);
     QVector<QPointF> poligonoVector(const QPointF ini, const QPointF fin, qreal offset);
 

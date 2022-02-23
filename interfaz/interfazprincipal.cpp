@@ -46,7 +46,7 @@ InterfazPrincipal::InterfazPrincipal(Kernel* k, QWidget *parent)
     //Conexiones Página Aeropuertos
     dialogConfPista = new PistaDialogo(listaPistas, this);
     dialogConfRodaje = new RodajeDialogo(listaRodajes, listaPistas, this);
-    dialogConfPlataformas = new PlataformaDialogo(listaPlataformas, this);
+    dialogConfPlataformas = new PlataformaDialogo(listaPistas, listaPlataformas, this);
 
     connect(ui->botonGraficarPista, &QAbstractButton::pressed, this, &InterfazPrincipal::crearPista);
     connect(this, SIGNAL(sigPistaCambiada()), k, SLOT(graficarPista()));

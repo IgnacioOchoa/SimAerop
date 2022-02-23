@@ -166,7 +166,7 @@
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
-         <widget class="QGraphicsView" name="graphicsView"/>
+         <widget class="PlataformaVista" name="gvPlataforma"/>
         </item>
        </layout>
       </widget>
@@ -230,6 +230,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PlataformaVista</class>
+   <extends>QGraphicsView</extends>
+   <header location="global">interfaz/aeropuerto/plataformasUI/plataformavista.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

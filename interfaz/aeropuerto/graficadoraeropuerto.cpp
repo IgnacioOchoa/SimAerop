@@ -39,12 +39,12 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
     path = path.simplified();
     QGraphicsPathItem* pavRigido = escenaAeropuerto->addPath(path, *bordeNegro, *colorPavimento);
 
-    vistaAeropuerto->fitInView(pavRigido,Qt::KeepAspectRatio);
-
     //Grafica la pintura de la pista 0 solamente
     graficarPinturaPista(ps.at(0));
 
     vistaAeropuerto->actualizarEntorno();
+    vistaAeropuerto->centrarVista();
+
 }
 
 void GraficadorAeropuerto::reportarDatosEscena()
@@ -185,12 +185,6 @@ void GraficadorAeropuerto::graficarMargenes(const Pista& p)
     }
 
     vistaAeropuerto->actualizarEntorno();
-}
-
-qreal GraficadorAeropuerto::largoVector(const QPointF ini, const QPointF fin)
-{
-    qreal largo = qSqrt(qPow(ini.x()-fin.x(), 2) + qPow(ini.y()-fin.y(), 2));
-    return largo;
 }
 
 qreal GraficadorAeropuerto::anguloVector(const QPointF ini, const QPointF fin)
