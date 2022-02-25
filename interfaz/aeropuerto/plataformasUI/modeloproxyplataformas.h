@@ -6,6 +6,9 @@
 #include <QPolygonF>
 #include <QDebug>
 #include <QAbstractProxyModel>
+#include "modeloplataformas.h"
+
+class ModeloPlataformas;
 
 class ModeloProxyPlataformas : public QAbstractProxyModel
 {
@@ -17,7 +20,7 @@ public:
         E_POS_Y,
         _END
     };
-    ModeloProxyPlataformas(QObject *parent);
+    ModeloProxyPlataformas(ModeloPlataformas* mod, QObject *parent);
     virtual QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const override
         {
             return createIndex(row, column, nullptr);
@@ -29,11 +32,17 @@ public:
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const override;
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const override;
     QVariant data(const QModelIndex &Index, int role = Qt::DisplayRole) const override;
-    virtual bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    virtual bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-    virtual QModelIndex mapFromSource(const QModelIndex & sourceIndex) const;
-    virtual QModelIndex mapToSource(const QModelIndex & proxyIndex) const;
-signals:
+    virtual QModelIndex mapFromSource(const QModelIndex & sourceIndex) const override {return sourceIndex;}
+    virtual QModelIndex mapToSource(const QModelIndex & proxyIndex) const override {return proxyIndex;}
+
+public slots:
+    void slotPlatCambiada(const QItemSelection &selected, const QItemSelection &deselected);
+
+private:
+    //ModeloPlataformas* modeloPlataformas;
+    void setNumRows();
+    int currentRow;
+    int numRows;
 
 };
 

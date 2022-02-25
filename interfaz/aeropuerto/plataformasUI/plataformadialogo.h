@@ -46,12 +46,12 @@ private:
     ModeloPlataformas* modelo;
     ModeloVerticesPlataformas* modeloVertices;
     ModeloProxyPlataformas* modeloProxy;
+    QList<Plataforma>& listaPlat;
 
     PlataformaEscena* escena;
     PlataformaVista* vista;
 
 private slots:
-    void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
     void dialogoAceptado();
     void dialogoCancelado();
     void slotBotonAgregarPlat();

@@ -4,6 +4,7 @@
 #include <QAbstractTableModel>
 #include "modeloverticesplataformas.h"
 #include "../../../estructuras-datos/elementosaerop.h"
+#include "QItemSelectionModel"
 
 class ModeloPlataformas : public QAbstractTableModel
 {
@@ -15,6 +16,11 @@ public:
         E_NOMBRE,
         E_VERTICES,
         _END
+    };
+
+    enum CustomRoles
+    {
+        rolPlataforma = Qt::UserRole
     };
 
     ModeloPlataformas(QList<Plataforma>& bl, QObject *parent);
@@ -32,7 +38,7 @@ public:
 
 private:
     QList<Plataforma> &listaPlataformas;
-
+    //QItemSelectionModel* selectionModel;
     Plataforma  plataformaDefault = Plataforma {"Foo", QVector<QPointF> {{500,500}, {500,450}, {450,450}, {450,500}}};
 
 };

@@ -2,8 +2,8 @@
 
 ModeloPlataformas::ModeloPlataformas(QList<Plataforma> &la, QObject *parent)
     : QAbstractTableModel(parent),
-      listaPlataformas(la),
-      buffListaPlataformas(la)
+      buffListaPlataformas(la),
+      listaPlataformas(la)
 {
 
 }
@@ -28,6 +28,12 @@ QVariant ModeloPlataformas::data(const QModelIndex &index, int role) const
     if (index.row() >= buffListaPlataformas.size())
         return QVariant();
 
+    if (role == rolPlataforma)
+    {
+        const auto& plataforma = buffListaPlataformas.at(index.row());
+        return QVariant::fromValue(plataforma);
+    }
+
     if (role == Qt::DisplayRole)
     {
         const auto& plataforma = buffListaPlataformas.at(index.row());
@@ -35,14 +41,11 @@ QVariant ModeloPlataformas::data(const QModelIndex &index, int role) const
         case 0:
             return plataforma.nombre;
             break;
-        case 1:
-            return "Vertice";
-            break;
         default:
             return QVariant();
             break;
         }
-     }
+    }
     else
         return QVariant();
 }

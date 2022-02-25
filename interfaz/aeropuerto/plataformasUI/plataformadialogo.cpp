@@ -4,25 +4,21 @@
 PlataformaDialogo::PlataformaDialogo(QList<Pista>& lp, QList<Plataforma> &la, QWidget *parent) :
     QDialog(parent),
     ui(new Ui::PlataformaDialogo),
-    modelo(new ModeloPlataformas(la, this))
-//    modeloProxy(new ModeloProxyPlataformas(this))
+    listaPlat(la)
+    //modelo(new ModeloPlataformas(la, this)),
+    //modeloProxy(new ModeloProxyPlataformas(modelo,this))
 
 {
     ui->setupUi(this);
     escena = new PlataformaEscena(ui->gvPlataforma, lp, this);
 
     configurarWidgets();
-
     connect(botonAceptar, &QPushButton::pressed, this, &PlataformaDialogo::dialogoAceptado);
     connect(botonCancelar, &QPushButton::pressed, this, &PlataformaDialogo::dialogoCancelado);
     connect(botonAgregarPlat, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonAgregarPlat);
     connect(botonEliminarPlat, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarPlat);
     connect(botonAgregarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonAgregarVert);
     connect(botonEliminarVert, &QPushButton::pressed, this, &PlataformaDialogo::slotBotonEliminarVert);
-
-    QItemSelectionModel* selectionModel = ui->lvNombres->selectionModel();
-    connect(selectionModel, &QItemSelectionModel::selectionChanged, this, &PlataformaDialogo::onSelectionChanged);
-
 }
 
 PlataformaDialogo::~PlataformaDialogo()
@@ -32,15 +28,21 @@ PlataformaDialogo::~PlataformaDialogo()
 
 void PlataformaDialogo::showEvent(QShowEvent *event)
 {
+    modelo = new ModeloPlataformas(listaPlat, this);
+    modeloProxy = new ModeloProxyPlataformas(modelo,this);
+    listaNombres->setModel(modelo);
+    tablaVertices->setModel(modeloProxy);
     modelo->sincListas();
     escena->limpiarEscena();
+    QItemSelectionModel* selectionModel = listaNombres->selectionModel();
+    connect(selectionModel, &QItemSelectionModel::selectionChanged, modeloProxy,
+            &ModeloProxyPlataformas::slotPlatCambiada);
     QWidget::showEvent(event);
     escena->graficar();
 }
 
 void PlataformaDialogo::configurarWidgets()
 {
-//    modeloProxy->setSourceModel(modelo);
     vista = ui->gvPlataforma;
     vista->configEscena(escena);
 
@@ -52,13 +54,11 @@ void PlataformaDialogo::configurarWidgets()
     botonEliminarVert = ui->pbEliminarVert;
 
     listaNombres = ui->lvNombres;
-    listaNombres->setModel(modelo);
     listaNombres->setSelectionBehavior(QAbstractItemView::SelectRows);
     listaNombres->setEditTriggers(QAbstractItemView::NoEditTriggers);
     listaNombres->viewport()->installEventFilter(this);
 
     tablaVertices = ui->tvVertices;
-//    tablaVertices->setModel(modeloProxy);
     tablaVertices->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     int anchoMin = tablaVertices->horizontalHeader()->length();
     tablaVertices->verticalHeader()->hide();
@@ -67,18 +67,6 @@ void PlataformaDialogo::configurarWidgets()
     tablaVertices->setSelectionBehavior(QAbstractItemView::SelectRows);
     tablaVertices->setEditTriggers(QAbstractItemView::NoEditTriggers);
     tablaVertices->viewport()->installEventFilter(this);
-
-}
-
-void PlataformaDialogo::onSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected)
-{
-    Q_UNUSED(deselected)
-
-    QModelIndexList list = selected.indexes();
-    const int& index = list.first().row();
-    Plataforma pl = modelo->buffListaPlataformas.at(index);
-    modeloVertices = new ModeloVerticesPlataformas(pl, this);
-    tablaVertices->setModel(modeloVertices);
 }
 
 void PlataformaDialogo::slotBotonAgregarPlat()

@@ -1,15 +1,17 @@
 #include "modeloproxyplataformas.h"
 
-ModeloProxyPlataformas::ModeloProxyPlataformas(QObject *parent)
+ModeloProxyPlataformas::ModeloProxyPlataformas(ModeloPlataformas* mod, QObject *parent)
     : QAbstractProxyModel(parent)
 {
-
+    setSourceModel(mod);
+    currentRow = 0;
+    setNumRows();
 }
 
 int ModeloProxyPlataformas::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
-    return 5;
+    return numRows;
 }
 
 int ModeloProxyPlataformas::columnCount(const QModelIndex &parent) const
@@ -23,17 +25,17 @@ QVariant ModeloProxyPlataformas::data(const QModelIndex &index, int role) const
     if (!index.isValid())
         return QVariant();
 
-//    if (index.row() >= buffListaPlataformas.size())
-//        return QVariant();
-
     if (role == Qt::DisplayRole)
     {
+        QVariant plat = sourceModel()->data(sourceModel()->index(currentRow,0),ModeloPlataformas::rolPlataforma);
+        //if (plat.canConvert<Plataforma>()) qInfo() << "Se puede convertir QVariant en Plataforma";
+        Plataforma p = qvariant_cast<Plataforma>(plat);
         switch(index.column()) {
         case 0:
-            return index.row();
+            return p.coordPerimetro[index.row()].x();
             break;
         case 1:
-            return index.column();
+            return p.coordPerimetro[index.row()].y();
             break;
         default:
             return QVariant();
@@ -44,20 +46,20 @@ QVariant ModeloProxyPlataformas::data(const QModelIndex &index, int role) const
         return QVariant();
 }
 
-bool ModeloProxyPlataformas::insertRows(int row, int count, const QModelIndex &parent)
+void ModeloProxyPlataformas::slotPlatCambiada(const QItemSelection &selected, const QItemSelection &deselected)
 {
-
+    Q_UNUSED(deselected)
+    currentRow = selected.indexes()[0].row();
+    beginRemoveRows(QModelIndex(),0,numRows-1);
+    endRemoveRows();
+    setNumRows();
+    beginInsertRows(QModelIndex(),0,numRows-1);
+    endInsertRows();
 }
 
-bool ModeloProxyPlataformas::removeRows(int row, int count, const QModelIndex &parent)
+void ModeloProxyPlataformas::setNumRows()
 {
-
-}
-
-QModelIndex ModeloProxyPlataformas::mapFromSource(const QModelIndex &sourceIndex) const
-{
-}
-
-QModelIndex ModeloProxyPlataformas::mapToSource(const QModelIndex &proxyIndex) const
-{
+    QVariant var = sourceModel()->data(sourceModel()->index(currentRow,0),ModeloPlataformas::rolPlataforma);
+    Plataforma p = qvariant_cast<Plataforma>(var);
+    numRows = p.coordPerimetro.size();
 }
