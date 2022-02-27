@@ -2,7 +2,6 @@
 #define MODELOPLATAFORMAS_H
 
 #include <QAbstractTableModel>
-#include "modeloverticesplataformas.h"
 #include "../../../estructuras-datos/elementosaerop.h"
 #include "QItemSelectionModel"
 

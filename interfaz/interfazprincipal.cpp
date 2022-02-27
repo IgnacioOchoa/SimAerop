@@ -118,9 +118,8 @@ void InterfazPrincipal::setDefaults()
                          5,5,5,5},
                          {"Rodaje4",QPointF(-38.2026,216.6577), QPointF(204.5264,279.7659), 30, "Grupo2", "Pista1", "TipoNulo",
                          5,5,5,5}});
-    listaPlataformas.append(Plataforma ("Norte", QVector<QPointF> {{-300,-300}, {-300,-200},  {300,-200}, {300,-300}, {-300,-300}}));
-    listaPlataformas.append(Plataforma ("Sur", QVector<QPointF> {{-300,200}, {-300,300},  {300,300}, {300,200}, {-300,200}}));
-    listaPlataformas.append(Plataforma ("Prueba", QVector<QPointF> {{-123,1}, {1111,-3.14},  {0,0}, {-56,200}}));
+    listaPlataformas.append(Plataforma ("Este", QVector<QPointF> {{-243.3479,-347.5368}, {-144.8671,-330.1720},  {-249.0560,260.7127}, {-347.5368,243.3479}, {-243.3479,-347.5368}}));
+    listaPlataformas.append(Plataforma ("Oeste", QVector<QPointF> {{249.0560,-260.7127}, {347.5368,-243.3479},  {243.3479,347.5368}, {144.8671,330.1720}, {249.0560,-260.7127}}));
     //********
     statusBar()->showMessage("Valores por default establecidos", 3000);
     actualizarDatosPista();

@@ -8,7 +8,6 @@
 #include <QDebug>
 #include "../../../estructuras-datos/elementosaerop.h"
 #include "modeloplataformas.h"
-#include "modeloverticesplataformas.h"
 #include "modeloproxyplataformas.h"
 #include "plataformavista.h"
 #include "plataformaescena.h"
@@ -44,7 +43,6 @@ private:
     QListView* listaNombres;
     QTableView* tablaVertices;
     ModeloPlataformas* modelo;
-    ModeloVerticesPlataformas* modeloVertices;
     ModeloProxyPlataformas* modeloProxy;
     QList<Plataforma>& listaPlat;
 
