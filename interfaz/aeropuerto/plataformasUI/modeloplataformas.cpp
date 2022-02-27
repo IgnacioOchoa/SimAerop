@@ -64,7 +64,7 @@ bool ModeloPlataformas::removeRows(int row, int count, const QModelIndex &parent
 {
     Q_UNUSED(parent);
     Q_UNUSED(count);
-    if (buffListaPlataformas.count() == 0) return true;
+    if (buffListaPlataformas.size() == 0) return true;
     beginRemoveRows(QModelIndex(), row, row);
     buffListaPlataformas.removeAt(row);
     endRemoveRows();

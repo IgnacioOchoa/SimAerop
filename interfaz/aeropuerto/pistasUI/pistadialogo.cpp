@@ -33,6 +33,7 @@ void PistaDialogo::poblarDatos()
     }
     leLargoPista->setText(pista.largo == 0 ? "" : QString::number(pista.largo));
     leAnchoPista->setText(pista.ancho == 0 ? "" : QString::number(pista.ancho));
+    dialPista->setValue(pista.orientacion/10);
     //leOrientacion->setText(pista.orientacion == 0 ? "" : QString::number(pista.orientacion));
 }
 
@@ -41,8 +42,9 @@ void PistaDialogo::poblarPista()
     pista.largo = leLargoPista->text().toInt();
     pista.ancho = leAnchoPista->text().toInt();
     //int angulo = 90 - (dialPista->value()%18)*10;
-    int angulo = 180 - (dialPista->value()-9)*10;
-    if (angulo < 0) angulo += 180;
+    //Angulo debería poder ingresarse maualmente con precisión a la centésima de grado
+    //La designación de cabeceras debería ser función de este ángulo, y no al revés.
+    int angulo = dialPista->value()*10; //<- esta función debería cambiar.
     if (angulo > 180) angulo -= 180;
     pista.orientacion = angulo;
 }
@@ -166,7 +168,7 @@ bool PistaDialogo::datosCompletos()
     if (largo < 100 || largo > 10000) return false;
 
     int ancho = leAnchoPista->text().toInt();
-    if (ancho < 10 || ancho>500) return false;
+    if (ancho < 10 || ancho>100) return false;
 
     return true;
 }

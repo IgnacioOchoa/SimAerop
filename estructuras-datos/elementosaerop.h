@@ -38,22 +38,23 @@ struct Pista {
     //dar un número de cabecera 08. Reimplementar getCabecera y getPuntoCabecera
 
     QString getCabecera(Cabecera cab) const {
-        int nro = (90 - orientacion)/10; //<--nro sería orientación/10 directamente. Debe redondearse, Ej 42° == 04, 46° == 05
-        if (nro < 0) nro += 36;
+        int nro = round(orientacion/10.0);
+        if (nro > 36) nro -= 36;
         if (nro == 0) nro = 36;
-        if (cab == CAB2) nro = (nro + 18) % 36;
+        if (cab == CAB2 && nro + 18 < 36) nro = nro + 18;
+        if (cab == CAB2 && nro + 18 >= 36) nro = nro + 18 - 36;
         return QString::number(nro).rightJustified(2,'0');
     }
     QPointF getPuntoCabecera(Cabecera cab) const {
         if(cab == CAB1)
         {
-            return QPointF(largo/2.0*qCos(qDegreesToRadians(float(orientacion))),
-                       -largo/2.0*qSin(qDegreesToRadians(float(orientacion))));
+            return QPointF(puntoOrigen.x() + largo/2.0*qCos(qDegreesToRadians(float(90-orientacion))),
+                       -puntoOrigen.y() - largo/2.0*qSin(qDegreesToRadians(float(90-orientacion))));
         }
         else //(cab == CAB2)
         {
-            return QPointF(-largo/2.0*qCos(qDegreesToRadians(float(orientacion))),
-                       largo/2.0*qSin(qDegreesToRadians(float(orientacion))));
+            return QPointF(puntoOrigen.x() - largo/2.0*qCos(qDegreesToRadians(float(90-orientacion))),
+                       -puntoOrigen.y() + largo/2.0*qSin(qDegreesToRadians(float(90-orientacion))));
         }
     }
     QString getCabecera(QPointF pos) const

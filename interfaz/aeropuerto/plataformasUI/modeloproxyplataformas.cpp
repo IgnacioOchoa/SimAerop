@@ -32,6 +32,7 @@ QVariant ModeloProxyPlataformas::data(const QModelIndex &index, int role) const
         Plataforma p = qvariant_cast<Plataforma>(plat);
         switch(index.column()) {
         case 0:
+//            qDebug() << index << p.nombre <<p.coordPerimetro.size() << index.row();
             return p.coordPerimetro[index.row()].x();
             break;
         case 1:
@@ -50,6 +51,7 @@ void ModeloProxyPlataformas::slotPlatCambiada(const QItemSelection &selected, co
 {
     Q_UNUSED(deselected)
     currentRow = selected.indexes()[0].row();
+    qDebug() << "pista cambiada" << currentRow;
     beginRemoveRows(QModelIndex(),0,numRows-1);
     endRemoveRows();
     setNumRows();

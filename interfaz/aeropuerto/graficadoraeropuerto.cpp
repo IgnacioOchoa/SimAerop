@@ -24,7 +24,7 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
         QPolygonF *pista = new QPolygonF(poligonoVector(ps.at(i).getPuntoCabecera(Pista::CAB1), ps.at(i).getPuntoCabecera(Pista::CAB2), ps.at(i).ancho/2.0));
         path.addPolygon(*pista);
         //ARREGLAR ORIENTACIÓN
-//        graficarMargenes(ps.at(i));
+        graficarMargenes(ps.at(i));
     }
     //Agrega Plataformas
     for (int i = 0; i <as.size(); ++i) {
@@ -41,12 +41,12 @@ void GraficadorAeropuerto::actualizarAeropuerto(const QList<Pista>& ps, const QL
     QGraphicsPathItem* pavRigido = escenaAeropuerto->addPath(path, *bordeNegro, *colorPavimento);
 
     //Grafica la pintura de las pistas
-    // ARREGLAR ORIENTACIÓN
-    graficarPinturaPista(ps.at(0));
+    for (int i = 0; i < ps.size(); i++){
+        graficarPinturaPista(ps.at(i));
+    }
 
     vistaAeropuerto->actualizarEntorno();
     vistaAeropuerto->centrarVista();
-
 }
 
 void GraficadorAeropuerto::reportarDatosEscena()
@@ -119,19 +119,19 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     //Graficación de barras de umbral
     for (int i=0; i<fajas; i++)
     {
-        QRectF* barraUm = new QRectF(-15,-anchoFajasUm/2,30,anchoFajasUm);
+        QRectF* barraUm = new QRectF(-anchoFajasUm/2, -15, anchoFajasUm, 30);
 
         QGraphicsRectItem* barraUm1 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
-        barraUm1->moveBy(-(p.largo/2.0 - 21),-(p.ancho/2.0 - 3  -anchoFajasUm/2) + i*anchoFajasUm*2);
+        barraUm1->moveBy(-(p.ancho/2.0 - 3  -anchoFajasUm/2) + i*anchoFajasUm*2, -(p.largo/2.0 - 21));
 
         QGraphicsRectItem* barraUm2 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
-        barraUm2->moveBy(-(p.largo/2.0 - 21),(p.ancho/2.0 - 3  -anchoFajasUm/2) - i*anchoFajasUm*2);
+        barraUm2->moveBy((p.ancho/2.0 - 3  -anchoFajasUm/2) - i*anchoFajasUm*2, -(p.largo/2.0 - 21));
 
         QGraphicsRectItem* barraUm3 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
-        barraUm3->moveBy((p.largo/2.0 - 21),-(p.ancho/2.0 - 3 - anchoFajasUm/2) + i*anchoFajasUm*2);
+        barraUm3->moveBy(-(p.ancho/2.0 - 3 - anchoFajasUm/2) + i*anchoFajasUm*2, (p.largo/2.0 - 21));
 
         QGraphicsRectItem* barraUm4 = escenaAeropuerto->addRect(*barraUm, *bordeBlanco, QBrush("white"));
-        barraUm4->moveBy((p.largo/2.0 - 21),(p.ancho/2.0 - 3 - anchoFajasUm/2) - i*anchoFajasUm*2);
+        barraUm4->moveBy((p.ancho/2.0 - 3 - anchoFajasUm/2) - i*anchoFajasUm*2, (p.largo/2.0 - 21));
 
         grpPinturaPista->addToGroup(barraUm1);
         grpPinturaPista->addToGroup(barraUm2);
@@ -143,9 +143,9 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     //Graficación de fajas transversales de umbral y fajas laterales de pista
     //Nota: No se programó limitación a 60 m de ancho de pista.
     QPainterPath outer;
-    outer.addRect(-p.largo/2.0,-p.ancho/2.0,p.largo,p.ancho);
+    outer.addRect(-p.ancho/2.0, -p.largo/2.0, p.ancho, p.largo);
     QPainterPath inner;
-    inner.addRect(-p.largo/2.0+1.8,-p.ancho/2.0+anchoFajasLa,p.largo-3.6,p.ancho-anchoFajasLa*2);
+    inner.addRect(-p.ancho/2.0+anchoFajasLa,-p.largo/2.0+1.8,p.ancho-anchoFajasLa*2, p.largo-3.6);
     outer = outer.subtracted(inner);
 
     QGraphicsPathItem* fajasTransyLat = escenaAeropuerto->addPath(outer, *bordeBlanco,  QBrush("white"));
@@ -157,28 +157,28 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     //faja de eje se mantendrá entre 30 y 35 m para pistas de mas de 500 m. ANCHO DEPENDE DE CAT APP.
 
     largoEjes = (p.largo-138)/(5*((p.largo-138+20)/50)/3.0-2/3.0);
-
+    QRectF* barraEj = new QRectF(-0.45, -largoEjes/2.0, 0.9,largoEjes);
     for (int i=0; i<(p.largo-138+20)/50; i++)
     {
-        QGraphicsRectItem* ejePista = escenaAeropuerto->addRect(-largoEjes/2.0,-0.45,largoEjes,0.9, *bordeBlanco, QBrush("white"));
-        ejePista->moveBy(-(p.largo/2.0-69-largoEjes/2.0)+5*largoEjes*i/3.0,0);
+        QGraphicsRectItem* ejePista = escenaAeropuerto->addRect(*barraEj, *bordeBlanco, QBrush("white"));
+        ejePista->moveBy(0, -(p.largo/2.0-69-largoEjes/2.0)+5*largoEjes*i/3.0);
         grpPinturaPista->addToGroup(ejePista);
     }
 
     //Graficación de puntos de visada
     //Nota: En esta versión se simplifica la graficación. Algunos de los parámetros deberían poder variar en rangos determinados.
 
-    QGraphicsRectItem* barraVi1 = escenaAeropuerto->addRect(-22.5,-anchoFajasVi/2.0,45,anchoFajasVi, *bordeBlanco, QBrush("white"));
-    barraVi1->moveBy(-(p.largo/2.0-distanciaUmVi+22.5),(espaciadoFajasVi/2.0+anchoFajasVi/2.0));
+    QGraphicsRectItem* barraVi1 = escenaAeropuerto->addRect(-anchoFajasVi/2.0, -22.5, anchoFajasVi, 45, *bordeBlanco, QBrush("white"));
+    barraVi1->moveBy((espaciadoFajasVi/2.0+anchoFajasVi/2.0),-(p.largo/2.0-distanciaUmVi+22.5));
 
-    QGraphicsRectItem* barraVi2 = escenaAeropuerto->addRect(-22.5,-anchoFajasVi/2.0,45,anchoFajasVi, *bordeBlanco, QBrush("white"));
-    barraVi2->moveBy(-(p.largo/2.0-distanciaUmVi+22.5),-(espaciadoFajasVi/2.0+anchoFajasVi/2.0));
+    QGraphicsRectItem* barraVi2 = escenaAeropuerto->addRect(-anchoFajasVi/2.0, -22.5, anchoFajasVi, 45, *bordeBlanco, QBrush("white"));
+    barraVi2->moveBy(-(espaciadoFajasVi/2.0+anchoFajasVi/2.0),-(p.largo/2.0-distanciaUmVi+22.5));
 
-    QGraphicsRectItem* barraVi3 = escenaAeropuerto->addRect(-22.5,-anchoFajasVi/2.0,45,anchoFajasVi, *bordeBlanco, QBrush("white"));
-    barraVi3->moveBy((p.largo/2.0-distanciaUmVi+22.5),(espaciadoFajasVi/2.0+anchoFajasVi/2.0));
+    QGraphicsRectItem* barraVi3 = escenaAeropuerto->addRect(-anchoFajasVi/2.0, -22.5, anchoFajasVi, 45, *bordeBlanco, QBrush("white"));
+    barraVi3->moveBy((espaciadoFajasVi/2.0+anchoFajasVi/2.0), (p.largo/2.0-distanciaUmVi+22.5));
 
-    QGraphicsRectItem* barraVi4 = escenaAeropuerto->addRect(-22.5,-anchoFajasVi/2.0,45,anchoFajasVi, *bordeBlanco, QBrush("white"));
-    barraVi4->moveBy((p.largo/2.0-distanciaUmVi+22.5),-(espaciadoFajasVi/2.0+anchoFajasVi/2.0));
+    QGraphicsRectItem* barraVi4 = escenaAeropuerto->addRect(-anchoFajasVi/2.0, -22.5, anchoFajasVi, 45, *bordeBlanco, QBrush("white"));
+    barraVi4->moveBy(-(espaciadoFajasVi/2.0+anchoFajasVi/2.0), (p.largo/2.0-distanciaUmVi+22.5));
 
     grpPinturaPista->addToGroup(barraVi1);
     grpPinturaPista->addToGroup(barraVi2);
@@ -192,22 +192,30 @@ void GraficadorAeropuerto::graficarPinturaPista(const Pista & p)
     grpPinturaPista->addToGroup(centro2);
 
     QTransform t;
-    t.rotate(-p.orientacion);
+    t.rotate(p.orientacion);
     grpPinturaPista->setTransform(t);
     escenaAeropuerto->addItem(grpPinturaPista);
+    grpPinturaPista->moveBy(p.puntoOrigen.x(), -p.puntoOrigen.y());
     vistaAeropuerto->actualizarEntorno();
 }
 
 void GraficadorAeropuerto::graficarMargenes(const Pista& p)
 {
     //Grafica márgenes de pista1 y áreas anterior al umbral
+    QGraphicsItemGroup* grpMargen = new QGraphicsItemGroup;
+    QGraphicsRectItem* margenes;
     if(p.ancho <60){
-       escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0-(60-p.ancho)/2.0,p.largo+60,60, *bordeTransparente, *colorMargen);
+        margenes = escenaAeropuerto->addRect(-p.ancho/2.0-(60-p.ancho)/2.0, -p.largo/2.0-30, 60, p.largo+60, *bordeTransparente, *colorMargen);
     }
     else{
-        escenaAeropuerto->addRect(-p.largo/2.0-30,-p.ancho/2.0,p.largo+60,p.ancho, *bordeTransparente, *colorMargen);
+        margenes = escenaAeropuerto->addRect(-p.ancho/2.0, -p.largo/2.0-30, p.ancho, p.largo+60, *bordeTransparente, *colorMargen);
     }
-
+    grpMargen->addToGroup(margenes);
+    QTransform t;
+    t.rotate(p.orientacion);
+    grpMargen->setTransform(t);
+    escenaAeropuerto->addItem(grpMargen);
+    grpMargen->moveBy(p.puntoOrigen.x(), -p.puntoOrigen.y());
     vistaAeropuerto->actualizarEntorno();
 }
 

@@ -33,12 +33,11 @@ public:
     void sincListas();
     void guardarLista();
 
-    QList<Plataforma> buffListaPlataformas; // CHANCHADA. SE PONE ACÁ PARA QUE SEA ACCESIBLE DESDE DIALOGOPLATAFORMA
-
 private:
+    QList<Plataforma> buffListaPlataformas;
     QList<Plataforma> &listaPlataformas;
     //QItemSelectionModel* selectionModel;
-    Plataforma  plataformaDefault = Plataforma {"Foo", QVector<QPointF> {{500,500}, {500,450}, {450,450}, {450,500}}};
+    Plataforma  plataformaDefault = Plataforma {"Foo", QVector<QPointF> {{500,500}, {500,450}, {450,450}, {450,500}, {500,500}}};
 
 };
 #endif // MODELOPLATAFORMAS_H
