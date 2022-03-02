@@ -15,8 +15,7 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     lineaActiva->setPen(pLineaActiva);
 
     connect(vista, &RodajeEdicionVista::sigVistaZoom, this, &RodajeEdicionEscena::slotVistaZoomeada);
-    connect(vista, &RodajeEdicionVista::sigMostrarSnapPuntero, this, &RodajeEdicionEscena::slotMostrarSnapPuntero);
-
+    connect(vista, &RodajeEdicionVista::sigMouseIngresado, this, &RodajeEdicionEscena::slotHabilitarSnap);
 }
 
 void RodajeEdicionEscena::graficar()
@@ -124,11 +123,13 @@ void RodajeEdicionEscena::graficarCabeceras()
 void RodajeEdicionEscena::iniciarLinea(QPointF pos)
 {
     inicioLineaActiva = pos;
+    qInfo() << "InicioLineaActiva = " << pos;
 }
 
 void RodajeEdicionEscena::setLineaActiva(QPointF p2)
 {
     lineaActiva->setLine(QLineF(inicioLineaActiva,p2));
+    qInfo() << "Linea activa: " << lineaActiva->line();
 }
 
 void RodajeEdicionEscena::slotCentroVistaMovido()
@@ -155,12 +156,17 @@ void RodajeEdicionEscena::slotVistaZoomeada()
     grilla.verificarEscala();
 }
 
-void RodajeEdicionEscena::slotMostrarSnapPuntero(bool mostrar)
+void RodajeEdicionEscena::slotHabilitarSnap(bool hab)
+{
+    habilitarSnap = hab;
+}
+
+void RodajeEdicionEscena::mostrarSnapPuntero(bool mostrar)
 {
     snapPista->setVisible(mostrar);
 }
 
-void RodajeEdicionEscena::slotMostrarCabPuntero(bool mostrar)
+void RodajeEdicionEscena::mostrarCabPuntero(bool mostrar)
 {
     snapCabecera->setVisible(mostrar);
 }

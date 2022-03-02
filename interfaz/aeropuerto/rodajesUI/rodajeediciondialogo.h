@@ -21,8 +21,10 @@ public:
     virtual bool eventFilter(QObject *obj, QEvent *event) override;
 
 private slots:
-    void slotModoEdicionCambiado(int m);
+    void slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion m);
+    void slotModoSnapCambiado(RodajeEdicionVista::modoSnap m);
     void slotCabeceraSeleccionada(QPointF pto) const;
+    void slotBotonModoEdicionAccionado(int nroBoton);
 
 private:
     void prepararEscena();

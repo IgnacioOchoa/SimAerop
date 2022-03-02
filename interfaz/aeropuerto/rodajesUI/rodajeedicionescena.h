@@ -27,23 +27,28 @@ public:
     void setLineaActiva(QPointF p2);
     void proyectarSobrePista(QPointF posMouse);
     void proyectarSobreCabecera(QPointF posMouse);
-    QPointF posSnapPuntero() {return snapPista->pos();}
-    QPointF posSnapCabecera() {return snapCabecera->pos();};
     QPoint calcularPuntoEnParalela(QPointF posCursor);
     void seleccionarCabecera(int indicePista, QPointF pos);
 
+    void mostrarSnapPuntero(bool mostrar);
+    void mostrarCabPuntero(bool mostrar);
+
+    QPointF posSnapPuntero() {return snapPista->pos();}
+    QPointF posSnapCabecera() {return snapCabecera->pos();};
+
 public slots:
+
     void slotCentroVistaMovido();
     void slotChckMostrarGrilla(bool);
     void slotMostrarCabeceras(bool);
     void slotVistaZoomeada();
-    void slotMostrarSnapPuntero(bool mostrar);
-    void slotMostrarCabPuntero(bool mostrar);
+    void slotHabilitarSnap(bool);
 
 private:
     void prepararSimbolosSnap();
     GrillaGuia grilla;
     bool mostrarGrilla;
+    bool habilitarSnap;
 
     QVector<QGraphicsItem*> elementosPpales;
     QVector<QGraphicsTextItem*> textoCabeceras;

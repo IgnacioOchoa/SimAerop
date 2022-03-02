@@ -20,13 +20,18 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
     if (event->button() == Qt::LeftButton && lineaIniciada==false) {
         switch(mEdicion) {
         case modoEdicion::PISTA:
-            escena->iniciarLinea(escena->posSnapPuntero());
-            lineaIniciada = true;
-            break;
-        case modoEdicion::SNAP_CABECERAS:
-            escena->seleccionarCabecera(indxPistaSeleccionada,escena->posSnapCabecera());
-            emit sigCambiarModo(modoEdicion::PISTA);
-            emit sigCabeceraSeleccionada(escena->posSnapCabecera());
+            switch(mSnap) {
+            case modoSnap::PISTA:
+                escena->iniciarLinea(escena->posSnapPuntero());
+                lineaIniciada = true;
+                break;
+            case modoSnap::CABECERAS:
+                escena->seleccionarCabecera(indxPistaSeleccionada,escena->posSnapCabecera());
+                emit sigCabeceraSeleccionada(escena->posSnapCabecera());
+                break;
+            default:
+                break;
+            }
             break;
         case modoEdicion::DOSPUNTOS:
             escena->iniciarLinea(mapToScene(pos));
@@ -68,11 +73,24 @@ void RodajeEdicionVista::actualizarVista()
     centerOn(0,0);
 }
 
-void RodajeEdicionVista::slotSetModEdicion(int m)
+void RodajeEdicionVista::slotSetModEdicion(modoEdicion m)
 {
-    mEdicion = static_cast<RodajeEdicionVista::modoEdicion>(m);
-    escena->slotMostrarSnapPuntero(m == modoEdicion::PISTA);
-    escena->slotMostrarCabPuntero(m == modoEdicion::SNAP_CABECERAS);
+    mEdicion = m;
+}
+
+void RodajeEdicionVista::slotSetModSnap(modoSnap m)
+{
+    mSnap = m;
+    if(mEdicion == modoEdicion::PISTA && mSnap == modoSnap::CABECERAS)
+    {
+        escena->mostrarCabPuntero(true);
+        escena->mostrarSnapPuntero(false);
+    }
+    if(mEdicion == modoEdicion::PISTA && mSnap == modoSnap::PISTA)
+    {
+        escena->mostrarCabPuntero(false);
+        escena->mostrarSnapPuntero(true);
+    }
 }
 
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
@@ -97,11 +115,11 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
     }
     else  //lineaIniciada = false
     {
-        switch(mEdicion) {
-        case modoEdicion::PISTA:
+        switch(mSnap) {
+        case modoSnap::PISTA:
           escena->proyectarSobrePista(mapToScene(pFinal));
           break;
-        case modoEdicion::SNAP_CABECERAS:
+        case modoSnap::CABECERAS:
           escena->proyectarSobreCabecera(mapToScene(pFinal));
           break;
         default:
@@ -109,4 +127,18 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
         }
     }
     VistaGraficaBase::mouseMoveEvent(event);
+}
+
+void RodajeEdicionVista::enterEvent(QEvent *ev)
+{
+    //qInfo() << "Mouse enter event en graphics view";
+    emit sigMouseIngresado(true);
+    QAbstractScrollArea::enterEvent(ev);
+}
+
+void RodajeEdicionVista::leaveEvent(QEvent *ev)
+{
+    //qInfo() << "Mouse leave event en graphics view";
+    emit sigMouseIngresado(false);
+    QAbstractScrollArea::leaveEvent(ev);
 }

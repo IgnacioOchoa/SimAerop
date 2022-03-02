@@ -110,7 +110,7 @@ void InterfazPrincipal::setDefaults()
     // VALORES POR DEFAULT OBJETOS DE PRUEBA
     //********
     listaPistas.append({"Pista principal", 2500,45,10,QPointF(0,0)});
-    listaPistas.append({"Pista secundaria", 2000,30,10,QPointF(600, 0)});
+    listaPistas.append({"Pista secundaria", 2000,30,20,QPointF(600, 0)});
     listaRodajes.append({{"Rodaje1",QPointF(-38.2026,216.6577), QPointF(-287.8775,192.9418), 30, "Grupo1", "Pista1", "TipoNulo",
                          5,5,5,5},
                          {"Rodaje2",QPointF(38.2026,-216.6577), QPointF(-204.5264,-279.7659), 30, "Grupo1", "Pista1", "TipoNulo",
