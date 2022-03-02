@@ -39,10 +39,9 @@ struct Pista {
 
     QString getCabecera(Cabecera cab) const {
         int nro = round(orientacion/10.0);
-        if (nro > 36) nro -= 36;
-        if (nro == 0) nro = 36;
-        if (cab == CAB2 && nro + 18 < 36) nro = nro + 18;
-        if (cab == CAB2 && nro + 18 >= 36) nro = nro + 18 - 36;
+        nro %= 18;
+        if (nro == 0) nro = 18;
+        if(cab == CAB2) nro += 18;
         return QString::number(nro).rightJustified(2,'0');
     }
     QPointF getPuntoCabecera(Cabecera cab) const {
