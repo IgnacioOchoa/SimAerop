@@ -18,9 +18,7 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWid
     escena = new RodajeEdicionEscena(ui->gvRodajeEdicion,listaPistas, this);
     configurarWidgets();
     actualizarPanelParametros();
-    ui->pbEditorRodaje1->setChecked(true);
-    slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
-    vista->slotSetModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
+    parametrosIniciales();
 
 }
 
@@ -108,5 +106,19 @@ void RodajeEdicionDialogo::configurarWidgets()
 
 void RodajeEdicionDialogo::actualizarPanelParametros()
 {
+
+}
+
+void RodajeEdicionDialogo::parametrosIniciales()
+{
+    ui->pbEditorRodaje1->setChecked(true);
+    slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
+    vista->slotSetModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
+    for (int i = 0; i<pistas.count(); i++)
+    {
+        Pista p = pistas[i];
+        escena->seleccionarCabecera(i, p.getPuntoCabecera(Pista::CAB1));
+    }
+    ui->lbSeleccionCabecera->setText(pistas[0].getCabecera(Pista::CAB1));
 
 }

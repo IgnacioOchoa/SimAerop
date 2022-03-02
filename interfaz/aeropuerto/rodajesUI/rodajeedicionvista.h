@@ -37,6 +37,7 @@ private:
     QPoint puntoInicioLinea;
     RodajeEdicionEscena* escena;
     modoEdicion mEdicion;
+    int indxPistaSeleccionada;
 };
 
 #endif // RODAJEEDICIONVISTA_H

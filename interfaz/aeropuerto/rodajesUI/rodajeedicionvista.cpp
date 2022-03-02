@@ -2,7 +2,8 @@
 
 RodajeEdicionVista::RodajeEdicionVista(QWidget* parent) :
     VistaGraficaBase(parent),
-    lineaIniciada(false)
+    lineaIniciada(false),
+    indxPistaSeleccionada(0)
 {
     setCursor(Qt::CrossCursor);
 }
@@ -23,7 +24,7 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
             lineaIniciada = true;
             break;
         case modoEdicion::SNAP_CABECERAS:
-            escena->seleccionarCabecera(escena->posSnapCabecera());
+            escena->seleccionarCabecera(indxPistaSeleccionada,escena->posSnapCabecera());
             emit sigCambiarModo(modoEdicion::PISTA);
             emit sigCabeceraSeleccionada(escena->posSnapCabecera());
             break;

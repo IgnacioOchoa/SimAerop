@@ -183,16 +183,19 @@ void RodajeEdicionEscena::prepararSimbolosSnap()
     addItem(snapCabecera);
     snapCabecera->hide();
 
-    selCabecera = new QGraphicsRectItem(QRectF(-6,-6,12,12));
-    QBrush br("#9dedb1");
-    QPen penSelCabecera(br,1);
-    penSelCabecera.setCosmetic(true);
-    selCabecera->setPen(penSelCabecera);
-    selCabecera->setBrush(br);
-    selCabecera->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-    addItem(selCabecera);
-    selCabecera->hide();
-
+    for(int i=0; i<pistas.count(); i++)
+    {
+        selCabecera = new QGraphicsRectItem(QRectF(-6,-6,12,12));
+        QBrush br("#9dedb1");
+        QPen penSelCabecera(br,1);
+        penSelCabecera.setCosmetic(true);
+        selCabecera->setPen(penSelCabecera);
+        selCabecera->setBrush(br);
+        selCabecera->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+        addItem(selCabecera);
+        selCabecera->hide();
+        vecSeleccionesCabecera.append(selCabecera);
+    }
 }
 
 void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
@@ -278,9 +281,9 @@ QPoint RodajeEdicionEscena::calcularPuntoEnParalela(QPointF posCursor)
     return QPoint(x,y);
 }
 
-void RodajeEdicionEscena::seleccionarCabecera(QPointF pos)
+void RodajeEdicionEscena::seleccionarCabecera(int indicePista, QPointF pos)
 {
-    selCabecera->setPos(pos);
-    selCabecera->show();
+    vecSeleccionesCabecera[indicePista]->setPos(pos);
+    vecSeleccionesCabecera[indicePista]->show();
     //Dibujar cuadrado verde sobre esa posicion
 }

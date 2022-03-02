@@ -28,6 +28,7 @@ private:
     void prepararEscena();
     void configurarWidgets();
     void actualizarPanelParametros();
+    void parametrosIniciales();
     Ui::RodajeEdicionDialogo *ui;
     RodajeEdicionEscena* escena;
     RodajeEdicionVista* vista;
