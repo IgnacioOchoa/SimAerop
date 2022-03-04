@@ -42,13 +42,11 @@ public slots:
     void slotChckMostrarGrilla(bool);
     void slotMostrarCabeceras(bool);
     void slotVistaZoomeada();
-    void slotHabilitarSnap(bool);
 
 private:
     void prepararSimbolosSnap();
     GrillaGuia grilla;
     bool mostrarGrilla;
-    bool habilitarSnap;
 
     QVector<QGraphicsItem*> elementosPpales;
     QVector<QGraphicsTextItem*> textoCabeceras;

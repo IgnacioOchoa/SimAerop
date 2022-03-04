@@ -48,11 +48,12 @@ bool RodajeEdicionDialogo::eventFilter(QObject *obj, QEvent *event)
     }
     else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusIn)
     {
-
+        slotModoSnapCambiado(RodajeEdicionVista::modoSnap::PISTA);
     }
     else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusOut)
     {
-
+        RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
+        if(!rod) slotModoSnapCambiado(RodajeEdicionVista::modoSnap::PTOPISTA);
     }
     return false;
 }
@@ -87,7 +88,7 @@ void RodajeEdicionDialogo::slotModoEdicionCambiado(RodajeEdicionVista::modoEdici
 
 void RodajeEdicionDialogo::slotModoSnapCambiado(RodajeEdicionVista::modoSnap m)
 {
-    vista->slotSetModSnap(m);
+    vista->guardarModoSnap(m);
 }
 
 void RodajeEdicionDialogo::slotCabeceraSeleccionada(QPointF pto) const

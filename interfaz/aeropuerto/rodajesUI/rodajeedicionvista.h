@@ -27,6 +27,7 @@ public:
 
     void configEscena(QGraphicsScene* es);
     void actualizarVista();
+    void guardarModoSnap(modoSnap m);
 
 signals:
     void sigVistaZoom();
@@ -44,6 +45,7 @@ private:
     RodajeEdicionEscena* escena;
     modoEdicion mEdicion;
     modoSnap mSnap;
+    modoSnap mSnapAnterior;
     int indxPistaSeleccionada;
 };
 

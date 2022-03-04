@@ -6,6 +6,8 @@ RodajeEdicionVista::RodajeEdicionVista(QWidget* parent) :
     indxPistaSeleccionada(0)
 {
     setCursor(Qt::CrossCursor);
+    mSnapAnterior = modoSnap::PTOPISTA;
+    mSnap = modoSnap::PTOPISTA;
 }
 
 void RodajeEdicionVista::resizeEvent(QResizeEvent *event)
@@ -80,17 +82,46 @@ void RodajeEdicionVista::slotSetModEdicion(modoEdicion m)
 
 void RodajeEdicionVista::slotSetModSnap(modoSnap m)
 {
+//    QString ms;
+//    switch(m) {
+//    case modoSnap::CABECERAS: {ms = "CABECERAS"; break;}
+//    case modoSnap::PISTA: {ms = "PISTA"; break;}
+//    case modoSnap::PTOPISTA: {ms = "PTOPISTA"; break;}
+//    case modoSnap::NULO: {ms = "NULO"; break;}
+//    }
+//    qInfo() << "Modo snap: " << ms;
+
+    mSnapAnterior = mSnap;
     mSnap = m;
-    if(mEdicion == modoEdicion::PISTA && mSnap == modoSnap::CABECERAS)
+
+    if (mEdicion == modoEdicion::PISTA)
     {
-        escena->mostrarCabPuntero(true);
-        escena->mostrarSnapPuntero(false);
+        switch(mSnap) {
+        case(modoSnap::CABECERAS):
+            escena->mostrarCabPuntero(true);
+            escena->mostrarSnapPuntero(false);
+            break;
+        case(modoSnap::PTOPISTA):
+            escena->mostrarCabPuntero(false);
+            escena->mostrarSnapPuntero(true);
+            break;
+        case(modoSnap::PISTA):
+            escena->mostrarCabPuntero(false);
+            escena->mostrarSnapPuntero(false);
+            break;
+        case(modoSnap::NULO):
+            escena->mostrarCabPuntero(false);
+            escena->mostrarSnapPuntero(false);
+            break;
+        default:
+            break;
+        }
     }
-    if(mEdicion == modoEdicion::PISTA && mSnap == modoSnap::PTOPISTA)
-    {
-        escena->mostrarCabPuntero(false);
-        escena->mostrarSnapPuntero(true);
-    }
+}
+
+void RodajeEdicionVista::guardarModoSnap(modoSnap m)
+{
+    mSnapAnterior = m;
 }
 
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
@@ -131,14 +162,12 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
 
 void RodajeEdicionVista::enterEvent(QEvent *ev)
 {
-    //qInfo() << "Mouse enter event en graphics view";
-    emit sigMouseIngresado(true);
+    slotSetModSnap(mSnapAnterior);
     QAbstractScrollArea::enterEvent(ev);
 }
 
 void RodajeEdicionVista::leaveEvent(QEvent *ev)
 {
-    //qInfo() << "Mouse leave event en graphics view";
-    emit sigMouseIngresado(false);
+    slotSetModSnap(modoSnap::NULO);
     QAbstractScrollArea::leaveEvent(ev);
 }
