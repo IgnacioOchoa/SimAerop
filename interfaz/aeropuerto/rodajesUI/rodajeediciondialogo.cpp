@@ -8,13 +8,15 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWid
     pistas(listaPistas)
 {
     ui->setupUi(this);
-    setStyleSheet("QLabel#lbSeleccionCabecera { background-color: transparent; border-color: black; "
-                  "border-width: 2; border-style: solid; border-radius: 10;"
-                  "color: blue }"
-                  "QLabel#lbSeleccionCabecera:hover {background-color: #e1eaeb}"
-                  "QLabel#lbSeleccionCabecera:focus { background-color: #defdff}");
+    QFile file(":/stylesheets/ssEditorRodajes.qss");
+        if(file.open(QFile::ReadOnly)) {
+           QString styleSheet = QLatin1String(file.readAll());
+           setStyleSheet(styleSheet);
+        }
     ui->lbSeleccionCabecera->setFocusPolicy(Qt::ClickFocus);
+    ui->lbPistaTrabajo->setFocusPolicy(Qt::ClickFocus);
     ui->lbSeleccionCabecera->installEventFilter(this);
+    ui->lbPistaTrabajo->installEventFilter(this);
     escena = new RodajeEdicionEscena(ui->gvRodajeEdicion,listaPistas, this);
     configurarWidgets();
     actualizarPanelParametros();
@@ -42,7 +44,15 @@ bool RodajeEdicionDialogo::eventFilter(QObject *obj, QEvent *event)
     else if (obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusOut)
     {
         RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
-        if(!rod) slotModoSnapCambiado(RodajeEdicionVista::modoSnap::PISTA);
+        if(!rod) slotModoSnapCambiado(RodajeEdicionVista::modoSnap::PTOPISTA);
+    }
+    else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusIn)
+    {
+
+    }
+    else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusOut)
+    {
+
     }
     return false;
 }
@@ -126,7 +136,7 @@ void RodajeEdicionDialogo::parametrosIniciales()
     ui->pbEditorRodaje1->setChecked(true);
     slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
     vista->slotSetModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
-    vista->slotSetModSnap(RodajeEdicionVista::modoSnap::PISTA);
+    vista->slotSetModSnap(RodajeEdicionVista::modoSnap::PTOPISTA);
     for (int i = 0; i<pistas.count(); i++)
     {
         Pista p = pistas[i];

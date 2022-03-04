@@ -1,6 +1,7 @@
 <RCC>
     <qresource prefix="/stylesheets">
         <file>stylesheetGeneral.qss</file>
+        <file>ssEditorRodajes.qss</file>
     </qresource>
     <qresource prefix="/imagenes">
         <file>imagenes/Check_mark.png</file>

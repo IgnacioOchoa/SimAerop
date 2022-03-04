@@ -123,13 +123,11 @@ void RodajeEdicionEscena::graficarCabeceras()
 void RodajeEdicionEscena::iniciarLinea(QPointF pos)
 {
     inicioLineaActiva = pos;
-    qInfo() << "InicioLineaActiva = " << pos;
 }
 
 void RodajeEdicionEscena::setLineaActiva(QPointF p2)
 {
     lineaActiva->setLine(QLineF(inicioLineaActiva,p2));
-    qInfo() << "Linea activa: " << lineaActiva->line();
 }
 
 void RodajeEdicionEscena::slotCentroVistaMovido()

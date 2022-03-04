@@ -1,0 +1,13 @@
+QLabel#lbSeleccionCabecera,
+QLabel#lbPistaTrabajo
+{ background-color: transparent; border-color: black;
+  border-width: 2; border-style: solid; border-radius: 10;
+  color: blue }
+
+QLabel#lbSeleccionCabecera:hover,
+QLabel#lbPistaTrabajo:hover
+{background-color: #e1eaeb}
+
+QLabel#lbSeleccionCabecera:focus,
+QLabel#lbPistaTrabajo:focus
+{ background-color: #defdff}
