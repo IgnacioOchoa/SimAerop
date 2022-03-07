@@ -2,7 +2,8 @@
 
 VistaGraficaBase::VistaGraficaBase(QWidget* w) :
     QGraphicsView(w),
-    contenidoGraficado(false)
+    contenidoGraficado(false),
+    maxScale(25)
 {
     this->setHorizontalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
     this->setVerticalScrollBarPolicy( Qt::ScrollBarAlwaysOff );
@@ -58,6 +59,9 @@ void VistaGraficaBase::wheelEvent(QWheelEvent *event)
     // hasta llegar a la escala mínima
     if (scHor*sc < minScale) {
         scale(minScale/transform().m11(),minScale/transform().m11());
+    }
+    else if (scHor*sc > maxScale) {
+        scale(maxScale/transform().m11(),maxScale/transform().m11());
     }
     else
     {

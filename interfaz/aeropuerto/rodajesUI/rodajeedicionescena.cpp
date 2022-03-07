@@ -4,6 +4,7 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     QGraphicsScene(parent),
     grilla(v,this),
     mostrarGrilla(false),
+    pistaActiva(0),
     vista(v),
     lineaActiva(new QGraphicsLineItem),
     pistas(listaPistas)
@@ -57,27 +58,30 @@ void RodajeEdicionEscena::graficarPistas()
         elementosPpales.append(addLine(QLineF(p1,p2),penPista));
 
         //Calcular deltaX y deltaY de la pista para luego calcular la pendiente
-        float deltaX;
-        float deltaY;
+        double deltaX;
+        double deltaY;
+
+        if (p1.x() > p2.x()) std::swap(p1,p2);
 
         deltaX = p2.x() - p1.x();
         deltaY = p2.y() - p1.y();
 
         if (abs(deltaX) < 1e-4f) deltaX = 0; //Como son floats, redondeo
 
-        float min;
-        float max;
+        double min;
+        double max;
 
         if(deltaX != 0) { //Linea no vertical
-        min = qMin(float(p1.x()),float(p2.x()));
-        max = qMax(float(p1.x()),float(p2.x()));
+        min = qMin(p1.x(),p2.x());
+        max = qMax(p1.x(),p2.x());
         }
         else {  //Linea vertical
-        min = qMin(float(p1.y()),float(p2.y()));
-        max = qMax(float(p1.y()),float(p2.y()));
+        min = qMin(p1.y(),p2.y());
+        max = qMax(p1.y(),p2.y());
         }
         //Guardar pendiente, ordenada al origen, punto inicio y punto final de la pista
-        paramRectasPistas.append({deltaX, deltaY, 0, min, max});
+        double m = deltaY/deltaX;
+        paramRectasPistas.append({deltaX, deltaY, p2.y()-p2.x()*m, min, max});
         extremosPista.append({p1,p2});
     }
 }
@@ -163,6 +167,17 @@ void RodajeEdicionEscena::mostrarCabPuntero(bool mostrar)
     snapCabecera->setVisible(mostrar);
 }
 
+void RodajeEdicionEscena::mostrarSelPista(bool mostrar)
+{
+    foreach(SombraLinea* sl, vecSeleccionesPista) {
+        sl->setVisible(false);
+    }
+
+}
+
+
+
+
 void RodajeEdicionEscena::prepararSimbolosSnap()
 {
     snapPista = new QGraphicsEllipseItem(QRectF(-6,-6,12,12));
@@ -194,52 +209,27 @@ void RodajeEdicionEscena::prepararSimbolosSnap()
         selCabecera->hide();
         vecSeleccionesCabecera.append(selCabecera);
     }
+
+    //Crear simbolos snap para pista
+    foreach(Pista p, pistas)
+    {
+        QRectF rectFondo(-8, -p.largo/2, 16, p.largo);
+
+        SombraLinea *fondoPista = new SombraLinea(rectFondo);
+        addItem(fondoPista);
+
+        fondoPista->setPos(p.puntoOrigen);
+        fondoPista->setRotation(p.orientacion);
+
+        vecSeleccionesPista.append(fondoPista);
+        fondoPista->hide();
+    }
 }
 
 void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 {
-    snapPista->show();
-
-    float y1 = posCursor.y();
-    float x1 = posCursor.x();
-    float dx = paramRectasPistas[0][0];
-    float dy = paramRectasPistas[0][1];
-    float a = paramRectasPistas[0][2];
-    float min = paramRectasPistas[0][3];
-    float max = paramRectasPistas[0][4];
-
-    float x;
-    float y;
-
-    if(dy == 0) {   // Recta horizontal
-        //qInfo() << "Recta horizontal";
-        x = x1;
-        y = a;
-        x = qMin(x,max);
-        x = qMax(x,min);
-    }
-    else if (dx == 0) { //Recta vertical
-        //qInfo() << "Recta vertical";
-        y = y1;
-        x = 0; //Esto hay que actualizarlo cuando se implementen pistas que no pasen por 0
-        y = qMin(y,max);
-        y = qMax(y,min);
-    }
-    else {
-        //qInfo() << "Recta oblicua";
-        float m = dy/dx;
-        float b = y1 + 1/m * x1;
-        x = (b-a)/(m+1/m);
-        x = qMin(x,max);
-        x = qMax(x,min);
-       // qInfo() << "x = " << x;
-        y = (-1/m)*x + b;
-        if(m < 0) {std::swap(min,max);}
-        y = qMin(y,max*m+a);
-        y = qMax(y,min*m+a);
-        //qInfo() << "y = " << y;
-    }
-    snapPista->setPos(x,y);
+    QPointF p = calcularPuntoEnPista(0,posCursor);
+    snapPista->setPos(p);
 }
 
 void RodajeEdicionEscena::proyectarSobreCabecera(QPointF posMouse)
@@ -277,6 +267,82 @@ QPoint RodajeEdicionEscena::calcularPuntoEnParalela(QPointF posCursor)
     float y = (-1/m)*x + b;
 
     return QPoint(x,y);
+}
+
+QPointF RodajeEdicionEscena::calcularPuntoEnPista(int nroPista, QPointF posCursor)
+{
+    float y1 = posCursor.y();
+    float x1 = posCursor.x();
+    float dx = paramRectasPistas[nroPista][0];
+    float dy = paramRectasPistas[nroPista][1];
+    float a = paramRectasPistas[nroPista][2];
+    float min = paramRectasPistas[nroPista][3];
+    float max = paramRectasPistas[nroPista][4];
+
+    float x;
+    float y;
+
+    if(dy == 0) {   // Recta horizontal
+        //qInfo() << "Recta horizontal";
+        x = x1;
+        y = a;
+        x = qMin(x,max);
+        x = qMax(x,min);
+    }
+    else if (dx == 0) { //Recta vertical
+        //qInfo() << "Recta vertical";
+        y = y1;
+        x = 0; //Esto hay que actualizarlo cuando se implementen pistas que no pasen por 0
+        y = qMin(y,max);
+        y = qMax(y,min);
+    }
+    else {
+        //qInfo() << "Recta oblicua";
+        float m = dy/dx;
+        float b = y1 + 1/m * x1;
+        x = (b-a)/(m+1/m);
+        x = qMin(x,max);
+        x = qMax(x,min);
+       // qInfo() << "x = " << x;
+        y = (-1/m)*x + b;
+        if(m < 0) {std::swap(min,max);}
+        y = qMin(y,max*m+a);
+        y = qMax(y,min*m+a);
+        //qInfo() << "y = " << y;
+    }
+    return QPointF(x,y);
+}
+
+int RodajeEdicionEscena::pistaMasCercana(QPointF posCursor)
+{
+    //Hay que determinar que pista esta mas cerca
+    float dist;
+    float minDist = 1e6;
+    int minIndx;
+    for (int i = 0; i<pistas.count(); i++)
+    {
+       QPointF ptoEnPista = calcularPuntoEnPista(i, posCursor);
+       dist = sqrt(qPow(ptoEnPista.x()-posCursor.x(),2)+qPow(ptoEnPista.y()-posCursor.y(),2));
+       if (dist < minDist) {
+           minDist = dist;
+           minIndx = i;
+       }
+    }
+    return minIndx;
+}
+
+void RodajeEdicionEscena::resaltarPista(int minIndx)
+{
+    for(int i=0; i<pistas.count(); i++)
+    {
+        if(i==minIndx) {
+            vecSeleccionesPista[i]->show();
+        }
+        else
+        {
+            vecSeleccionesPista[i]->hide();
+        }
+    }
 }
 
 void RodajeEdicionEscena::seleccionarCabecera(int indicePista, QPointF pos)

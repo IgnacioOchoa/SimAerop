@@ -16,6 +16,7 @@ SOURCES += \
     interfaz/aeropuerto/aeropuertovista.cpp \
     interfaz/aeropuerto/dibujo/cotagrafica.cpp \
     interfaz/aeropuerto/dibujo/lineaumbral.cpp \
+    interfaz/aeropuerto/dibujo/sombralinea.cpp \
     interfaz/aeropuerto/graficadoraeropuerto.cpp \
     interfaz/aeropuerto/pistasUI/pistadial.cpp \
     interfaz/aeropuerto/pistasUI/pistadialogo.cpp \
@@ -47,6 +48,7 @@ HEADERS += \
     interfaz/aeropuerto/aeropuertovista.h \
     interfaz/aeropuerto/dibujo/cotagrafica.h \
     interfaz/aeropuerto/dibujo/lineaumbral.h \
+    interfaz/aeropuerto/dibujo/sombralinea.h \
     interfaz/aeropuerto/graficadoraeropuerto.h \
     interfaz/aeropuerto/pistasUI/pistadial.h \
     interfaz/aeropuerto/pistasUI/pistadialogo.h \

@@ -135,6 +135,7 @@ void RodajeEdicionDialogo::actualizarPanelParametros()
 void RodajeEdicionDialogo::parametrosIniciales()
 {
     ui->pbEditorRodaje1->setChecked(true);
+    vista->setMaxScale(5);
     slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
     vista->slotSetModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
     vista->slotSetModSnap(RodajeEdicionVista::modoSnap::PTOPISTA);

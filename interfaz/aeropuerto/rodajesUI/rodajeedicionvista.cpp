@@ -153,8 +153,11 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
         case modoSnap::CABECERAS:
           escena->proyectarSobreCabecera(mapToScene(pFinal));
           break;
+        case modoSnap::PISTA:
+          escena->resaltarPista(escena->pistaMasCercana(pFinal));
+          break;
         default:
-            break;
+          break;
         }
     }
     VistaGraficaBase::mouseMoveEvent(event);

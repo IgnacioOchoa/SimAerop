@@ -6,7 +6,9 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QGraphicsEllipseItem>
+#include <QGraphicsEffect>
 #include "rodajeedicionvista.h"
+#include "../dibujo/sombralinea.h"
 #include "../grillaguia.h"
 #include <QtMath>
 #include <QDebug>
@@ -28,10 +30,15 @@ public:
     void proyectarSobrePista(QPointF posMouse);
     void proyectarSobreCabecera(QPointF posMouse);
     QPoint calcularPuntoEnParalela(QPointF posCursor);
+    QPointF calcularPuntoEnPista(int nroPista, QPointF posCursor);
+    int pistaMasCercana(QPointF posCursor);
+    void resaltarPista(int indx);
+
     void seleccionarCabecera(int indicePista, QPointF pos);
 
     void mostrarSnapPuntero(bool mostrar);
     void mostrarCabPuntero(bool mostrar);
+    void mostrarSelPista(bool mostrar);
 
     QPointF posSnapPuntero() {return snapPista->pos();}
     QPointF posSnapCabecera() {return snapCabecera->pos();};
@@ -47,6 +54,7 @@ private:
     void prepararSimbolosSnap();
     GrillaGuia grilla;
     bool mostrarGrilla;
+    int pistaActiva;
 
     QVector<QGraphicsItem*> elementosPpales;
     QVector<QGraphicsTextItem*> textoCabeceras;
@@ -59,9 +67,10 @@ private:
 
     QPointF inicioLineaActiva;
     const QList<Pista>& pistas;
-    QVector<QVector<float>> paramRectasPistas;  // vector que contiene dx, dy y a, de la ecuacion y = (dy/dx)*x + a
+    QVector<QVector<double>> paramRectasPistas;  // vector que contiene dx, dy y a, de la ecuacion y = (dy/dx)*x + a
     QVector<QList<QPointF>> extremosPista;
     QVector<QGraphicsRectItem*> vecSeleccionesCabecera;
+    QVector<SombraLinea*> vecSeleccionesPista;
 };
 
 

@@ -23,6 +23,7 @@ public:
 
     void centrarVista();
     inline void moverAOrigien() {centerOn(0,0); centroVista = {0,0};};
+    void setMaxScale(float m) {maxScale = m;}
 
 protected:
     void actualizarScRect(QRectF rectElementos = QRectF());
