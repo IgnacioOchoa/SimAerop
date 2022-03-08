@@ -27,17 +27,16 @@ public:
 
     void configEscena(QGraphicsScene* es);
     void actualizarVista();
-    void guardarModoSnap(modoSnap m);
+    void actualizarSnapEscena();
+
+    void setModEdicion(RodajeEdicionVista::modoEdicion m) {mEdicion = m;}
+    void setModSnap(RodajeEdicionVista::modoSnap m) {mSnap = m;}
 
 signals:
     void sigVistaZoom();
     void sigMouseIngresado(bool);
-    //void sigCambiarModoEdicion(int modo);
     void sigCabeceraSeleccionada(QPointF pto);
-
-public slots:
-    void slotSetModEdicion(RodajeEdicionVista::modoEdicion m);
-    void slotSetModSnap(RodajeEdicionVista::modoSnap m);
+    void sigPistaSeleccionada(int nroPista);
 
 private:
     bool lineaIniciada;
@@ -45,8 +44,6 @@ private:
     RodajeEdicionEscena* escena;
     modoEdicion mEdicion;
     modoSnap mSnap;
-    modoSnap mSnapAnterior;
-    int indxPistaSeleccionada;
 };
 
 #endif // RODAJEEDICIONVISTA_H

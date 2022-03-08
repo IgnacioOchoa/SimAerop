@@ -32,13 +32,16 @@ public:
     QPoint calcularPuntoEnParalela(QPointF posCursor);
     QPointF calcularPuntoEnPista(int nroPista, QPointF posCursor);
     int pistaMasCercana(QPointF posCursor);
-    void resaltarPista(int indx);
+    int pistaSeleccionada() {return pistaActiva;}
+    void resaltarPista(QPointF posCursor);
 
-    void seleccionarCabecera(int indicePista, QPointF pos);
+    void seleccionarCabecera(QPointF pos);
+    void seleccionarPista();
 
     void mostrarSnapPuntero(bool mostrar);
     void mostrarCabPuntero(bool mostrar);
     void mostrarSelPista(bool mostrar);
+    void permitirSnap(bool permitir);
 
     QPointF posSnapPuntero() {return snapPista->pos();}
     QPointF posSnapCabecera() {return snapCabecera->pos();};
@@ -54,7 +57,14 @@ private:
     void prepararSimbolosSnap();
     GrillaGuia grilla;
     bool mostrarGrilla;
+    bool permSnap;
     int pistaActiva;
+    int pistaResaltada;
+    SombraLinea* resaltadoPista;
+    SombraLinea* seleccionPista;
+
+    QColor colorAzulClaro = {"#c2f2fc"};
+    QColor colorAzulOscuro = {"#74a9b8"};
 
     QVector<QGraphicsItem*> elementosPpales;
     QVector<QGraphicsTextItem*> textoCabeceras;

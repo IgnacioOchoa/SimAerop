@@ -4,7 +4,9 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     QGraphicsScene(parent),
     grilla(v,this),
     mostrarGrilla(false),
+    permSnap(false),
     pistaActiva(0),
+    pistaResaltada(0),
     vista(v),
     lineaActiva(new QGraphicsLineItem),
     pistas(listaPistas)
@@ -14,7 +16,6 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     QPen pLineaActiva("orange");
     pLineaActiva.setWidth(3) ; pLineaActiva.setCosmetic(true);
     lineaActiva->setPen(pLineaActiva);
-
     connect(vista, &RodajeEdicionVista::sigVistaZoom, this, &RodajeEdicionEscena::slotVistaZoomeada);
 }
 
@@ -159,24 +160,23 @@ void RodajeEdicionEscena::slotVistaZoomeada()
 
 void RodajeEdicionEscena::mostrarSnapPuntero(bool mostrar)
 {
-    snapPista->setVisible(mostrar);
+    snapPista->setVisible(mostrar && permSnap);
 }
 
 void RodajeEdicionEscena::mostrarCabPuntero(bool mostrar)
 {
-    snapCabecera->setVisible(mostrar);
+    snapCabecera->setVisible(mostrar && permSnap);
 }
 
 void RodajeEdicionEscena::mostrarSelPista(bool mostrar)
 {
-    foreach(SombraLinea* sl, vecSeleccionesPista) {
-        sl->setVisible(false);
-    }
-
+    resaltadoPista->setVisible(mostrar && permSnap);
 }
 
-
-
+void RodajeEdicionEscena::permitirSnap(bool permitir)
+{
+    permSnap = permitir;
+}
 
 void RodajeEdicionEscena::prepararSimbolosSnap()
 {
@@ -211,19 +211,17 @@ void RodajeEdicionEscena::prepararSimbolosSnap()
     }
 
     //Crear simbolos snap para pista
-    foreach(Pista p, pistas)
-    {
-        QRectF rectFondo(-8, -p.largo/2, 16, p.largo);
 
-        SombraLinea *fondoPista = new SombraLinea(rectFondo);
-        addItem(fondoPista);
+    Pista p = pistas[0];
 
-        fondoPista->setPos(p.puntoOrigen);
-        fondoPista->setRotation(p.orientacion);
+    QRectF rectFondo(-8, -p.largo/2, 16, p.largo);
+    resaltadoPista = new SombraLinea(rectFondo, colorAzulOscuro);
+    addItem(resaltadoPista);
+    resaltadoPista->hide();
 
-        vecSeleccionesPista.append(fondoPista);
-        fondoPista->hide();
-    }
+    seleccionPista = new SombraLinea(rectFondo, colorAzulClaro);
+    addItem(seleccionPista);
+    seleccionPista->show();
 }
 
 void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
@@ -331,23 +329,32 @@ int RodajeEdicionEscena::pistaMasCercana(QPointF posCursor)
     return minIndx;
 }
 
-void RodajeEdicionEscena::resaltarPista(int minIndx)
+void RodajeEdicionEscena::resaltarPista(QPointF pto)
 {
-    for(int i=0; i<pistas.count(); i++)
-    {
-        if(i==minIndx) {
-            vecSeleccionesPista[i]->show();
-        }
-        else
-        {
-            vecSeleccionesPista[i]->hide();
-        }
-    }
+    pistaResaltada = pistaMasCercana(pto);
+    Pista p = pistas[pistaResaltada];
+    QRectF rectFondo(-8, -p.largo/2, 16, p.largo);
+    resaltadoPista->setRect(rectFondo);
+    resaltadoPista->setPos(p.puntoOrigen);
+    resaltadoPista->setRotation(p.orientacion);
+    resaltadoPista->show();
 }
 
-void RodajeEdicionEscena::seleccionarCabecera(int indicePista, QPointF pos)
+void RodajeEdicionEscena::seleccionarCabecera(QPointF pos)
 {
-    vecSeleccionesCabecera[indicePista]->setPos(pos);
-    vecSeleccionesCabecera[indicePista]->show();
+    vecSeleccionesCabecera[pistaActiva]->setPos(pos);
+    vecSeleccionesCabecera[pistaActiva]->show();
     //Dibujar cuadrado verde sobre esa posicion
+}
+
+void RodajeEdicionEscena::seleccionarPista()
+{
+    pistaActiva = pistaResaltada;
+    Pista p = pistas[pistaActiva];
+    QRectF rectFondo(-8, -p.largo/2, 16, p.largo);
+    seleccionPista->setRect(rectFondo);
+    seleccionPista->setPos(p.puntoOrigen);
+    seleccionPista->setRotation(p.orientacion);
+    seleccionPista->setZValue(-1);
+    seleccionPista->show();
 }

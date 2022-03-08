@@ -1,9 +1,10 @@
 #include "sombralinea.h"
 
-SombraLinea::SombraLinea(QRectF rect) :
+SombraLinea::SombraLinea(QRectF rect, QColor col) :
     QGraphicsItem(),
     rectBase(rect),
-    rectEscalado(rect)
+    rectEscalado(rect),
+    colorFondo(col)
 {
 
 }
@@ -12,7 +13,6 @@ void SombraLinea::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
 {
     Q_UNUSED(option)
     Q_UNUSED(widget)
-    QColor colorFondo("#c2f2fc");
     colorFondo.setAlpha(150);
     QPen penFondo(Qt::NoPen);
     QBrush brushFondo(colorFondo);
@@ -25,6 +25,12 @@ void SombraLinea::paint(QPainter *painter, const QStyleOptionGraphicsItem *optio
     painter->setPen(penFondo);
     painter->drawLine(QLine(-10,-10,10,10));
     painter->drawLine(QLine(-10,10,10,-10));
+    calcularShape();
+}
+
+void SombraLinea::setRect(QRectF r)
+{
+    rectBase = r;
     calcularShape();
 }
 

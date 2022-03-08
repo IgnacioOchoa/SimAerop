@@ -22,8 +22,8 @@ public:
 
 private slots:
     void slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion m);
-    void slotModoSnapCambiado(RodajeEdicionVista::modoSnap m);
     void slotCabeceraSeleccionada(QPointF pto) const;
+    void slotPistaSeleccionada(int nroPista);
     void slotBotonModoEdicionAccionado(int nroBoton);
 
 private:

@@ -39,21 +39,25 @@ bool RodajeEdicionDialogo::eventFilter(QObject *obj, QEvent *event)
 {
     if(obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusIn)
     {
-        slotModoSnapCambiado(RodajeEdicionVista::modoSnap::CABECERAS);
+        vista->setModSnap(RodajeEdicionVista::modoSnap::CABECERAS);
     }
     else if (obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusOut)
     {
-        RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
-        if(!rod) slotModoSnapCambiado(RodajeEdicionVista::modoSnap::PTOPISTA);
+//        RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
+//        if(!rod) vista->guardarModoSnap(RodajeEdicionVista::modoSnap::NULO);
+//        else {
+//            QWidget* w = dynamic_cast<QWidget*>(obj);
+//            if(w) w->setFocus();
+//        }
     }
     else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusIn)
     {
-        slotModoSnapCambiado(RodajeEdicionVista::modoSnap::PISTA);
+        vista->setModSnap(RodajeEdicionVista::modoSnap::PISTA);
     }
     else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusOut)
     {
         RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
-        if(!rod) slotModoSnapCambiado(RodajeEdicionVista::modoSnap::PTOPISTA);
+        if(!rod) vista->setModSnap(RodajeEdicionVista::modoSnap::NULO);
     }
     return false;
 }
@@ -83,17 +87,17 @@ void RodajeEdicionDialogo::slotModoEdicionCambiado(RodajeEdicionVista::modoEdici
     default:
         break;
     }
-    vista->slotSetModEdicion(m);
-}
-
-void RodajeEdicionDialogo::slotModoSnapCambiado(RodajeEdicionVista::modoSnap m)
-{
-    vista->guardarModoSnap(m);
+    vista->setModEdicion(m);
 }
 
 void RodajeEdicionDialogo::slotCabeceraSeleccionada(QPointF pto) const
 {
     ui->lbSeleccionCabecera->setText(pistas[0].getCabecera(pto));
+}
+
+void RodajeEdicionDialogo::slotPistaSeleccionada(int nroPista)
+{
+    ui->lbPistaTrabajo->setText(pistas[nroPista].nombre);
 }
 
 void RodajeEdicionDialogo::slotBotonModoEdicionAccionado(int nroBoton)
@@ -122,6 +126,7 @@ void RodajeEdicionDialogo::configurarWidgets()
     connect(ui->cbCabeceras, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotMostrarCabeceras);
     connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::idPressed), this, &RodajeEdicionDialogo::slotBotonModoEdicionAccionado);
     connect(vista, QOverload<QPointF>::of(&RodajeEdicionVista::sigCabeceraSeleccionada), this, &RodajeEdicionDialogo::slotCabeceraSeleccionada);
+    connect(vista, &RodajeEdicionVista::sigPistaSeleccionada, this, &RodajeEdicionDialogo::slotPistaSeleccionada);
     ui->pbEditorRodaje1->setToolTip(rp.tiposRodaje[0]);
     ui->pbEditorRodaje2->setToolTip(rp.tiposRodaje[1]);
     ui->pbEditorRodaje3->setToolTip(rp.tiposRodaje[2]);
@@ -137,12 +142,12 @@ void RodajeEdicionDialogo::parametrosIniciales()
     ui->pbEditorRodaje1->setChecked(true);
     vista->setMaxScale(5);
     slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
-    vista->slotSetModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
-    vista->slotSetModSnap(RodajeEdicionVista::modoSnap::PTOPISTA);
+    vista->setModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
+    vista->setModSnap(RodajeEdicionVista::modoSnap::PTOPISTA);
     for (int i = 0; i<pistas.count(); i++)
     {
         Pista p = pistas[i];
-        escena->seleccionarCabecera(i, p.getPuntoCabecera(Pista::CAB1));
+        escena->seleccionarCabecera(p.getPuntoCabecera(Pista::CAB1));
     }
     ui->lbSeleccionCabecera->setText(pistas[0].getCabecera(Pista::CAB1));
 }

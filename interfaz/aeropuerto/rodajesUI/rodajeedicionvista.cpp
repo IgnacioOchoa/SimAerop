@@ -2,12 +2,10 @@
 
 RodajeEdicionVista::RodajeEdicionVista(QWidget* parent) :
     VistaGraficaBase(parent),
-    lineaIniciada(false),
-    indxPistaSeleccionada(0)
+    lineaIniciada(false)
 {
     setCursor(Qt::CrossCursor);
-    mSnapAnterior = modoSnap::PTOPISTA;
-    mSnap = modoSnap::PTOPISTA;
+    mSnap = modoSnap::NULO;
 }
 
 void RodajeEdicionVista::resizeEvent(QResizeEvent *event)
@@ -28,9 +26,16 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
                 lineaIniciada = true;
                 break;
             case modoSnap::CABECERAS:
-                escena->seleccionarCabecera(indxPistaSeleccionada,escena->posSnapCabecera());
+                escena->seleccionarCabecera(escena->posSnapCabecera());
                 emit sigCabeceraSeleccionada(escena->posSnapCabecera());
+                mSnap = modoSnap::NULO;
+                actualizarSnapEscena();
                 break;
+            case modoSnap::PISTA:
+                escena->seleccionarPista();
+                mSnap = modoSnap::NULO;
+                actualizarSnapEscena();
+                emit sigPistaSeleccionada(escena->pistaSeleccionada());
             default:
                 break;
             }
@@ -65,6 +70,7 @@ void RodajeEdicionVista::configEscena(QGraphicsScene* es)
     setScene(es);
     escena = qobject_cast<RodajeEdicionEscena*>(scene());
     connect(this, &VistaGraficaBase::centroMovido, qobject_cast<RodajeEdicionEscena*>(es), &RodajeEdicionEscena::slotCentroVistaMovido);
+    escena->seleccionarPista();
 }
 
 void RodajeEdicionVista::actualizarVista()
@@ -75,53 +81,35 @@ void RodajeEdicionVista::actualizarVista()
     centerOn(0,0);
 }
 
-void RodajeEdicionVista::slotSetModEdicion(modoEdicion m)
+void RodajeEdicionVista::actualizarSnapEscena()
 {
-    mEdicion = m;
-}
-
-void RodajeEdicionVista::slotSetModSnap(modoSnap m)
-{
-//    QString ms;
-//    switch(m) {
-//    case modoSnap::CABECERAS: {ms = "CABECERAS"; break;}
-//    case modoSnap::PISTA: {ms = "PISTA"; break;}
-//    case modoSnap::PTOPISTA: {ms = "PTOPISTA"; break;}
-//    case modoSnap::NULO: {ms = "NULO"; break;}
-//    }
-//    qInfo() << "Modo snap: " << ms;
-
-    mSnapAnterior = mSnap;
-    mSnap = m;
-
     if (mEdicion == modoEdicion::PISTA)
     {
         switch(mSnap) {
         case(modoSnap::CABECERAS):
             escena->mostrarCabPuntero(true);
             escena->mostrarSnapPuntero(false);
+            escena->mostrarSelPista(false);
             break;
         case(modoSnap::PTOPISTA):
             escena->mostrarCabPuntero(false);
             escena->mostrarSnapPuntero(true);
+            escena->mostrarSelPista(false);
             break;
         case(modoSnap::PISTA):
             escena->mostrarCabPuntero(false);
             escena->mostrarSnapPuntero(false);
+            escena->mostrarSelPista(true);
             break;
         case(modoSnap::NULO):
             escena->mostrarCabPuntero(false);
             escena->mostrarSnapPuntero(false);
+            escena->mostrarSelPista(false);
             break;
         default:
             break;
         }
     }
-}
-
-void RodajeEdicionVista::guardarModoSnap(modoSnap m)
-{
-    mSnapAnterior = m;
 }
 
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
@@ -154,7 +142,7 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
           escena->proyectarSobreCabecera(mapToScene(pFinal));
           break;
         case modoSnap::PISTA:
-          escena->resaltarPista(escena->pistaMasCercana(pFinal));
+          escena->resaltarPista(mapToScene(pFinal));
           break;
         default:
           break;
@@ -165,12 +153,14 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
 
 void RodajeEdicionVista::enterEvent(QEvent *ev)
 {
-    slotSetModSnap(mSnapAnterior);
+    escena->permitirSnap(true);
+    actualizarSnapEscena();
     QAbstractScrollArea::enterEvent(ev);
 }
 
 void RodajeEdicionVista::leaveEvent(QEvent *ev)
 {
-    slotSetModSnap(modoSnap::NULO);
+    escena->permitirSnap(false);
+    actualizarSnapEscena();
     QAbstractScrollArea::leaveEvent(ev);
 }
