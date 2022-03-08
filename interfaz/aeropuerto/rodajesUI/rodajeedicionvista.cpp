@@ -27,7 +27,7 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
                 break;
             case modoSnap::CABECERAS:
                 escena->seleccionarCabecera(escena->posSnapCabecera());
-                emit sigCabeceraSeleccionada(escena->posSnapCabecera());
+                emit sigCabeceraSeleccionada(escena->cabeceraSeleccionada());
                 mSnap = modoSnap::NULO;
                 actualizarSnapEscena();
                 break;
@@ -36,6 +36,7 @@ void RodajeEdicionVista::mousePressEvent(QMouseEvent *event)
                 mSnap = modoSnap::NULO;
                 actualizarSnapEscena();
                 emit sigPistaSeleccionada(escena->pistaSeleccionada());
+                emit sigCabeceraSeleccionada(escena->cabeceraSeleccionada());
             default:
                 break;
             }
@@ -71,6 +72,7 @@ void RodajeEdicionVista::configEscena(QGraphicsScene* es)
     escena = qobject_cast<RodajeEdicionEscena*>(scene());
     connect(this, &VistaGraficaBase::centroMovido, qobject_cast<RodajeEdicionEscena*>(es), &RodajeEdicionEscena::slotCentroVistaMovido);
     escena->seleccionarPista();
+    emit sigPistaSeleccionada(escena->pistaSeleccionada());
 }
 
 void RodajeEdicionVista::actualizarVista()

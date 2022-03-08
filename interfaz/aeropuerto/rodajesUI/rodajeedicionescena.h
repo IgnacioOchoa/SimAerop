@@ -32,7 +32,10 @@ public:
     QPoint calcularPuntoEnParalela(QPointF posCursor);
     QPointF calcularPuntoEnPista(int nroPista, QPointF posCursor);
     int pistaMasCercana(QPointF posCursor);
+
     int pistaSeleccionada() {return pistaActiva;}
+    QString cabeceraSeleccionada() {return pistas[pistaActiva].getCabecera(cabeceraActiva);}
+
     void resaltarPista(QPointF posCursor);
 
     void seleccionarCabecera(QPointF pos);
@@ -59,12 +62,13 @@ private:
     bool mostrarGrilla;
     bool permSnap;
     int pistaActiva;
+    QPointF cabeceraActiva;
     int pistaResaltada;
     SombraLinea* resaltadoPista;
     SombraLinea* seleccionPista;
 
-    QColor colorAzulClaro = {"#c2f2fc"};
-    QColor colorAzulOscuro = {"#74a9b8"};
+    QColor colorAzulClaro = {QColor(194, 242, 252)};
+    QColor colorAzulOscuro = {QColor(116, 169, 184)};
 
     QVector<QGraphicsItem*> elementosPpales;
     QVector<QGraphicsTextItem*> textoCabeceras;
@@ -79,8 +83,6 @@ private:
     const QList<Pista>& pistas;
     QVector<QVector<double>> paramRectasPistas;  // vector que contiene dx, dy y a, de la ecuacion y = (dy/dx)*x + a
     QVector<QList<QPointF>> extremosPista;
-    QVector<QGraphicsRectItem*> vecSeleccionesCabecera;
-    QVector<SombraLinea*> vecSeleccionesPista;
 };
 
 

@@ -22,7 +22,7 @@ public:
 
 private slots:
     void slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion m);
-    void slotCabeceraSeleccionada(QPointF pto) const;
+    void slotCabeceraSeleccionada(QString cabecera) const;
     void slotPistaSeleccionada(int nroPista);
     void slotBotonModoEdicionAccionado(int nroBoton);
 

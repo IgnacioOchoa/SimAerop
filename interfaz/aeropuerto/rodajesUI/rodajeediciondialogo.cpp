@@ -90,9 +90,9 @@ void RodajeEdicionDialogo::slotModoEdicionCambiado(RodajeEdicionVista::modoEdici
     vista->setModEdicion(m);
 }
 
-void RodajeEdicionDialogo::slotCabeceraSeleccionada(QPointF pto) const
+void RodajeEdicionDialogo::slotCabeceraSeleccionada(QString cabecera) const
 {
-    ui->lbSeleccionCabecera->setText(pistas[0].getCabecera(pto));
+    ui->lbSeleccionCabecera->setText(cabecera);
 }
 
 void RodajeEdicionDialogo::slotPistaSeleccionada(int nroPista)
@@ -117,7 +117,6 @@ void RodajeEdicionDialogo::configurarWidgets()
     vista = ui->gvRodajeEdicion;
     RodajeParametros rp;
 
-    ui->gvRodajeEdicion->configEscena(escena);
     ui->cbGrilla->setChecked(false);
     btnsEdicionRodaje->addButton(ui->pbEditorRodaje1, 0);
     btnsEdicionRodaje->addButton(ui->pbEditorRodaje2, 1);
@@ -125,8 +124,9 @@ void RodajeEdicionDialogo::configurarWidgets()
     connect(ui->cbGrilla, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotChckMostrarGrilla);
     connect(ui->cbCabeceras, &QCheckBox::stateChanged, escena, &RodajeEdicionEscena::slotMostrarCabeceras);
     connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::idPressed), this, &RodajeEdicionDialogo::slotBotonModoEdicionAccionado);
-    connect(vista, QOverload<QPointF>::of(&RodajeEdicionVista::sigCabeceraSeleccionada), this, &RodajeEdicionDialogo::slotCabeceraSeleccionada);
+    connect(vista, &RodajeEdicionVista::sigCabeceraSeleccionada, this, &RodajeEdicionDialogo::slotCabeceraSeleccionada);
     connect(vista, &RodajeEdicionVista::sigPistaSeleccionada, this, &RodajeEdicionDialogo::slotPistaSeleccionada);
+    vista->configEscena(escena);
     ui->pbEditorRodaje1->setToolTip(rp.tiposRodaje[0]);
     ui->pbEditorRodaje2->setToolTip(rp.tiposRodaje[1]);
     ui->pbEditorRodaje3->setToolTip(rp.tiposRodaje[2]);
@@ -144,10 +144,5 @@ void RodajeEdicionDialogo::parametrosIniciales()
     slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
     vista->setModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
     vista->setModSnap(RodajeEdicionVista::modoSnap::PTOPISTA);
-    for (int i = 0; i<pistas.count(); i++)
-    {
-        Pista p = pistas[i];
-        escena->seleccionarCabecera(p.getPuntoCabecera(Pista::CAB1));
-    }
     ui->lbSeleccionCabecera->setText(pistas[0].getCabecera(Pista::CAB1));
 }

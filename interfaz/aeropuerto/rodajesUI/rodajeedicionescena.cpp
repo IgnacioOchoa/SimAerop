@@ -83,7 +83,6 @@ void RodajeEdicionEscena::graficarPistas()
         //Guardar pendiente, ordenada al origen, punto inicio y punto final de la pista
         double m = deltaY/deltaX;
         paramRectasPistas.append({deltaX, deltaY, p2.y()-p2.x()*m, min, max});
-        extremosPista.append({p1,p2});
     }
 }
 
@@ -196,19 +195,15 @@ void RodajeEdicionEscena::prepararSimbolosSnap()
     addItem(snapCabecera);
     snapCabecera->hide();
 
-    for(int i=0; i<pistas.count(); i++)
-    {
-        selCabecera = new QGraphicsRectItem(QRectF(-6,-6,12,12));
-        QBrush br("#9dedb1");
-        QPen penSelCabecera(br,1);
-        penSelCabecera.setCosmetic(true);
-        selCabecera->setPen(penSelCabecera);
-        selCabecera->setBrush(br);
-        selCabecera->setFlag(QGraphicsItem::ItemIgnoresTransformations);
-        addItem(selCabecera);
-        selCabecera->hide();
-        vecSeleccionesCabecera.append(selCabecera);
-    }
+    selCabecera = new QGraphicsRectItem(QRectF(-6,-6,12,12));
+    QBrush br(QColor(101, 171, 118));
+    QPen penSelCabecera(br,1);
+    penSelCabecera.setCosmetic(true);
+    selCabecera->setPen(penSelCabecera);
+    selCabecera->setBrush(br);
+    selCabecera->setFlag(QGraphicsItem::ItemIgnoresTransformations);
+    addItem(selCabecera);
+    selCabecera->hide();
 
     //Crear simbolos snap para pista
 
@@ -342,9 +337,9 @@ void RodajeEdicionEscena::resaltarPista(QPointF pto)
 
 void RodajeEdicionEscena::seleccionarCabecera(QPointF pos)
 {
-    vecSeleccionesCabecera[pistaActiva]->setPos(pos);
-    vecSeleccionesCabecera[pistaActiva]->show();
-    //Dibujar cuadrado verde sobre esa posicion
+    selCabecera->setPos(pos);
+    selCabecera->show();
+    cabeceraActiva = pos;
 }
 
 void RodajeEdicionEscena::seleccionarPista()
@@ -357,4 +352,6 @@ void RodajeEdicionEscena::seleccionarPista()
     seleccionPista->setRotation(p.orientacion);
     seleccionPista->setZValue(-1);
     seleccionPista->show();
+    extremosPista = {{p.getPuntoCabecera(Pista::CAB1), p.getPuntoCabecera(Pista::CAB2)}};
+    seleccionarCabecera(p.getPuntoCabecera(Pista::CAB1));
 }

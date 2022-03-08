@@ -35,7 +35,7 @@ public:
 signals:
     void sigVistaZoom();
     void sigMouseIngresado(bool);
-    void sigCabeceraSeleccionada(QPointF pto);
+    void sigCabeceraSeleccionada(QString cabecera);
     void sigPistaSeleccionada(int nroPista);
 
 private:

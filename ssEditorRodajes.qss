@@ -2,7 +2,7 @@ QLabel#lbSeleccionCabecera,
 QLabel#lbPistaTrabajo
 { background-color: transparent; border-color: black;
   border-width: 2; border-style: solid; border-radius: 10;
-  color: blue }
+  color: black}
 
 QLabel#lbSeleccionCabecera:hover,
 QLabel#lbPistaTrabajo:hover
