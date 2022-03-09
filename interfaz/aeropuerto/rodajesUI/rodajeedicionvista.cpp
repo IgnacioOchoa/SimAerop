@@ -139,6 +139,7 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
         switch(mSnap) {
         case modoSnap::PTOPISTA:
           escena->proyectarSobrePista(mapToScene(pFinal));
+          emit sigPosEnPistaMovido(escena->distanciaPunteroACabecera());
           break;
         case modoSnap::CABECERAS:
           escena->proyectarSobreCabecera(mapToScene(pFinal));

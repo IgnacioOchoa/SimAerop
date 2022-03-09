@@ -177,6 +177,14 @@ void RodajeEdicionEscena::permitirSnap(bool permitir)
     permSnap = permitir;
 }
 
+float RodajeEdicionEscena::distanciaPunteroACabecera()
+{
+    QPointF p1 = snapPista->pos();
+    QPointF p2 = cabeceraActiva;
+    float distancia = sqrt(qPow(p1.x()-p2.x(),2)+qPow(p1.y()-p2.y(),2));
+    return distancia;
+}
+
 void RodajeEdicionEscena::prepararSimbolosSnap()
 {
     snapPista = new QGraphicsEllipseItem(QRectF(-6,-6,12,12));
@@ -221,7 +229,7 @@ void RodajeEdicionEscena::prepararSimbolosSnap()
 
 void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 {
-    QPointF p = calcularPuntoEnPista(0,posCursor);
+    QPointF p = calcularPuntoEnPista(pistaActiva,posCursor);
     snapPista->setPos(p);
 }
 

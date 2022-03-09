@@ -25,6 +25,7 @@ private slots:
     void slotCabeceraSeleccionada(QString cabecera) const;
     void slotPistaSeleccionada(int nroPista);
     void slotBotonModoEdicionAccionado(int nroBoton);
+    void slotDistanciaACabeceraCambiada(float dist);
 
 private:
     void prepararEscena();

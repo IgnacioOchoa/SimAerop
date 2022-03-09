@@ -32,7 +32,6 @@ public:
     QPoint calcularPuntoEnParalela(QPointF posCursor);
     QPointF calcularPuntoEnPista(int nroPista, QPointF posCursor);
     int pistaMasCercana(QPointF posCursor);
-
     int pistaSeleccionada() {return pistaActiva;}
     QString cabeceraSeleccionada() {return pistas[pistaActiva].getCabecera(cabeceraActiva);}
 
@@ -47,7 +46,8 @@ public:
     void permitirSnap(bool permitir);
 
     QPointF posSnapPuntero() {return snapPista->pos();}
-    QPointF posSnapCabecera() {return snapCabecera->pos();};
+    QPointF posSnapCabecera() {return snapCabecera->pos();}
+    float distanciaPunteroACabecera();
 
 public slots:
 

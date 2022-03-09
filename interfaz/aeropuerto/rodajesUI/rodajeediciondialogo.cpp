@@ -17,6 +17,7 @@ RodajeEdicionDialogo::RodajeEdicionDialogo(const QList<Pista>& listaPistas, QWid
     ui->lbPistaTrabajo->setFocusPolicy(Qt::ClickFocus);
     ui->lbSeleccionCabecera->installEventFilter(this);
     ui->lbPistaTrabajo->installEventFilter(this);
+    ui->leDistancia->installEventFilter(this);
     escena = new RodajeEdicionEscena(ui->gvRodajeEdicion,listaPistas, this);
     configurarWidgets();
     actualizarPanelParametros();
@@ -37,27 +38,32 @@ void RodajeEdicionDialogo::showEvent(QShowEvent *event)
 
 bool RodajeEdicionDialogo::eventFilter(QObject *obj, QEvent *event)
 {
-    if(obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusIn)
+    if(event->type() == QEvent::FocusIn)
     {
-        vista->setModSnap(RodajeEdicionVista::modoSnap::CABECERAS);
+        if(obj == ui->lbSeleccionCabecera) {
+            vista->setModSnap(RodajeEdicionVista::modoSnap::CABECERAS);
+        }
+        else if (obj == ui->lbPistaTrabajo) {
+            vista->setModSnap(RodajeEdicionVista::modoSnap::PISTA);
+        }
+        else if (obj == ui->leDistancia) {
+            vista->setModSnap(RodajeEdicionVista::modoSnap::PTOPISTA);
+        }
     }
-    else if (obj == ui->lbSeleccionCabecera && event->type() == QEvent::FocusOut)
+    else if (event->type() == QEvent::FocusOut)
     {
-//        RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
-//        if(!rod) vista->guardarModoSnap(RodajeEdicionVista::modoSnap::NULO);
-//        else {
-//            QWidget* w = dynamic_cast<QWidget*>(obj);
-//            if(w) w->setFocus();
-//        }
-    }
-    else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusIn)
-    {
-        vista->setModSnap(RodajeEdicionVista::modoSnap::PISTA);
-    }
-    else if (obj == ui->lbPistaTrabajo && event->type() == QEvent::FocusOut)
-    {
-        RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
-        if(!rod) vista->setModSnap(RodajeEdicionVista::modoSnap::NULO);
+       if(obj == ui->lbSeleccionCabecera) {
+           RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
+           if(!rod) vista->setModSnap(RodajeEdicionVista::modoSnap::NULO);
+       }
+       else if (obj == ui->lbPistaTrabajo) {
+           RodajeEdicionVista* rod = qobject_cast<RodajeEdicionVista*>(focusWidget());
+           if(!rod) vista->setModSnap(RodajeEdicionVista::modoSnap::NULO);
+       }
+       else if (obj == ui->leDistancia)
+       {
+
+       }
     }
     return false;
 }
@@ -112,6 +118,11 @@ void RodajeEdicionDialogo::slotBotonModoEdicionAccionado(int nroBoton)
     }
 }
 
+void RodajeEdicionDialogo::slotDistanciaACabeceraCambiada(float dist)
+{
+    ui->leDistancia->setText(QString::number(dist,'f',1));
+}
+
 void RodajeEdicionDialogo::configurarWidgets()
 {
     vista = ui->gvRodajeEdicion;
@@ -126,6 +137,7 @@ void RodajeEdicionDialogo::configurarWidgets()
     connect(btnsEdicionRodaje, QOverload<int>::of(&QButtonGroup::idPressed), this, &RodajeEdicionDialogo::slotBotonModoEdicionAccionado);
     connect(vista, &RodajeEdicionVista::sigCabeceraSeleccionada, this, &RodajeEdicionDialogo::slotCabeceraSeleccionada);
     connect(vista, &RodajeEdicionVista::sigPistaSeleccionada, this, &RodajeEdicionDialogo::slotPistaSeleccionada);
+    connect(vista, &RodajeEdicionVista::sigPosEnPistaMovido, this, &RodajeEdicionDialogo::slotDistanciaACabeceraCambiada);
     vista->configEscena(escena);
     ui->pbEditorRodaje1->setToolTip(rp.tiposRodaje[0]);
     ui->pbEditorRodaje2->setToolTip(rp.tiposRodaje[1]);
@@ -143,6 +155,6 @@ void RodajeEdicionDialogo::parametrosIniciales()
     vista->setMaxScale(5);
     slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion::PISTA);
     vista->setModEdicion(RodajeEdicionVista::modoEdicion::PISTA);
-    vista->setModSnap(RodajeEdicionVista::modoSnap::PTOPISTA);
+    vista->setModSnap(RodajeEdicionVista::modoSnap::NULO);
     ui->lbSeleccionCabecera->setText(pistas[0].getCabecera(Pista::CAB1));
 }

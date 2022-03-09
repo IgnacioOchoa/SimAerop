@@ -37,6 +37,7 @@ signals:
     void sigMouseIngresado(bool);
     void sigCabeceraSeleccionada(QString cabecera);
     void sigPistaSeleccionada(int nroPista);
+    void sigPosEnPistaMovido(float distancia);
 
 private:
     bool lineaIniciada;
