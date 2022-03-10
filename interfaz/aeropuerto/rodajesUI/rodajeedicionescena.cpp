@@ -16,6 +16,7 @@ RodajeEdicionEscena::RodajeEdicionEscena(RodajeEdicionVista* v, const QList<Pist
     QPen pLineaActiva("orange");
     pLineaActiva.setWidth(3) ; pLineaActiva.setCosmetic(true);
     lineaActiva->setPen(pLineaActiva);
+    lineaActiva->hide();
     connect(vista, &RodajeEdicionVista::sigVistaZoom, this, &RodajeEdicionEscena::slotVistaZoomeada);
 }
 
@@ -126,6 +127,7 @@ void RodajeEdicionEscena::graficarCabeceras()
 void RodajeEdicionEscena::iniciarLinea(QPointF pos)
 {
     inicioLineaActiva = pos;
+    lineaActiva->show();
 }
 
 void RodajeEdicionEscena::setLineaActiva(QPointF p2)
@@ -185,6 +187,11 @@ float RodajeEdicionEscena::distanciaPunteroACabecera()
     return distancia;
 }
 
+void RodajeEdicionEscena::cancelarLinea()
+{
+    lineaActiva->setLine(QLine());
+}
+
 void RodajeEdicionEscena::prepararSimbolosSnap()
 {
     snapPista = new QGraphicsEllipseItem(QRectF(-6,-6,12,12));
@@ -231,6 +238,25 @@ void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 {
     QPointF p = calcularPuntoEnPista(pistaActiva,posCursor);
     snapPista->setPos(p);
+}
+
+void RodajeEdicionEscena::posicionarSnapPista(float distancia)
+{
+    QPointF p1,p2;
+    p1 = cabeceraActiva;
+    if (pistas[pistaActiva].getCabecera(cabeceraActiva) == pistas[pistaActiva].getCabecera(Pista::CAB1))
+        p2 = pistas[pistaActiva].getPuntoCabecera(Pista::CAB2); // La cabecera activa es la CAB1
+    else
+        p2 = pistas[pistaActiva].getPuntoCabecera(Pista::CAB1);
+    qInfo() << "Distancia = " << distancia;
+    float largoPista = pistas[pistaActiva].largo;
+    float factor = distancia/largoPista;
+    qInfo() << "p1 = " << p1;
+    qInfo() << "p2 = " << p2;
+    qInfo() << "factor = " << factor;
+    qInfo() << "Pto = " << p1*(1-factor) + p2*factor;
+    snapPista->setPos(p1*(1-factor) + p2*factor);
+
 }
 
 void RodajeEdicionEscena::proyectarSobreCabecera(QPointF posMouse)

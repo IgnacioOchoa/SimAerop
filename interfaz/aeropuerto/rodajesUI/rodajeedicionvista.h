@@ -32,6 +32,9 @@ public:
     void setModEdicion(RodajeEdicionVista::modoEdicion m) {mEdicion = m;}
     void setModSnap(RodajeEdicionVista::modoSnap m) {mSnap = m;}
 
+    void fijarPosPista(float distancia);
+    void liberarPista();
+
 signals:
     void sigVistaZoom();
     void sigMouseIngresado(bool);
@@ -41,10 +44,12 @@ signals:
 
 private:
     bool lineaIniciada;
+    bool posEnPistaFijado;
     QPoint puntoInicioLinea;
     RodajeEdicionEscena* escena;
     modoEdicion mEdicion;
     modoSnap mSnap;
+
 };
 
 #endif // RODAJEEDICIONVISTA_H

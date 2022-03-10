@@ -26,6 +26,9 @@ private slots:
     void slotPistaSeleccionada(int nroPista);
     void slotBotonModoEdicionAccionado(int nroBoton);
     void slotDistanciaACabeceraCambiada(float dist);
+    void slotAnguloFijado(bool fijado);
+    void slotDistanciaFijado(bool fijado);
+    void slotLongitudFijado(bool fijado);
 
 private:
     void prepararEscena();

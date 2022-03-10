@@ -123,6 +123,24 @@ void RodajeEdicionDialogo::slotDistanciaACabeceraCambiada(float dist)
     ui->leDistancia->setText(QString::number(dist,'f',1));
 }
 
+void RodajeEdicionDialogo::slotAnguloFijado(bool fijado)
+{
+    ui->leAngulo->setReadOnly(fijado);
+
+}
+
+void RodajeEdicionDialogo::slotDistanciaFijado(bool fijado)
+{
+    ui->leDistancia->setReadOnly(fijado);
+    if(fijado) vista->fijarPosPista(ui->leDistancia->text().toFloat());
+    else vista->liberarPista();
+}
+
+void RodajeEdicionDialogo::slotLongitudFijado(bool fijado)
+{
+    ui->leLongitud->setReadOnly(fijado);
+}
+
 void RodajeEdicionDialogo::configurarWidgets()
 {
     vista = ui->gvRodajeEdicion;
@@ -141,9 +159,9 @@ void RodajeEdicionDialogo::configurarWidgets()
     connect(ui->leDistancia, &QLineEdit::returnPressed, ui->candadoDistancia, &BotonCandado::slotCerrarCandado);
     connect(ui->leAngulo, &QLineEdit::returnPressed, ui->candadoAngulo, &BotonCandado::slotCerrarCandado);
     connect(ui->leLongitud, &QLineEdit::returnPressed, ui->candadoLongitud, &BotonCandado::slotCerrarCandado);
-    connect(ui->candadoDistancia, &BotonCandado::sigValorFijado, [this](bool fijado){ui->leDistancia->setReadOnly(fijado);});
-    connect(ui->candadoAngulo, &BotonCandado::sigValorFijado, [this](bool fijado){ui->leAngulo->setReadOnly(fijado);});
-    connect(ui->candadoLongitud, &BotonCandado::sigValorFijado, [this](bool fijado){ui->leLongitud->setReadOnly(fijado);});
+    connect(ui->candadoDistancia, &BotonCandado::sigValorFijado, this, &RodajeEdicionDialogo::slotDistanciaFijado);
+    connect(ui->candadoAngulo, &BotonCandado::sigValorFijado, this, &RodajeEdicionDialogo::slotAnguloFijado);
+    connect(ui->candadoLongitud, &BotonCandado::sigValorFijado, this, &RodajeEdicionDialogo::slotLongitudFijado);
     vista->configEscena(escena);
     ui->pbEditorRodaje1->setToolTip(rp.tiposRodaje[0]);
     ui->pbEditorRodaje2->setToolTip(rp.tiposRodaje[1]);

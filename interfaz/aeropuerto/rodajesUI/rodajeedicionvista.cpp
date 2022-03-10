@@ -2,7 +2,8 @@
 
 RodajeEdicionVista::RodajeEdicionVista(QWidget* parent) :
     VistaGraficaBase(parent),
-    lineaIniciada(false)
+    lineaIniciada(false),
+    posEnPistaFijado(false)
 {
     setCursor(Qt::CrossCursor);
     mSnap = modoSnap::NULO;
@@ -114,6 +115,19 @@ void RodajeEdicionVista::actualizarSnapEscena()
     }
 }
 
+void RodajeEdicionVista::fijarPosPista(float distancia)
+{
+    escena->posicionarSnapPista(distancia);
+    posEnPistaFijado = true;
+}
+
+void RodajeEdicionVista::liberarPista()
+{
+    posEnPistaFijado=false;
+    escena->cancelarLinea();
+    lineaIniciada=false;
+}
+
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
 {
     QPoint pFinal = event->pos();
@@ -138,8 +152,10 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
     {
         switch(mSnap) {
         case modoSnap::PTOPISTA:
+          if (!posEnPistaFijado) {
           escena->proyectarSobrePista(mapToScene(pFinal));
           emit sigPosEnPistaMovido(escena->distanciaPunteroACabecera());
+          }
           break;
         case modoSnap::CABECERAS:
           escena->proyectarSobreCabecera(mapToScene(pFinal));

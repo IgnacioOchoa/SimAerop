@@ -28,6 +28,7 @@ public:
     void iniciarLinea(QPointF pos);
     void setLineaActiva(QPointF p2);
     void proyectarSobrePista(QPointF posMouse);
+    void posicionarSnapPista(float distancia);
     void proyectarSobreCabecera(QPointF posMouse);
     QPoint calcularPuntoEnParalela(QPointF posCursor);
     QPointF calcularPuntoEnPista(int nroPista, QPointF posCursor);
@@ -48,6 +49,8 @@ public:
     QPointF posSnapPuntero() {return snapPista->pos();}
     QPointF posSnapCabecera() {return snapCabecera->pos();}
     float distanciaPunteroACabecera();
+
+    void cancelarLinea();
 
 public slots:
 
