@@ -138,6 +138,12 @@ void RodajeEdicionDialogo::configurarWidgets()
     connect(vista, &RodajeEdicionVista::sigCabeceraSeleccionada, this, &RodajeEdicionDialogo::slotCabeceraSeleccionada);
     connect(vista, &RodajeEdicionVista::sigPistaSeleccionada, this, &RodajeEdicionDialogo::slotPistaSeleccionada);
     connect(vista, &RodajeEdicionVista::sigPosEnPistaMovido, this, &RodajeEdicionDialogo::slotDistanciaACabeceraCambiada);
+    connect(ui->leDistancia, &QLineEdit::returnPressed, ui->candadoDistancia, &BotonCandado::slotCerrarCandado);
+    connect(ui->leAngulo, &QLineEdit::returnPressed, ui->candadoAngulo, &BotonCandado::slotCerrarCandado);
+    connect(ui->leLongitud, &QLineEdit::returnPressed, ui->candadoLongitud, &BotonCandado::slotCerrarCandado);
+    connect(ui->candadoDistancia, &BotonCandado::sigValorFijado, [this](bool fijado){ui->leDistancia->setReadOnly(fijado);});
+    connect(ui->candadoAngulo, &BotonCandado::sigValorFijado, [this](bool fijado){ui->leAngulo->setReadOnly(fijado);});
+    connect(ui->candadoLongitud, &BotonCandado::sigValorFijado, [this](bool fijado){ui->leLongitud->setReadOnly(fijado);});
     vista->configEscena(escena);
     ui->pbEditorRodaje1->setToolTip(rp.tiposRodaje[0]);
     ui->pbEditorRodaje2->setToolTip(rp.tiposRodaje[1]);

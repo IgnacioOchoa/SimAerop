@@ -35,6 +35,7 @@ SOURCES += \
     interfaz/aeropuerto/rodajesUI/rodajeedicionescena.cpp \
     interfaz/aeropuerto/rodajesUI/rodajeedicionvista.cpp \
     interfaz/aeropuerto/vistagraficabase.cpp \
+    interfaz/botoncandado.cpp \
     interfaz/interfazprincipal.cpp \
     kernel/kernel.cpp \
     main.cpp
@@ -67,6 +68,7 @@ HEADERS += \
     interfaz/aeropuerto/rodajesUI/rodajeedicionescena.h \
     interfaz/aeropuerto/rodajesUI/rodajeedicionvista.h \
     interfaz/aeropuerto/vistagraficabase.h \
+    interfaz/botoncandado.h \
     interfaz/interfazprincipal.h \
     kernel/kernel.h
 

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>718</width>
-    <height>464</height>
+    <height>512</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -249,7 +249,66 @@
                </widget>
               </item>
               <item row="2" column="1">
-               <widget class="QLineEdit" name="leDistancia"/>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QLineEdit" name="leDistancia"/>
+                </item>
+                <item>
+                 <widget class="BotonCandado" name="candadoDistancia">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="3" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Angulo</string>
+                </property>
+                <property name="margin">
+                 <number>5</number>
+                </property>
+               </widget>
+              </item>
+              <item row="3" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_7">
+                <item>
+                 <widget class="QLineEdit" name="leAngulo"/>
+                </item>
+                <item>
+                 <widget class="BotonCandado" name="candadoAngulo">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="4" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Longitud</string>
+                </property>
+                <property name="margin">
+                 <number>5</number>
+                </property>
+               </widget>
+              </item>
+              <item row="4" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QLineEdit" name="leLongitud"/>
+                </item>
+                <item>
+                 <widget class="BotonCandado" name="candadoLongitud">
+                  <property name="text">
+                   <string/>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
               </item>
              </layout>
             </item>
@@ -492,6 +551,11 @@
    <class>RodajeEdicionVista</class>
    <extends>QGraphicsView</extends>
    <header>interfaz/aeropuerto/rodajesUI/rodajeedicionvista.h</header>
+  </customwidget>
+  <customwidget>
+   <class>BotonCandado</class>
+   <extends>QPushButton</extends>
+   <header>interfaz/botoncandado.h</header>
   </customwidget>
  </customwidgets>
  <resources>

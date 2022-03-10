@@ -8,5 +8,7 @@
         <file>imagenes/BotonRodaje1.png</file>
         <file>imagenes/BotonRodaje2.png</file>
         <file>imagenes/BotonRodaje3.png</file>
+        <file>imagenes/candado.png</file>
+        <file>imagenes/candado2.png</file>
     </qresource>
 </RCC>
