@@ -68,6 +68,16 @@ bool RodajeEdicionDialogo::eventFilter(QObject *obj, QEvent *event)
     return false;
 }
 
+void RodajeEdicionDialogo::keyPressEvent(QKeyEvent *e)
+{
+    if(e->key() == Qt::Key_Escape) {
+        vista->liberarPista();
+    }
+    else {
+        QDialog::keyPressEvent(e);
+    }
+}
+
 void RodajeEdicionDialogo::slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion m)
 {
     RodajeParametros rp;

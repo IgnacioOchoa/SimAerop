@@ -49,6 +49,7 @@ private:
     RodajeEdicionEscena* escena;
     modoEdicion mEdicion;
     modoSnap mSnap;
+    QPoint pMouse;
 
 };
 

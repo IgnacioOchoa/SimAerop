@@ -190,6 +190,7 @@ float RodajeEdicionEscena::distanciaPunteroACabecera()
 void RodajeEdicionEscena::cancelarLinea()
 {
     lineaActiva->setLine(QLine());
+    lineaActiva->hide();
 }
 
 void RodajeEdicionEscena::prepararSimbolosSnap()

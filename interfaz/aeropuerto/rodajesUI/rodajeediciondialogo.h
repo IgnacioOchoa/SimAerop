@@ -19,6 +19,7 @@ public:
     ~RodajeEdicionDialogo();
     virtual void showEvent(QShowEvent *event) override;
     virtual bool eventFilter(QObject *obj, QEvent *event) override;
+    virtual void keyPressEvent(QKeyEvent *e) override;
 
 private slots:
     void slotModoEdicionCambiado(RodajeEdicionVista::modoEdicion m);

@@ -126,21 +126,23 @@ void RodajeEdicionVista::liberarPista()
     posEnPistaFijado=false;
     escena->cancelarLinea();
     lineaIniciada=false;
+    escena->proyectarSobrePista(mapToScene(pMouse));
+    emit sigPosEnPistaMovido(escena->distanciaPunteroACabecera());
 }
 
 void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
 {
-    QPoint pFinal = event->pos();
+    pMouse = event->pos();
     if (lineaIniciada) {
       switch(mEdicion) {
         case modoEdicion::PISTA:
-            escena->setLineaActiva(mapToScene(pFinal));
+            escena->setLineaActiva(mapToScene(pMouse));
             break;
         case modoEdicion::DOSPUNTOS:
-            escena->setLineaActiva(mapToScene(pFinal));
+            escena->setLineaActiva(mapToScene(pMouse));
             break;
         case modoEdicion::PARALELA:
-            escena->setLineaActiva(escena->calcularPuntoEnParalela(mapToScene(pFinal)));
+            escena->setLineaActiva(escena->calcularPuntoEnParalela(mapToScene(pMouse)));
             break;
         case modoEdicion::NULO:
             break;
@@ -153,15 +155,15 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
         switch(mSnap) {
         case modoSnap::PTOPISTA:
           if (!posEnPistaFijado) {
-          escena->proyectarSobrePista(mapToScene(pFinal));
+          escena->proyectarSobrePista(mapToScene(pMouse));
           emit sigPosEnPistaMovido(escena->distanciaPunteroACabecera());
           }
           break;
         case modoSnap::CABECERAS:
-          escena->proyectarSobreCabecera(mapToScene(pFinal));
+          escena->proyectarSobreCabecera(mapToScene(pMouse));
           break;
         case modoSnap::PISTA:
-          escena->resaltarPista(mapToScene(pFinal));
+          escena->resaltarPista(mapToScene(pMouse));
           break;
         default:
           break;
