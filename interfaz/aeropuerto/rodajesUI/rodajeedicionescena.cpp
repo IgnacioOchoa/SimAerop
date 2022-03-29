@@ -370,11 +370,29 @@ void RodajeEdicionEscena::resaltarPista(QPointF pto)
     resaltadoPista->show();
 }
 
+float RodajeEdicionEscena::longitudRodaje()
+{
+    return lineaActiva->line().length();
+}
+
+float RodajeEdicionEscena::anguloRodaje()
+{
+    //Para calcular el angulo, uso el producto punto entre dos vectores
+    // cos(alpha) = A.B/(|A||B|)
+    QPointF vecDirRodaje = lineaActiva->line().p2() - lineaActiva->line().p1();
+    float prodPto = vecDirRodaje.x() * vecDirPista.x() + vecDirRodaje.y() * vecDirPista.y();
+    float cosAlpha = prodPto/(pistas[pistaActiva].largo * lineaActiva->line().length());
+    float alpha = qRadiansToDegrees(qAcos(cosAlpha));
+    if (alpha < 0) alpha += 180;
+    return alpha;
+}
+
 void RodajeEdicionEscena::seleccionarCabecera(QPointF pos)
 {
     selCabecera->setPos(pos);
     selCabecera->show();
     cabeceraActiva = pos;
+    vecDirPista = pistas[pistaActiva].getVectorDireccion(pos);
 }
 
 void RodajeEdicionEscena::seleccionarPista()

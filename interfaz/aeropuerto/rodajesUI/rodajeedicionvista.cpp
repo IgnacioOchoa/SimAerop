@@ -137,6 +137,8 @@ void RodajeEdicionVista::mouseMoveEvent(QMouseEvent* event)
       switch(mEdicion) {
         case modoEdicion::PISTA:
             escena->setLineaActiva(mapToScene(pMouse));
+            emit sigAnguloRodajeModificado(escena->anguloRodaje());
+            emit sigLongitudRodajeModificada(escena->longitudRodaje());
             break;
         case modoEdicion::DOSPUNTOS:
             escena->setLineaActiva(mapToScene(pMouse));

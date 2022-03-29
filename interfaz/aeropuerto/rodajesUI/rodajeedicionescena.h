@@ -38,6 +38,9 @@ public:
 
     void resaltarPista(QPointF posCursor);
 
+    float longitudRodaje();
+    float anguloRodaje();
+
     void seleccionarCabecera(QPointF pos);
     void seleccionarPista();
 
@@ -66,6 +69,7 @@ private:
     bool permSnap;
     int pistaActiva;
     QPointF cabeceraActiva;
+    QPointF vecDirPista;
     int pistaResaltada;
     SombraLinea* resaltadoPista;
     SombraLinea* seleccionPista;

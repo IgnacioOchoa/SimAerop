@@ -41,6 +41,8 @@ signals:
     void sigCabeceraSeleccionada(QString cabecera);
     void sigPistaSeleccionada(int nroPista);
     void sigPosEnPistaMovido(float distancia);
+    void sigAnguloRodajeModificado(float angulo);
+    void sigLongitudRodajeModificada(float angulo);
 
 private:
     bool lineaIniciada;

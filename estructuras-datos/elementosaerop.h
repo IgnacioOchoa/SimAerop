@@ -66,6 +66,17 @@ struct Pista {
             return getCabecera(CAB2);
         else return "??";
     }
+    QPointF getVectorDireccion(QPointF cabeceraOrigen) const
+    {
+        if(abs(cabeceraOrigen.x()-getPuntoCabecera(CAB1).x()) < 1e-3 && // La cabecera de origen es la 1
+           abs(cabeceraOrigen.y()-getPuntoCabecera(CAB1).y()) < 1e-3) {
+            return (getPuntoCabecera(CAB2) - getPuntoCabecera(CAB1));
+        }
+        else if(abs(cabeceraOrigen.x()-getPuntoCabecera(CAB2).x()) < 1e-3 && //La cabecera de origen es la 2
+                abs(cabeceraOrigen.y()-getPuntoCabecera(CAB2).y()) < 1e-3)
+            return (getPuntoCabecera(CAB1) - getPuntoCabecera(CAB2));
+        else return QPointF(); //Si devuelve esto es que la cabecera de origen es incorrecta
+    }
 };
 
 inline QDebug operator<<(QDebug stream, const Pista& p)

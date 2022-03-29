@@ -133,10 +133,22 @@ void RodajeEdicionDialogo::slotDistanciaACabeceraCambiada(float dist)
     ui->leDistancia->setText(QString::number(dist,'f',1));
 }
 
+void RodajeEdicionDialogo::slotAnguloModificado(float angulo)
+{
+    if(!ui->leAngulo->isReadOnly())
+    ui->leAngulo->setText(QString::number(angulo,'f',1));
+}
+
 void RodajeEdicionDialogo::slotAnguloFijado(bool fijado)
 {
     ui->leAngulo->setReadOnly(fijado);
 
+}
+
+void RodajeEdicionDialogo::slotLongitudModificada(float distancia)
+{
+    if(!ui->leLongitud->isReadOnly())
+    ui->leLongitud->setText(QString::number(distancia,'f',1));
 }
 
 void RodajeEdicionDialogo::slotDistanciaFijado(bool fijado)
@@ -166,6 +178,8 @@ void RodajeEdicionDialogo::configurarWidgets()
     connect(vista, &RodajeEdicionVista::sigCabeceraSeleccionada, this, &RodajeEdicionDialogo::slotCabeceraSeleccionada);
     connect(vista, &RodajeEdicionVista::sigPistaSeleccionada, this, &RodajeEdicionDialogo::slotPistaSeleccionada);
     connect(vista, &RodajeEdicionVista::sigPosEnPistaMovido, this, &RodajeEdicionDialogo::slotDistanciaACabeceraCambiada);
+    connect(vista, &RodajeEdicionVista::sigAnguloRodajeModificado, this, &RodajeEdicionDialogo::slotAnguloModificado);
+    connect(vista, &RodajeEdicionVista::sigLongitudRodajeModificada, this, &RodajeEdicionDialogo::slotLongitudModificada);
     connect(ui->leDistancia, &QLineEdit::returnPressed, ui->candadoDistancia, &BotonCandado::slotCerrarCandado);
     connect(ui->leAngulo, &QLineEdit::returnPressed, ui->candadoAngulo, &BotonCandado::slotCerrarCandado);
     connect(ui->leLongitud, &QLineEdit::returnPressed, ui->candadoLongitud, &BotonCandado::slotCerrarCandado);

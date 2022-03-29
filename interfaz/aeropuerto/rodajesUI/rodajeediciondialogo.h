@@ -27,7 +27,9 @@ private slots:
     void slotPistaSeleccionada(int nroPista);
     void slotBotonModoEdicionAccionado(int nroBoton);
     void slotDistanciaACabeceraCambiada(float dist);
+    void slotAnguloModificado(float angulo);
     void slotAnguloFijado(bool fijado);
+    void slotLongitudModificada(float distancia);
     void slotDistanciaFijado(bool fijado);
     void slotLongitudFijado(bool fijado);
 
