@@ -237,6 +237,8 @@ void RodajeEdicionEscena::prepararSimbolosSnap()
 
 void RodajeEdicionEscena::proyectarSobrePista(QPointF posCursor)
 {
+    // Toma la posicion del cursor sobre la escena, calcula y muestra el punto
+    // mas cercano sobre la pist activa
     QPointF p = calcularPuntoEnPista(pistaActiva,posCursor);
     snapPista->setPos(p);
 }
@@ -299,54 +301,17 @@ QPoint RodajeEdicionEscena::calcularPuntoEnParalela(QPointF posCursor)
 
 QPointF RodajeEdicionEscena::calcularPuntoEnPista(int nroPista, QPointF posCursor)
 {
-    float y1 = posCursor.y();
-    float x1 = posCursor.x();
-    float dx = paramRectasPistas[nroPista][0];
-    float dy = paramRectasPistas[nroPista][1];
-    float a = paramRectasPistas[nroPista][2];
-    float min = paramRectasPistas[nroPista][3];
-    float max = paramRectasPistas[nroPista][4];
-
-    float x;
-    float y;
-
-    if(dy == 0) {   // Recta horizontal
-        //qInfo() << "Recta horizontal";
-        x = x1;
-        y = a;
-        x = qMin(x,max);
-        x = qMax(x,min);
-    }
-    else if (dx == 0) { //Recta vertical
-        //qInfo() << "Recta vertical";
-        y = y1;
-        x = 0; //Esto hay que actualizarlo cuando se implementen pistas que no pasen por 0
-        y = qMin(y,max);
-        y = qMax(y,min);
-    }
-    else {
-        //qInfo() << "Recta oblicua";
-        float m = dy/dx;
-        float b = y1 + 1/m * x1;
-        x = (b-a)/(m+1/m);
-        x = qMin(x,max);
-        x = qMax(x,min);
-       // qInfo() << "x = " << x;
-        y = (-1/m)*x + b;
-        if(m < 0) {std::swap(min,max);}
-        y = qMin(y,max*m+a);
-        y = qMax(y,min*m+a);
-        //qInfo() << "y = " << y;
-    }
-    return QPointF(x,y);
+    QPointF p1 = pistas[nroPista].getPuntoCabecera(Pista::CAB1);
+    QPointF p2 = pistas[nroPista].getPuntoCabecera(Pista::CAB2);
+    return proyectarSobreRecta(p1,p2,posCursor);
 }
 
 int RodajeEdicionEscena::pistaMasCercana(QPointF posCursor)
 {
-    //Hay que determinar que pista esta mas cerca
+    //Hay que determinar que pista esta mas cerca al cursor
     float dist;
     float minDist = 1e6;
-    int minIndx;
+    int minIndx = 0;
     for (int i = 0; i<pistas.count(); i++)
     {
        QPointF ptoEnPista = calcularPuntoEnPista(i, posCursor);
@@ -368,6 +333,48 @@ void RodajeEdicionEscena::resaltarPista(QPointF pto)
     resaltadoPista->setPos(p.puntoOrigen);
     resaltadoPista->setRotation(p.orientacion);
     resaltadoPista->show();
+}
+
+QPointF RodajeEdicionEscena::proyectarSobreRecta(QPointF pInicio, QPointF pFin, QPointF pLibre)
+{
+    //Funcion que toma la recta delimitada por pInicio y pFin, y proyecta el punto pLibre sobre
+    //la misma. Proyectar implica devolver el punto sobre la recta que se encuentra mas cerca de
+    //pLibre
+    double x,y,m,a,b;
+    // m = pendiente de la recta sobre la que quiero proyectar el punto
+    // a = punto donde la recta sobre la que quiero proyectar corta al eje y
+    // b = punto donde la recta que une el punto libre con la recta sobre la que quiero proyectar, corta al eje y
+    if(pInicio.y() == pFin.y()) {   // Recta horizontal
+        //qInfo() << "Recta horizontal";
+        x = pLibre.x();
+        y = pInicio.y();
+        x = qMin(x,qMax(pInicio.x(), pFin.x()));
+        x = qMax(x,qMin(pInicio.x(), pFin.x()));
+    }
+    else if (pInicio.x() == pFin.x()) { //Recta vertical
+        //qInfo() << "Recta vertical";
+        y = pLibre.y();
+        x = pInicio.x();
+        y = qMin(y,qMax(pInicio.y(),pFin.y()));
+        y = qMax(y,qMin(pInicio.y(),pFin.y()));
+    }
+    else {
+        //qInfo() << "Recta oblicua";
+        if(pFin.x() > pInicio.x()) {
+            m = (pFin.y()-pInicio.y())/(pFin.x() - pInicio.x());
+        }
+        else {
+            m = (pInicio.y()-pFin.y())/(pInicio.x() - pFin.x());
+        }
+        b = pLibre.y() + 1/m * pLibre.x();
+        a = pInicio.y() - pInicio.x()*m;
+        x = (b-a)/(m+1/m); // El punto en x donde se cruzan las dos rectas perpendiculares,
+                           // Sale de igualar las ecuaciones de las dos rectas
+        x = qMin(x,qMax(pInicio.x(), pFin.x()));
+        x = qMax(x,qMin(pInicio.x(), pFin.x()));
+        y = m*x + a;
+    }
+    return QPointF(x,y);
 }
 
 float RodajeEdicionEscena::longitudRodaje()

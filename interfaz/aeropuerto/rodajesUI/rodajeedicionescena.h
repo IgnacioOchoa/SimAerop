@@ -38,6 +38,8 @@ public:
 
     void resaltarPista(QPointF posCursor);
 
+    QPointF proyectarSobreRecta(QPointF pInicio, QPointF pFin, QPointF pLibre);
+
     float longitudRodaje();
     float anguloRodaje();
 
